@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -10,6 +11,8 @@ namespace PrestaVende.Public
 {
     public partial class PrestaVende : System.Web.UI.MasterPage
     {
+        private CLASS.cs_menu cs_menu = new CLASS.cs_menu();
+        private string error = "";
         protected void Page_Load(object sender, EventArgs e)
         {
             getMenu();
@@ -17,8 +20,20 @@ namespace PrestaVende.Public
 
         public void getMenu()
         {
-            Panel myFieldSet = new Panel();
-            myFieldSet.GroupingText = "Contact Details";
+
+            try
+            {
+                foreach (DataRow item in cs_menu.getMenuHeader(ref error).Rows)
+                {
+
+                } 
+
+            }
+            catch (Exception ex)
+            {
+                ex.ToString();
+            }
+
             HtmlGenericControl divMenu = new HtmlGenericControl("div");
             HtmlGenericControl ulPrincipal = new HtmlGenericControl("ul");
 

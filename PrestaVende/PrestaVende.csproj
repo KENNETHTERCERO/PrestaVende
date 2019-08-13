@@ -99,6 +99,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Public\PrestaVende.Master" />
+    <Content Include="WebLogin.aspx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -114,6 +115,9 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CLASS\cs_connection.cs" />
+    <Compile Include="CLASS\cs_menu.cs" />
+    <Compile Include="CLASS\cs_usuario.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -132,10 +136,16 @@
     <Compile Include="Public\WFPrincipal.aspx.designer.cs">
       <DependentUpon>WFPrincipal.aspx</DependentUpon>
     </Compile>
+    <Compile Include="WebLogin.aspx.cs">
+      <DependentUpon>WebLogin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebLogin.aspx.designer.cs">
+      <DependentUpon>WebLogin.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="CLASS\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <PropertyGroup>
