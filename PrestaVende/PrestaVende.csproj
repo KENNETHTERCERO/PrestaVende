@@ -99,6 +99,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Public\PrestaVende.Master" />
+    <Content Include="Public\WFMantAreaEmpresa.aspx" />
     <Content Include="WebLogin.aspx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -128,6 +129,12 @@
     </Compile>
     <Compile Include="Public\PrestaVende.Master.designer.cs">
       <DependentUpon>PrestaVende.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Public\WFMantAreaEmpresa.aspx.cs">
+      <DependentUpon>WFMantAreaEmpresa.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\WFMantAreaEmpresa.aspx.designer.cs">
+      <DependentUpon>WFMantAreaEmpresa.aspx</DependentUpon>
     </Compile>
     <Compile Include="Public\WFPrincipal.aspx.cs">
       <DependentUpon>WFPrincipal.aspx</DependentUpon>
