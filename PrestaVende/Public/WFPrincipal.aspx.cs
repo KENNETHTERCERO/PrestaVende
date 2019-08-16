@@ -27,7 +27,7 @@ namespace PrestaVende.Public
             {
                 if (!IsPostBack)
                 {
-                    valor_cookie = cookie["id_user"].ToString();
+                    //valor_cookie = cookie["id_user"].ToString();
                 }
             }
             // hasta aqui-->
