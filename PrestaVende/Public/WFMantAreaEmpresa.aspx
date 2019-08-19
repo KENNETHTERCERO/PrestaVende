@@ -77,7 +77,9 @@
                                                         <big><asp:Label ID="lblIdEmpresa" runat="server" Text="ID AREA EMPRESA"></asp:Label></big>
                                                     </td>
                                                     <td>
-                                                        <asp:Label ID="ddidAreaEmpresa" runat="server" Text="0"></asp:Label>
+                                                        <center>
+                                                        <asp:Label ID="ddidAreaEmpresa" runat="server" Text="0"  ></asp:Label>
+                                                        </center>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -104,24 +106,7 @@
                                                     <td>
                                                          <asp:DropDownList ID="ddlEstado" runat="server" class="form-control"></asp:DropDownList>
                                                     </td>
-                                                </tr>
-
-                                                     <tr>
-                                                    <td>
-                                                        <big><asp:Label ID="lblTipo" runat="server" Text="FECHA CREACION"></asp:Label></big>
-                                                    </td>
-                                                    <td>
-                                                        <asp:TextBox ID="txtFechaCreacion" runat="server" class="form-control" Enabled="true" type="date" PlaceHolder="dd/mm/aaaa"></asp:TextBox>
-                                                    </td>
-                                                </tr>
-                                                  <tr>
-                                                    <td>
-                                                        <big><asp:Label ID="LblModificacion" runat="server" Text="FECHA MODIFICACIÓN"></asp:Label></big>
-                                                    </td>
-                                                    <td>
-                                                        <asp:TextBox ID="txtFechaModifiacion" runat="server" class="form-control" Enabled="true" type="date" PlaceHolder="dd/mm/aaaa"></asp:TextBox>
-                                                    </td>
-                                                </tr>                                                                                                                                         
+                                                </tr>                                                                                                                                                                                                                                       
                                               </table>
                                         </div>
                                     </div>
@@ -138,12 +123,14 @@
                                                             <asp:ButtonField ButtonType="Button" FooterStyle-BackColor="#ff9a32" CommandName="select" HeaderText="" Text="->" >
                                                             <FooterStyle BackColor="#FF9A32" />
                                                             </asp:ButtonField>
-                                                                <asp:BoundField DataField="id_area_empresa" HeaderText="<center>ID</center>" SortExpression="id_area_empresa" HtmlEncode="false"/>
+                                                                <asp:BoundField DataField="id_area_empresa" HeaderText="<center>ID</center>" SortExpression="id_area_empresa" HtmlEncode="false"/>                                                            
+                                                                <asp:BoundField DataField="id_pais" HeaderText="<center>IdPais</center>" SortExpression="id_pais" HtmlEncode="false"/>
                                                                 <asp:BoundField DataField="pais" HeaderText="<center>PAIS</center>" SortExpression="pais" HtmlEncode="false" />
                                                                 <asp:BoundField DataField="descripcion" HeaderText="<center>DESCRIPCION</center>" SortExpression="descripcion" HtmlEncode="false" />
-                                                                <asp:BoundField DataField="Estado" HeaderText="<center>ESTADO</center>" SortExpression="estado"  HtmlEncode="false"/>
-                                                                <asp:BoundField DataField="fecha_creacion" HeaderText="<center>FECHA CREACION</center>" SortExpression="idTipoCorte" HtmlEncode="false" Visible="true"/>
-                                                                <asp:BoundField DataField="fecha_modificacion" HeaderText="<center>FECHA MODIFICACION</center>" SortExpression="estado" HtmlEncode="false" Visible="true"/>
+                                                                <asp:BoundField DataField="estadoAreaEmpresa" HeaderText="<center>ESTADO</center>" SortExpression="estadoAreaEmpresa"  HtmlEncode="false"/>
+                                                                <asp:BoundField DataField="fecha_creacion" HeaderText="<center>FECHA CREACION</center>" SortExpression="fecha_creacion" HtmlEncode="false" Visible="true"/>
+                                                                <asp:BoundField DataField="fecha_modificacion" HeaderText="<center>FECHA MODIFICACION</center>" SortExpression="fecha_modificacion" HtmlEncode="false" Visible="true"/>
+                                                                <asp:BoundField DataField="estado" HeaderText="<center>IDESTADO</center>" SortExpression="estado"  HtmlEncode="false" />
                                                         </Columns>
                                                         <EditRowStyle BackColor="#7C6F57" />
                                                         <FooterStyle BackColor="#1C5E55" Font-Bold="False" ForeColor="White" />

@@ -110,7 +110,7 @@ namespace PrestaVende.Public
         {
             try
             {
-                lblIdEmpresa.Text = mAreaEmpresa.getIDMaxAreaEmpresa(ref error);
+                ddidAreaEmpresa.Text = mAreaEmpresa.getIDMaxAreaEmpresa(ref error);
                 hideOrShowDiv(false);
                 cleanControls();
             }
@@ -128,9 +128,7 @@ namespace PrestaVende.Public
             {
                 txtDescripcion.Text = "";
                 ddlEstado.SelectedValue = "1";
-                ddidPais.SelectedValue = "0";
-                txtFechaCreacion.Text = "";
-                txtFechaModifiacion.Text = "";
+                ddidPais.SelectedValue = "0";              
             }
             catch (Exception ex)
             {
@@ -183,7 +181,8 @@ namespace PrestaVende.Public
         {
             try
             {
-                if (mAreaEmpresa.insertAreaEmpresa(ref error, lblIdEmpresa.Text, ddidPais.SelectedValue.ToString(), txtDescripcion.Text.ToString(), ddlEstado.SelectedValue.ToString(), txtFechaCreacion.Text.ToString(), txtFechaModifiacion.Text.ToString()))
+                DateTime thisDay = DateTime.Now;
+                if (mAreaEmpresa.insertAreaEmpresa(ref error, ddidAreaEmpresa.Text, ddidPais.SelectedValue.ToString(), txtDescripcion.Text.ToString(), ddlEstado.SelectedValue.ToString(), thisDay.ToString("MM/dd/yyyy HH:mm:ss"), thisDay.ToString("MM/dd/yyyy HH:mm:ss")))
                 {
                     showSuccess("Se agrego el area empresa correctamente.");
                     return true;
@@ -209,8 +208,6 @@ namespace PrestaVende.Public
                 else if (txtDescripcion.Text.ToString().Length < 3) { showWarning("Usted debe agregar una descripcion para poder guardar."); return false; }
                 else if (ddidPais.SelectedValue.ToString().Equals("0")) { showWarning("Usted debe seleccionar un país para poder guardar."); return false; }
                 else if (ddlEstado.SelectedValue.ToString().Equals("0")) { showWarning("Usted debe seleccionar un estado para poder guardar."); return false; }
-                else if (txtFechaCreacion.Text == "") { showWarning("Usted debe agregar una descripcion para poder guardar."); return false; }
-                else if (txtFechaModifiacion.Text == "") { showWarning("Usted debe agregar una descripcion para poder guardar."); return false; }
                 else
                     return true;
             }
@@ -260,6 +257,8 @@ namespace PrestaVende.Public
             try
             {
                 GrdVAreaEmpresa.DataSource = mAreaEmpresa.getAreaEmpresa(ref error);
+                //GrdVAreaEmpresa.Columns[2].Visible = false;
+                //GrdVAreaEmpresa.Columns[8].Visible = false;
                 GrdVAreaEmpresa.DataBind();
             }
             catch (Exception ex)
@@ -272,7 +271,8 @@ namespace PrestaVende.Public
         {
             try
             {
-                if (mAreaEmpresa.updateAreaEmpresa(ref error, lblIdEmpresa.Text.ToString(), ddidPais.SelectedValue.ToString(), txtDescripcion.Text.ToString(), ddlEstado.SelectedValue.ToString(), txtFechaCreacion.Text.ToString(), txtFechaModifiacion.Text.ToString()))
+                DateTime thisDay = DateTime.Now;
+                if (mAreaEmpresa.updateAreaEmpresa(ref error, lblIdEmpresa.Text.ToString(), ddidPais.SelectedValue.ToString(), txtDescripcion.Text.ToString(), ddlEstado.SelectedValue.ToString(), thisDay.ToString("MM/dd/yyyy HH:mm:ss")))
                 {
                     showSuccess("Se modifico el area empresa correctamente.");
                     return true;
@@ -301,13 +301,13 @@ namespace PrestaVende.Public
                     GridViewRow selectedRow = GrdVAreaEmpresa.Rows[index];
                     TableCell id_area_empresa = selectedRow.Cells[1];
                     TableCell id_pais = selectedRow.Cells[2];
-                    TableCell descripcion = selectedRow.Cells[3];
-                    TableCell estado = selectedRow.Cells[4];
-                    TableCell fecha_creacion = selectedRow.Cells[5];
-                    TableCell fecha_modificacion = selectedRow.Cells[8];
+                    TableCell descripcion = selectedRow.Cells[4];
+                    TableCell estado = selectedRow.Cells[8];
+                    TableCell fecha_creacion = selectedRow.Cells[6];
+                    TableCell fecha_modificacion = selectedRow.Cells[7];
 
                     isUpdate = true;
-                    setControlsEdit(id_area_empresa.Text.ToString(), id_pais.Text.ToString(), descripcion.Text.ToString(), estado.Text.ToString(), txtFechaCreacion.Text.ToString(), txtFechaModifiacion.Text.ToString());
+                    setControlsEdit(id_area_empresa.Text.ToString(), id_pais.Text.ToString(), descripcion.Text.ToString(), estado.Text.ToString());
                     hideOrShowDiv(false);
                     divSucceful.Visible = false;
                 }
@@ -318,22 +318,23 @@ namespace PrestaVende.Public
             }
         }
 
-        private void setControlsEdit(string id_area_empresa, string id_pais, string descripcion, string estado, string fecha_creacion, string fecha_modificacion)
+        private void setControlsEdit(string id_area_empresa, string id_pais, string descripcion, string estado)
         {
             try
             {
-                lblIdEmpresa.Text = id_area_empresa;
+                ddidAreaEmpresa.Text = id_area_empresa;
                 ddidPais.SelectedValue = id_pais;
                 txtDescripcion.Text = descripcion;
                 ddlEstado.SelectedValue = estado;
-                txtFechaCreacion.Text = fecha_creacion;
-                txtFechaModifiacion.Text = fecha_modificacion;
+               
             }
             catch (Exception ex)
             {
                 showError(ex.ToString());
             }
         }
+
+       
     }
 }
 

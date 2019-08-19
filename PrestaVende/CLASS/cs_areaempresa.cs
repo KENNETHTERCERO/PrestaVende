@@ -70,6 +70,7 @@ namespace PrestaVende.CLASS
                 command.Connection = connection.connection;
                 command.CommandText = " SELECT "
                                     + "     ae.id_area_empresa,  "
+                                    + "     ae.id_pais, "
                                     + "		p.pais, "
                                     + "        ae.descripcion, "
                                     + "        (CASE WHEN ae.estado = 1 THEN 'ACTIVO' WHEN ae.estado = 0 THEN 'INACTIVO' ELSE 'OTRO ESTADO' END) AS estadoAreaEmpresa, "
@@ -176,7 +177,7 @@ namespace PrestaVende.CLASS
             }
         }
 
-        public bool updateAreaEmpresa(ref string error, string id_area_empresa, string id_pais, string descripcion, string estado, string fecha_creacion, string fecha_modificacion)
+        public bool updateAreaEmpresa(ref string error, string id_area_empresa, string id_pais, string descripcion, string estado, string fecha_modificacion)
         {
             try
             {
@@ -184,12 +185,11 @@ namespace PrestaVende.CLASS
                 command.Connection = connection.connection;
                 command.Transaction = connection.connection.BeginTransaction();
                 command.Parameters.Clear();
-                command.CommandText = "UPDATE tbl_area_empresa SET id_pais = @id_pais, descripcion = @descripcion, estado = @estado, fecha_creacion = @fecha_creacion, fecha_modificacion = @fecha_modificacion WHERE id_area_empresa = id_area_empresa";
+                command.CommandText = "UPDATE tbl_area_empresa SET id_pais = @id_pais, descripcion = @descripcion, estado = @estado, fecha_modificacion = @fecha_modificacion WHERE id_area_empresa = id_area_empresa";
                 command.Parameters.AddWithValue("@id_area_empresa", id_area_empresa);
                 command.Parameters.AddWithValue("@id_pais", id_pais);
                 command.Parameters.AddWithValue("@descripcion", descripcion);
                 command.Parameters.AddWithValue("@estado", estado);
-                command.Parameters.AddWithValue("@fecha_creacion", fecha_creacion);
                 command.Parameters.AddWithValue("@fecha_modificacion", fecha_modificacion);                
                 if (int.Parse(command.ExecuteNonQuery().ToString()) > 0)
                 {
