@@ -99,6 +99,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Public\PrestaVende.Master" />
+    <Content Include="Public\WFBusquedaCliente.aspx" />
     <Content Include="Public\WFMantAreaEmpresa.aspx" />
     <Content Include="WebLogin.aspx" />
     <None Include="Web.Debug.config">
@@ -116,7 +117,7 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CLASS\cs_areaempresa.cs" />
+    <Compile Include="CLASS\cs_cliente.cs" />
     <Compile Include="CLASS\cs_connection.cs" />
     <Compile Include="CLASS\cs_menu.cs" />
     <Compile Include="CLASS\cs_usuario.cs" />
@@ -130,6 +131,13 @@
     </Compile>
     <Compile Include="Public\PrestaVende.Master.designer.cs">
       <DependentUpon>PrestaVende.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Public\WFBusquedaCliente.aspx.cs">
+      <DependentUpon>WFBusquedaCliente.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\WFBusquedaCliente.aspx.designer.cs">
+      <DependentUpon>WFBusquedaCliente.aspx</DependentUpon>
     </Compile>
     <Compile Include="Public\WFMantAreaEmpresa.aspx.cs">
       <DependentUpon>WFMantAreaEmpresa.aspx</DependentUpon>
