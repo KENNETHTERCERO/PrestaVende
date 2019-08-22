@@ -58,7 +58,7 @@
                                                 <table>
                                                     <tr>
                                                         <td>
-                                                            <h1>Mantenimiento de Esquejes&nbsp;&nbsp;</h1>
+                                                            <h1>Mantenimiento Área Empresa &nbsp;&nbsp;</h1>
                                                         </td>
                                                         <td></td>
                                                     </tr>
@@ -74,12 +74,22 @@
                                             <table>
                                                 <tr>
                                                     <td>
-                                                        <big><asp:Label ID="lblIdEsqueje" runat="server" Text="ID ESQUEJE"></asp:Label></big>
+                                                        <big><asp:Label ID="lblIdEmpresa" runat="server" Text="ID AREA EMPRESA"></asp:Label></big>
                                                     </td>
                                                     <td>
-                                                        <asp:Label ID="lblIdNumero" runat="server" Text="0"></asp:Label>
+                                                        <center>
+                                                        <asp:Label ID="ddidAreaEmpresa" runat="server" Text="0"  ></asp:Label>
+                                                        </center>
                                                     </td>
                                                 </tr>
+                                                <tr>
+                                                    <td>
+                                                        <big><asp:Label ID="lblPais" runat="server" Text="PAÍS"></asp:Label></big>
+                                                    </td>
+                                                    <td>
+                                                         <asp:DropDownList ID="ddidPais" runat="server" class="form-control"></asp:DropDownList>
+                                                    </td>
+                                                </tr>         
                                                 <tr>
                                                     <td>
                                                         <big><asp:Label ID="lblDescripcion" runat="server" Text="DESCRIPCION"></asp:Label></big>
@@ -88,46 +98,15 @@
                                                         <asp:TextBox ID="txtDescripcion" runat="server" class="form-control"/>
                                                     </td>
                                                 </tr>
-                                                     <tr>
-                                                    <td>
-                                                        <big><asp:Label ID="lblTipo" runat="server" Text="TIPO"></asp:Label></big>
-                                                    </td>
-                                                    <td>
-                                                        <asp:TextBox ID="txtTipo" runat="server" class="form-control"/>
-                                                    </td>
-                                                </tr>
-                                                  <tr>
-                                                    <td>
-                                                        <big><asp:Label ID="lblCantidadpormedida" runat="server" Text="CANTIDAD POR MEDIDA"></asp:Label></big>
-                                                    </td>
-                                                    <td>
-                                                        <asp:TextBox ID="txtCantidadpormedida"  type="number" step="1" min="0" runat="server" class="form-control"/>
-                                                    </td>
-                                                </tr>
-                                                  <tr>
-                                                    <td>
-                                                        <big><asp:Label ID="lblPesoportray" runat="server" Text="PESO POR TRAY"></asp:Label></big>
-                                                    </td>
-                                                    <td>
-                                                        <asp:TextBox ID="txtPesoportray" type="number" min="1" runat="server" class="form-control"/>
-                                                    </td>
-                                                </tr>
+
                                                 <tr>
-                                                    <td>
-                                                        <big><asp:Label ID="lblTipoCorte" runat="server" Text="TIPO CORTE"></asp:Label></big>
-                                                    </td>
-                                                    <td>
-                                                         <asp:DropDownList ID="ddlTipoCorte" runat="server" class="form-control"></asp:DropDownList>
-                                                    </td>
-                                                </tr>
-                                                 <tr>
                                                     <td>
                                                         <big><asp:Label ID="lblEstado" runat="server" Text="ESTADO"></asp:Label></big>
                                                     </td>
                                                     <td>
                                                          <asp:DropDownList ID="ddlEstado" runat="server" class="form-control"></asp:DropDownList>
                                                     </td>
-                                                </tr>
+                                                </tr>                                                                                                                                                                                                                                       
                                               </table>
                                         </div>
                                     </div>
@@ -137,22 +116,21 @@
                                         <table>
                                             <tr>
                                                 <td>
-                                                    <asp:GridView ID="gvSize" runat="server" Width="100%" CssClass="footable" AutoGenerateColumns="False" 
+                                                    <asp:GridView ID="GrdVAreaEmpresa" runat="server" Width="100%" CssClass="footable" AutoGenerateColumns="False" 
                                                         ForeColor="#333333" GridLines="None" OnRowCommand="gvSize_RowCommand">
                                                         <AlternatingRowStyle BackColor="White" />
                                                         <Columns>
                                                             <asp:ButtonField ButtonType="Button" FooterStyle-BackColor="#ff9a32" CommandName="select" HeaderText="" Text="->" >
                                                             <FooterStyle BackColor="#FF9A32" />
                                                             </asp:ButtonField>
-                                                                <asp:BoundField DataField="id_esqueje" HeaderText="<center>ID</center>" SortExpression="id_esqueje" HtmlEncode="false"/>
+                                                                <asp:BoundField DataField="id_area_empresa" HeaderText="<center>ID</center>" SortExpression="id_area_empresa" HtmlEncode="false"/>                                                            
+                                                                <asp:BoundField DataField="id_pais" HeaderText="<center>IdPais</center>" SortExpression="id_pais" HtmlEncode="false"/>
+                                                                <asp:BoundField DataField="pais" HeaderText="<center>PAIS</center>" SortExpression="pais" HtmlEncode="false" />
                                                                 <asp:BoundField DataField="descripcion" HeaderText="<center>DESCRIPCION</center>" SortExpression="descripcion" HtmlEncode="false" />
-                                                                <asp:BoundField DataField="tipo" HeaderText="<center>TIPO</center>" SortExpression="tipo"  HtmlEncode="false"/>
-                                                                <asp:BoundField DataField="cantidad_por_medida" HeaderText="<center>CANTIDAD<br />POR<br />MEDIDA</center>" SortExpression="cantidad_por_medida"  HtmlEncode="false"/>
-                                                                <asp:BoundField DataField="peso_por_tray" HeaderText="<center>PESO<br />POR<br />TRAY</center>" SortExpression="pesos_por_tray"  HtmlEncode="false"/>
-                                                                <asp:BoundField DataField="tipoCorteletras" HeaderText="<center>TIPO CORTE</center>" SortExpression="tipoCorteletras"  HtmlEncode="false"/>
-                                                                <asp:BoundField DataField="estadoletras" HeaderText="<center>ESTADO</center>" SortExpression="estadoLetras"  HtmlEncode="false"/>
-                                                                <asp:BoundField DataField="idTipoCorte" HeaderText="<center>ITC</center>" SortExpression="idTipoCorte" HtmlEncode="false" Visible="true"/>
-                                                                <asp:BoundField DataField="estado" HeaderText="<center>IES</center>" SortExpression="estado" HtmlEncode="false" Visible="true"/>
+                                                                <asp:BoundField DataField="estadoAreaEmpresa" HeaderText="<center>ESTADO</center>" SortExpression="estadoAreaEmpresa"  HtmlEncode="false"/>
+                                                                <asp:BoundField DataField="fecha_creacion" HeaderText="<center>FECHA CREACION</center>" SortExpression="fecha_creacion" HtmlEncode="false" Visible="true"/>
+                                                                <asp:BoundField DataField="fecha_modificacion" HeaderText="<center>FECHA MODIFICACION</center>" SortExpression="fecha_modificacion" HtmlEncode="false" Visible="true"/>
+                                                                <asp:BoundField DataField="estado" HeaderText="<center>IDESTADO</center>" SortExpression="estado"  HtmlEncode="false" />
                                                         </Columns>
                                                         <EditRowStyle BackColor="#7C6F57" />
                                                         <FooterStyle BackColor="#1C5E55" Font-Bold="False" ForeColor="White" />

@@ -118,6 +118,7 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CLASS\cs_areaempresa.cs" />
     <Compile Include="CLASS\cs_cliente.cs" />
     <Compile Include="CLASS\cs_connection.cs" />
     <Compile Include="CLASS\cs_menu.cs" />
