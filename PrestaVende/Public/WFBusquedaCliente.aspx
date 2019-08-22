@@ -90,7 +90,7 @@
                                                         <big><asp:Label ID="lblDPI" runat="server" Text="DPI"></asp:Label></big>
                                                     </td>
                                                     <td>
-                                                        <asp:TextBox ID="txtDPI" runat="server" class="form-control" ContentPlaceHolder="0000000000000" AccessKey="" Font-Bold="True"></asp:TextBox>
+                                                        <asp:TextBox ID="txtDPI" runat="server" type="number" class="form-control" ContentPlaceHolder="0000000000000" AccessKey="" Font-Bold="True"></asp:TextBox>
                                                     </td>
                                                 </tr>
                                                 <tr>

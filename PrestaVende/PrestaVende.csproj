@@ -101,6 +101,7 @@
     <Content Include="Public\PrestaVende.Master" />
     <Content Include="Public\WFBusquedaCliente.aspx" />
     <Content Include="Public\WFMantAreaEmpresa.aspx" />
+    <Content Include="Public\WFPrestamo.aspx" />
     <Content Include="WebLogin.aspx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -145,6 +146,13 @@
     </Compile>
     <Compile Include="Public\WFMantAreaEmpresa.aspx.designer.cs">
       <DependentUpon>WFMantAreaEmpresa.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\WFPrestamo.aspx.cs">
+      <DependentUpon>WFPrestamo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\WFPrestamo.aspx.designer.cs">
+      <DependentUpon>WFPrestamo.aspx</DependentUpon>
     </Compile>
     <Compile Include="Public\WFPrincipal.aspx.cs">
       <DependentUpon>WFPrincipal.aspx</DependentUpon>

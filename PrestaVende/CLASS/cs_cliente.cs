@@ -105,41 +105,126 @@ namespace PrestaVende.CLASS
                 DataTable returnTable = new DataTable("estados");
                 connection.connection.Open();
                 command.Connection = connection.connection;
-                command.Parameters.Clear();
-                command.Transaction =  connection.connection.BeginTransaction();
-                command.CommandText = "INSERT INTO tbl_cliente (DPI, nit, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, direccion, correo_electronico, numero_telefono, estado) " +
-                                                        "VALUES(@DPI, @nit, @primer_nombre, @segundo_nombre, @primer_apellido, @segundo_apellido, @direccion, @correo_electronico, @numero_telefono, @estado)";
-                command.Parameters.AddWithValue("@DPI", datos[0]);
-                command.Parameters.AddWithValue("@nit", datos[1]);
-                command.Parameters.AddWithValue("@primer_nombre", datos[2]);
-                command.Parameters.AddWithValue("@segundo_nombre", datos[3]);
-                command.Parameters.AddWithValue("@primer_apellido", datos[4]);
-                command.Parameters.AddWithValue("@segundo_apellido", datos[5]);
-                command.Parameters.AddWithValue("@direccion", datos[6]);
-                command.Parameters.AddWithValue("@correo_electronico", datos[7]);
-                command.Parameters.AddWithValue("@numero_telefono", datos[8]);
-                command.Parameters.AddWithValue("@estado", datos[9]);
-                returnInt = command.ExecuteNonQuery();
-                
-                if (returnInt > 0)
+
+                if (validateDPIAndNit(ref error, datos[0], datos[1]) == "0")
                 {
-                    command.Transaction.Commit();
+                    command.Parameters.Clear();
+                    command.Transaction = connection.connection.BeginTransaction();
+                    command.CommandText = "INSERT INTO tbl_cliente (DPI, nit, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, direccion, correo_electronico, numero_telefono, estado) " +
+                                                            "VALUES(@DPI, @nit, @primer_nombre, @segundo_nombre, @primer_apellido, @segundo_apellido, @direccion, @correo_electronico, @numero_telefono, @estado)";
+                    command.Parameters.AddWithValue("@DPI", datos[0]);
+                    command.Parameters.AddWithValue("@nit", datos[1]);
+                    command.Parameters.AddWithValue("@primer_nombre", datos[2]);
+                    command.Parameters.AddWithValue("@segundo_nombre", datos[3]);
+                    command.Parameters.AddWithValue("@primer_apellido", datos[4]);
+                    command.Parameters.AddWithValue("@segundo_apellido", datos[5]);
+                    command.Parameters.AddWithValue("@direccion", datos[6]);
+                    command.Parameters.AddWithValue("@correo_electronico", datos[7]);
+                    command.Parameters.AddWithValue("@numero_telefono", datos[8]);
+                    command.Parameters.AddWithValue("@estado", datos[9]);
+                    returnInt = command.ExecuteNonQuery();
+
+                    if (returnInt > 0)
+                    {
+                        command.Transaction.Commit();
+                    }
+                    return returnInt;
                 }
                 else
                 {
-                    command.Transaction.Rollback();
-                    returnInt = 0;
+                    error = "El DPI o Nit ya existe en el catalogo de clientes, por favor busquelo.";
+                    return returnInt;
                 }
-                return returnInt;
+
+                
             }
             catch (Exception ex)
             {
+                command.Transaction.Rollback();
                 error = ex.ToString();
                 return 0;
             }
             finally
             {
                 connection.connection.Close();
+            }
+        }
+
+        public int updateClient(ref string error, string[] datos)
+        {
+            try
+            {
+                int returnInt = 0;
+                DataTable returnTable = new DataTable("estados");
+                connection.connection.Open();
+                command.Connection = connection.connection;
+
+                command.Parameters.Clear();
+                command.Transaction = connection.connection.BeginTransaction();
+                command.CommandText = "UPDATE tbl_cliente SET " +
+                                            "primer_nombre = @primer_nombre, " +
+                                            "segundo_nombre = @segundo_nombre, " +
+                                            "primer_apellido = @primer_apellido, " +
+                                            "segundo_apellido = @segundo_apellido, " +
+                                            "direccion = @direccion, " +
+                                            "correo_electronico = @correo_electronico, " +
+                                            "numero_telefono = @numero_telefono, " +
+                                            "estado = @estado " +
+                                      "WHERE id_cliente = @id_cliente";
+
+                command.Parameters.AddWithValue("@primer_nombre", datos[0]);
+                command.Parameters.AddWithValue("@segundo_nombre", datos[1]);
+                command.Parameters.AddWithValue("@primer_apellido", datos[2]);
+                command.Parameters.AddWithValue("@segundo_apellido", datos[3]);
+                command.Parameters.AddWithValue("@direccion", datos[4]);
+                command.Parameters.AddWithValue("@correo_electronico", datos[5]);
+                command.Parameters.AddWithValue("@numero_telefono", datos[6]);
+                command.Parameters.AddWithValue("@estado", datos[7]);
+                command.Parameters.AddWithValue("@id_cliente", datos[8]);
+                returnInt = command.ExecuteNonQuery();
+
+                if (returnInt > 0)
+                {
+                    command.Transaction.Commit();
+                }
+                else
+                {
+                    throw new Exception("No se pudo actualizar el cliente, por favor valide la informacion y vuelva a intentarlo.");
+                }
+                return returnInt;
+            }
+            catch (Exception ex)
+            {
+                command.Transaction.Rollback();
+                error = ex.ToString();
+                return 0;
+            }
+            finally
+            {
+                connection.connection.Close();
+            }
+        }
+
+        public string validateDPIAndNit(ref string error, string DPI, string nit)
+        {
+            try
+            {
+                string returnIDClientMax;
+
+                command.Connection = connection.connection;
+                command.CommandText = "SELECT MAX(ISNULL(id_cliente, 0)) " +
+                                        "FROM tbl_cliente " +
+                                        "WHERE DPI = @validaDPI OR nit = @validaNit";
+                command.Parameters.AddWithValue("@validaDPI", DPI);
+                command.Parameters.AddWithValue("@validaNit", nit);
+                returnIDClientMax = command.ExecuteScalar().ToString();
+
+                return returnIDClientMax;
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                return null;
             }
         }
 
@@ -151,7 +236,7 @@ namespace PrestaVende.CLASS
 
                 connection.connection.Open();
                 command.Connection = connection.connection;
-                command.CommandText = "SELECT MAX(id_cliente) + 1 FROM tbl_cliente";
+                command.CommandText = "SELECT MAX(ISNULL(id_cliente, 0)) + 1 FROM tbl_cliente";
                 returnIDClientMax = command.ExecuteScalar().ToString();
 
                 return returnIDClientMax;

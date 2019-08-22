@@ -12,7 +12,7 @@ namespace PrestaVende.Public
     {
         private CLASS.cs_cliente cs_cliente = new CLASS.cs_cliente();
         private string error = "";
-        private bool isUpdate = false;
+        private static bool isUpdate = false;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -223,7 +223,33 @@ namespace PrestaVende.Public
         {
             try
             {
+                try
+                {
+                    string[] datosUpdate = new string[10];
 
+                    datosUpdate[0] = txtPrimerNombre.Text;
+                    datosUpdate[1] = txtSegundoNombre.Text;
+                    datosUpdate[2] = txtPrimerApellido.Text;
+                    datosUpdate[3] = txtSegundoApellido.Text;
+                    datosUpdate[4] = txtDireccion.Text;
+                    datosUpdate[5] = txtCorreoElectronico.Text;
+                    datosUpdate[6] = txtNumeroTelefono.Text;
+                    datosUpdate[7] = ddlEstado.SelectedValue.ToString();
+                    datosUpdate[8] = lblIdClienteNumero.Text.ToString();
+
+                    if (cs_cliente.updateClient(ref error, datosUpdate) > 0)
+                    {
+                        showSuccess("Se edito cliente sin problema.");
+                    }
+                    else
+                    {
+                        showError(error);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    showError(ex.ToString());
+                }
             }
             catch (Exception ex)
             {
@@ -236,8 +262,9 @@ namespace PrestaVende.Public
             try
             {
                 string id_max;
+                error = "";
                 id_max = cs_cliente.getMaxIDClient(ref error);
-                if (error != "")
+                if (error == "")
                 {
                     lblIdClienteNumero.Text = id_max;
                 }
@@ -251,6 +278,52 @@ namespace PrestaVende.Public
             {
 
                 throw;
+            }
+        }
+
+        private bool validateDataText()
+        {
+            try
+            {
+                if (txtDPI.Text.ToString().Length == 0)
+                {
+                    showWarning("Debe ingresar un numero de DPI para poder guardar cliente.");
+                    return false;
+                }
+                else if (txtDPI.Text.ToString().Length < 13)
+                {
+                    showWarning("Debe agregar el numero de DPI completo.");
+                    return false;
+                }
+                else if (txtNit.Text.ToString().Length == 0)
+                {
+                    showWarning("Debe agregar el NIT para poder guardar.");
+                    return false;
+                }
+                else if (txtPrimerNombre.Text.ToString().Length == 0)
+                {
+                    showWarning("Debe agregar el primer nombre para poder guardar.");
+                    return false;
+                }
+                else if (txtPrimerApellido.Text.ToString().Length == 0)
+                {
+                    showWarning("Debe agregar el primer apellido para poder guardar.");
+                    return false;
+                }
+                else if (txtNumeroTelefono.Text.ToString().Length == 0)
+                {
+                    showWarning("Debe agregar el numero de telefono para poder guardar.");
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                showError(ex.ToString());
+                return false;
             }
         }
         #endregion
@@ -326,23 +399,21 @@ namespace PrestaVende.Public
                     int index = Convert.ToInt32(e.CommandArgument);
 
                     GridViewRow selectedRow = gvCliente.Rows[index];
-                    TableCell id_usuario        = selectedRow.Cells[1];
+                    TableCell id_cliente = selectedRow.Cells[2];
+                    Session["id_cliente_to_sub_cliente"] = id_cliente.Text.ToString();
+                    Response.Redirect("WFPrestamo.aspx?id_cliente=" + id_cliente.Text);
 
-                    isUpdate = true;
-                    //setControlsEdit(id_usuario.Text.ToString(), usuario.Text.ToString(), primer_nombre.Text.ToString(), segundo_nombre.Text.ToString(), primer_apellido.Text.ToString(), segundo_apellido.Text.ToString(), id_ubicacion.Text.ToString(), id_rol.Text.ToString(), estado.Text.ToString());
-                    hideOrShowDiv(false);
-                    divSucceful.Visible = false;
                 }
                 else if (e.CommandName == "editar")
                 {
                     int index = Convert.ToInt32(e.CommandArgument);
 
                     GridViewRow selectedRow = gvCliente.Rows[index];
-                    TableCell id_usuario        = selectedRow.Cells[2];
+                    TableCell id_cliente = selectedRow.Cells[2];
                     isUpdate = true;
                     hideOrShowDiv(false);
                     divSucceful.Visible = false;
-                    editClient(id_usuario.Text.ToString());
+                    editClient(id_cliente.Text.ToString());
                 }
             }
             catch (Exception ex)
@@ -355,13 +426,16 @@ namespace PrestaVende.Public
         {
             try
             {
-                if (isUpdate)
+                if (validateDataText())
                 {
-                    editClient();
-                }
-                else
-                {
-                    insertClient();
+                    if (isUpdate)
+                    {
+                        editClient();
+                    }
+                    else
+                    {
+                        insertClient();
+                    }
                 }
             }
             catch (Exception ex)
