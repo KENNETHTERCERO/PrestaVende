@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -272,7 +273,15 @@ namespace PrestaVende.Public
             try
             {
                 DateTime thisDay = DateTime.Now;
-                if (mAreaEmpresa.updateAreaEmpresa(ref error, lblIdEmpresa.Text.ToString(), ddidPais.SelectedValue.ToString(), txtDescripcion.Text.ToString(), ddlEstado.SelectedValue.ToString(), thisDay.ToString("MM/dd/yyyy HH:mm:ss")))
+                string[] datosUpdate = new string[5];
+
+                datosUpdate[0] = ddidAreaEmpresa.Text;
+                datosUpdate[1] = ddidPais.SelectedValue;
+                datosUpdate[2] = txtDescripcion.Text;
+                datosUpdate[3] = ddlEstado.SelectedValue;
+                datosUpdate[4] = thisDay.ToString("MM/dd/yyyy HH:mm:ss");
+
+                if (mAreaEmpresa.updateAreaEmpresa(ref error, datosUpdate))
                 {
                     showSuccess("Se modifico el area empresa correctamente.");
                     return true;
@@ -287,8 +296,8 @@ namespace PrestaVende.Public
                 showError(error + " - " + ex.ToString());
                 return false;
             }
-            return false;
         }
+
 
         protected void gvSize_RowCommand(object sender, GridViewCommandEventArgs e)
         {
@@ -297,17 +306,23 @@ namespace PrestaVende.Public
                 if (e.CommandName == "select")
                 {
                     int index = Convert.ToInt32(e.CommandArgument);
+                    DataTable DtAreaEmpresa;
 
                     GridViewRow selectedRow = GrdVAreaEmpresa.Rows[index];
                     TableCell id_area_empresa = selectedRow.Cells[1];
-                    TableCell id_pais = selectedRow.Cells[2];
-                    TableCell descripcion = selectedRow.Cells[4];
-                    TableCell estado = selectedRow.Cells[8];
-                    TableCell fecha_creacion = selectedRow.Cells[6];
-                    TableCell fecha_modificacion = selectedRow.Cells[7];
+
+                    DtAreaEmpresa = mAreaEmpresa.getObtieneDatosModificar(ref error, id_area_empresa.Text.ToString());
+
+                    foreach (DataRow item in DtAreaEmpresa.Rows)
+                    {
+                        ddidAreaEmpresa.Text = item[0].ToString();
+                        ddidPais.SelectedValue = item[1].ToString();
+                        txtDescripcion.Text = item[2].ToString();
+                        ddlEstado.SelectedValue = item[3].ToString(); 
+                    }
+                   
 
                     isUpdate = true;
-                    setControlsEdit(id_area_empresa.Text.ToString(), id_pais.Text.ToString(), descripcion.Text.ToString(), estado.Text.ToString());
                     hideOrShowDiv(false);
                     divSucceful.Visible = false;
                 }
@@ -316,25 +331,9 @@ namespace PrestaVende.Public
             {
                 showError(ex.ToString());
             }
-        }
-
-        private void setControlsEdit(string id_area_empresa, string id_pais, string descripcion, string estado)
-        {
-            try
-            {
-                ddidAreaEmpresa.Text = id_area_empresa;
-                ddidPais.SelectedValue = id_pais;
-                txtDescripcion.Text = descripcion;
-                ddlEstado.SelectedValue = estado;
-               
-            }
-            catch (Exception ex)
-            {
-                showError(ex.ToString());
-            }
-        }
-
-       
+        }      
     }
+
+        
 }
 

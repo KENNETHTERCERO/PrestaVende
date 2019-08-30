@@ -121,12 +121,35 @@ namespace PrestaVende.CLASS
         {
             try
             {
-                DataTable esqueje = new DataTable();
+                DataTable EstadoAreaEmpresa = new DataTable();
                 connection.connection.Open();
                 command.Connection = connection.connection;
                 command.CommandText = "SELECT 0 AS id, 'INACTIVO' AS estado UNION SELECT 1 AS id, 'ACTIVO' AS estado";
-                esqueje.Load(command.ExecuteReader());
-                return esqueje;
+                EstadoAreaEmpresa.Load(command.ExecuteReader());
+                return EstadoAreaEmpresa;
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                return null;
+            }
+            finally
+            {
+                connection.connection.Close();
+            }
+        }
+
+        public DataTable getObtieneDatosModificar(ref string error, string id_area_empresa)
+        {
+            try
+            {
+                DataTable DatosAreaEmpresa = new DataTable();
+                connection.connection.Open();
+                command.Connection = connection.connection;
+                command.CommandText = "SELECT id_area_empresa, id_pais, descripcion, estado FROM tbl_area_empresa WHERE id_area_empresa = @id_area_empresa";
+                command.Parameters.AddWithValue("@id_area_empresa", id_area_empresa);
+                DatosAreaEmpresa.Load(command.ExecuteReader());
+                return DatosAreaEmpresa;
             }
             catch (Exception ex)
             {
@@ -177,7 +200,7 @@ namespace PrestaVende.CLASS
             }
         }
 
-        public bool updateAreaEmpresa(ref string error, string id_area_empresa, string id_pais, string descripcion, string estado, string fecha_modificacion)
+        public bool updateAreaEmpresa(ref string error, string[] datos)
         {
             try
             {
@@ -185,12 +208,12 @@ namespace PrestaVende.CLASS
                 command.Connection = connection.connection;
                 command.Transaction = connection.connection.BeginTransaction();
                 command.Parameters.Clear();
-                command.CommandText = "UPDATE tbl_area_empresa SET id_pais = @id_pais, descripcion = @descripcion, estado = @estado, fecha_modificacion = @fecha_modificacion WHERE id_area_empresa = id_area_empresa";
-                command.Parameters.AddWithValue("@id_area_empresa", id_area_empresa);
-                command.Parameters.AddWithValue("@id_pais", id_pais);
-                command.Parameters.AddWithValue("@descripcion", descripcion);
-                command.Parameters.AddWithValue("@estado", estado);
-                command.Parameters.AddWithValue("@fecha_modificacion", fecha_modificacion);                
+                command.CommandText = "UPDATE tbl_area_empresa SET id_pais = @id_pais, descripcion = @descripcion, estado = @estado, fecha_modificacion = @fecha_modificacion WHERE id_area_empresa = @id_area_empresa";
+                command.Parameters.AddWithValue("@id_area_empresa", datos[0]);
+                command.Parameters.AddWithValue("@id_pais", datos[1]);
+                command.Parameters.AddWithValue("@descripcion", datos[2]);
+                command.Parameters.AddWithValue("@estado", datos[3]);
+                command.Parameters.AddWithValue("@fecha_modificacion", datos[4]);                
                 if (int.Parse(command.ExecuteNonQuery().ToString()) > 0)
                 {
                     command.Transaction.Commit();
@@ -212,6 +235,8 @@ namespace PrestaVende.CLASS
                 connection.connection.Close();
             }
         }
+
+   
     }
 
 

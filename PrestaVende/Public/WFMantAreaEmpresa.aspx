@@ -2,7 +2,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-  <asp:UpdatePanel runat="server" ID="uPanel" >
+    <asp:UpdatePanel runat="server" ID="uPanel" >
         <ContentTemplate>
             <div class="container-fluid text-center">
                 <div class="row content">
@@ -124,13 +124,9 @@
                                                             <FooterStyle BackColor="#FF9A32" />
                                                             </asp:ButtonField>
                                                                 <asp:BoundField DataField="id_area_empresa" HeaderText="<center>ID</center>" SortExpression="id_area_empresa" HtmlEncode="false"/>                                                            
-                                                                <asp:BoundField DataField="id_pais" HeaderText="<center>IdPais</center>" SortExpression="id_pais" HtmlEncode="false"/>
                                                                 <asp:BoundField DataField="pais" HeaderText="<center>PAIS</center>" SortExpression="pais" HtmlEncode="false" />
                                                                 <asp:BoundField DataField="descripcion" HeaderText="<center>DESCRIPCION</center>" SortExpression="descripcion" HtmlEncode="false" />
-                                                                <asp:BoundField DataField="estadoAreaEmpresa" HeaderText="<center>ESTADO</center>" SortExpression="estadoAreaEmpresa"  HtmlEncode="false"/>
-                                                                <asp:BoundField DataField="fecha_creacion" HeaderText="<center>FECHA CREACION</center>" SortExpression="fecha_creacion" HtmlEncode="false" Visible="true"/>
-                                                                <asp:BoundField DataField="fecha_modificacion" HeaderText="<center>FECHA MODIFICACION</center>" SortExpression="fecha_modificacion" HtmlEncode="false" Visible="true"/>
-                                                                <asp:BoundField DataField="estado" HeaderText="<center>IDESTADO</center>" SortExpression="estado"  HtmlEncode="false" />
+                                                                <asp:BoundField DataField="estadoAreaEmpresa" HeaderText="<center>ESTADO</center>" SortExpression="estadoAreaEmpresa"  HtmlEncode="false"/>                                                                
                                                         </Columns>
                                                         <EditRowStyle BackColor="#7C6F57" />
                                                         <FooterStyle BackColor="#1C5E55" Font-Bold="False" ForeColor="White" />
