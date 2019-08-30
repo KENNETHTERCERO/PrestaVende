@@ -64,8 +64,8 @@
                                                             <big><asp:Label ID="lblCliente" runat="server">Cliente:&nbsp;&nbsp;</asp:Label></big>
                                                         </td>
                                                         <td>
-                                                            <big><asp:Label ID="id_cliente" runat="server" Text="0"></asp:Label></big>
-                                                            <big><asp:Label ID="nombre_cliente" runat="server"></asp:Label></big>
+                                                            <big><asp:Label ID="lblid_cliente" runat="server" Text="0"></asp:Label></big>
+                                                            <big><asp:Label ID="lblnombre_cliente" runat="server"></asp:Label></big>
                                                         </td>
                                                     </tr>
                                                 </table>
@@ -114,10 +114,10 @@
                                                 </tr>
                                                 <tr>
                                                     <td>
-                                                        <asp:DropDownList ID="ddlCategoria" runat="server" CssClass="form-control"></asp:DropDownList>
+                                                        <asp:DropDownList ID="ddlCategoria" runat="server" AutoPostBack="true" CssClass="form-control" OnSelectedIndexChanged="ddlCategoria_SelectedIndexChanged"></asp:DropDownList>
                                                     </td>
                                                     <td>
-                                                        <asp:DropDownList ID="ddlSubCategoria" runat="server" CssClass="form-control"></asp:DropDownList>
+                                                        <asp:DropDownList ID="ddlSubCategoria" runat="server" AutoPostBack="true" CssClass="form-control" OnSelectedIndexChanged="ddlSubCategoria_SelectedIndexChanged"></asp:DropDownList>
                                                     </td>
                                                     <td>
                                                         <asp:DropDownList ID="ddlProducto" runat="server" CssClass="form-control"></asp:DropDownList>
@@ -129,6 +129,26 @@
                                                         <asp:Label ID="lblPeso" runat="server" Text="PESO"></asp:Label>
                                                     </td>
                                                     <td>
+                                                        <asp:Label ID="lblPesoDescuento" runat="server" Text="PESO DESCUENTO"></asp:Label>
+                                                        
+                                                    </td>
+                                                    <td>
+                                                        <asp:Label ID="lblPesoConDescuento" runat="server" Text="PESO CON DESCUENTO"></asp:Label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <asp:TextBox ID="txtPeso" runat="server" type="number" AutoPostBack="true" class="form-control" OnTextChanged="txtPeso_TextChanged"></asp:TextBox>
+                                                    </td>
+                                                    <td>
+                                                        <asp:TextBox ID="txtPesoDescuento" type="number" AutoPostBack="true" runat="server" class="form-control" OnTextChanged="txtPesoDescuento_TextChanged"></asp:TextBox>
+                                                    </td>
+                                                    <td>
+                                                        <asp:TextBox ID="txtPesoConDescuento" type="number" runat="server" class="form-control" Enabled="false"></asp:TextBox>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
                                                         <asp:Label ID="lblKilataje" runat="server" Text="KILATAJE"></asp:Label>
                                                     </td>
                                                     <td>
@@ -137,13 +157,11 @@
                                                 </tr>
                                                 <tr>
                                                     <td>
-                                                        <asp:TextBox ID="txtPeso" runat="server" type="number" class="form-control"></asp:TextBox>
-                                                    </td>
-                                                    <td>
-                                                        <asp:DropDownList ID="ddlKilataje" type="number" runat="server" class="form-control"></asp:DropDownList>
+                                                        <asp:DropDownList ID="ddlKilataje" runat="server" AutoPostBack="true" class="form-control" OnSelectedIndexChanged="ddlKilataje_SelectedIndexChanged"></asp:DropDownList>
                                                     </td>
                                                     <td>
                                                         <asp:TextBox ID="txtObservaciones" runat="server" class="form-control"></asp:TextBox>
+                                                        
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -184,7 +202,7 @@
                                             </table>
                                         </div>
                                     </div>
-                                        
+
                                     <div id="div_gridView" runat="server" visible="true">
                                         <br />
                                         <table>
