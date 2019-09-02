@@ -337,7 +337,7 @@ namespace PrestaVende.CLASS
                 command.Parameters.AddWithValue("@id_tipo_transaccion", TipoTransaccion);
                 command.Parameters.AddWithValue("@id_caja", id_caja);
                 command.Parameters.AddWithValue("@monto", monto);                
-                command.Parameters.AddWithValue("@estado_transaccion", 1);
+                command.Parameters.AddWithValue("@estado_transaccion", 2);
                 command.Parameters.AddWithValue("@fecha_transaccion", fecha_creacion);
                 command.Parameters.AddWithValue("@usuario", usuario_asigna);
                 command.ExecuteNonQuery();
