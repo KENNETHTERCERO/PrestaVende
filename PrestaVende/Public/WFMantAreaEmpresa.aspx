@@ -36,7 +36,6 @@
                                 <strong>
                                     <asp:Label runat="server" ID="lblWarning" Text=""></asp:Label></strong>
                             </div>
-
                             <div align="center" runat="server" id="divError" visible="false" class="alert alert-danger alert-dismissable fade in">
                                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                                 <strong>
@@ -109,8 +108,8 @@
                                                 </tr>                                                                                                                                                                                                                                       
                                               </table>
                                         </div>
-                                    </div>
-                                        
+                                    </div>                                       
+
                                     <div id="div_gridView" runat="server" visible ="false">
                                         <br />
                                         <table>

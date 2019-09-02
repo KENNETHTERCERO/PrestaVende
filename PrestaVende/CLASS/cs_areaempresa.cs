@@ -12,34 +12,7 @@ namespace PrestaVende.CLASS
         private cs_connection connection = new cs_connection();
         private SqlCommand command = new SqlCommand();
 
-        //public DataTable getAreaEmpresa()
-        //{
-        //    try
-        //    {
-        //        DataTable AreaEmpresa = new DataTable();
-        //        connection.connection.Open();
-        //        command.Connection = connection.connection;
-        //        command.CommandText = "SELECT 0 AS id, 'SELECCIONAR' AS descripcion UNION " +
-        //                                "SELECT " +
-        //                                    "id_esqueje AS id, " +
-        //                                    "descripcion AS descripcion " +
-        //                                "FROM " +
-        //                                "tbl_esqueje " +
-        //                                "WHERE estado <> 0 ";
-        //        AreaEmpresa.Load(command.ExecuteReader());
-        //        return AreaEmpresa;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        //class_all_data.errors = ex.ToString();
-        //        return null;
-        //    }
-        //    finally
-        //    {
-        //        connection.connection.Close();
-        //    }
-        //}
-
+        
         public string getIDMaxAreaEmpresa(ref string error)
         {
             try

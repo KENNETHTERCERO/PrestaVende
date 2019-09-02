@@ -15,6 +15,7 @@ namespace PrestaVende.Public
         {
             divWarning.Visible = true;
             lblWarning.Controls.Add(new LiteralControl(string.Format("<span style='color:Orange'>{0}</span>", warning)));
+
             return true;
         }
 
@@ -22,21 +23,26 @@ namespace PrestaVende.Public
         {
             divError.Visible = true;
             lblError.Controls.Add(new LiteralControl(string.Format("<span style='color:Red'>{0}</span>", error)));
+
             return true;
         }
 
         private bool showSuccess(string error)
         {
-            divSucceful.Visible = true;
+            divSucceful.Visible = true;        
             lblSuccess.Controls.Add(new LiteralControl(string.Format("<span style='color:Green'>{0}</span>", error)));
+
             return true;
         }
         #endregion
+
         #region variables 
+
         private static string error = "";
-        private static bool isUpdate = false;
+        private static bool isUpdate = false;    
 
         private CLASS.cs_AreaEmpresa mAreaEmpresa = new CLASS.cs_AreaEmpresa();
+
         #endregion
 
         protected void Page_Load(object sender, EventArgs e)
@@ -78,7 +84,7 @@ namespace PrestaVende.Public
             {
                 if (hidePanel.Equals(true))
                 {
-                    div_ingresa_datos.Visible = false;
+                    div_ingresa_datos.Visible = false;               
                     div_gridView.Visible = true;
                     btnSalir.Visible = true;
                     btnCreate.Visible = true;
@@ -97,7 +103,6 @@ namespace PrestaVende.Public
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
@@ -116,11 +121,9 @@ namespace PrestaVende.Public
                 cleanControls();
             }
             catch (Exception)
-            {
-
+            {          
                 throw;
             }
-
         }
 
         private void cleanControls()
@@ -129,15 +132,13 @@ namespace PrestaVende.Public
             {
                 txtDescripcion.Text = "";
                 ddlEstado.SelectedValue = "1";
-                ddidPais.SelectedValue = "0";              
+                ddidPais.SelectedValue = "0";
             }
             catch (Exception ex)
             {
                 showError(ex.ToString());
             }
         }
-
-
 
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
@@ -198,7 +199,6 @@ namespace PrestaVende.Public
                 showError(error + " - " + ex.ToString());
                 return false;
             }
-            return false;
         }
 
         private bool validateInformation()
@@ -206,11 +206,11 @@ namespace PrestaVende.Public
             try
             {
                 if (txtDescripcion.Text.ToString().Equals("")) { showWarning("Usted debe agregar una descripcion para poder guardar."); return false; }
-                else if (txtDescripcion.Text.ToString().Length < 3) { showWarning("Usted debe agregar una descripcion para poder guardar."); return false; }
+                else if (txtDescripcion.Text.ToString().Length < 3) { showWarning("Usted debe agregar una descripcion para poder guardar."); return false; }            
                 else if (ddidPais.SelectedValue.ToString().Equals("0")) { showWarning("Usted debe seleccionar un país para poder guardar."); return false; }
-                else if (ddlEstado.SelectedValue.ToString().Equals("0")) { showWarning("Usted debe seleccionar un estado para poder guardar."); return false; }
+                //else if (ddlEstado.SelectedValue.ToString = "1") { showWarning("Usted debe seleccionar un estado para poder guardar."); return false; }
                 else
-                    return true;
+                    return true;            
             }
             catch (Exception ex)
             {
@@ -298,7 +298,6 @@ namespace PrestaVende.Public
             }
         }
 
-
         protected void gvSize_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             try
@@ -307,20 +306,18 @@ namespace PrestaVende.Public
                 {
                     int index = Convert.ToInt32(e.CommandArgument);
                     DataTable DtAreaEmpresa;
-
                     GridViewRow selectedRow = GrdVAreaEmpresa.Rows[index];
+
                     TableCell id_area_empresa = selectedRow.Cells[1];
-
                     DtAreaEmpresa = mAreaEmpresa.getObtieneDatosModificar(ref error, id_area_empresa.Text.ToString());
-
+              
                     foreach (DataRow item in DtAreaEmpresa.Rows)
                     {
                         ddidAreaEmpresa.Text = item[0].ToString();
                         ddidPais.SelectedValue = item[1].ToString();
                         txtDescripcion.Text = item[2].ToString();
-                        ddlEstado.SelectedValue = item[3].ToString(); 
+                        ddlEstado.SelectedValue = item[3].ToString();
                     }
-                   
 
                     isUpdate = true;
                     hideOrShowDiv(false);
@@ -331,9 +328,7 @@ namespace PrestaVende.Public
             {
                 showError(ex.ToString());
             }
-        }      
+        }
     }
 
-        
 }
-
