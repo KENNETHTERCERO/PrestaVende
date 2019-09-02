@@ -100,6 +100,8 @@
     </Content>
     <Content Include="Public\PrestaVende.Master" />
     <Content Include="Public\WFBusquedaCliente.aspx" />
+    <Content Include="Public\WFMantenimientoSubCategoria.aspx" />
+    <Content Include="Public\WFMantenimientoCategoria.aspx" />
     <Content Include="Public\WFMantenimientoEmpresa.aspx" />
     <Content Include="Public\WFMantenimientoTipoCaja.aspx" />
     <Content Include="Public\WFMantAreaEmpresa.aspx" />
@@ -153,6 +155,20 @@
     </Compile>
     <Compile Include="Public\WFBusquedaCliente.aspx.designer.cs">
       <DependentUpon>WFBusquedaCliente.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\WFMantenimientoSubCategoria.aspx.cs">
+      <DependentUpon>WFMantenimientoSubCategoria.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\WFMantenimientoSubCategoria.aspx.designer.cs">
+      <DependentUpon>WFMantenimientoSubCategoria.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\WFMantenimientoCategoria.aspx.cs">
+      <DependentUpon>WFMantenimientoCategoria.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\WFMantenimientoCategoria.aspx.designer.cs">
+      <DependentUpon>WFMantenimientoCategoria.aspx</DependentUpon>
     </Compile>
     <Compile Include="Public\WFMantenimientoEmpresa.aspx.cs">
       <DependentUpon>WFMantenimientoEmpresa.aspx</DependentUpon>
