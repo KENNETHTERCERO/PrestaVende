@@ -121,22 +121,22 @@ namespace PrestaVende.Public {
         protected global::System.Web.UI.WebControls.Label lblCliente;
         
         /// <summary>
-        /// id_cliente control.
+        /// lblid_cliente control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label id_cliente;
+        protected global::System.Web.UI.WebControls.Label lblid_cliente;
         
         /// <summary>
-        /// nombre_cliente control.
+        /// lblnombre_cliente control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label nombre_cliente;
+        protected global::System.Web.UI.WebControls.Label lblnombre_cliente;
         
         /// <summary>
         /// div_ingresa_datos control.
@@ -274,6 +274,51 @@ namespace PrestaVende.Public {
         protected global::System.Web.UI.WebControls.Label lblPeso;
         
         /// <summary>
+        /// lblPesoDescuento control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblPesoDescuento;
+        
+        /// <summary>
+        /// lblPesoConDescuento control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblPesoConDescuento;
+        
+        /// <summary>
+        /// txtPeso control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtPeso;
+        
+        /// <summary>
+        /// txtPesoDescuento control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtPesoDescuento;
+        
+        /// <summary>
+        /// txtPesoConDescuento control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtPesoConDescuento;
+        
+        /// <summary>
         /// lblKilataje control.
         /// </summary>
         /// <remarks>
@@ -290,15 +335,6 @@ namespace PrestaVende.Public {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblObservaciones;
-        
-        /// <summary>
-        /// txtPeso control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtPeso;
         
         /// <summary>
         /// ddlKilataje control.

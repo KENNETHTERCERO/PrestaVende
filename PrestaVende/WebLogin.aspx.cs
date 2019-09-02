@@ -34,7 +34,7 @@ namespace PrestaVende
             {
                 if (validateTextBox())
                 {
-                    string[] respuesta;
+                    string[] respuesta = new string[10];
                     respuesta = login.Login(txtUser.Text, txtPassword.Text);
 
 
