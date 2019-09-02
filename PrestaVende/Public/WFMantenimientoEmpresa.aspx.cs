@@ -8,7 +8,7 @@ using System.Web.UI.WebControls;
 
 namespace PrestaVende.Public
 {
-    public partial class WFMantAreaEmpresa : System.Web.UI.Page
+    public partial class WFMantenimientoEmpresa : System.Web.UI.Page
     {
         #region messages
         private bool showWarning(string warning)
@@ -41,7 +41,7 @@ namespace PrestaVende.Public
         private static string error = "";
         private static bool isUpdate = false;    
 
-        private CLASS.cs_AreaEmpresa mAreaEmpresa = new CLASS.cs_AreaEmpresa();
+        private CLASS.cs_Empresa mEmpresa = new CLASS.cs_Empresa();
 
         #endregion
 
@@ -67,8 +67,9 @@ namespace PrestaVende.Public
                     {
                         hideOrShowDiv(true);
                         getDataGrid();
-                        getEstadoAreaEmpresa();
-                        getPais();
+                        getAreaEmpresa();
+                        getTipoEmpresa();
+                        getEstadoEmpresa();
                     }
                 }
             }
@@ -116,7 +117,7 @@ namespace PrestaVende.Public
         {
             try
             {
-                ddidAreaEmpresa.Text = mAreaEmpresa.getIDMaxAreaEmpresa(ref error);
+                ddidEmpresa.Text = mEmpresa.getIDMaxEmpresa(ref error);
                 hideOrShowDiv(false);
                 cleanControls();
             }
@@ -130,9 +131,16 @@ namespace PrestaVende.Public
         {
             try
             {
-                txtDescripcion.Text = "";
-                ddlEstado.SelectedValue = "1";
-                ddidPais.SelectedValue = "0";
+                ddidAreaEmpresa2.SelectedValue = "0";
+                ddidTipoEmpresa.SelectedValue = "0";
+                txtNombreEmpresa.Text = "";
+                txtNitEmpresa.Text = "";
+                txtDireccionEmpresa.Text = "";
+                txtPatente.Text = "";
+                txtLibro.Text = "";
+                txtFolio.Text = "";
+                ddEstado.SelectedValue = "1";
+                ChbxVende.Checked = false;
             }
             catch (Exception ex)
             {
@@ -149,7 +157,7 @@ namespace PrestaVende.Public
                     if (isUpdate)
                     {
                         //ACTUALIZA REGISTRO
-                        if (updateAreaEmpresa())
+                        if (updateEmpresa())
                         {
                             hideOrShowDiv(true);
                             getDataGrid();
@@ -159,7 +167,7 @@ namespace PrestaVende.Public
                     else
                     {
                         //GUARDA NUEVO
-                        if (insertAreaEmpresa())
+                        if (insertEmpresa())
                         {
                             hideOrShowDiv(true);
                             getDataGrid();
@@ -179,19 +187,22 @@ namespace PrestaVende.Public
             hideOrShowDiv(true);
         }
 
-        private bool insertAreaEmpresa()
+        private bool insertEmpresa()
         {
             try
             {
+               
                 DateTime thisDay = DateTime.Now;
-                if (mAreaEmpresa.insertAreaEmpresa(ref error, ddidAreaEmpresa.Text, ddidPais.SelectedValue.ToString(), txtDescripcion.Text.ToString(), ddlEstado.SelectedValue.ToString(), thisDay.ToString("MM/dd/yyyy HH:mm:ss"), thisDay.ToString("MM/dd/yyyy HH:mm:ss")))
+                if (mEmpresa.insertEmpresa(ref error, ddidEmpresa.Text, ddidAreaEmpresa2.SelectedValue.ToString(), ddidTipoEmpresa.SelectedValue.ToString(), txtNombreEmpresa.Text.ToString(), txtNitEmpresa.Text.ToString(),
+                    txtDireccionEmpresa.Text.ToString(), txtPatente.Text.ToString(), txtLibro.Text.ToString(), txtFolio.Text.ToString(), ddEstado.SelectedValue.ToString(), 
+                    thisDay.ToString("MM/dd/yyyy HH:mm:ss"), thisDay.ToString("MM/dd/yyyy HH:mm:ss"), ChbxVende.Checked))
                 {
-                    showSuccess("Se agrego el area empresa correctamente.");
+                    showSuccess("Se agrego la empresa correctamente.");
                     return true;
                 }
                 else
                 {
-                    throw new SystemException("No se pudo agregar area empresa, por favor, valide los datos y vuelva a intentarlo.");
+                    throw new SystemException("No se pudo agregar la empresa, por favor, valide los datos y vuelva a intentarlo.");
                 }
             }
             catch (Exception ex)
@@ -205,10 +216,14 @@ namespace PrestaVende.Public
         {
             try
             {
-                if (txtDescripcion.Text.ToString().Equals("")) { showWarning("Usted debe agregar una descripcion para poder guardar."); return false; }
-                else if (txtDescripcion.Text.ToString().Length < 3) { showWarning("Usted debe agregar una descripcion para poder guardar."); return false; }            
-                else if (ddidPais.SelectedValue.ToString().Equals("0")) { showWarning("Usted debe seleccionar un país para poder guardar."); return false; }
-                //else if (ddlEstado.SelectedValue.ToString = "1") { showWarning("Usted debe seleccionar un estado para poder guardar."); return false; }
+                if (ddidAreaEmpresa2.SelectedValue.ToString().Equals("0")) { showWarning("Usted debe seleccionar un area de empresa para poder guardar."); return false; }
+                else if (ddidTipoEmpresa.SelectedValue.ToString().Equals("0")) { showWarning("Usted debe seleccionar un tipo de empresa para poder guardar."); return false; }            
+                else if (txtNombreEmpresa.Text.ToString().Length < 3) { showWarning("Usted debe ingresar un nombre de empresa para poder guardar."); return false; }
+                else if (txtNitEmpresa.Text.ToString().Length < 9) { showWarning("Usted debe ingresar NIT válido para poder guardar."); return false; }
+                else if (txtDireccionEmpresa.Text.ToString().Length < 3) { showWarning("Usted debe ingresar una dirección de empresa para poder guardar."); return false; }
+                else if (txtPatente.Text.ToString().Length < 1) { showWarning("Usted debe ingresar número de patente para poder guardar."); return false; }
+                else if (txtLibro.Text.ToString().Length < 1) { showWarning("Usted debe ingresar un número de libro para poder guardar."); return false; }
+                else if (txtFolio.Text.ToString().Length < 1) { showWarning("Usted debe ingresar número de folio para poder guardar."); return false; }
                 else
                     return true;            
             }
@@ -219,15 +234,15 @@ namespace PrestaVende.Public
             }
         }
 
-        private void getEstadoAreaEmpresa()
+        private void getEstadoEmpresa()
         {
             try
             {
-                ddlEstado.DataSource = mAreaEmpresa.getEstadoAreaEmpresa(ref error);
-                ddlEstado.DataValueField = "id";
-                ddlEstado.DataTextField = "estado";
-                ddlEstado.DataBind();
-                ddlEstado.SelectedValue = "1";
+                ddEstado.DataSource = mEmpresa.getEstadoEmpresa(ref error);
+                ddEstado.DataValueField = "id";
+                ddEstado.DataTextField = "estado";
+                ddEstado.DataBind();
+                ddEstado.SelectedValue = "1";
             }
             catch (Exception ex)
             {
@@ -236,15 +251,32 @@ namespace PrestaVende.Public
             }
         }
 
-        private void getPais()
+        private void getAreaEmpresa()
         {
             try
             {
-                ddidPais.DataSource = mAreaEmpresa.getPais(ref error);
-                ddidPais.DataValueField = "id_pais";
-                ddidPais.DataTextField = "descripcion";
-                ddidPais.DataBind();
-                ddidPais.SelectedValue = "0";
+                ddidAreaEmpresa2.DataSource = mEmpresa.getAreaEmpresa(ref error);
+                ddidAreaEmpresa2.DataValueField = "id_area_empresa";
+                ddidAreaEmpresa2.DataTextField = "descripcion";
+                ddidAreaEmpresa2.DataBind();
+                ddidAreaEmpresa2.SelectedValue = "0";
+            }
+            catch (Exception ex)
+            {
+                showError(ex.ToString());
+                throw;
+            }
+        }
+
+        private void getTipoEmpresa()
+        {
+            try
+            {
+                ddidTipoEmpresa.DataSource = mEmpresa.getTipoEmpresa(ref error);
+                ddidTipoEmpresa.DataValueField = "id_tipo_empresa";
+                ddidTipoEmpresa.DataTextField = "tipo_empresa";
+                ddidTipoEmpresa.DataBind();
+                ddidTipoEmpresa.SelectedValue = "0";
             }
             catch (Exception ex)
             {
@@ -257,10 +289,8 @@ namespace PrestaVende.Public
         {
             try
             {
-                GrdVAreaEmpresa.DataSource = mAreaEmpresa.getAreaEmpresa(ref error);
-                //GrdVAreaEmpresa.Columns[2].Visible = false;
-                //GrdVAreaEmpresa.Columns[8].Visible = false;
-                GrdVAreaEmpresa.DataBind();
+                GrdVEmpresa.DataSource = mEmpresa.getEmpresa(ref error);               
+                GrdVEmpresa.DataBind();
             }
             catch (Exception ex)
             {
@@ -268,27 +298,34 @@ namespace PrestaVende.Public
             }
         }
 
-        private bool updateAreaEmpresa()
+        private bool updateEmpresa()
         {
             try
             {
                 DateTime thisDay = DateTime.Now;
-                string[] datosUpdate = new string[5];
+                string[] datosUpdate = new string[13];
 
-                datosUpdate[0] = ddidAreaEmpresa.Text;
-                datosUpdate[1] = ddidPais.SelectedValue;
-                datosUpdate[2] = txtDescripcion.Text;
-                datosUpdate[3] = ddlEstado.SelectedValue;
-                datosUpdate[4] = thisDay.ToString("MM/dd/yyyy HH:mm:ss");
+                datosUpdate[0] = ddidEmpresa.Text;
+                datosUpdate[1] = ddidAreaEmpresa2.SelectedValue;
+                datosUpdate[2] = ddidTipoEmpresa.SelectedValue;
+                datosUpdate[3] = txtNombreEmpresa.Text;
+                datosUpdate[4] = txtNitEmpresa.Text;
+                datosUpdate[5] = txtDireccionEmpresa.Text;
+                datosUpdate[6] = txtPatente.Text;
+                datosUpdate[7] = txtLibro.Text;
+                datosUpdate[8] = txtFolio.Text;
+                datosUpdate[9] = ddEstado.SelectedValue;
+                datosUpdate[10] = thisDay.ToString("MM/dd/yyyy HH:mm:ss");
+                datosUpdate[11] = ChbxVende.Checked.ToString();
 
-                if (mAreaEmpresa.updateAreaEmpresa(ref error, datosUpdate))
+                if (mEmpresa.updateEmpresa(ref error, datosUpdate))
                 {
-                    showSuccess("Se modifico el area empresa correctamente.");
+                    showSuccess("Se modifico la empresa correctamente.");
                     return true;
                 }
                 else
                 {
-                    throw new SystemException("No se pudo modificar el area empresa, por favor, valide los datos y vuelva a intentarlo.");
+                    throw new SystemException("No se pudo modificar la empresa, por favor, valide los datos y vuelva a intentarlo.");
                 }
             }
             catch (Exception ex)
@@ -305,18 +342,33 @@ namespace PrestaVende.Public
                 if (e.CommandName == "select")
                 {
                     int index = Convert.ToInt32(e.CommandArgument);
-                    DataTable DtAreaEmpresa;
-                    GridViewRow selectedRow = GrdVAreaEmpresa.Rows[index];
+                    DataTable DtEmpresa;
+                    GridViewRow selectedRow = GrdVEmpresa.Rows[index];
 
-                    TableCell id_area_empresa = selectedRow.Cells[1];
-                    DtAreaEmpresa = mAreaEmpresa.getObtieneDatosModificar(ref error, id_area_empresa.Text.ToString());
+                    TableCell id_empresa = selectedRow.Cells[1];
+                    DtEmpresa = mEmpresa.getObtieneDatosModificar(ref error, id_empresa.Text.ToString());
               
-                    foreach (DataRow item in DtAreaEmpresa.Rows)
+                    foreach (DataRow item in DtEmpresa.Rows)
                     {
-                        ddidAreaEmpresa.Text = item[0].ToString();
-                        ddidPais.SelectedValue = item[1].ToString();
-                        txtDescripcion.Text = item[2].ToString();
-                        ddlEstado.SelectedValue = item[3].ToString();
+                        ddidEmpresa.Text = item[0].ToString();
+                        ddidAreaEmpresa2.SelectedValue = item[1].ToString();
+                        ddidTipoEmpresa.Text = item[2].ToString();
+                        txtNombreEmpresa.Text = item[3].ToString();
+                        txtNitEmpresa.Text = item[4].ToString();
+                        txtDireccionEmpresa.Text = item[5].ToString();
+                        txtPatente.Text = item[6].ToString();
+                        txtLibro.Text = item[7].ToString();
+                        txtFolio.Text = item[8].ToString();
+                        ddEstado.SelectedValue = item[9].ToString();
+
+                        if (item[10].ToString() == "0")
+                        {
+                            ChbxVende.Checked = false;
+                        }
+                        else
+                        {
+                            ChbxVende.Checked = true;
+                        }
                     }
 
                     isUpdate = true;
@@ -328,6 +380,11 @@ namespace PrestaVende.Public
             {
                 showError(ex.ToString());
             }
+        }
+        
+        protected void ChbxVende_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
     }
 

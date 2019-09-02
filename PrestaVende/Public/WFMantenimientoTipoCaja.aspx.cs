@@ -8,7 +8,7 @@ using System.Web.UI.WebControls;
 
 namespace PrestaVende.Public
 {
-    public partial class WFMantAreaEmpresa : System.Web.UI.Page
+    public partial class WFMantenimientoTipoCaja : System.Web.UI.Page
     {
         #region messages
         private bool showWarning(string warning)
@@ -41,7 +41,7 @@ namespace PrestaVende.Public
         private static string error = "";
         private static bool isUpdate = false;    
 
-        private CLASS.cs_AreaEmpresa mAreaEmpresa = new CLASS.cs_AreaEmpresa();
+        private CLASS.cs_tipo_caja mTipoCaja = new CLASS.cs_tipo_caja();
 
         #endregion
 
@@ -68,7 +68,6 @@ namespace PrestaVende.Public
                         hideOrShowDiv(true);
                         getDataGrid();
                         getEstadoAreaEmpresa();
-                        getPais();
                     }
                 }
             }
@@ -116,7 +115,7 @@ namespace PrestaVende.Public
         {
             try
             {
-                ddidAreaEmpresa.Text = mAreaEmpresa.getIDMaxAreaEmpresa(ref error);
+                ddidTipoCaja.Text = mTipoCaja.getIDTipoCaja(ref error);
                 hideOrShowDiv(false);
                 cleanControls();
             }
@@ -130,9 +129,9 @@ namespace PrestaVende.Public
         {
             try
             {
-                txtDescripcion.Text = "";
+                //ddidTipoCaja.Text = "0";
+                txtTipoCaja.Text = "";
                 ddlEstado.SelectedValue = "1";
-                ddidPais.SelectedValue = "0";
             }
             catch (Exception ex)
             {
@@ -149,7 +148,7 @@ namespace PrestaVende.Public
                     if (isUpdate)
                     {
                         //ACTUALIZA REGISTRO
-                        if (updateAreaEmpresa())
+                        if (updateTipoCaja())
                         {
                             hideOrShowDiv(true);
                             getDataGrid();
@@ -159,7 +158,7 @@ namespace PrestaVende.Public
                     else
                     {
                         //GUARDA NUEVO
-                        if (insertAreaEmpresa())
+                        if (insertTipoCaja())
                         {
                             hideOrShowDiv(true);
                             getDataGrid();
@@ -179,19 +178,19 @@ namespace PrestaVende.Public
             hideOrShowDiv(true);
         }
 
-        private bool insertAreaEmpresa()
+        private bool insertTipoCaja()
         {
             try
             {
                 DateTime thisDay = DateTime.Now;
-                if (mAreaEmpresa.insertAreaEmpresa(ref error, ddidAreaEmpresa.Text, ddidPais.SelectedValue.ToString(), txtDescripcion.Text.ToString(), ddlEstado.SelectedValue.ToString(), thisDay.ToString("MM/dd/yyyy HH:mm:ss"), thisDay.ToString("MM/dd/yyyy HH:mm:ss")))
+                if (mTipoCaja.insertTipoCaja(ref error, txtTipoCaja.Text, ddlEstado.SelectedValue.ToString(), thisDay.ToString("MM/dd/yyyy HH:mm:ss"), thisDay.ToString("MM/dd/yyyy HH:mm:ss")))
                 {
-                    showSuccess("Se agrego el area empresa correctamente.");
+                    showSuccess("Se agrego el tipo de caja correctamente.");
                     return true;
                 }
                 else
                 {
-                    throw new SystemException("No se pudo agregar area empresa, por favor, valide los datos y vuelva a intentarlo.");
+                    throw new SystemException("No se pudo agregar el tipo de caja, por favor, valide los datos y vuelva a intentarlo.");
                 }
             }
             catch (Exception ex)
@@ -205,10 +204,7 @@ namespace PrestaVende.Public
         {
             try
             {
-                if (txtDescripcion.Text.ToString().Equals("")) { showWarning("Usted debe agregar una descripcion para poder guardar."); return false; }
-                else if (txtDescripcion.Text.ToString().Length < 3) { showWarning("Usted debe agregar una descripcion para poder guardar."); return false; }            
-                else if (ddidPais.SelectedValue.ToString().Equals("0")) { showWarning("Usted debe seleccionar un país para poder guardar."); return false; }
-                //else if (ddlEstado.SelectedValue.ToString = "1") { showWarning("Usted debe seleccionar un estado para poder guardar."); return false; }
+                if (txtTipoCaja.Text.ToString().Equals("")) { showWarning("Usted debe agregar una descripción de tipo de caja para poder guardar."); return false; }                
                 else
                     return true;            
             }
@@ -223,7 +219,7 @@ namespace PrestaVende.Public
         {
             try
             {
-                ddlEstado.DataSource = mAreaEmpresa.getEstadoAreaEmpresa(ref error);
+                ddlEstado.DataSource = mTipoCaja.getEstadoTipoCaja(ref error);
                 ddlEstado.DataValueField = "id";
                 ddlEstado.DataTextField = "estado";
                 ddlEstado.DataBind();
@@ -235,32 +231,13 @@ namespace PrestaVende.Public
                 throw;
             }
         }
-
-        private void getPais()
-        {
-            try
-            {
-                ddidPais.DataSource = mAreaEmpresa.getPais(ref error);
-                ddidPais.DataValueField = "id_pais";
-                ddidPais.DataTextField = "descripcion";
-                ddidPais.DataBind();
-                ddidPais.SelectedValue = "0";
-            }
-            catch (Exception ex)
-            {
-                showError(ex.ToString());
-                throw;
-            }
-        }
-
+       
         private void getDataGrid()
         {
             try
             {
-                GrdVAreaEmpresa.DataSource = mAreaEmpresa.getAreaEmpresa(ref error);
-                //GrdVAreaEmpresa.Columns[2].Visible = false;
-                //GrdVAreaEmpresa.Columns[8].Visible = false;
-                GrdVAreaEmpresa.DataBind();
+                GrdVTipoCaja.DataSource = mTipoCaja.getTipoCaja(ref error);                
+                GrdVTipoCaja.DataBind();
             }
             catch (Exception ex)
             {
@@ -268,27 +245,27 @@ namespace PrestaVende.Public
             }
         }
 
-        private bool updateAreaEmpresa()
+        private bool updateTipoCaja()
         {
             try
             {
                 DateTime thisDay = DateTime.Now;
                 string[] datosUpdate = new string[5];
 
-                datosUpdate[0] = ddidAreaEmpresa.Text;
-                datosUpdate[1] = ddidPais.SelectedValue;
-                datosUpdate[2] = txtDescripcion.Text;
-                datosUpdate[3] = ddlEstado.SelectedValue;
+                datosUpdate[0] = ddidTipoCaja.Text;
+                datosUpdate[1] = txtTipoCaja.Text;
+                datosUpdate[2] = ddlEstado.SelectedValue;
+                datosUpdate[3] = thisDay.ToString("MM/dd/yyyy HH:mm:ss");
                 datosUpdate[4] = thisDay.ToString("MM/dd/yyyy HH:mm:ss");
 
-                if (mAreaEmpresa.updateAreaEmpresa(ref error, datosUpdate))
+                if (mTipoCaja.updateTipoCaja(ref error, datosUpdate))
                 {
-                    showSuccess("Se modifico el area empresa correctamente.");
+                    showSuccess("Se modifico el tipo de caja correctamente.");
                     return true;
                 }
                 else
                 {
-                    throw new SystemException("No se pudo modificar el area empresa, por favor, valide los datos y vuelva a intentarlo.");
+                    throw new SystemException("No se pudo modificar el tipo de caja, por favor, valide los datos y vuelva a intentarlo.");
                 }
             }
             catch (Exception ex)
@@ -306,17 +283,16 @@ namespace PrestaVende.Public
                 {
                     int index = Convert.ToInt32(e.CommandArgument);
                     DataTable DtAreaEmpresa;
-                    GridViewRow selectedRow = GrdVAreaEmpresa.Rows[index];
+                    GridViewRow selectedRow = GrdVTipoCaja.Rows[index];
 
-                    TableCell id_area_empresa = selectedRow.Cells[1];
-                    DtAreaEmpresa = mAreaEmpresa.getObtieneDatosModificar(ref error, id_area_empresa.Text.ToString());
+                    TableCell id_tipo_caja = selectedRow.Cells[1];
+                    DtAreaEmpresa = mTipoCaja.getObtieneDatosTipoCajaModificar(ref error, id_tipo_caja.Text.ToString());
               
                     foreach (DataRow item in DtAreaEmpresa.Rows)
                     {
-                        ddidAreaEmpresa.Text = item[0].ToString();
-                        ddidPais.SelectedValue = item[1].ToString();
-                        txtDescripcion.Text = item[2].ToString();
-                        ddlEstado.SelectedValue = item[3].ToString();
+                        ddidTipoCaja.Text = item[0].ToString();
+                        txtTipoCaja.Text = item[1].ToString();
+                        ddlEstado.SelectedValue = item[2].ToString();
                     }
 
                     isUpdate = true;
