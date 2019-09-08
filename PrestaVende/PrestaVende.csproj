@@ -101,6 +101,9 @@
     <Content Include="Public\PrestaVende.Master" />
     <Content Include="Public\RecepcionCaja.aspx" />
     <Content Include="Public\WFBusquedaCliente.aspx" />
+    <Content Include="Public\WFMantenimientoCaja.aspx" />
+    <Content Include="Public\WFMantenimientoProducto.aspx" />
+    <Content Include="Public\WFMantenimientoLiquidaciones.aspx" />
     <Content Include="Public\WFMantenimientoSubCategoria.aspx" />
     <Content Include="Public\WFMantenimientoCategoria.aspx" />
     <Content Include="Public\WFMantenimientoEmpresa.aspx" />
@@ -124,6 +127,8 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CLASS\cs_caja.cs" />
+    <Compile Include="CLASS\cs_liquidacion.cs" />
     <Compile Include="CLASS\cs_empresa.cs" />
     <Compile Include="CLASS\cs_tipo_caja.cs" />
     <Compile Include="CLASS\cs_areaempresa.cs" />
@@ -163,6 +168,27 @@
     </Compile>
     <Compile Include="Public\WFBusquedaCliente.aspx.designer.cs">
       <DependentUpon>WFBusquedaCliente.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\WFMantenimientoCaja.aspx.cs">
+      <DependentUpon>WFMantenimientoCaja.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\WFMantenimientoCaja.aspx.designer.cs">
+      <DependentUpon>WFMantenimientoCaja.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\WFMantenimientoProducto.aspx.cs">
+      <DependentUpon>WFMantenimientoProducto.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\WFMantenimientoProducto.aspx.designer.cs">
+      <DependentUpon>WFMantenimientoProducto.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\WFMantenimientoLiquidaciones.aspx.cs">
+      <DependentUpon>WFMantenimientoLiquidaciones.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\WFMantenimientoLiquidaciones.aspx.designer.cs">
+      <DependentUpon>WFMantenimientoLiquidaciones.aspx</DependentUpon>
     </Compile>
     <Compile Include="Public\WFMantenimientoSubCategoria.aspx.cs">
       <DependentUpon>WFMantenimientoSubCategoria.aspx</DependentUpon>
