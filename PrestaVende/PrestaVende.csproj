@@ -99,6 +99,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Public\PrestaVende.Master" />
+    <Content Include="Public\RecepcionCaja.aspx" />
     <Content Include="Public\WFBusquedaCliente.aspx" />
     <Content Include="Public\WFMantenimientoSubCategoria.aspx" />
     <Content Include="Public\WFMantenimientoCategoria.aspx" />
@@ -148,6 +149,13 @@
     </Compile>
     <Compile Include="Public\PrestaVende.Master.designer.cs">
       <DependentUpon>PrestaVende.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Public\RecepcionCaja.aspx.cs">
+      <DependentUpon>RecepcionCaja.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\RecepcionCaja.aspx.designer.cs">
+      <DependentUpon>RecepcionCaja.aspx</DependentUpon>
     </Compile>
     <Compile Include="Public\WFBusquedaCliente.aspx.cs">
       <DependentUpon>WFBusquedaCliente.aspx</DependentUpon>
