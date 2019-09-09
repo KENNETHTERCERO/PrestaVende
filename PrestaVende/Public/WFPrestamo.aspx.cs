@@ -122,7 +122,7 @@ namespace PrestaVende.Public
         {
             try
             {
-                ddlCategoria.DataSource = cs_categoria.getCategoria(ref error);
+                ddlCategoria.DataSource = cs_categoria.getCategoriaComboBox(ref error);
                 ddlCategoria.DataValueField = "id_categoria";
                 ddlCategoria.DataTextField = "categoria";
                 ddlCategoria.DataBind();

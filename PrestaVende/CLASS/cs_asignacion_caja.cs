@@ -395,6 +395,105 @@ namespace PrestaVende.CLASS
             }
         }
 
+        public DataTable getAsignacionCaja(ref string error, string id_asignacion_caja)
+        {
+            try
+            {
+                DataTable dtAsignacionCaja = new DataTable("AsignacionCaja");
+                connection.connection.Open();
+                command.Connection = connection.connection;
+                command.CommandText = "SELECT " +
+                                            "asi.id_asignacion_caja, " +
+	                                        "asi.id_caja,            " +
+	                                        "asi.id_estado_caja,     " +
+	                                        "asi.monto,              " +
+	                                        "asi.estado_asignacion,  " +
+	                                        "asi.fecha_creacion,     " +
+	                                        "caj.nombre_caja,        " +
+	                                        "caj.puede_vender        " +
+                                        "FROM                        " +
+                                        "tbl_asignacion_caja AS asi  " +
+                                        "INNER JOIN tbl_caja AS caj ON caj.id_caja = asi.id_caja " +
+                                        "WHERE asi.id_asignacion_caja = @id_asignacion_caja";
+                command.Parameters.AddWithValue("@id_asignacion_caja", id_asignacion_caja);
+                dtAsignacionCaja.Load(command.ExecuteReader());
+                return dtAsignacionCaja;
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                return null;
+            }
+            finally
+            {
+                connection.connection.Close();
+            }
+        }
+
+        public bool recibirCaja(ref string error, string id_asignacion_caja)
+        {
+            try
+            {
+                int rowsUpdated = 0;
+                
+                connection.connection.Open();
+                command.Connection = connection.connection;
+                command.Transaction = connection.connection.BeginTransaction();
+                command.Parameters.Clear();
+                command.CommandText = "UPDATE tbl_asignacion_caja SET id_estado_caja = 3, estado_asignacion = 1 WHERE id_asignacion_caja = @id_asignacion_caja";
+                command.Parameters.AddWithValue("@id_asignacion_caja", id_asignacion_caja);
+                rowsUpdated = command.ExecuteNonQuery();
+
+                if (rowsUpdated <= 0)
+                {
+                    command.Transaction.Rollback();
+                    return false;
+                }
+
+                command.CommandText = "UPDATE tbl_caja SET id_estado_caja = 3 WHERE id_caja = @id_caja";
+                command.Parameters.AddWithValue("@id_caja", CLASS.cs_usuario.id_caja);
+                rowsUpdated = command.ExecuteNonQuery();
+
+                if (rowsUpdated <= 0)
+                {
+                    command.Transaction.Rollback();
+                    return false;
+                }
+                command.CommandText = "UPDATE tbl_caja SET saldo = saldo - @saldo WHERE id_tipo_caja = 1 AND id_sucursal = @id_sucursal";
+                command.Parameters.AddWithValue("@id_sucursal", CLASS.cs_usuario.id_sucursal);
+                command.Parameters.AddWithValue("@saldo", CLASS.cs_usuario.Saldo_caja);
+                rowsUpdated = command.ExecuteNonQuery();
+
+                if (rowsUpdated <= 0)
+                {
+                    command.Transaction.Rollback();
+                    return false;
+                }
+
+                command.CommandText = "UPDATE tbl_usuario SET caja_asignada = 1 WHERE id_usuario = @id_usuario";
+                command.Parameters.AddWithValue("@id_usuario", CLASS.cs_usuario.id_usuario);
+                rowsUpdated = command.ExecuteNonQuery();
+
+                if (rowsUpdated <= 0)
+                {
+                    command.Transaction.Rollback();
+                    return false;
+                }
+
+                command.Transaction.Commit();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                command.Transaction.Rollback();
+                error = ex.ToString();
+                return false;
+            }
+            finally
+            {
+                connection.connection.Close();
+            }
+        }
         #endregion
 
     }
