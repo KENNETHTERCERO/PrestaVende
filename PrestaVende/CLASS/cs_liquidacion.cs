@@ -89,15 +89,16 @@ namespace PrestaVende.CLASS
             }
         }
 
-        public bool getValidaPrestamo(ref string error, string id_prestamo_encabezado)
+        public bool getValidaPrestamo(ref string error, string numero_prestamo)
         {
             try
             {
                 DataTable Prestamo = new DataTable();
                 connection.connection.Open();
                 command.Connection = connection.connection;
-                command.CommandText = "SELECT * FROM tbl_prestamo_encabezado WHERE id_prestamo_encabezado = @id_prestamo_encabezado and estado_prestamo = 2";
-                command.Parameters.AddWithValue("@id_prestamo_encabezado", id_prestamo_encabezado);
+                command.CommandText = "SELECT * FROM tbl_prestamo_encabezado WHERE numero_prestamo = @numero_prestamo and estado_prestamo = 2 and id_sucursal = @id_sucursal";
+                command.Parameters.AddWithValue("@numero_prestamo", numero_prestamo);
+                command.Parameters.AddWithValue("@id_sucursal", CLASS.cs_usuario.id_sucursal);
                 Prestamo.Load(command.ExecuteReader());
 
                 if (Prestamo.Rows.Count > 0)
@@ -166,7 +167,7 @@ namespace PrestaVende.CLASS
             }
         }
 
-        public bool insertLiquidacion(ref string error, string id_sucursal, string numero_prestamo, string monto_liquidacion, string estado_liquidacion, string fecha_liquidacion, string fecha_anulacion_liquidacion)
+        public bool insertLiquidacion(ref string error, string numero_prestamo, string monto_liquidacion, string estado_liquidacion, string fecha_liquidacion, string fecha_anulacion_liquidacion)
         {
             try
             {
@@ -176,7 +177,7 @@ namespace PrestaVende.CLASS
                 command.Parameters.Clear();
                 command.CommandText = "INSERT INTO tbl_liquidacion (id_sucursal, numero_prestamo, monto_liquidacion, estado_liquidacion, fecha_liquidacion, fecha_anulacion_liquidacion) "
                                         + " VALUES(@id_sucursal, @numero_prestamo, @monto_liquidacion, @estado_liquidacion, @fecha_liquidacion, @fecha_anulacion_liquidacion) ";
-                command.Parameters.AddWithValue("@id_sucursal", id_sucursal);
+                command.Parameters.AddWithValue("@id_sucursal", CLASS.cs_usuario.id_sucursal);
                 command.Parameters.AddWithValue("@numero_prestamo", numero_prestamo);
                 command.Parameters.AddWithValue("@monto_liquidacion", monto_liquidacion);
                 command.Parameters.AddWithValue("@estado_liquidacion", estado_liquidacion);

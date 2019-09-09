@@ -10,7 +10,7 @@
 namespace PrestaVende.Public {
     
     
-    public partial class WFMantenimientoLiquidaciones {
+    public partial class WFMantAreaEmpresa {
         
         /// <summary>
         /// uPanel control.
@@ -121,58 +121,94 @@ namespace PrestaVende.Public {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_ingresa_datos;
         
         /// <summary>
-        /// lblIdLiquidacion control.
+        /// lblidSucursal control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblIdLiquidacion;
+        protected global::System.Web.UI.WebControls.Label lblidSucursal;
         
         /// <summary>
-        /// ddidLiquidacion control.
+        /// ddidSucursal control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label ddidLiquidacion;
+        protected global::System.Web.UI.WebControls.Label ddidSucursal;
         
         /// <summary>
-        /// lblNumeroPrestamo control.
+        /// lblidEmpresa control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblNumeroPrestamo;
+        protected global::System.Web.UI.WebControls.Label lblidEmpresa;
         
         /// <summary>
-        /// txtNumeroPrestamo control.
+        /// ddidEmpresa control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtNumeroPrestamo;
+        protected global::System.Web.UI.WebControls.DropDownList ddidEmpresa;
         
         /// <summary>
-        /// lblMontoLiquidacion control.
+        /// lblMunicipio control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblMontoLiquidacion;
+        protected global::System.Web.UI.WebControls.Label lblMunicipio;
         
         /// <summary>
-        /// txtMontoLiquidacion control.
+        /// ddidMunicipio control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtMontoLiquidacion;
+        protected global::System.Web.UI.WebControls.DropDownList ddidMunicipio;
+        
+        /// <summary>
+        /// lblZona control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblZona;
+        
+        /// <summary>
+        /// txtZona control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtZona;
+        
+        /// <summary>
+        /// lblDireccion control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblDireccion;
+        
+        /// <summary>
+        /// txtDireccion control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtDireccion;
         
         /// <summary>
         /// lblEstado control.
@@ -193,24 +229,6 @@ namespace PrestaVende.Public {
         protected global::System.Web.UI.WebControls.DropDownList ddlEstado;
         
         /// <summary>
-        /// lblAnular control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblAnular;
-        
-        /// <summary>
-        /// ChbxAnular control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox ChbxAnular;
-        
-        /// <summary>
         /// div_gridView control.
         /// </summary>
         /// <remarks>
@@ -220,12 +238,12 @@ namespace PrestaVende.Public {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_gridView;
         
         /// <summary>
-        /// GrdVLiquidacion control.
+        /// GrdVAreaEmpresa control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GrdVLiquidacion;
+        protected global::System.Web.UI.WebControls.GridView GrdVAreaEmpresa;
     }
 }

@@ -8,7 +8,7 @@ using System.Web.UI.WebControls;
 
 namespace PrestaVende.Public
 {
-    public partial class WFMantenimientoLiquidaciones : System.Web.UI.Page
+    public partial class WFMantAreaEmpresa : System.Web.UI.Page
     {
         #region messages
         private bool showWarning(string warning)
@@ -41,7 +41,7 @@ namespace PrestaVende.Public
         private static string error = "";
         private static bool isUpdate = false;    
 
-        private CLASS.cs_liquidacion mLiquidacion = new CLASS.cs_liquidacion();
+        private CLASS.cs_AreaEmpresa mAreaEmpresa = new CLASS.cs_AreaEmpresa();
 
         #endregion
 
@@ -67,8 +67,8 @@ namespace PrestaVende.Public
                     {
                         hideOrShowDiv(true);
                         getDataGrid();
-                        //getSucursal();
-                        getEstadoLiquidacion();
+                        getEstadoAreaEmpresa();
+                        getPais();
                     }
                 }
             }
@@ -116,15 +116,7 @@ namespace PrestaVende.Public
         {
             try
             {
-                ddidLiquidacion.Text = mLiquidacion.getIDMaxLiquidacion(ref error);
-                lblAnular.Visible = false;
-                ChbxAnular.Visible = false;
-                //ddidSucursal.Enabled = true;
-                txtNumeroPrestamo.ReadOnly = false;
-                txtMontoLiquidacion.ReadOnly = false;               
-                lblEstado.Visible = true;
-                ddlEstado.Visible = true;
-
+                ddidAreaEmpresa.Text = mAreaEmpresa.getIDMaxAreaEmpresa(ref error);
                 hideOrShowDiv(false);
                 cleanControls();
             }
@@ -138,10 +130,9 @@ namespace PrestaVende.Public
         {
             try
             {
-                txtMontoLiquidacion.Text = "";
-                txtNumeroPrestamo.Text = "";
+                txtDescripcion.Text = "";
                 ddlEstado.SelectedValue = "1";
-                //ddidSucursal.SelectedValue = "0";
+                ddidPais.SelectedValue = "0";
             }
             catch (Exception ex)
             {
@@ -158,7 +149,7 @@ namespace PrestaVende.Public
                     if (isUpdate)
                     {
                         //ACTUALIZA REGISTRO
-                        if (updateLiquidacion())
+                        if (updateAreaEmpresa())
                         {
                             hideOrShowDiv(true);
                             getDataGrid();
@@ -168,7 +159,7 @@ namespace PrestaVende.Public
                     else
                     {
                         //GUARDA NUEVO
-                        if (insertLiquidacion())
+                        if (insertAreaEmpresa())
                         {
                             hideOrShowDiv(true);
                             getDataGrid();
@@ -188,31 +179,20 @@ namespace PrestaVende.Public
             hideOrShowDiv(true);
         }
 
-        private bool insertLiquidacion()
+        private bool insertAreaEmpresa()
         {
             try
             {
                 DateTime thisDay = DateTime.Now;
-
-                if (mLiquidacion.getValidaPrestamo(ref error, txtNumeroPrestamo.Text.ToString()))
+                if (mAreaEmpresa.insertAreaEmpresa(ref error, ddidAreaEmpresa.Text, ddidPais.SelectedValue.ToString(), txtDescripcion.Text.ToString(), ddlEstado.SelectedValue.ToString(), thisDay.ToString("MM/dd/yyyy HH:mm:ss"), thisDay.ToString("MM/dd/yyyy HH:mm:ss")))
                 {
-                    if (mLiquidacion.insertLiquidacion(ref error, txtNumeroPrestamo.Text.ToString(), txtMontoLiquidacion.Text.ToString(), ddlEstado.SelectedValue.ToString(), thisDay.ToString("MM/dd/yyyy HH:mm:ss"), thisDay.ToString("MM/dd/yyyy HH:mm:ss")))
-                    {
-                        showSuccess("Se agrego la liquidación correctamente.");
-                        return true;
-                    }
-                    else
-                    {
-                        throw new SystemException("No se pudo agregar la liquidación, por favor, valide los datos y vuelva a intentarlo.");
-                    }
+                    showSuccess("Se agrego el area empresa correctamente.");
+                    return true;
                 }
                 else
                 {
-                    showWarning("No se pudo agregar la liquidación, por favor ingrese un número de prestamo válido.");
-                    return false;
+                    throw new SystemException("No se pudo agregar area empresa, por favor, valide los datos y vuelva a intentarlo.");
                 }
-
-                
             }
             catch (Exception ex)
             {
@@ -225,10 +205,10 @@ namespace PrestaVende.Public
         {
             try
             {
-                if (txtNumeroPrestamo.Text.ToString().Length < 1) { showWarning("Usted debe agregar un número de prestamo para poder guardar."); return false; }
-                else if (txtMontoLiquidacion.Text.ToString().Length < 3) { showWarning("Usted debe agregar una descripcion para poder guardar."); return false; }            
-                //else if (ddidSucursal.SelectedValue.ToString().Equals("0")) { showWarning("Usted debe seleccionar una sucursal para poder guardar."); return false; }
-                
+                if (txtDescripcion.Text.ToString().Equals("")) { showWarning("Usted debe agregar una descripcion para poder guardar."); return false; }
+                else if (txtDescripcion.Text.ToString().Length < 3) { showWarning("Usted debe agregar una descripcion para poder guardar."); return false; }            
+                else if (ddidPais.SelectedValue.ToString().Equals("0")) { showWarning("Usted debe seleccionar un país para poder guardar."); return false; }
+                //else if (ddlEstado.SelectedValue.ToString = "1") { showWarning("Usted debe seleccionar un estado para poder guardar."); return false; }
                 else
                     return true;            
             }
@@ -239,11 +219,11 @@ namespace PrestaVende.Public
             }
         }
 
-        private void getEstadoLiquidacion()
+        private void getEstadoAreaEmpresa()
         {
             try
             {
-                ddlEstado.DataSource = mLiquidacion.getEstadoLiquidacion(ref error);
+                ddlEstado.DataSource = mAreaEmpresa.getEstadoAreaEmpresa(ref error);
                 ddlEstado.DataValueField = "id";
                 ddlEstado.DataTextField = "estado";
                 ddlEstado.DataBind();
@@ -256,29 +236,31 @@ namespace PrestaVende.Public
             }
         }
 
-        //private void getSucursal()
-        //{
-        //    try
-        //    {
-        //        ddidSucursal.DataSource = mLiquidacion.getSucursal(ref error);
-        //        ddidSucursal.DataValueField = "id_sucursal";
-        //        ddidSucursal.DataTextField = "sucursal";
-        //        ddidSucursal.DataBind();
-        //        ddidSucursal.SelectedValue = "0";
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        showError(ex.ToString());
-        //        throw;
-        //    }
-        //}
+        private void getPais()
+        {
+            try
+            {
+                ddidPais.DataSource = mAreaEmpresa.getPais(ref error);
+                ddidPais.DataValueField = "id_pais";
+                ddidPais.DataTextField = "descripcion";
+                ddidPais.DataBind();
+                ddidPais.SelectedValue = "0";
+            }
+            catch (Exception ex)
+            {
+                showError(ex.ToString());
+                throw;
+            }
+        }
 
         private void getDataGrid()
         {
             try
             {
-              GrdVLiquidacion.DataSource = mLiquidacion.getLiquidacion(ref error);
-              GrdVLiquidacion.DataBind();
+                GrdVAreaEmpresa.DataSource = mAreaEmpresa.getAreaEmpresa(ref error);
+                //GrdVAreaEmpresa.Columns[2].Visible = false;
+                //GrdVAreaEmpresa.Columns[8].Visible = false;
+                GrdVAreaEmpresa.DataBind();
             }
             catch (Exception ex)
             {
@@ -286,33 +268,27 @@ namespace PrestaVende.Public
             }
         }
 
-        private bool updateLiquidacion()
+        private bool updateAreaEmpresa()
         {
             try
             {
                 DateTime thisDay = DateTime.Now;
-                string[] datosUpdate = new string[3];
+                string[] datosUpdate = new string[5];
 
-                datosUpdate[0] = ddidLiquidacion.Text;
-                datosUpdate[1] = thisDay.ToString("MM/dd/yyyy HH:mm:ss");
+                datosUpdate[0] = ddidAreaEmpresa.Text;
+                datosUpdate[1] = ddidPais.SelectedValue;
+                datosUpdate[2] = txtDescripcion.Text;
+                datosUpdate[3] = ddlEstado.SelectedValue;
+                datosUpdate[4] = thisDay.ToString("MM/dd/yyyy HH:mm:ss");
 
-                if (ChbxAnular.Checked == true)
+                if (mAreaEmpresa.updateAreaEmpresa(ref error, datosUpdate))
                 {
-                    datosUpdate[2] = "0";
-                }
-                else
-                {
-                    datosUpdate[2] = "1";
-                }
-
-                if (mLiquidacion.updateLiquidacion(ref error, datosUpdate))
-                {
-                    showSuccess("Se anulo la liquidación correctamente.");
+                    showSuccess("Se modifico el area empresa correctamente.");
                     return true;
                 }
                 else
                 {
-                    throw new SystemException("No se pudo anular la liquidación, por favor, valide los datos y vuelva a intentarlo.");
+                    throw new SystemException("No se pudo modificar el area empresa, por favor, valide los datos y vuelva a intentarlo.");
                 }
             }
             catch (Exception ex)
@@ -329,29 +305,18 @@ namespace PrestaVende.Public
                 if (e.CommandName == "select")
                 {
                     int index = Convert.ToInt32(e.CommandArgument);
-                    DataTable DtLiquidacion;
-                    GridViewRow selectedRow = GrdVLiquidacion.Rows[index];
+                    DataTable DtAreaEmpresa;
+                    GridViewRow selectedRow = GrdVAreaEmpresa.Rows[index];
 
-                    TableCell id_liquidacion = selectedRow.Cells[1];
-                    DtLiquidacion = mLiquidacion.getObtieneDatosModificar(ref error, id_liquidacion.Text.ToString());
+                    TableCell id_area_empresa = selectedRow.Cells[1];
+                    DtAreaEmpresa = mAreaEmpresa.getObtieneDatosModificar(ref error, id_area_empresa.Text.ToString());
               
-                    foreach (DataRow item in DtLiquidacion.Rows)
+                    foreach (DataRow item in DtAreaEmpresa.Rows)
                     {
-                        ddidLiquidacion.Text = item[0].ToString();
-                        //ddidSucursal.SelectedValue = item[1].ToString();
-                        txtNumeroPrestamo.Text = item[2].ToString();
-                        txtMontoLiquidacion.Text = item[3].ToString();
-                        ddlEstado.SelectedValue = item[4].ToString();
-
-                        //ddidSucursal.Enabled = false;
-                        txtNumeroPrestamo.ReadOnly = true;
-                        txtMontoLiquidacion.ReadOnly = true;
-                        lblAnular.Visible = true;
-                        ChbxAnular.Visible = true;
-                        lblEstado.Visible = false;
-                        ddlEstado.Visible = false;
-                        ChbxAnular.Checked = false;
-
+                        ddidAreaEmpresa.Text = item[0].ToString();
+                        ddidPais.SelectedValue = item[1].ToString();
+                        txtDescripcion.Text = item[2].ToString();
+                        ddlEstado.SelectedValue = item[3].ToString();
                     }
 
                     isUpdate = true;
@@ -363,11 +328,6 @@ namespace PrestaVende.Public
             {
                 showError(ex.ToString());
             }
-        }
-
-        protected void ChbxAnular_CheckedChanged(object sender, EventArgs e)
-        {
-
         }
     }
 
