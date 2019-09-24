@@ -8,7 +8,7 @@ using System.Web.UI.WebControls;
 
 namespace PrestaVende.Public
 {
-    public partial class WFMantAreaEmpresa : System.Web.UI.Page
+    public partial class WFMantenimientoSucursal : System.Web.UI.Page
     {
         #region messages
         private bool showWarning(string warning)

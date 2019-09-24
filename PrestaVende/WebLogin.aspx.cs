@@ -15,7 +15,7 @@ namespace PrestaVende
         private static DateTime fecha_asignacion, fecha_hoy;
 
         private static string id_asignacion = "0", estado_asignacion = "", caja_asignada = "", error = "";
-
+                                                                                                                                                                                 
         protected void Page_Load(object sender, EventArgs e)
         {
             txtUser.Focus();

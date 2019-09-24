@@ -15,18 +15,19 @@ namespace PrestaVende.CLASS
 
         #region constantes
 
-        private string[] TipoCajaGeneral = {"1","4"};
+        private string[] TipoCajaGeneral = { "1", "4" };
 
         //ESTADOS CAJA
-        private string Disponible = "1";
-        private string AsignacionCaja = "2";
-        private string CajaRecibida = "3";
-        private string CierreCaja = "4";
-        private string AsignacionCajaGeneral = "5";
-        private string RecepcionCajaGeneral = "6";
-        private string IncrementoCapitalCaja = "7";
-        private string DecrementoCapitalCaja = "8";    
-        
+        private string Disponible = "";
+        private string AsignacionCaja = "";
+        private string CajaRecibida = "";
+        private string CierreCaja = "";
+        private string AsignacionCajaGeneral = "";
+        private string RecepcionCajaGeneral = "";
+        private string IncrementoCapitalCaja = "";
+        private string DecrementoCapitalCaja = "";
+
+        //TIPOS TRANSACCIONES
         private int TransaccionAperturaCajaGeneral = 1;
         private int TransaccionCierreCajaGeneral = 2;
         private int TransaccionIncrementoCapitalCajaGeneral = 3;
@@ -71,6 +72,7 @@ namespace PrestaVende.CLASS
             {
                 DataTable EstadoCaja = new DataTable();
                 connection.connection.Open();
+                command.Parameters.Clear();
                 command.Connection = connection.connection;
                 command.CommandText = " SELECT 0 AS id_estado_caja, 'SELECCIONAR' AS estado_caja UNION "
                                     + "  select id_estado_caja, estado_caja "
@@ -144,16 +146,16 @@ namespace PrestaVende.CLASS
                 DataTable AsignacionAreaEmpresa = new DataTable();
                 connection.connection.Open();
                 command.Connection = connection.connection;
-                command.CommandText = " select top (20) ac.id_asignacion_caja, " 
-				                                    + " ac.id_caja,                                                "
-				                                    + " c.nombre_caja,                                             "
-				                                    + " ec.estado_caja,                                            "
-				                                    + " ac.monto,                                                  "
-				                                    + " case                                                       "
-				                                    + "	when ac.estado_asignacion = 1 then 'ACTIVO'                "
-				                                    + "	else 'INACTIVO'                                            "
-				                                    + " end estado_asignacion,                                     "
-				                                    + " ac.usuario_asigna as usuario_asigna,                        "
+                command.CommandText = " select top (20) ac.id_asignacion_caja, "
+                                                    + " ac.id_caja,                                                "
+                                                    + " c.nombre_caja,                                             "
+                                                    + " ec.estado_caja,                                            "
+                                                    + " ac.monto,                                                  "
+                                                    + " case                                                       "
+                                                    + "	when ac.estado_asignacion = 1 then 'ACTIVO'                "
+                                                    + "	else 'INACTIVO'                                            "
+                                                    + " end estado_asignacion,                                     "
+                                                    + " ac.usuario_asigna as usuario_asigna,                        "
                                                     + " (us.primer_nombre + ' ' + us.segundo_nombre + ' ' +us.primer_apellido + ' ' + us.segundo_apellido) as usuario_asignado "
                                         + "	from tbl_asignacion_caja ac                                             "
                                         + "		inner join tbl_caja c                                               "
@@ -166,8 +168,17 @@ namespace PrestaVende.CLASS
                                         + "			on rtc.id_tipo_caja = c.id_tipo_caja                            "
                                         + "		inner join tbl_rol r                                                "
                                         + "			on r.id_rol = rtc.id_rol                                        "
-                                        + "	where r.id_rol = @id_rol                                                "
-                                        + "	group by ac.id_asignacion_caja,                                         "
+                                        + "	where r.id_rol = @id_rol                                                ";
+
+                if (CLASS.cs_usuario.usuario.Contains("GERENTE"))
+                {
+                }
+                else
+                {
+                    command.CommandText = command.CommandText + "	and us.id_usuario = @id_usuario                                                     ";
+                }
+
+                command.CommandText = command.CommandText + "	group by ac.id_asignacion_caja,                                         "
                                         + "				 ac.id_caja,                                                "
                                         + "				 c.nombre_caja,                                             "
                                         + "				 ec.estado_caja,                                            "
@@ -179,6 +190,7 @@ namespace PrestaVende.CLASS
                                         + "				 us.primer_apellido,                                        "
                                         + "				 us.segundo_apellido, ac.fecha_creacion order by ac.fecha_creacion ";
                 command.Parameters.AddWithValue("@id_rol", CLASS.cs_usuario.id_rol);
+                command.Parameters.AddWithValue("@id_usuario", CLASS.cs_usuario.id_usuario);
                 AsignacionAreaEmpresa.Load(command.ExecuteReader());
                 return AsignacionAreaEmpresa;
             }
@@ -214,19 +226,65 @@ namespace PrestaVende.CLASS
         }
 
         public bool insertAsignacionCaja(ref string error, string id_asignacion_caja, string id_caja, string id_estado_caja, string monto, string estado_asignacion,
-                                            string fecha_creacion, string fecha_modificacion, string usuario_asigna, string id_usuario_asignado, Boolean  BlnRecibir)
+                                            string fecha_creacion, string fecha_modificacion, string usuario_asigna, string id_usuario_asignado, Boolean BlnRecibir)
         {
             try
             {
                 DataTable DtDatosAsignacionCaja = new DataTable();
+                DataTable DtEstados = new DataTable();
                 string TipoCajaAsignacion = "";
                 string EstadoCajaAsignacion = "";
                 bool General_Transaccional = false;
                 int TipoTransaccion = 0;
+                int rowsUpdated = 0;
+                int contadorFilasEstados = 0;
 
-                connection.connection.Open();
+                //OBTIENE ESTADOS POR TIPO DE CAJA
                 command.Connection = connection.connection;
+                connection.connection.Open();
+                command.Parameters.Clear();
                 command.Transaction = connection.connection.BeginTransaction();
+
+
+                command.CommandText =
+                                         " select a.id_estado_caja from tbl_estado_caja a                      "
+                                        + "         inner join tbl_caja b                                       "
+                                        + "         on a.id_tipo_caja = b.id_tipo_caja                          "
+                                        + "         where b.id_caja = @id_caja and estado_caja like '%recibida%'       "
+                                        + " UNION                                                               "
+                                        + " select a.id_estado_caja from tbl_estado_caja a                      "
+                                        + "         inner join tbl_caja b                                       "
+                                        + "         on a.id_tipo_caja = b.id_tipo_caja                          "
+                                        + "         where b.id_caja = @id_caja and estado_caja like '%asignación%'     "
+                                        + " UNION                                                               "
+                                        + " select a.id_estado_caja from tbl_estado_caja a                      "
+                                        + "         inner join tbl_caja b                                       "
+                                        + "         on a.id_tipo_caja = b.id_tipo_caja                          "
+                                        + "         where b.id_caja = @id_caja and estado_caja like '%cierre%'";
+                command.Parameters.AddWithValue("@id_caja", id_caja);
+                DtEstados.Load(command.ExecuteReader());
+                //connection.connection.Close();
+
+                if (DtEstados.Rows.Count > 2)
+                {
+                    foreach (DataRow item in DtEstados.Rows)
+                    {
+                        if (contadorFilasEstados == 0)
+                        {
+                            CajaRecibida = item[0].ToString();
+                        }
+                        else if (contadorFilasEstados == 1)
+                        {
+                            EstadoCajaAsignacion = item[0].ToString();
+                        }
+                        else if (contadorFilasEstados == 2)
+                        {
+                            CierreCaja = item[0].ToString();
+                        }
+                        contadorFilasEstados = contadorFilasEstados + 1;
+                    }
+                }
+
                 command.Parameters.Clear();
                 command.CommandText = " INSERT INTO tbl_asignacion_caja (id_caja, id_estado_caja, monto,                    "
                                      + "       estado_asignacion, fecha_creacion, fecha_modificacion, usuario_asigna, id_usuario_asignado)      "
@@ -243,13 +301,13 @@ namespace PrestaVende.CLASS
                     command.Parameters.AddWithValue("@id_usuario_asignado", id_usuario_asignado);
                 }
 
-                command.Parameters.AddWithValue("@id_caja", id_caja);               
+                command.Parameters.AddWithValue("@id_caja", id_caja);
                 command.Parameters.AddWithValue("@monto", monto);
                 command.Parameters.AddWithValue("@estado_asignacion", estado_asignacion);
-                command.Parameters.AddWithValue("@fecha_creacion", fecha_creacion);
-                command.Parameters.AddWithValue("@fecha_modificacion", fecha_modificacion);
+                command.Parameters.AddWithValue("@fecha_creacion", DateTime.Now);
+                command.Parameters.AddWithValue("@fecha_modificacion", DateTime.Now);
                 command.Parameters.AddWithValue("@usuario_asigna", usuario_asigna);
-                
+
                 command.ExecuteNonQuery();
 
                 //OBTIENE TIPO DE CAJA y ESTADO CAJA
@@ -263,7 +321,6 @@ namespace PrestaVende.CLASS
                     TipoCajaAsignacion = item[0].ToString();
                 }
 
-                EstadoCajaAsignacion = id_estado_caja;
                 //INSERTANDO TRANSACCION
                 command.Parameters.Clear();
                 command.CommandText = " INSERT INTO tbl_transaccion (id_tipo_transaccion, id_caja ,monto, "
@@ -278,6 +335,9 @@ namespace PrestaVende.CLASS
                         General_Transaccional = true; //GENERAL
                     }
                 }
+
+
+
 
                 if (General_Transaccional == false) //TRANSACCIONAL
                 {
@@ -295,16 +355,8 @@ namespace PrestaVende.CLASS
                         {
                             TipoTransaccion = TransaccionCierreCajaTransaccional;
                         }
-                        else if (EstadoCajaAsignacion == IncrementoCapitalCaja)
-                        {
-                            TipoTransaccion = TransaccionIncrementoCapitalCajaTransaccional;
-                        }
-                        else if (EstadoCajaAsignacion == DecrementoCapitalCaja)
-                        {
-                            TipoTransaccion = TransaccionDecrementoCapitalCajaTransaccional;
-                        }
                     }
-                    
+
                 }
                 else  //GENERAL
                 {
@@ -322,43 +374,62 @@ namespace PrestaVende.CLASS
                         {
                             TipoTransaccion = TransaccionCierreCajaGeneral;
                         }
-                        else if (EstadoCajaAsignacion == IncrementoCapitalCaja)
-                        {
-                            TipoTransaccion = TransaccionIncrementoCapitalCajaGeneral;
-                        }
-                        else if (EstadoCajaAsignacion == DecrementoCapitalCaja)
-                        {
-                            TipoTransaccion = TransaccionDecrementoCapitalCajaGeneral;
-                        }
-                    }                   
+                    }
                 }
 
-
+                command.Parameters.Clear();
                 command.Parameters.AddWithValue("@id_tipo_transaccion", TipoTransaccion);
                 command.Parameters.AddWithValue("@id_caja", id_caja);
-                command.Parameters.AddWithValue("@monto", monto);                
+                command.Parameters.AddWithValue("@monto", monto);
                 command.Parameters.AddWithValue("@estado_transaccion", 2);
-                command.Parameters.AddWithValue("@fecha_transaccion", fecha_creacion);
+                command.Parameters.AddWithValue("@fecha_transaccion", DateTime.Now);
                 command.Parameters.AddWithValue("@usuario", usuario_asigna);
                 command.ExecuteNonQuery();
 
-                command.Parameters.Clear();
-                command.CommandText = " UPDATE tbl_caja SET id_estado_caja = @id_estado_caja, fecha_modificacion = @fecha_modificacion"
-                                    + " WHERE id_caja = @id_caja";
-                command.Parameters.AddWithValue("@id_estado_caja", id_estado_caja);
-                command.Parameters.AddWithValue("@id_caja", id_caja);
-                command.Parameters.AddWithValue("@fecha_modificacion", fecha_creacion);
-                command.ExecuteNonQuery();
-
-                if (int.Parse(command.ExecuteNonQuery().ToString()) > 0)
+                if (BlnRecibir == true) //CUANDO LA CAJA ES RECIBIDA
                 {
-                    command.Transaction.Commit();
-                    return true;
+                    command.Parameters.Clear();
+                    command.CommandText = " UPDATE tbl_caja SET id_estado_caja = @id_estado_caja, fecha_modificacion = @fecha_modificacion"
+                                        + " WHERE id_caja = @id_caja";
+                    command.Parameters.AddWithValue("@id_estado_caja", CajaRecibida);
+                    command.Parameters.AddWithValue("@id_caja", id_caja);
+                    command.Parameters.AddWithValue("@fecha_modificacion", DateTime.Now);
+                    rowsUpdated = command.ExecuteNonQuery();
+
+                    command.Parameters.Clear();
+                    command.CommandText = "UPDATE tbl_caja SET saldo = saldo - @saldo WHERE id_tipo_caja = @id_tipo_caja AND id_caja = @id_caja";
+                    command.Parameters.AddWithValue("@id_tipo_caja", 3);
+                    command.Parameters.AddWithValue("@id_caja", id_caja);
+                    command.Parameters.AddWithValue("@saldo", CLASS.cs_usuario.Saldo_caja);
+                    rowsUpdated = command.ExecuteNonQuery();
+
+                    command.CommandText = "UPDATE tbl_usuario SET caja_asignada = 1 WHERE id_usuario = @id_usuario";
+                    command.Parameters.AddWithValue("@id_usuario", CLASS.cs_usuario.id_usuario);
+                    rowsUpdated = command.ExecuteNonQuery();
+
+                    if (rowsUpdated <= 0)
+                    {
+                        command.Transaction.Rollback();
+                        return false;
+                    }
                 }
                 else
                 {
-                    throw new SystemException("No se pudo insertar la asiganación de caja, por favor, valide los datos, o comuniquese con el administrador del sistema. ");
+                    command.Parameters.Clear();
+                    command.CommandText = " UPDATE tbl_caja SET id_estado_caja = @id_estado_caja, fecha_modificacion = @fecha_modificacion"
+                                        + " WHERE id_caja = @id_caja";
+                    command.Parameters.AddWithValue("@id_estado_caja", id_estado_caja);
+                    command.Parameters.AddWithValue("@id_caja", id_caja);
+                    command.Parameters.AddWithValue("@fecha_modificacion", fecha_creacion);
+                    command.ExecuteNonQuery();
                 }
+
+
+
+
+                command.Transaction.Commit();
+                return true;
+
             }
             catch (Exception ex)
             {
@@ -404,13 +475,13 @@ namespace PrestaVende.CLASS
                 command.Connection = connection.connection;
                 command.CommandText = "SELECT " +
                                             "asi.id_asignacion_caja, " +
-	                                        "asi.id_caja,            " +
-	                                        "asi.id_estado_caja,     " +
-	                                        "asi.monto,              " +
-	                                        "asi.estado_asignacion,  " +
-	                                        "asi.fecha_creacion,     " +
-	                                        "caj.nombre_caja,        " +
-	                                        "caj.puede_vender        " +
+                                            "asi.id_caja,            " +
+                                            "asi.id_estado_caja,     " +
+                                            "asi.monto,              " +
+                                            "asi.estado_asignacion,  " +
+                                            "asi.fecha_creacion,     " +
+                                            "caj.nombre_caja,        " +
+                                            "caj.puede_vender        " +
                                         "FROM                        " +
                                         "tbl_asignacion_caja AS asi  " +
                                         "INNER JOIN tbl_caja AS caj ON caj.id_caja = asi.id_caja " +
@@ -435,22 +506,37 @@ namespace PrestaVende.CLASS
             try
             {
                 int rowsUpdated = 0;
-                
+                string id_caja = "";
+
+                //OBTIENE CAJA
+                command.Connection.Open();
+                command.Connection = connection.connection;
+                command.Parameters.Clear();
+                command.CommandText = "SELECT id_caja FROM tbl_asignacion_caja where id_asignacion_caja = @id_asignacion_caja";
+                command.Parameters.AddWithValue("@id_asignacion_caja", id_asignacion_caja);
+                id_caja = command.ExecuteScalar().ToString();
+                command.Connection.Close();
+
+                command.Connection.Open();
+                command.Connection = connection.connection;
+                command.Parameters.Clear();
+                command.CommandText = "select a.id_estado_caja from tbl_estado_caja a "
+                                        + " inner join tbl_caja b "
+                                        + " on a.id_tipo_caja = b.id_tipo_caja "
+                                        + " where id_caja = @id_caja and estado_caja like '%recibida%'";
+                command.Parameters.AddWithValue("@id_caja", id_caja);
+                CajaRecibida = command.ExecuteScalar().ToString();
+                command.Connection.Close();
+
+
                 connection.connection.Open();
                 command.Connection = connection.connection;
                 command.Transaction = connection.connection.BeginTransaction();
                 command.Parameters.Clear();
-                command.CommandText = "UPDATE tbl_asignacion_caja SET id_estado_caja = 3, estado_asignacion = 1 WHERE id_asignacion_caja = @id_asignacion_caja";
-                command.Parameters.AddWithValue("@id_asignacion_caja", id_asignacion_caja);
-                rowsUpdated = command.ExecuteNonQuery();
 
-                if (rowsUpdated <= 0)
-                {
-                    command.Transaction.Rollback();
-                    return false;
-                }
 
-                command.CommandText = "UPDATE tbl_caja SET id_estado_caja = 3 WHERE id_caja = @id_caja";
+                command.CommandText = "UPDATE tbl_caja SET id_estado_caja = @id_estado_caja WHERE id_caja = @id_caja";
+                command.Parameters.AddWithValue("@id_estado_caja", CajaRecibida);
                 command.Parameters.AddWithValue("@id_caja", CLASS.cs_usuario.id_caja);
                 rowsUpdated = command.ExecuteNonQuery();
 
@@ -459,8 +545,9 @@ namespace PrestaVende.CLASS
                     command.Transaction.Rollback();
                     return false;
                 }
-                command.CommandText = "UPDATE tbl_caja SET saldo = saldo - @saldo WHERE id_tipo_caja = 1 AND id_sucursal = @id_sucursal";
-                command.Parameters.AddWithValue("@id_sucursal", CLASS.cs_usuario.id_sucursal);
+                command.Parameters.Clear();
+                command.CommandText = "UPDATE tbl_caja SET saldo = saldo - @saldo WHERE id_tipo_caja = 1 AND id_caja = @id_caja";
+                command.Parameters.AddWithValue("@id_caja", CLASS.cs_usuario.id_caja);
                 command.Parameters.AddWithValue("@saldo", CLASS.cs_usuario.Saldo_caja);
                 rowsUpdated = command.ExecuteNonQuery();
 
@@ -494,8 +581,30 @@ namespace PrestaVende.CLASS
                 connection.connection.Close();
             }
         }
+
+
+
+        public string getIdCaja(string id_asignacion_caja)
+        {
+            try
+            {
+                DataTable EstadoAreaEmpresa = new DataTable();
+                command.Connection.Open();
+                command.Connection = connection.connection;
+                command.CommandText = "select id_caja from tbl_asignacion_caja where id_asignacion_caja = @id_asignacion_caja";
+                command.Parameters.AddWithValue("@id_asignacion_caja", id_asignacion_caja);
+                return command.ExecuteScalar().ToString();
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+            finally
+            {
+                connection.connection.Close();
+            }
+        }
+
         #endregion
-
     }
-
 }

@@ -101,7 +101,6 @@
     <Content Include="Public\PrestaVende.Master" />
     <Content Include="Public\RecepcionCaja.aspx" />
     <Content Include="Public\WFBusquedaCliente.aspx" />
-    <Content Include="Public\WFMantenimientoSucursal.aspx" />
     <Content Include="Public\WFMantenimientoCaja.aspx" />
     <Content Include="Public\WFMantenimientoProducto.aspx" />
     <Content Include="Public\WFMantenimientoLiquidaciones.aspx" />
@@ -128,7 +127,6 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CLASS\cs_sucursal.cs" />
     <Compile Include="CLASS\cs_caja.cs" />
     <Compile Include="CLASS\cs_liquidacion.cs" />
     <Compile Include="CLASS\cs_empresa.cs" />
@@ -170,13 +168,6 @@
     </Compile>
     <Compile Include="Public\WFBusquedaCliente.aspx.designer.cs">
       <DependentUpon>WFBusquedaCliente.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Public\WFMantenimientoSucursal.aspx.cs">
-      <DependentUpon>WFMantenimientoSucursal.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Public\WFMantenimientoSucursal.aspx.designer.cs">
-      <DependentUpon>WFMantenimientoSucursal.aspx</DependentUpon>
     </Compile>
     <Compile Include="Public\WFMantenimientoCaja.aspx.cs">
       <DependentUpon>WFMantenimientoCaja.aspx</DependentUpon>
