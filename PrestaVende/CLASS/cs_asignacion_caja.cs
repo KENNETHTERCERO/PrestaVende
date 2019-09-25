@@ -398,7 +398,7 @@ namespace PrestaVende.CLASS
 
                     command.Parameters.Clear();
                     command.CommandText = "UPDATE tbl_caja SET saldo = saldo - @saldo WHERE id_tipo_caja = @id_tipo_caja AND id_caja = @id_caja";
-                    command.Parameters.AddWithValue("@id_tipo_caja", 3);
+                    command.Parameters.AddWithValue("@id_tipo_caja", TipoCajaAsignacion);
                     command.Parameters.AddWithValue("@id_caja", id_caja);
                     command.Parameters.AddWithValue("@saldo", CLASS.cs_usuario.Saldo_caja);
                     rowsUpdated = command.ExecuteNonQuery();
