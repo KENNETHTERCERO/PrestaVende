@@ -187,6 +187,7 @@ namespace PrestaVende.Public
 
                     TableCell id_asignacion_caja = selectedRow.Cells[1];
                     DtAsignacionCaja = mAsignacionCaja.getDatosAsignacionCaja(ref error, id_asignacion_caja.Text.ToString());
+                    getEstadoCaja();
 
                     foreach (DataRow item in DtAsignacionCaja.Rows)
                     {
@@ -200,7 +201,7 @@ namespace PrestaVende.Public
                         ddIdEstadoCaja.Visible = false;
                         ddIdUsuarioAsignado.Visible = false;
                         ddIdEstado.Visible = false;
-                        lblCaja.Visible = false;
+                        lblCaja.Visible = true;
                         lblEstado.Visible = false;
                         lblEstadoCaja.Visible = false;
                         lblUsuarioAsignado.Visible = false;
@@ -377,7 +378,7 @@ namespace PrestaVende.Public
                     blnRecibir = true;
                 }
 
-                if (mAsignacionCaja.insertAsignacionCaja(ref error, ddidAsignacion.Text, ddIdCaja.SelectedValue.ToString(), ddIdEstadoCaja.SelectedValue.ToString(), txtMonto.Text, ddIdEstado.SelectedValue.ToString(), thisDay.ToString("MM/dd/yyyy HH:mm:ss"), thisDay.ToString("MM/dd/yyyy HH:mm:ss"), CLASS.cs_usuario.usuario, ddIdUsuarioAsignado.SelectedValue.ToString(), blnRecibir))                  
+                if (mAsignacionCaja.insertAsignacionCaja(ref error, ddidAsignacion.Text, ddIdCaja.SelectedValue.ToString(), ddIdEstadoCaja.SelectedValue.ToString(), txtMonto.Text, "0", thisDay.ToString("MM/dd/yyyy HH:mm:ss"), thisDay.ToString("MM/dd/yyyy HH:mm:ss"), CLASS.cs_usuario.usuario, ddIdUsuarioAsignado.SelectedValue.ToString(), blnRecibir))                  
                 {
                     showSuccess("Se realizó la asignación de caja correctamente.");
                     return true;

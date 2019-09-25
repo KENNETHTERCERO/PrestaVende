@@ -10,7 +10,7 @@
 namespace PrestaVende.Public {
     
     
-    public partial class WFMantAreaEmpresa {
+    public partial class WFMantenimientoSucursal {
         
         /// <summary>
         /// uPanel control.
