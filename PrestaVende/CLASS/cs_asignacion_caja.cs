@@ -506,33 +506,30 @@ namespace PrestaVende.CLASS
             try
             {
                 int rowsUpdated = 0;
-                string id_caja = "";
-
-                //OBTIENE CAJA
-                command.Connection.Open();
-                command.Connection = connection.connection;
-                command.Parameters.Clear();
-                command.CommandText = "SELECT id_caja FROM tbl_asignacion_caja where id_asignacion_caja = @id_asignacion_caja";
-                command.Parameters.AddWithValue("@id_asignacion_caja", id_asignacion_caja);
-                id_caja = command.ExecuteScalar().ToString();
-                command.Connection.Close();
-
-                command.Connection.Open();
-                command.Connection = connection.connection;
-                command.Parameters.Clear();
-                command.CommandText = "select a.id_estado_caja from tbl_estado_caja a "
-                                        + " inner join tbl_caja b "
-                                        + " on a.id_tipo_caja = b.id_tipo_caja "
-                                        + " where id_caja = @id_caja and estado_caja like '%recibida%'";
-                command.Parameters.AddWithValue("@id_caja", id_caja);
-                CajaRecibida = command.ExecuteScalar().ToString();
-                command.Connection.Close();
-
+                DataTable DtEstados = new DataTable();
 
                 connection.connection.Open();
                 command.Connection = connection.connection;
                 command.Transaction = connection.connection.BeginTransaction();
                 command.Parameters.Clear();
+
+
+                command.CommandText =
+                                         " select a.id_estado_caja from tbl_estado_caja a                      "
+                                        + "         inner join tbl_caja b                                       "
+                                        + "         on a.id_tipo_caja = b.id_tipo_caja                          "
+                                        + "         where b.id_caja = @id_caja and estado_caja like '%recibida%'       ";
+                                       
+                command.Parameters.AddWithValue("@id_caja", CLASS.cs_usuario.id_caja);
+                DtEstados.Load(command.ExecuteReader());
+
+                if (DtEstados.Rows.Count > 0)
+                {
+                    foreach (DataRow item in DtEstados.Rows)
+                    {
+                            CajaRecibida = item[0].ToString();
+                    }
+                }
 
 
                 command.CommandText = "UPDATE tbl_caja SET id_estado_caja = @id_estado_caja WHERE id_caja = @id_caja";
