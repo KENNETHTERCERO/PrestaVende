@@ -175,6 +175,15 @@ namespace PrestaVende.Public {
         protected global::System.Web.UI.WebControls.Label lblTotalPrestamo;
         
         /// <summary>
+        /// lblCasilla control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblCasilla;
+        
+        /// <summary>
         /// lblNumeroPrestamoNumero control.
         /// </summary>
         /// <remarks>
@@ -209,6 +218,15 @@ namespace PrestaVende.Public {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblTotalPrestamoQuetzales;
+        
+        /// <summary>
+        /// ddlCasilla control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlCasilla;
         
         /// <summary>
         /// lblCategoria control.

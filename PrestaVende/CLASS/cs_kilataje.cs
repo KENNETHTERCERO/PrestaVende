@@ -39,5 +39,28 @@ namespace PrestaVende.CLASS
                 connection.connection.Close();
             }
         }
+
+        public DataTable getKilatajeByID(ref string error, string id_kilataje)
+        {
+            try
+            {
+                DataTable dtKilataje = new DataTable("tblkilataje");
+                connection.connection.Open();
+                command.Connection = connection.connection;
+                command.CommandText = "SELECT * FROM tbl_kilataje WHERE estado = 1 AND id_kilataje = @id_kilajate";
+                command.Parameters.AddWithValue("@id_kilajate", id_kilataje);
+                dtKilataje.Load(command.ExecuteReader());
+                return dtKilataje;
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                return null;
+            }
+            finally
+            {
+                connection.connection.Close();
+            }
+        }
     }
 }

@@ -116,7 +116,7 @@ namespace PrestaVende.Public
         {
             try
             {
-                ddidAreaEmpresa.Text = mAreaEmpresa.getIDMaxAreaEmpresa(ref error);
+                //ddidAreaEmpresa.Text = mAreaEmpresa.getIDMaxAreaEmpresa(ref error);
                 hideOrShowDiv(false);
                 cleanControls();
             }
@@ -130,9 +130,9 @@ namespace PrestaVende.Public
         {
             try
             {
-                txtDescripcion.Text = "";
-                ddlEstado.SelectedValue = "1";
-                ddidPais.SelectedValue = "0";
+                //txtDescripcion.Text = "";
+                //ddlEstado.SelectedValue = "1";
+                //ddidPais.SelectedValue = "0";
             }
             catch (Exception ex)
             {
@@ -183,16 +183,17 @@ namespace PrestaVende.Public
         {
             try
             {
-                DateTime thisDay = DateTime.Now;
-                if (mAreaEmpresa.insertAreaEmpresa(ref error, ddidAreaEmpresa.Text, ddidPais.SelectedValue.ToString(), txtDescripcion.Text.ToString(), ddlEstado.SelectedValue.ToString(), thisDay.ToString("MM/dd/yyyy HH:mm:ss"), thisDay.ToString("MM/dd/yyyy HH:mm:ss")))
-                {
-                    showSuccess("Se agrego el area empresa correctamente.");
-                    return true;
-                }
-                else
-                {
-                    throw new SystemException("No se pudo agregar area empresa, por favor, valide los datos y vuelva a intentarlo.");
-                }
+                //DateTime thisDay = DateTime.Now;
+                //if (mAreaEmpresa.insertAreaEmpresa(ref error, ddidAreaEmpresa.Text, ddidPais.SelectedValue.ToString(), txtDescripcion.Text.ToString(), ddlEstado.SelectedValue.ToString(), thisDay.ToString("MM/dd/yyyy HH:mm:ss"), thisDay.ToString("MM/dd/yyyy HH:mm:ss")))
+                //{
+                //    showSuccess("Se agrego el area empresa correctamente.");
+                //    return true;
+                //}
+                //else
+                //{
+                //    throw new SystemException("No se pudo agregar area empresa, por favor, valide los datos y vuelva a intentarlo.");
+                //}
+                return true;
             }
             catch (Exception ex)
             {
@@ -205,11 +206,11 @@ namespace PrestaVende.Public
         {
             try
             {
-                if (txtDescripcion.Text.ToString().Equals("")) { showWarning("Usted debe agregar una descripcion para poder guardar."); return false; }
-                else if (txtDescripcion.Text.ToString().Length < 3) { showWarning("Usted debe agregar una descripcion para poder guardar."); return false; }            
-                else if (ddidPais.SelectedValue.ToString().Equals("0")) { showWarning("Usted debe seleccionar un país para poder guardar."); return false; }
-                //else if (ddlEstado.SelectedValue.ToString = "1") { showWarning("Usted debe seleccionar un estado para poder guardar."); return false; }
-                else
+                //if (txtDescripcion.Text.ToString().Equals("")) { showWarning("Usted debe agregar una descripcion para poder guardar."); return false; }
+                //else if (txtDescripcion.Text.ToString().Length < 3) { showWarning("Usted debe agregar una descripcion para poder guardar."); return false; }            
+                //else if (ddidPais.SelectedValue.ToString().Equals("0")) { showWarning("Usted debe seleccionar un país para poder guardar."); return false; }
+                ////else if (ddlEstado.SelectedValue.ToString = "1") { showWarning("Usted debe seleccionar un estado para poder guardar."); return false; }
+                //else
                     return true;            
             }
             catch (Exception ex)
@@ -240,11 +241,11 @@ namespace PrestaVende.Public
         {
             try
             {
-                ddidPais.DataSource = mAreaEmpresa.getPais(ref error);
-                ddidPais.DataValueField = "id_pais";
-                ddidPais.DataTextField = "descripcion";
-                ddidPais.DataBind();
-                ddidPais.SelectedValue = "0";
+                //ddidPais.DataSource = mAreaEmpresa.getPais(ref error);
+                //ddidPais.DataValueField = "id_pais";
+                //ddidPais.DataTextField = "descripcion";
+                //ddidPais.DataBind();
+                //ddidPais.SelectedValue = "0";
             }
             catch (Exception ex)
             {
@@ -275,9 +276,9 @@ namespace PrestaVende.Public
                 DateTime thisDay = DateTime.Now;
                 string[] datosUpdate = new string[5];
 
-                datosUpdate[0] = ddidAreaEmpresa.Text;
-                datosUpdate[1] = ddidPais.SelectedValue;
-                datosUpdate[2] = txtDescripcion.Text;
+                //datosUpdate[0] = ddidAreaEmpresa.Text;
+                //datosUpdate[1] = ddidPais.SelectedValue;
+                //datosUpdate[2] = txtDescripcion.Text;
                 datosUpdate[3] = ddlEstado.SelectedValue;
                 datosUpdate[4] = thisDay.ToString("MM/dd/yyyy HH:mm:ss");
 
@@ -313,9 +314,9 @@ namespace PrestaVende.Public
               
                     foreach (DataRow item in DtAreaEmpresa.Rows)
                     {
-                        ddidAreaEmpresa.Text = item[0].ToString();
-                        ddidPais.SelectedValue = item[1].ToString();
-                        txtDescripcion.Text = item[2].ToString();
+                        //ddidAreaEmpresa.Text = item[0].ToString();
+                        //ddidPais.SelectedValue = item[1].ToString();
+                        //txtDescripcion.Text = item[2].ToString();
                         ddlEstado.SelectedValue = item[3].ToString();
                     }
 

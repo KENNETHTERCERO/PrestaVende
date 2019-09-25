@@ -10,19 +10,19 @@
                         <center>
                         <h2>Opciones</h2>
                             <div class=".btn-group-vertical">
-                                <asp:Button ID="btnBack" runat="server" Width="200px" Text="Regresar" class="btn btn-default" Visible="true"/>
+                                <asp:Button ID="btnBack" runat="server" Width="200px" Text="Regresar" CssClass="btn btn-default" Visible="true" OnClick="btnBack_Click"/>
                                 <br />
                                 <br />
                                 <br />
-                                <asp:Button ID="btnGuardarPrestamo" runat="server" Width="200px" Text="Guardar préstamo" class="btn btn-primary" Visible="true"/>
+                                <asp:Button ID="btnGuardarPrestamo" runat="server" Width="200px" Text="Guardar préstamo" CssClass="btn btn-primary" Visible="true" OnClick="btnGuardarPrestamo_Click"/>
                                 <br />
                                 <br />
                                 <br />
-                                <asp:Button ID="btnGuardarAvaluo" runat="server" Width="200px" Text="Guardar avaluo" class="btn btn-info" Visible="false" />
+                                <asp:Button ID="btnGuardarAvaluo" runat="server" Width="200px" Text="Guardar avaluo" CssClass="btn btn-info" Visible="false" />
                                 <br />
                                 <br />
                                 <br />
-                                <asp:Button ID="btnVerEstadoDeCuenta" runat="server" Width="200px" Text="Cancelar" class="btn btn-warning" Visible="true" />
+                                <asp:Button ID="btnVerEstadoDeCuenta" runat="server" Width="200px" Text="Cancelar" CssClass="btn btn-warning" Visible="true" />
                                 <br />
                                 <br />
                                 <br />
@@ -88,6 +88,9 @@
                                                     <td>
                                                         <asp:Label ID="lblTotalPrestamo" runat="server" Text="TOTAL PRESTAMO"></asp:Label>
                                                     </td>
+                                                    <td>
+                                                        <asp:Label ID="lblCasilla" runat="server" Text="CASILLA"></asp:Label>
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td>
@@ -99,6 +102,9 @@
                                                     <td>
                                                         <asp:Label ID="Label1" runat="server" Text="Q"></asp:Label>
                                                         <asp:Label ID="lblTotalPrestamoQuetzales" runat="server" Text="0"></asp:Label>
+                                                    </td>
+                                                    <td>
+                                                        <asp:DropDownList ID="ddlCasilla" runat="server" CssClass="form-control"></asp:DropDownList>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -138,10 +144,10 @@
                                                 </tr>
                                                 <tr>
                                                     <td>
-                                                        <asp:TextBox ID="txtPeso" runat="server" type="number" AutoPostBack="true" class="form-control" OnTextChanged="txtPeso_TextChanged"></asp:TextBox>
+                                                        <asp:TextBox ID="txtPeso" runat="server" type="number" step="0.01" AutoPostBack="true" class="form-control" OnTextChanged="txtPeso_TextChanged"></asp:TextBox>
                                                     </td>
                                                     <td>
-                                                        <asp:TextBox ID="txtPesoDescuento" type="number" AutoPostBack="true" runat="server" class="form-control" OnTextChanged="txtPesoDescuento_TextChanged"></asp:TextBox>
+                                                        <asp:TextBox ID="txtPesoDescuento" type="number" AutoPostBack="true" step="0.01" runat="server" class="form-control" OnTextChanged="txtPesoDescuento_TextChanged"></asp:TextBox>
                                                     </td>
                                                     <td>
                                                         <asp:TextBox ID="txtPesoConDescuento" type="number" runat="server" class="form-control" Enabled="false"></asp:TextBox>
@@ -190,13 +196,13 @@
                                                 </tr>
                                                 <tr>
                                                     <td>
-                                                        <asp:TextBox ID="txtValor" type="number" runat="server" CssClass="form-control"></asp:TextBox>
+                                                        <asp:TextBox ID="txtValor" type="number" step="0.01" runat="server" CssClass="form-control"></asp:TextBox>
                                                     </td>
                                                     <td>
                                                         <asp:DropDownList ID="ddlIntereses" runat="server" CssClass="form-control"></asp:DropDownList>
                                                     </td>
                                                     <td>
-                                                        <asp:Button ID="btnAgregar" runat="server" CssClass="btn btn-success" Text="AGREGAR ARTICULO" />
+                                                        <asp:Button ID="btnAgregar" runat="server" CssClass="btn btn-success" Text="AGREGAR ARTICULO" OnClick="btnAgregar_Click" />
                                                     </td>
                                                 </tr>
                                             </table>
@@ -212,14 +218,18 @@
                                                         ForeColor="#333333" GridLines="None">
                                                         <AlternatingRowStyle BackColor="White" />
                                                         <Columns>
-                                                            <asp:ButtonField ButtonType="Button" ControlStyle-CssClass="btn btn-danger" FooterStyle-BackColor="#ff9a32" CommandName="crear" HeaderText="<center>X</center>" Text="->" >
+                                                            <asp:ButtonField ButtonType="Button" ControlStyle-CssClass="btn btn-danger" FooterStyle-BackColor="#ff9a32" CommandName="crear" HeaderText="<center>X</center>" Text="X" >
                                                             <FooterStyle BackColor="#FF9A32" />
                                                             </asp:ButtonField>
-                                                            <asp:BoundField DataField="id_producto" HeaderText="<center>ID</center>" SortExpression="id_producto" HtmlEncode="false"/>
-                                                            <asp:BoundField DataField="peso" HeaderText="<center>Peso</center>" SortExpression="peso" HtmlEncode="false" />
-                                                            <asp:BoundField DataField="kilataje" HeaderText="<center>Kilataje</center>" SortExpression="kilataje" HtmlEncode="false" />
-                                                            <asp:BoundField DataField="valor" HeaderText="<center>Valor</center>" SortExpression="valor" HtmlEncode="false" />
-                                                            <asp:BoundField DataField="caracteristicas" HeaderText="<center>Caracteristicas</center>" SortExpression="caracteristicas"  HtmlEncode="false"/>
+                                                            <asp:BoundField DataField="id"              HeaderText="<center>IDJ</center>"               SortExpression="id"             HtmlEncode="false"/>
+                                                            <asp:BoundField DataField="linea"           HeaderText="<center>Linea</center>"             SortExpression="linea"          HtmlEncode="false"/>
+                                                            <asp:BoundField DataField="joya"            HeaderText="<center>Joya</center>"              SortExpression="articulo"       HtmlEncode="false"/>
+                                                            <asp:BoundField DataField="kilataje"        HeaderText="<center>Kilataje</center>"          SortExpression="kilataje"       HtmlEncode="false" />
+                                                            <asp:BoundField DataField="peso"            HeaderText="<center>Peso</center>"              SortExpression="peso"           HtmlEncode="false" />
+                                                            <asp:BoundField DataField="descuento"       HeaderText="<center>Descuento</center>"         SortExpression="descuento"      HtmlEncode="false" />
+                                                            <asp:BoundField DataField="pesoReal"        HeaderText="<center>Peso Real</center>"         SortExpression="pesoReal"       HtmlEncode="false" />
+                                                            <asp:BoundField DataField="valor"           HeaderText="<center>Valor</center>"             SortExpression="valor"          HtmlEncode="false" />
+                                                            <asp:BoundField DataField="caracteristicas" HeaderText="<center>Caracteristicas</center>"   SortExpression="caracteristicas" HtmlEncode="false"/>
                                                         </Columns>
                                                         <EditRowStyle BackColor="#7C6F57" />
                                                         <FooterStyle BackColor="#1C5E55" Font-Bold="False" ForeColor="White" />
@@ -229,18 +239,18 @@
                                                         <SelectedRowStyle BackColor="#ff9a32" Font-Bold="True" ForeColor="#333333" />
                                                     </asp:GridView>
                                                     <asp:GridView ID="gvProductoElectrodomesticos" runat="server" Width="100%" CssClass="footable" AutoGenerateColumns="False" 
-                                                        ForeColor="#333333" GridLines="None">
+                                                        ForeColor="#333333" GridLines="None" OnRowCommand="gvProductoElectrodomesticos_RowCommand">
                                                         <AlternatingRowStyle BackColor="White" />
                                                         <Columns>
-                                                            <asp:ButtonField ButtonType="Button" ControlStyle-CssClass="btn btn-danger" FooterStyle-BackColor="#ff9a32" CommandName="crear" HeaderText="<center>X</center>" Text="->" >
+                                                            <asp:ButtonField ButtonType="Button" ControlStyle-CssClass="btn btn-danger" FooterStyle-BackColor="#ff9a32" CommandName="borrar" HeaderText="<center>Borrar</center>" Text="X" >
                                                             <FooterStyle BackColor="#FF9A32" />
                                                             </asp:ButtonField>
-                                                            <asp:BoundField DataField="id_producto" HeaderText="<center>ID</center>" SortExpression="id_producto" HtmlEncode="false"/>
-                                                            <asp:BoundField DataField="producto" HeaderText="<center>Producto</center>" SortExpression="producto" HtmlEncode="false" />
-                                                            <asp:BoundField DataField="marca" HeaderText="<center>Marca</center>" SortExpression="marca" HtmlEncode="false" />
-                                                            <asp:BoundField DataField="valor" HeaderText="<center>Valor</center>" SortExpression="valor" HtmlEncode="false" />
-                                                            <asp:BoundField DataField="caracteristicas" HeaderText="<center>Caracteristicas</center>" SortExpression="caracteristicas"  HtmlEncode="false"/>
-                                                            <asp:BoundField DataField="id_marca" HeaderText="<center>IDM</center>" SortExpression="id_marca" HtmlEncode="false"/>
+                                                            <asp:BoundField DataField="id_producto"         HeaderText="<center>ID</center>"                SortExpression="id_producto"        HtmlEncode="false"/>
+                                                            <asp:BoundField DataField="linea"               HeaderText="<center>Linea</center>"             SortExpression="linea"          HtmlEncode="false"/>
+                                                            <asp:BoundField DataField="producto"            HeaderText="<center>Producto</center>"          SortExpression="producto"           HtmlEncode="false" />
+                                                            <asp:BoundField DataField="marca"               HeaderText="<center>Marca</center>"             SortExpression="marca"              HtmlEncode="false" />
+                                                            <asp:BoundField DataField="valor"               HeaderText="<center>Valor</center>"             SortExpression="valor"              HtmlEncode="false" />
+                                                            <asp:BoundField DataField="caracteristicas"     HeaderText="<center>Caracteristicas</center>"   SortExpression="caracteristicas"    HtmlEncode="false"/>
                                                         </Columns>
                                                         <EditRowStyle BackColor="#7C6F57" />
                                                         <FooterStyle BackColor="#1C5E55" Font-Bold="False" ForeColor="White" />
