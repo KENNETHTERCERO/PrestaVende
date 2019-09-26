@@ -69,7 +69,7 @@ namespace PrestaVende.CLASS
                                             "ISNULL(asi.id_asignacion_caja, 0), " +  //9, 10
                                             "ISNULL(asi.estado_asignacion, 0), " + //10, 11
                                             "usu.caja_asignada, " +     //11, 12
-                                            "cal.id_tipo_caja " +       //12, 13
+                                            "ISNULL(caj.id_tipo_caja, 0) " +       //12, 13
                                         "FROM " +
                                         "tbl_usuario AS usu " +
                                         "LEFT JOIN tbl_asignacion_caja AS asi ON asi.id_usuario_asignado = usu.id_usuario AND asi.id_estado_caja in (2,3) AND asi.estado_asignacion IN (0,1) " +
