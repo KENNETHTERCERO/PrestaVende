@@ -9,15 +9,14 @@ namespace PrestaVende.CLASS
 {
     public class cs_AreaEmpresa
     {
-        private cs_connection conexion = new cs_connection();
-        private SqlCommand commando = new SqlCommand();
+        private cs_connection connection = new cs_connection();
+        private SqlCommand command = new SqlCommand();
 
         
         public string getIDMaxAreaEmpresa(ref string error)
         {
             try
             {
-                conexion.connection.Open();
                 connection.connection.Open();
                 command.Connection = connection.connection;
                 command.CommandText = "SELECT ISNULL(MAX(id_area_empresa), 0) +1 FROM tbl_area_empresa";

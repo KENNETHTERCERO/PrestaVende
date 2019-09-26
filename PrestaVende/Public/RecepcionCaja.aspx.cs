@@ -163,7 +163,7 @@ namespace PrestaVende.Public
             {
                 if (validarCheck())
                 {
-                    insertar();
+                    //insertar();
                 }
             }
             catch (Exception ex)
