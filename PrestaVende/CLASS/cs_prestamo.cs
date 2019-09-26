@@ -73,10 +73,10 @@ namespace PrestaVende.CLASS
                 command.Parameters.Clear();
                 command.CommandText = "INSERT INTO tbl_prestamo_encabezado (id_sucursal, id_cliente, numero_prestamo, total_prestamo, fecha_creacion_prestamo, estado_prestamo, fecha_proximo_pago, saldo_prestamo, usuario, id_plan_prestamo, id_interes, id_casilla) " +
                                             "VALUES( " +
-                                            "@id_sucursal_enc,      "+  
-                                            "@numero_prestamo,         "+
-                                            "@id_cliente,              "+   
-                                            "@total_prestamo,          "+
+                                            "@id_sucursal_enc,         "+  
+                                            "@id_cliente,              "+
+                                            "@numero_prestamo,         " +
+                                            "@total_prestamo,          " +
                                             "GETDATE(),                "+
                                             "@estado_prestamo,         "+
                                             "@fecha_proximo_pago,      "+
@@ -124,12 +124,12 @@ namespace PrestaVende.CLASS
                     if (tipo_prenda.Equals("1"))
                     {
                         comando = "INSERT INTO tbl_prestamo_detalle (id_prestamo_encabezado, id_sucursal, numero_prestamo, id_producto,     numero_linea,               peso,       id_kilataje,            cantidad,           valor,          id_marca,           caracteristicas,            peso_descuento,         peso_con_descuento) " +
-                              $"VALUES({id_prestamo_encabezado}, {cs_usuario.id_sucursal}, {numero_prestamo}, {item["id_producto"].ToString()}, {item["numero_linea"].ToString()}, {item["peso"].ToString()}, {item["id_kilataje"].ToString()}, 1, {item["valor"].ToString()}, 0, {item["caracteristicas"].ToString()}, {item["peso_descuento"].ToString()}, {item["peso_con_descuento"].ToString()})";
+                              $"VALUES({id_prestamo_encabezado}, {cs_usuario.id_sucursal}, {numero_prestamo}, {item["id_producto"].ToString()}, {item["numero_linea"].ToString()}, {item["peso"].ToString()}, {item["id_kilataje"].ToString()}, 1, {item["valor"].ToString()}, 0, '{item["caracteristicas"].ToString()}', {item["descuento"].ToString()}, {item["pesoReal"].ToString()})";
                     }
                     else
                     {
                         comando = "INSERT INTO tbl_prestamo_detalle (id_prestamo_encabezado, id_sucursal, numero_prestamo, id_producto,     numero_linea,               peso,       id_kilataje,            cantidad,           valor,          id_marca,           caracteristicas, peso_descuento, peso_con_descuento) " +
-                              $"VALUES({id_prestamo_encabezado}, {cs_usuario.id_sucursal}, {numero_prestamo}, {item["id_producto"].ToString()}, {item["numero_linea"].ToString()}, 0, 0, 1, {item["valor"].ToString()}, {item["id_marca"].ToString()}, {item["caracteristicas"].ToString()}, 0, 0)";
+                              $"VALUES({id_prestamo_encabezado}, {cs_usuario.id_sucursal}, {numero_prestamo}, {item["id_producto"].ToString()}, {item["numero_linea"].ToString()}, 0, 0, 1, {item["valor"].ToString()}, {item["id_marca"].ToString()}, '{item["caracteristicas"].ToString()}', 0, 0)";
                     }
                     command.CommandText = comando;
                     inserts += command.ExecuteNonQuery();
@@ -153,11 +153,11 @@ namespace PrestaVende.CLASS
             {
                 int insert = 0;
                 command.CommandText = "INSERT INTO tbl_transaccion (id_tipo_transaccion, id_caja, monto, numero_prestamo, estado_transaccion, fecha_transaccion, usuario, movimiento_saldo) " +
-                                                                "VALUES(7, @id_caja, @monto, @numero_prestamo, 1, GETDATE(), @usuario, (SELECT saldo - @monto FROM tbl_caja WHERE id_caja = @id_caja))";
+                                                                "VALUES(7, @id_caja, @monto, @numero_prestamo_transaccion, 1, GETDATE(), @usuario_transaccion, (SELECT saldo - @monto FROM tbl_caja WHERE id_caja = @id_caja))";
                 command.Parameters.AddWithValue("@id_caja",         cs_usuario.id_caja);
                 command.Parameters.AddWithValue("@monto",           monto);
-                command.Parameters.AddWithValue("@numero_prestamo", numero_prestamo);
-                command.Parameters.AddWithValue("@usuario",         cs_usuario.usuario);
+                command.Parameters.AddWithValue("@numero_prestamo_transaccion", numero_prestamo);
+                command.Parameters.AddWithValue("@usuario_transaccion",         cs_usuario.usuario);
                 insert = command.ExecuteNonQuery();
                 if (insert > 0)
                     return true;

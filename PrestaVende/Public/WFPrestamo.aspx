@@ -221,8 +221,8 @@
                                                             <asp:ButtonField ButtonType="Button" ControlStyle-CssClass="btn btn-danger" FooterStyle-BackColor="#ff9a32" CommandName="crear" HeaderText="<center>X</center>" Text="X" >
                                                             <FooterStyle BackColor="#FF9A32" />
                                                             </asp:ButtonField>
-                                                            <asp:BoundField DataField="id"              HeaderText="<center>IDJ</center>"               SortExpression="id"             HtmlEncode="false"/>
-                                                            <asp:BoundField DataField="linea"           HeaderText="<center>Linea</center>"             SortExpression="linea"          HtmlEncode="false"/>
+                                                            <asp:BoundField DataField="id_producto"              HeaderText="<center>IDJ</center>"               SortExpression="id_producto"             HtmlEncode="false"/>
+                                                            <asp:BoundField DataField="numero_linea"           HeaderText="<center>Linea</center>"             SortExpression="numero_linea"          HtmlEncode="false"/>
                                                             <asp:BoundField DataField="joya"            HeaderText="<center>Joya</center>"              SortExpression="articulo"       HtmlEncode="false"/>
                                                             <asp:BoundField DataField="kilataje"        HeaderText="<center>Kilataje</center>"          SortExpression="kilataje"       HtmlEncode="false" />
                                                             <asp:BoundField DataField="peso"            HeaderText="<center>Peso</center>"              SortExpression="peso"           HtmlEncode="false" />
@@ -246,7 +246,7 @@
                                                             <FooterStyle BackColor="#FF9A32" />
                                                             </asp:ButtonField>
                                                             <asp:BoundField DataField="id_producto"         HeaderText="<center>ID</center>"                SortExpression="id_producto"        HtmlEncode="false"/>
-                                                            <asp:BoundField DataField="linea"               HeaderText="<center>Linea</center>"             SortExpression="linea"          HtmlEncode="false"/>
+                                                            <asp:BoundField DataField="numero_linea"               HeaderText="<center>Linea</center>"             SortExpression="numero_linea"          HtmlEncode="false"/>
                                                             <asp:BoundField DataField="producto"            HeaderText="<center>Producto</center>"          SortExpression="producto"           HtmlEncode="false" />
                                                             <asp:BoundField DataField="marca"               HeaderText="<center>Marca</center>"             SortExpression="marca"              HtmlEncode="false" />
                                                             <asp:BoundField DataField="valor"               HeaderText="<center>Valor</center>"             SortExpression="valor"              HtmlEncode="false" />

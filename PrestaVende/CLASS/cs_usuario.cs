@@ -14,6 +14,7 @@ namespace PrestaVende.CLASS
         public static int       id_sucursal     = 0;
         public static int       id_rol          = 0;
         public static int       id_caja         = 0;
+        public static int       id_tipo_caja    = 0;
         public static int       puede_vender    = 0;
         private static decimal  saldo_caja      = 0;
         public static string    usuario         = "";
@@ -45,7 +46,7 @@ namespace PrestaVende.CLASS
         {
             string errorExec = "";
             string[] error;
-            error = new string[13];
+            error = new string[14];
 
             try
             {
@@ -67,10 +68,12 @@ namespace PrestaVende.CLASS
                                             "ISNULL(asi.id_caja, 0), " +           //8, 9
                                             "ISNULL(asi.id_asignacion_caja, 0), " +  //9, 10
                                             "ISNULL(asi.estado_asignacion, 0), " + //10, 11
-                                            "usu.caja_asignada " + //11, 12
+                                            "usu.caja_asignada, " +     //11, 12
+                                            "cal.id_tipo_caja " +       //12, 13
                                         "FROM " +
                                         "tbl_usuario AS usu " +
                                         "LEFT JOIN tbl_asignacion_caja AS asi ON asi.id_usuario_asignado = usu.id_usuario AND asi.id_estado_caja in (2,3) AND asi.estado_asignacion IN (0,1) " +
+                                        "LEFT JOIN tbl_caja AS caj ON caj.id_caja = asi.id_caja " +
                                         "WHERE usu.usuario = @usuario and usu.password_user = @password " +
                                               "AND usu.estado = 1 ORDER BY asi.fecha_creacion DESC";
                 command.Parameters.AddWithValue("@usuario", user);
@@ -94,6 +97,7 @@ namespace PrestaVende.CLASS
                         error[10] = item[9].ToString();
                         error[11] = item[10].ToString();
                         error[12] = item[11].ToString();
+                        error[13] = item[12].ToString();
                     }
                 }
                 else

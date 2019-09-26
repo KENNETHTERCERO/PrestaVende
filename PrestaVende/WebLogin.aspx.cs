@@ -64,6 +64,7 @@ namespace PrestaVende
                         id_asignacion                       = respuesta[10];
                         estado_asignacion                   = respuesta[11];
                         caja_asignada                       = respuesta[12];
+                        CLASS.cs_usuario.id_tipo_caja       = Convert.ToInt32(respuesta[13]);
 
                         Session["id_rol"] = CLASS.cs_usuario.id_rol;
                         userLogin.Expires = DateTime.Now.AddHours(3);

@@ -335,15 +335,21 @@ namespace PrestaVende.Public
             try
             {
                 row = dtTablaJoyas.NewRow();
-                row["id"] = ddlProducto.SelectedValue;
-                row["linea"] = 1;
+                row["id_producto"] = ddlProducto.SelectedValue;
+                row["numero_linea"] = 1;
                 row["joya"] = ddlProducto.SelectedItem.Text.ToString();
                 row["kilataje"] = ddlKilataje.SelectedItem.Text.ToString();
                 row["peso"] = txtPeso.Text;
                 row["descuento"] = txtPesoDescuento.Text;
                 row["pesoReal"] = txtPesoConDescuento.Text.ToString();
                 row["valor"] = txtValor.Text.ToString();
-                row["caracteristicas"] = txtCaracteristicas.Text.ToString();
+                if (txtCaracteristicas.Text.ToString().Length > 0)
+                {
+                    row["caracteristicas"] = txtCaracteristicas.Text.ToString();
+                }
+                else
+                    row["caracteristicas"] = "N/A";
+
                 row["id_kilataje"] = ddlKilataje.SelectedValue.ToString();
                 dtTablaJoyas.Rows.Add(row);
                 int linea = 1;
@@ -420,8 +426,8 @@ namespace PrestaVende.Public
         {
             try
             {
-                dtTablaJoyas.Columns.Add("id");
-                dtTablaJoyas.Columns.Add("linea"          );
+                dtTablaJoyas.Columns.Add("id_producto");
+                dtTablaJoyas.Columns.Add("numero_linea"          );
                 dtTablaJoyas.Columns.Add("joya"           );
                 dtTablaJoyas.Columns.Add("kilataje"       );
                 dtTablaJoyas.Columns.Add("peso"           );
@@ -502,7 +508,7 @@ namespace PrestaVende.Public
         {
             try
             {
-                if (gvProductoJoya.Rows.Count == 0 || gvProductoElectrodomesticos.Rows.Count == 0)
+                if (gvProductoJoya.Rows.Count == 0 && gvProductoElectrodomesticos.Rows.Count == 0)
                 {
                     ddlCategoria.Enabled = true;
                 }
