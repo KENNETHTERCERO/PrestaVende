@@ -215,10 +215,10 @@
                                             <tr>
                                                 <td>
                                                     <asp:GridView ID="gvProductoJoya" runat="server" Width="100%" CssClass="footable" AutoGenerateColumns="False" 
-                                                        ForeColor="#333333" GridLines="None">
+                                                        ForeColor="#333333" GridLines="None" OnRowCommand="gvProductoJoya_RowCommand">
                                                         <AlternatingRowStyle BackColor="White" />
                                                         <Columns>
-                                                            <asp:ButtonField ButtonType="Button" ControlStyle-CssClass="btn btn-danger" FooterStyle-BackColor="#ff9a32" CommandName="crear" HeaderText="<center>X</center>" Text="X" >
+                                                            <asp:ButtonField ButtonType="Button" ControlStyle-CssClass="btn btn-danger" FooterStyle-BackColor="#ff9a32" CommandName="borrar" HeaderText="<center>X</center>" Text="X" >
                                                             <FooterStyle BackColor="#FF9A32" />
                                                             </asp:ButtonField>
                                                             <asp:BoundField DataField="id_producto"              HeaderText="<center>IDJ</center>"               SortExpression="id_producto"             HtmlEncode="false"/>
