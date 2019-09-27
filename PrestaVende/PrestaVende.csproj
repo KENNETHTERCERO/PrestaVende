@@ -152,6 +152,7 @@
     <Compile Include="CLASS\cs_plan_prestamo.cs" />
     <Compile Include="CLASS\cs_producto.cs" />
     <Compile Include="CLASS\cs_subcategoria.cs" />
+    <Compile Include="CLASS\cs_transaccion.cs" />
     <Compile Include="CLASS\cs_usuario.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

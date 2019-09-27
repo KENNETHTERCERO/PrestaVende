@@ -189,7 +189,7 @@ namespace PrestaVende.Public
 
                 DateTime thisDay = DateTime.Now;
                 if (mSerie.insertSerie(ref error, ddidSerie.Text, txtSerie.Text.ToString(), txtResolucion.Text.ToString(), txtFechaResolucion.Text.ToString(),
-                    ddEstado.SelectedValue.ToString(), thisDay.ToString("MM/dd/yyyy HH:mm:ss"), ddidSucursal.SelectedValue.ToString(),
+                    ddEstado.SelectedValue.ToString(), ddidSucursal.SelectedValue.ToString(),
                     txtNumeroDeFacturas.Text.ToString()))
                 {
                     showSuccess("Se agrego la serie correctamente.");

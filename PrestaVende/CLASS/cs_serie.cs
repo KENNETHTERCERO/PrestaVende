@@ -32,6 +32,64 @@ namespace PrestaVende.CLASS
             }
         }
 
+        public DataTable getSerieDDL(ref string error, int id_sucursal)
+        {
+            try
+            {
+                DataTable Serie = new DataTable();
+                connection.connection.Open();
+                command.Connection = connection.connection;
+                command.CommandText = "SELECT 0 AS id_serie, 'SELECCIONAR' AS serie UNION "
+                                    + "SELECT  id_serie,serie"
+                                    + " FROM tbl_serie       "
+                                    + " WHERE estado = 1 AND id_sucursal = @id_sucursal";
+                command.Parameters.AddWithValue("@id_sucursal", id_sucursal);
+                Serie.Load(command.ExecuteReader());
+                return Serie;
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                return null;
+            }
+            finally
+            {
+                connection.connection.Close();
+            }
+        }
+
+        public Int64 getCorrelativoSerie(ref string error, int id_serie)
+        {
+            try
+            {
+                DataTable Serie = new DataTable();
+                Int64 correlativo = 0;
+                connection.connection.Open();
+                command.Connection = connection.connection;
+                command.CommandText = "SELECT Correlativo"
+                                    + " FROM tbl_serie       "
+                                    + " WHERE estado = 1 AND id_serie = @id_serie";
+                command.Parameters.AddWithValue("@id_serie", id_serie);
+                Serie.Load(command.ExecuteReader());
+
+                if(Serie.Rows.Count > 0)
+                {
+                    correlativo = Int64.Parse(Serie.Rows[0]["Correlativo"].ToString());
+                }
+
+                return correlativo;
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                return 0;
+            }
+            finally
+            {
+                connection.connection.Close();
+            }
+        }
+
         public DataTable getSerie(ref string error)
         {
             try
@@ -129,7 +187,7 @@ namespace PrestaVende.CLASS
         }
 
         public bool insertSerie(ref string error, string id_serie, string serie, string resolucion,
-                                      string fecha_resolucion, string estado, string fecha_creacion,
+                                      string fecha_resolucion, string estado,
                                       string id_sucursal, string numero_de_facturas)
         {
             try
@@ -141,13 +199,12 @@ namespace PrestaVende.CLASS
                 command.CommandText = " INSERT INTO tbl_serie (serie, resolucion, fecha_resolucion,    "
                                    + "      estado, fecha_creacion, id_sucursal, correlativo,  numero_de_facturas) "
                                    + " VALUES(@serie, @resolucion, @fecha_resolucion,                   "
-                                   + "         @estado, @fecha_creacion, @id_sucursal, @correlativo,               "
+                                   + "         @estado, GETDATE(), @id_sucursal, @correlativo,               "
                                    + "         @numero_de_facturas) ";
                 command.Parameters.AddWithValue("@serie", serie);
                 command.Parameters.AddWithValue("@resolucion", resolucion);
                 command.Parameters.AddWithValue("@fecha_resolucion", fecha_resolucion);
                 command.Parameters.AddWithValue("@estado", estado);
-                command.Parameters.AddWithValue("@fecha_creacion", fecha_creacion);
                 command.Parameters.AddWithValue("@id_sucursal", id_sucursal);
                 command.Parameters.AddWithValue("@correlativo", 0);
                 command.Parameters.AddWithValue("@numero_de_facturas", numero_de_facturas);

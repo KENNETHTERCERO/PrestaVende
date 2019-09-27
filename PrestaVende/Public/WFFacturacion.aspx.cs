@@ -94,19 +94,19 @@ namespace PrestaVende.Public
         protected void btnCobroIntereses_Click(object sender, EventArgs e)
         {
             string id_prestamo = Request.QueryString["id_prestamo"];
-            Response.Redirect("WFCrearFactura.aspx?id_prestamo=" + id_prestamo + "?id_tipo=1");
+            Response.Redirect("WFCrearFactura.aspx?id_prestamo=" + id_prestamo + "&id_tipo=1");
         }
 
         protected void btnAbonoCapital_Click(object sender, EventArgs e)
         {
             string id_prestamo = Request.QueryString["id_prestamo"];
-            Response.Redirect("WFCrearFactura.aspx?id_prestamo=" + id_prestamo + "?id_tipo=2");
+            Response.Redirect("WFCrearFactura.aspx?id_prestamo=" + id_prestamo + "&id_tipo=2");
         }
 
         protected void btnCancelacion_Click(object sender, EventArgs e)
         {
             string id_prestamo = Request.QueryString["id_prestamo"];
-            Response.Redirect("WFCrearFactura.aspx?id_prestamo=" + id_prestamo + "?id_tipo=3");
+            Response.Redirect("WFCrearFactura.aspx?id_prestamo=" + id_prestamo + "&id_tipo=3");
         }
     }
 }

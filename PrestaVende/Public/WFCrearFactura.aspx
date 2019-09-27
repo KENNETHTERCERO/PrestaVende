@@ -74,68 +74,66 @@
                                         <div>
                                             <table>
                                                 <tr>
-                                                    <td>
-                                                        <asp:Label ID="lblNumeroFactura" runat="server" >NUMERO FACTURA</asp:Label>
-                                                    </td>
-                                                    <td>
-                                                        <asp:Label ID="lblSerie" runat="server">SERIE</asp:Label>
-                                                    </td>
-                                                    <td>
+                                                    <td colspan="2">
                                                         <asp:Label ID="lblCliente" runat="server" Text="CLIENTE"></asp:Label>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <big><asp:Label ID="lblNumeroPrestamoNumeroFactura" runat="server" Text="0"></asp:Label></big>
-                                                    </td>
-                                                    <td>
-                                                        <asp:DropDownList ID="ddlSerie" runat="server" CssClass="form-control"></asp:DropDownList>
-                                                    </td>
-                                                    <td>
-                                                        <asp:Label ID="lblNombeCliente" runat="server" Text="0"></asp:Label>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <asp:Label ID="lblTipoTransaccion" runat="server" Text="TIPO TRANSACCION"></asp:Label>
-                                                    </td>
-                                                    <td>
-                                                        <asp:Label ID="lblCaja" runat="server" Text="CAJA"></asp:Label>
                                                     </td>
                                                     <td>
                                                         <asp:Label ID="lblIdPrestamo" runat="server" Text="PRESTAMO"></asp:Label>
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td>
-                                                        <big><asp:Label ID="lblTransaccion" runat="server" Text="0"></asp:Label></big>
-                                                    </td>
-                                                    <td>
-                                                        <asp:DropDownList ID="ddlCaja" runat="server" AutoPostBack="true" CssClass="form-control" OnSelectedIndexChanged="ddlSubCategoria_SelectedIndexChanged"></asp:DropDownList>
+                                                    <td colspan="2">
+                                                        <asp:Label ID="lblNombreCliente" runat="server" Text="0"></asp:Label>
                                                     </td>
                                                     <td>
                                                         <big><asp:Label ID="lblNombrePrestamo" runat="server" Text="0"></asp:Label></big>
+                                                    </td>                                                    
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <asp:Label ID="lblSerie" runat="server">SERIE</asp:Label>
+                                                    </td>                                                    
+                                                    <td>
+                                                        <asp:Label ID="lblNumeroFactura" runat="server" >NUMERO FACTURA</asp:Label>
                                                     </td>
+                                                    <td>
+                                                        <asp:Label ID="lblTipoTransaccion" runat="server" Text="TIPO TRANSACCION"></asp:Label>
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <asp:DropDownList ID="ddlSerie" runat="server" CssClass="form-control" OnSelectedIndexChanged="ddlSerie_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
+                                                    </td>
+                                                    <td>
+                                                        <big><asp:Label ID="lblNumeroPrestamoNumeroFactura" runat="server" Text="0"></asp:Label></big>
+                                                    </td>
+                                                    <td>
+                                                        <big><asp:Label ID="lblTransaccion" runat="server" Text="0"></asp:Label></big>
+                                                    </td>                                                  
                                                 </tr>
                                                 
-                                                <tr>
+                                                <tr>     
                                                     <td>
-                                                        <asp:Label ID="lblValor" runat="server" Text="VALOR"></asp:Label>
-                                                    </td>
+                                                        <asp:Label ID="lblSubTotal" runat="server" Text="SUB TOTAL"></asp:Label>
+                                                    </td>                                               
                                                     <td>
-                                                        <asp:Label ID="lblIntereses" runat="server" Text="INTERESES"></asp:Label>
+                                                        <asp:Label ID="lblIVA" runat="server" Text="IVA"></asp:Label>
+                                                    </td>                                                    
+                                                    <td>
+                                                        <asp:Label ID="lblTotalFactura" runat="server" Text="TOTAL FACTURA"></asp:Label>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td>
-                                                        <asp:TextBox ID="txtValor" type="number" runat="server" CssClass="form-control"></asp:TextBox>
-                                                    </td>
+                                                        <big><asp:Label ID="lblSubTotalFactura" runat="server" Text="0"></asp:Label></big>
+                                                    </td>  
                                                     <td>
-                                                        <asp:DropDownList ID="ddlIntereses" runat="server" CssClass="form-control"></asp:DropDownList>
-                                                    </td>
+                                                        <big><asp:Label ID="lblIVAFactura" runat="server" Text="0"></asp:Label></big>
+                                                    </td>  
                                                     <td>
-                                                        <asp:Button ID="btnAgregar" runat="server" CssClass="btn btn-success" Text="AGREGAR ARTICULO" />
-                                                    </td>
+                                                        <big><asp:Label ID="lblTotalFacturaV" runat="server" Text="0"></asp:Label></big>
+                                                    </td> 
                                                 </tr>
                                             </table>
                                         </div>
@@ -150,9 +148,6 @@
                                                         ForeColor="#333333" GridLines="None">
                                                         <AlternatingRowStyle BackColor="White" />
                                                         <Columns>
-                                                            <asp:ButtonField ButtonType="Button" ControlStyle-CssClass="btn btn-danger" FooterStyle-BackColor="#ff9a32" CommandName="crear" HeaderText="<center>X</center>" Text="->" >
-                                                            <FooterStyle BackColor="#FF9A32" />
-                                                            </asp:ButtonField>
                                                             <asp:BoundField DataField="id_producto" HeaderText="<center>ID</center>" SortExpression="id_producto" HtmlEncode="false"/>
                                                             <asp:BoundField DataField="peso" HeaderText="<center>Peso</center>" SortExpression="peso" HtmlEncode="false" />
                                                             <asp:BoundField DataField="kilataje" HeaderText="<center>Kilataje</center>" SortExpression="kilataje" HtmlEncode="false" />
@@ -165,28 +160,7 @@
                                                         <PagerStyle BackColor="#666666" ForeColor="White" HorizontalAlign="Center" />
                                                         <RowStyle BackColor="#E3EAEB" />
                                                         <SelectedRowStyle BackColor="#ff9a32" Font-Bold="True" ForeColor="#333333" />
-                                                    </asp:GridView>
-                                                    <asp:GridView ID="gvProductoElectrodomesticos" runat="server" Width="100%" CssClass="footable" AutoGenerateColumns="False" 
-                                                        ForeColor="#333333" GridLines="None">
-                                                        <AlternatingRowStyle BackColor="White" />
-                                                        <Columns>
-                                                            <asp:ButtonField ButtonType="Button" ControlStyle-CssClass="btn btn-danger" FooterStyle-BackColor="#ff9a32" CommandName="crear" HeaderText="<center>X</center>" Text="->" >
-                                                            <FooterStyle BackColor="#FF9A32" />
-                                                            </asp:ButtonField>
-                                                            <asp:BoundField DataField="id_producto" HeaderText="<center>ID</center>" SortExpression="id_producto" HtmlEncode="false"/>
-                                                            <asp:BoundField DataField="producto" HeaderText="<center>Producto</center>" SortExpression="producto" HtmlEncode="false" />
-                                                            <asp:BoundField DataField="marca" HeaderText="<center>Marca</center>" SortExpression="marca" HtmlEncode="false" />
-                                                            <asp:BoundField DataField="valor" HeaderText="<center>Valor</center>" SortExpression="valor" HtmlEncode="false" />
-                                                            <asp:BoundField DataField="caracteristicas" HeaderText="<center>Caracteristicas</center>" SortExpression="caracteristicas"  HtmlEncode="false"/>
-                                                            <asp:BoundField DataField="id_marca" HeaderText="<center>IDM</center>" SortExpression="id_marca" HtmlEncode="false"/>
-                                                        </Columns>
-                                                        <EditRowStyle BackColor="#7C6F57" />
-                                                        <FooterStyle BackColor="#1C5E55" Font-Bold="False" ForeColor="White" />
-                                                        <HeaderStyle BackColor="#016965" Font-Bold="False" ForeColor="White" HorizontalAlign="Center" />
-                                                        <PagerStyle BackColor="#666666" ForeColor="White" HorizontalAlign="Center" />
-                                                        <RowStyle BackColor="#E3EAEB" />
-                                                        <SelectedRowStyle BackColor="#ff9a32" Font-Bold="True" ForeColor="#333333" />
-                                                    </asp:GridView>
+                                                    </asp:GridView>                                                    
                                                 </td>
                                             </tr>
                                             <tr>
