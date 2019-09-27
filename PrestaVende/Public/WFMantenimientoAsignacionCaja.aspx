@@ -86,7 +86,7 @@
                                                         <big><asp:Label ID="lblCaja" runat="server" Text="CAJA"></asp:Label></big>
                                                     </td>
                                                     <td>
-                                                         <asp:DropDownList ID="ddIdCaja" runat="server" class="form-control"></asp:DropDownList>
+                                                         <asp:DropDownList ID="ddIdCaja" runat="server" class="form-control" AutoPostBack="true" OnSelectedIndexChanged="ddIdCaja_SelectedIndexChanged"></asp:DropDownList>
                                                     </td>
                                                 </tr>         
                                                 <tr>
@@ -94,7 +94,7 @@
                                                         <big><asp:Label ID="lblEstadoCaja" runat="server" Text="ESTADO CAJA "></asp:Label></big>
                                                     </td>
                                                     <td>
-                                                        <asp:DropDownList ID="ddIdEstadoCaja" runat="server" class="form-control"/>
+                                                        <asp:DropDownList ID="ddIdEstadoCaja" runat="server" class="form-control" />
                                                     </td>
                                                 </tr>
 

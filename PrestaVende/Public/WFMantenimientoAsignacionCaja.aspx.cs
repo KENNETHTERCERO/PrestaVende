@@ -74,7 +74,7 @@ namespace PrestaVende.Public
                         getCaja();
                         getDataGrid();
                         getUsuarioAsignado();
-                        getEstadoCaja();
+                        //getEstadoCaja();
                     }
                 }
             }
@@ -187,10 +187,11 @@ namespace PrestaVende.Public
 
                     TableCell id_asignacion_caja = selectedRow.Cells[1];
                     DtAsignacionCaja = mAsignacionCaja.getDatosAsignacionCaja(ref error, id_asignacion_caja.Text.ToString());
-                    getEstadoCaja();
 
                     foreach (DataRow item in DtAsignacionCaja.Rows)
                     {
+                        getEstadosCajaUpdate(item[1].ToString());
+
                         ddidAsignacion.Text = mAsignacionCaja.getIDMaxAsignacionCaja(ref error);
                         ddIdCaja.SelectedValue = item[1].ToString();
                         ddIdEstadoCaja.SelectedValue = item[2].ToString();
@@ -212,6 +213,7 @@ namespace PrestaVende.Public
                     isUpdate = true;
                     hideOrShowDiv(false);
                     divSucceful.Visible = false;
+                    getDataGrid();
                 }
             }
             catch (Exception ex)
@@ -311,11 +313,28 @@ namespace PrestaVende.Public
             }
         }
 
-        protected void getEstadoCaja()
+        protected void getEstadosCajaUpdate(string id_caja)
         {
             try
             {
-                ddIdEstadoCaja.DataSource = mAsignacionCaja.getEstadoCajaPorRol(ref error);
+                ddIdEstadoCaja.DataSource = mAsignacionCaja.getEstadosCajas(ref error, id_caja);
+                ddIdEstadoCaja.DataValueField = "id_estado_caja";
+                ddIdEstadoCaja.DataTextField = "estado_caja";
+                ddIdEstadoCaja.DataBind();
+                ddIdEstadoCaja.SelectedValue = "0";
+            }
+            catch (Exception ex)
+            {
+                showError(ex.ToString());
+                throw;
+            }
+        }
+
+        protected void getEstadoCaja(string id_caja)
+        {
+            try
+            {
+                ddIdEstadoCaja.DataSource = mAsignacionCaja.getEstadoCajaPorRol(ref error, id_caja);
                 ddIdEstadoCaja.DataValueField = "id_estado_caja";
                 ddIdEstadoCaja.DataTextField = "estado_caja";
                 ddIdEstadoCaja.DataBind();
@@ -378,7 +397,7 @@ namespace PrestaVende.Public
                     blnRecibir = true;
                 }
 
-                if (mAsignacionCaja.insertAsignacionCaja(ref error, ddidAsignacion.Text, ddIdCaja.SelectedValue.ToString(), ddIdEstadoCaja.SelectedValue.ToString(), txtMonto.Text, "0", thisDay.ToString("MM/dd/yyyy HH:mm:ss"), thisDay.ToString("MM/dd/yyyy HH:mm:ss"), CLASS.cs_usuario.usuario, ddIdUsuarioAsignado.SelectedValue.ToString(), blnRecibir))                  
+                if (mAsignacionCaja.insertAsignacionCaja(ref error, ddidAsignacion.Text, ddIdCaja.SelectedValue.ToString(), ddIdEstadoCaja.SelectedValue.ToString(), txtMonto.Text, ddIdEstado.SelectedValue.ToString(), thisDay.ToString("MM/dd/yyyy HH:mm:ss"), thisDay.ToString("MM/dd/yyyy HH:mm:ss"), CLASS.cs_usuario.usuario, ddIdUsuarioAsignado.SelectedValue.ToString(), blnRecibir))                  
                 {
                     showSuccess("Se realizó la asignación de caja correctamente.");
                     return true;
@@ -397,6 +416,10 @@ namespace PrestaVende.Public
         }
         #endregion
 
+        protected void ddIdCaja_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            getEstadoCaja(ddIdCaja.SelectedValue);
+        }
     }
 }
 
