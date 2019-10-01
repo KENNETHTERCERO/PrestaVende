@@ -101,9 +101,14 @@
     <Content Include="Public\PrestaVende.Master" />
     <Content Include="Public\RecepcionCaja.aspx" />
     <Content Include="Public\WFBusquedaCliente.aspx" />
+    <Content Include="Public\WFBusquedaClienteFacturacion.aspx" />
+    <Content Include="Public\WFCrearFactura.aspx" />
+    <Content Include="Public\WFFacturacion.aspx" />
+    <Content Include="Public\WFListadoPrestamo.aspx" />
     <Content Include="Public\WFMantenimientoCaja.aspx" />
     <Content Include="Public\WFMantenimientoProducto.aspx" />
     <Content Include="Public\WFMantenimientoLiquidaciones.aspx" />
+    <Content Include="Public\WFMantenimientoSerie.aspx" />
     <Content Include="Public\WFMantenimientoSubCategoria.aspx" />
     <Content Include="Public\WFMantenimientoCategoria.aspx" />
     <Content Include="Public\WFMantenimientoEmpresa.aspx" />
@@ -129,9 +134,11 @@
   <ItemGroup>
     <Compile Include="CLASS\cs_caja.cs" />
     <Compile Include="CLASS\cs_casilla.cs" />
+    <Compile Include="CLASS\cs_factura.cs" />
     <Compile Include="CLASS\cs_liquidacion.cs" />
     <Compile Include="CLASS\cs_empresa.cs" />
     <Compile Include="CLASS\cs_prestamo.cs" />
+    <Compile Include="CLASS\cs_serie.cs" />
     <Compile Include="CLASS\cs_tipo_caja.cs" />
     <Compile Include="CLASS\cs_areaempresa.cs" />
     <Compile Include="CLASS\cs_categoria.cs" />
@@ -145,6 +152,7 @@
     <Compile Include="CLASS\cs_plan_prestamo.cs" />
     <Compile Include="CLASS\cs_producto.cs" />
     <Compile Include="CLASS\cs_subcategoria.cs" />
+    <Compile Include="CLASS\cs_transaccion.cs" />
     <Compile Include="CLASS\cs_usuario.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -171,6 +179,34 @@
     <Compile Include="Public\WFBusquedaCliente.aspx.designer.cs">
       <DependentUpon>WFBusquedaCliente.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Public\WFBusquedaClienteFacturacion.aspx.cs">
+      <DependentUpon>WFBusquedaClienteFacturacion.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\WFBusquedaClienteFacturacion.aspx.designer.cs">
+      <DependentUpon>WFBusquedaClienteFacturacion.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\WFCrearFactura.aspx.cs">
+      <DependentUpon>WFCrearFactura.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\WFCrearFactura.aspx.designer.cs">
+      <DependentUpon>WFCrearFactura.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\WFFacturacion.aspx.cs">
+      <DependentUpon>WFFacturacion.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\WFFacturacion.aspx.designer.cs">
+      <DependentUpon>WFFacturacion.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\WFListadoPrestamo.aspx.cs">
+      <DependentUpon>WFListadoPrestamo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\WFListadoPrestamo.aspx.designer.cs">
+      <DependentUpon>WFListadoPrestamo.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Public\WFMantenimientoCaja.aspx.cs">
       <DependentUpon>WFMantenimientoCaja.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -191,6 +227,13 @@
     </Compile>
     <Compile Include="Public\WFMantenimientoLiquidaciones.aspx.designer.cs">
       <DependentUpon>WFMantenimientoLiquidaciones.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\WFMantenimientoSerie.aspx.cs">
+      <DependentUpon>WFMantenimientoSerie.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\WFMantenimientoSerie.aspx.designer.cs">
+      <DependentUpon>WFMantenimientoSerie.aspx</DependentUpon>
     </Compile>
     <Compile Include="Public\WFMantenimientoSubCategoria.aspx.cs">
       <DependentUpon>WFMantenimientoSubCategoria.aspx</DependentUpon>

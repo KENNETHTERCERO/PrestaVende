@@ -359,7 +359,7 @@ namespace PrestaVende.Public
                     decimal totalPrestamo = 0;
                     foreach (DataRow item in dtTablaJoyas.Rows)
                     {
-                        item["linea"] = linea;
+                        item["numero_linea"] = linea;
                         linea++;
                         totalPrestamo += Convert.ToDecimal(item["valor"].ToString());
                     }
@@ -806,11 +806,6 @@ namespace PrestaVende.Public
             }
         }
 
-        protected void gvProductoElectrodomesticos_RowCommand(object sender, GridViewCommandEventArgs e)
-        {
-
-        }
-
         protected void btnGuardarPrestamo_Click(object sender, EventArgs e)
         {
             try
@@ -818,6 +813,42 @@ namespace PrestaVende.Public
                 if (validateDataPrestamo())
                 {
                     guardarPrestamo();
+                }
+            }
+            catch (Exception ex)
+            {
+                showError(ex.ToString());
+            }
+        }
+
+        protected void gvProductoElectrodomesticos_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            try
+            {
+                if (e.CommandName == "borrar")
+                {
+                    int index = Convert.ToInt32(e.CommandArgument);
+                    dtTablaArticulos.Rows[index].Delete();
+                    gvProductoElectrodomesticos.DataSource = dtTablaJoyas;
+                    gvProductoElectrodomesticos.DataBind();
+                }
+            }
+            catch (Exception ex)
+            {
+                showError(ex.ToString());
+            }
+        }
+
+        protected void gvProductoJoya_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            try
+            {
+                if (e.CommandName == "borrar")
+                {
+                    int index = Convert.ToInt32(e.CommandArgument);
+                    dtTablaJoyas.Rows[index].Delete();
+                    gvProductoJoya.DataSource = dtTablaJoyas;
+                    gvProductoJoya.DataBind();
                 }
             }
             catch (Exception ex)
