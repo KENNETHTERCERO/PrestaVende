@@ -115,7 +115,7 @@
                                                          <asp:DropDownList ID="ddIdEstado" runat="server" class="form-control"></asp:DropDownList>
                                                     </td>
                                                 </tr>   
-
+                                                   
                                                 <tr>
                                                     <td>
                                                         <big><asp:Label ID="lblUsuarioAsignado" runat="server" Text="USUARIO ASIGNADO"></asp:Label></big>
@@ -126,7 +126,7 @@
                                                 </tr>   
                                                 <tr>
                                                    <td>
-                                                       <big><asp:Label ID="lblRecibir" runat="server" Text="RECIBIR"></asp:Label></big>
+                                                       <big><asp:Label ID="lblRecibir" runat="server" Text="CERRAR"></asp:Label></big>
                                                    </td>
                                                     <td>    
                                                          <asp:CheckBox ID="ChbxRecibir" runat="server" oncheckedchanged="ChbxRecibir_CheckedChanged" AutoPostBack="true" class="form-control">
