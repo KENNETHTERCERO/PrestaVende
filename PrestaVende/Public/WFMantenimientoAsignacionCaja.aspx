@@ -105,16 +105,7 @@
                                                     <td>
                                                          <asp:TextBox ID="txtMonto" type="decimal" text="0" runat="server" class="form-control"></asp:TextBox>
                                                     </td>
-                                                </tr>      
-                                                
-                                                <tr>
-                                                    <td>
-                                                        <big><asp:Label ID="lblEstado" runat="server" Text="ESTADO"></asp:Label></big>
-                                                    </td>
-                                                    <td>
-                                                         <asp:DropDownList ID="ddIdEstado" runat="server" class="form-control"></asp:DropDownList>
-                                                    </td>
-                                                </tr>   
+                                                </tr>                                                                                                       
                                                    
                                                 <tr>
                                                     <td>
