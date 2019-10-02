@@ -14,7 +14,7 @@ namespace PrestaVende.CLASS
 
         public cs_factura()
         {
-            //cs_usuario.id_sucursal;
+            
         }
 
         public DataTable ObtenerFacturas(ref string error, string id_prestamo)
