@@ -26,11 +26,9 @@ namespace PrestaVende.CLASS
         private string Decremento = "8";
         private string AsignacionCajaGeneral = "";
         private string RecepcionCajaGeneral = "";
-        private string IncrementoCapitalCaja = "";
-        private string DecrementoCapitalCaja = "";
-
+      
         //TIPOS TRANSACCIONES
-        private int TransaccionAperturaCajaGeneral = 1;
+        //private int TransaccionAperturaCajaGeneral = 1;
         private int TransaccionCierreCajaGeneral = 2;
         private int TransaccionIncrementoCapitalCajaGeneral = 3;
         private int TransaccionDecrementoCapitalCajaGeneral = 4;
