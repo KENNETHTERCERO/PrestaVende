@@ -67,5 +67,31 @@ namespace PrestaVende.Public
                 ex.ToString();
             }
         }
+
+        protected void btnSalir_Click(object sender, EventArgs e)
+        {
+            cancelarRecepcion();
+            Response.Redirect("~/WebLogin.aspx", false);
+        }
+
+        private void cancelarRecepcion()
+        {
+            try
+            {
+                CLASS.cs_usuario.id_usuario = 0;
+                CLASS.cs_usuario.id_empresa = 0;
+                CLASS.cs_usuario.id_sucursal = 0;
+                CLASS.cs_usuario.id_rol = 0;
+                CLASS.cs_usuario.id_caja = 0;
+                CLASS.cs_usuario.usuario = "";
+                CLASS.cs_usuario.primer_nombre = "";
+                CLASS.cs_usuario.primer_apellido = "";
+                CLASS.cs_usuario.Saldo_caja = 0;
+            }
+            catch (Exception ex)
+            {
+                //showError(ex.ToString());
+            }
+        }
     }
 }

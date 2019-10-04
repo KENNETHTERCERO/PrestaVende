@@ -105,7 +105,7 @@
                     <asp:LinkButton ID="btnCambio" runat="server" Text="Cambio de password" ></asp:LinkButton>
                 </li>
                 <li>
-                    <asp:LinkButton ID="btnSalir" runat="server" Text="Salir" ></asp:LinkButton>
+                    <asp:LinkButton ID="btnSalir" runat="server" Text="Salir" OnClick="btnSalir_Click" ></asp:LinkButton>
                 </li>
             </ul>
         </div>
