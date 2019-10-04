@@ -21,7 +21,7 @@ namespace PrestaVende.CLASS
         public static string    primer_nombre   = "";
         public static string    primer_apellido = "";
         
-        private cs_connection connect;
+        private cs_connection connect = new cs_connection();
         private SqlCommand command = new SqlCommand();
 
         public static decimal Saldo_caja
@@ -50,11 +50,9 @@ namespace PrestaVende.CLASS
 
             try
             {
-                connect = new cs_connection(user, password);
                 DataTable dtUser = new DataTable("user");
 
                 connect.connection.Open();
-
                 command.Connection = connect.connection;
                 command.CommandText = "SELECT TOP 1 " +
                                             "usu.id_usuario, " +        //0, 1
