@@ -28,17 +28,13 @@ namespace PrestaVende.CLASS
         private string RecepcionCajaGeneral = "";
       
         //TIPOS TRANSACCIONES
-        //private int TransaccionAperturaCajaGeneral = 1;
         private int TransaccionCierreCajaGeneral = 2;
         private int TransaccionIncrementoCapitalCajaGeneral = 3;
         private int TransaccionDecrementoCapitalCajaGeneral = 4;
         private int TransaccionIncrementoCapitalCajaTransaccional = 15;
-        private int TransaccionDecrementoCapitalCajaTransaccional = 16;
-        private int TransaccionAperturaCajaTransaccional = 17;
+        private int TransaccionDecrementoCapitalCajaTransaccional = 16;    
         private int TransaccionCierreCajaTransaccional = 18;
-        private int TransaccionRecepcionCajaGeneral = 14;
-        private int TransaccionRecepcionCajaTransaccional = 19;
-
+      
         #endregion
 
         #region combos
@@ -187,27 +183,27 @@ namespace PrestaVende.CLASS
             }
         }
 
-        public DataTable getEstadoAsignacionCaja(ref string error)
-        {
-            try
-            {
-                DataTable EstadoAreaEmpresa = new DataTable();
-                connection.connection.Open();
-                command.Connection = connection.connection;
-                command.CommandText = "SELECT 0 AS id, 'INACTIVO' AS estado UNION SELECT 1 AS id, 'ACTIVO' AS estado";
-                EstadoAreaEmpresa.Load(command.ExecuteReader());
-                return EstadoAreaEmpresa;
-            }
-            catch (Exception ex)
-            {
-                error = ex.ToString();
-                return null;
-            }
-            finally
-            {
-                connection.connection.Close();
-            }
-        }
+        //public DataTable getEstadoAsignacionCaja(ref string error)
+        //{
+        //    try
+        //    {
+        //        DataTable EstadoAreaEmpresa = new DataTable();
+        //        connection.connection.Open();
+        //        command.Connection = connection.connection;
+        //        command.CommandText = "SELECT 0 AS id, 'INACTIVO' AS estado UNION SELECT 1 AS id, 'ACTIVO' AS estado";
+        //        EstadoAreaEmpresa.Load(command.ExecuteReader());
+        //        return EstadoAreaEmpresa;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        error = ex.ToString();
+        //        return null;
+        //    }
+        //    finally
+        //    {
+        //        connection.connection.Close();
+        //    }
+        //}
 
 
         public DataTable getUsuarioAsignado(ref string error)
@@ -242,7 +238,7 @@ namespace PrestaVende.CLASS
                 command.CommandText = " select top (20) ac.id_asignacion_caja, "
                                                     + " ac.id_caja,                                                "
                                                     + " c.nombre_caja,                                             "
-                                                    + " ec.estado_caja,                                            "
+                                                    + " ec.estado_caja,                                              "
                                                     + " ac.monto,                                                  "
                                                     + " case                                                       "
                                                     + "	when ac.estado_asignacion = 1 then 'ACTIVO'                "
@@ -496,9 +492,9 @@ namespace PrestaVende.CLASS
                             command.CommandText = " UPDATE tbl_caja SET SALDO = SALDO - @SaldoAsignado, id_estado_caja = @id_estado_caja where id_tipo_caja = @id_tipo_caja ";
                         }
                        
-                        command.Parameters.AddWithValue("@id_caja", monto);
                         command.Parameters.AddWithValue("@id_tipo_caja", id_tipo_caja);
                         command.Parameters.AddWithValue("@id_estado_caja", id_estado_caja);
+                        command.Parameters.AddWithValue("@SaldoAsignado", monto);
                         rowsUpdated = command.ExecuteNonQuery();
 
                         if (rowsUpdated <= 0)
@@ -531,36 +527,36 @@ namespace PrestaVende.CLASS
                 //{
                 //    if (BlnRecibir == true)
                 //    {
-                //        TipoTransaccion = TransaccionRecepcionCajaTransaccional;
+                //        TipoTransaccion = TransaccionCierreCajaTransaccional;
                 //    }
                 //    else
                 //    {
-                //        if (EstadoCajaAsignacion == AsignacionCaja)
-                //        {
-                //            TipoTransaccion = TransaccionAperturaCajaTransaccional;
-                //        }
-                //        else if (EstadoCajaAsignacion == CierreCaja)
-                //        {
-                //            TipoTransaccion = TransaccionCierreCajaTransaccional;
-                //        }
+                //        //if (EstadoCajaAsignacion == AsignacionCaja)
+                //        //{
+                //        //    TipoTransaccion = TransaccionAperturaCajaTransaccional;
+                //        //}
+                //        //else if (EstadoCajaAsignacion == CierreCaja)
+                //        //{
+                //        //    TipoTransaccion = TransaccionCierreCajaTransaccional;
+                //        //}
                 //    }
                 //}
                 //else  //GENERAL
                 //{
                 //    if (BlnRecibir == true)
                 //    {
-                //        TipoTransaccion = TransaccionRecepcionCajaGeneral;
+                //        TipoTransaccion = TransaccionCierreCajaGeneral;
                 //    }
                 //    else
                 //    {
-                //        if (EstadoCajaAsignacion == AsignacionCaja)
-                //        {
-                //            TipoTransaccion = TransaccionAperturaCajaGeneral;
-                //        }
-                //        else if (EstadoCajaAsignacion == CierreCaja)
-                //        {
-                //            TipoTransaccion = TransaccionCierreCajaGeneral;
-                //        }
+                //        //if (EstadoCajaAsignacion == AsignacionCaja)
+                //        //{
+                //        //    TipoTransaccion = TransaccionAperturaCajaGeneral;
+                //        //}
+                //        //else if (EstadoCajaAsignacion == CierreCaja)
+                //        //{
+                //        //    TipoTransaccion = TransaccionCierreCajaGeneral;
+                //        //}
                 //    }
                 //}
 
