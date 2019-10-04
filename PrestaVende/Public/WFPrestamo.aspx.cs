@@ -831,6 +831,7 @@ namespace PrestaVende.Public
                     dtTablaArticulos.Rows[index].Delete();
                     gvProductoElectrodomesticos.DataSource = dtTablaJoyas;
                     gvProductoElectrodomesticos.DataBind();
+                    blockComboBox();
                 }
             }
             catch (Exception ex)
@@ -849,6 +850,7 @@ namespace PrestaVende.Public
                     dtTablaJoyas.Rows[index].Delete();
                     gvProductoJoya.DataSource = dtTablaJoyas;
                     gvProductoJoya.DataBind();
+                    blockComboBox();
                 }
             }
             catch (Exception ex)
