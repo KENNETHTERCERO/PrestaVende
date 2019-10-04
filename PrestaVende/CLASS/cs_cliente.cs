@@ -110,8 +110,10 @@ namespace PrestaVende.CLASS
                 {
                     command.Parameters.Clear();
                     command.Transaction = connection.connection.BeginTransaction();
-                    command.CommandText = "INSERT INTO tbl_cliente (DPI, nit, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, direccion, correo_electronico, numero_telefono, estado) " +
-                                                            "VALUES(@DPI, @nit, @primer_nombre, @segundo_nombre, @primer_apellido, @segundo_apellido, @direccion, @correo_electronico, @numero_telefono, @estado)";
+                    command.CommandText = "INSERT INTO tbl_cliente (DPI, nit, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, direccion, correo_electronico, numero_telefono, estado, " + 
+                                                                    " id_pais, id_departamento, id_municipio, id_subcategoria_medio, id_categoria_medio) " +
+                                                            "VALUES(@DPI, @nit, @primer_nombre, @segundo_nombre, @primer_apellido, @segundo_apellido, @direccion, @correo_electronico, @numero_telefono, @estado, " + 
+                                                                    "@id_pais, @id_departamento, @id_municipio, @id_subcategoria_medio, @id_categoria_medio)";
                     command.Parameters.AddWithValue("@DPI", datos[0]);
                     command.Parameters.AddWithValue("@nit", datos[1]);
                     command.Parameters.AddWithValue("@primer_nombre", datos[2]);
@@ -122,6 +124,12 @@ namespace PrestaVende.CLASS
                     command.Parameters.AddWithValue("@correo_electronico", datos[7]);
                     command.Parameters.AddWithValue("@numero_telefono", datos[8]);
                     command.Parameters.AddWithValue("@estado", datos[9]);
+                    command.Parameters.AddWithValue("@id_pais", datos[10]);
+                    command.Parameters.AddWithValue("@id_departamento", datos[11]);
+                    command.Parameters.AddWithValue("@id_municipio", datos[12]);
+                    command.Parameters.AddWithValue("@id_subcategoria_medio", datos[13]);
+                    command.Parameters.AddWithValue("@id_categoria_medio", datos[14]);
+
                     returnInt = command.ExecuteNonQuery();
 
                     if (returnInt > 0)
