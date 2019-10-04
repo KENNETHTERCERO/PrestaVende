@@ -238,7 +238,7 @@ namespace PrestaVende.CLASS
                 command.CommandText = " select top (20) ac.id_asignacion_caja, "
                                                     + " ac.id_caja,                                                "
                                                     + " c.nombre_caja,                                             "
-                                                    + " ec.estado_caja,                                            "
+                                                    + " ec.estado_caja,                                              "
                                                     + " ac.monto,                                                  "
                                                     + " case                                                       "
                                                     + "	when ac.estado_asignacion = 1 then 'ACTIVO'                "
