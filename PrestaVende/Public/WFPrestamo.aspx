@@ -22,6 +22,10 @@
                                 <br />
                                 <br />
                                 <br />
+                                <asp:Button ID="btnProyeccion" runat="server" Width="200px" Text="Proyeccion" CssClass="btn btn-danger" Visible="true" OnClick="btnProyeccion_Click" />
+                                <br />
+                                <br />
+                                <br />
                                 <asp:Button ID="btnVerEstadoDeCuenta" runat="server" Width="200px" Text="Cancelar" CssClass="btn btn-warning" Visible="true" />
                                 <br />
                                 <br />

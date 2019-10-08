@@ -644,7 +644,7 @@ namespace PrestaVende.CLASS
             }
         }
 
-        public bool recibirCaja(ref string error, string id_asignacion_caja, string monto)
+        public bool recibirAsignacionCaja(ref string error, string id_asignacion_caja, string monto)
         {
             try
             {
@@ -666,14 +666,27 @@ namespace PrestaVende.CLASS
                     throw new SystemException("Error actualizando la tabla de asignacion de caja.");
                 }
                 command.Parameters.Clear();
-                command.CommandText = "UPDATE tbl_caja SET id_estado_caja = 2 WHERE id_caja = @id_caja";
+                command.CommandText = "UPDATE tbl_caja SET id_estado_caja = 2, saldo = @monto_caja WHERE id_caja = @id_caja";
                 command.Parameters.AddWithValue("@id_caja", CLASS.cs_usuario.id_caja);
+                command.Parameters.AddWithValue("@monto_caja", monto);
                 rowsUpdated = command.ExecuteNonQuery();
 
                 if (rowsUpdated <= 0)
                 {
                     throw new SystemException("Error actualizando la tabla de caja.");
                 }
+
+                command.Parameters.Clear();
+                command.CommandText = "UPDATE tbl_caja SET saldo = saldo - @monto_caja_general WHERE id_sucursal = @id_sucursal AND id_tipo_caja = 1 AND id_estado_caja = 2";
+                command.Parameters.AddWithValue("@id_sucursal", CLASS.cs_usuario.id_sucursal);
+                command.Parameters.AddWithValue("@monto_caja_general", monto);
+                rowsUpdated = command.ExecuteNonQuery();
+
+                if (rowsUpdated <= 0)
+                {
+                    throw new SystemException("Error actualizando el saldo de la caja general.");
+                }
+
                 command.Parameters.Clear();
                 command.CommandText = "UPDATE tbl_usuario SET caja_asignada = 1 WHERE id_usuario = @id_usuario";
                 command.Parameters.AddWithValue("@id_usuario", CLASS.cs_usuario.id_usuario);
@@ -714,7 +727,88 @@ namespace PrestaVende.CLASS
             }
         }
 
+        public bool recibirCierreCaja(ref string error, string id_asignacion_caja, string monto)
+        {
+            try
+            {
+                int rowsUpdated = 0;
+                DataTable DtEstados = new DataTable();
 
+                connection.connection.Open();
+                command.Connection = connection.connection;
+                command.Transaction = connection.connection.BeginTransaction();
+                command.Parameters.Clear();
+
+
+                command.CommandText = "UPDATE tbl_asignacion_caja SET estado_asignacion = 1 WHERE id_asignacion_caja = @id_asignacion_caja";
+                command.Parameters.AddWithValue("@id_asignacion_caja", id_asignacion_caja);
+                rowsUpdated = command.ExecuteNonQuery();
+
+                if (rowsUpdated <= 0)
+                {
+                    throw new SystemException("Error actualizando la tabla de asignacion de caja.");
+                }
+                command.Parameters.Clear();
+                command.CommandText = "UPDATE tbl_caja SET id_estado_caja = 2, saldo = @monto_caja WHERE id_caja = @id_caja";
+                command.Parameters.AddWithValue("@id_caja", CLASS.cs_usuario.id_caja);
+                command.Parameters.AddWithValue("@monto_caja", monto);
+                rowsUpdated = command.ExecuteNonQuery();
+
+                if (rowsUpdated <= 0)
+                {
+                    throw new SystemException("Error actualizando la tabla de caja.");
+                }
+
+                command.Parameters.Clear();
+                command.CommandText = "UPDATE tbl_caja SET saldo = saldo - @monto_caja_general WHERE id_sucursal = @id_sucursal AND id_tipo_caja = 1 AND id_estado_caja = 2";
+                command.Parameters.AddWithValue("@id_sucursal", CLASS.cs_usuario.id_sucursal);
+                command.Parameters.AddWithValue("@monto_caja_general", monto);
+                rowsUpdated = command.ExecuteNonQuery();
+
+                if (rowsUpdated <= 0)
+                {
+                    throw new SystemException("Error actualizando el saldo de la caja general.");
+                }
+
+                command.Parameters.Clear();
+                command.CommandText = "UPDATE tbl_usuario SET caja_asignada = 1 WHERE id_usuario = @id_usuario";
+                command.Parameters.AddWithValue("@id_usuario", CLASS.cs_usuario.id_usuario);
+                rowsUpdated = command.ExecuteNonQuery();
+
+                if (rowsUpdated <= 0)
+                {
+                    throw new SystemException("Error actualizando la tabla de usuario en la recepcion.");
+                }
+
+                command.Parameters.Clear();
+                command.CommandText = "INSERT INTO tbl_transaccion (id_tipo_transaccion, id_caja, monto, estado_transaccion, fecha_transaccion, usuario, movimiento_saldo, id_sucursal) " +
+                                        "VALUES(5, @id_caja_transaccion, @monto, 1, GETDATE(), @usuario, @movimiento_saldo, @id_sucursal)";
+                command.Parameters.AddWithValue("@id_caja_transaccion", CLASS.cs_usuario.id_usuario);
+                command.Parameters.AddWithValue("@monto", monto);
+                command.Parameters.AddWithValue("@usuario", CLASS.cs_usuario.usuario);
+                command.Parameters.AddWithValue("@movimiento_saldo", monto);
+                command.Parameters.AddWithValue("@id_sucursal", CLASS.cs_usuario.id_sucursal);
+                rowsUpdated = command.ExecuteNonQuery();
+
+                if (rowsUpdated <= 0)
+                {
+                    throw new SystemException("Error actualizando la tabla de usuario en la recepcion.");
+                }
+
+                command.Transaction.Commit();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                command.Transaction.Rollback();
+                error = ex.ToString();
+                return false;
+            }
+            finally
+            {
+                connection.connection.Close();
+            }
+        }
 
         public string getIdCaja(string id_asignacion_caja)
         {

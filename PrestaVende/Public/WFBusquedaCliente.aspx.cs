@@ -197,7 +197,7 @@ namespace PrestaVende.Public
         {
             try
             {
-                string[] datosInsert = new string[15];
+                string[] datosInsert = new string[16];
 
                 datosInsert[0] = txtDPI.Text;
                 datosInsert[1] = txtNit.Text;
@@ -214,6 +214,7 @@ namespace PrestaVende.Public
                 datosInsert[12] = ddlMunicipio.SelectedValue.ToString();
                 datosInsert[13] = ddlSubCategoriaMedio.SelectedValue.ToString();
                 datosInsert[14] = ddlCategoriaMedio.SelectedValue.ToString();
+                datosInsert[15] = ddlProfesion.SelectedValue.ToString();
 
                 if (cs_cliente.insertClient(ref error, datosInsert) > 0)
                 {
@@ -247,6 +248,7 @@ namespace PrestaVende.Public
                     datosUpdate[6] = txtNumeroTelefono.Text;
                     datosUpdate[7] = ddlEstado.SelectedValue.ToString();
                     datosUpdate[8] = lblIdClienteNumero.Text.ToString();
+                    datosUpdate[9] = ddlProfesion.SelectedValue.ToString();
 
                     if (cs_cliente.updateClient(ref error, datosUpdate) > 0)
                     {
