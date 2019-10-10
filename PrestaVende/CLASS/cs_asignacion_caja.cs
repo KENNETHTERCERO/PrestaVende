@@ -26,21 +26,15 @@ namespace PrestaVende.CLASS
         private string Decremento = "8";
         private string AsignacionCajaGeneral = "";
         private string RecepcionCajaGeneral = "";
-        private string IncrementoCapitalCaja = "";
-        private string DecrementoCapitalCaja = "";
-
+      
         //TIPOS TRANSACCIONES
-        private int TransaccionAperturaCajaGeneral = 1;
         private int TransaccionCierreCajaGeneral = 2;
         private int TransaccionIncrementoCapitalCajaGeneral = 3;
         private int TransaccionDecrementoCapitalCajaGeneral = 4;
         private int TransaccionIncrementoCapitalCajaTransaccional = 15;
-        private int TransaccionDecrementoCapitalCajaTransaccional = 16;
-        private int TransaccionAperturaCajaTransaccional = 17;
+        private int TransaccionDecrementoCapitalCajaTransaccional = 16;    
         private int TransaccionCierreCajaTransaccional = 18;
-        private int TransaccionRecepcionCajaGeneral = 14;
-        private int TransaccionRecepcionCajaTransaccional = 19;
-
+      
         #endregion
 
         #region combos
@@ -68,30 +62,113 @@ namespace PrestaVende.CLASS
             }
         }
 
-        public DataTable getEstadoCajaPorRol(ref string error)
+        public DataTable getEstadosCajas(ref string error, string id_caja)
+        {
+            try
+            {
+                DataTable EstadosCaja = new DataTable();
+                DataTable DtEstadosValidacion = new DataTable();
+                string id_tipo_caja_seleccionada = "";
+                connection.connection.Open();
+                command.Parameters.Clear();
+                command.Connection = connection.connection;
+
+
+               //OBTENIENDO TIPO DE CAJA
+                command.CommandText = "select id_tipo_caja from tbl_caja where id_caja = @id_caja";
+                command.Parameters.AddWithValue("@id_caja", id_caja);
+                DtEstadosValidacion.Load(command.ExecuteReader());
+
+                //SI LA CAJA YA ESTA RECIBIDA DEBE MOSTRAR INCREMENTO Y DECREMENTO
+                if (DtEstadosValidacion.Rows.Count > 0)
+                {
+                    foreach (DataRow item in DtEstadosValidacion.Rows)
+                    {
+                        id_tipo_caja_seleccionada = item[1].ToString();
+                    }
+                }
+
+                        //SI LA CAJA ESTA CERRADA NO DEBE APARECER EL ESTADO DE CIERRE
+                        command.CommandText = "SELECT 0 AS id_estado_caja, 'SELECCIONAR' AS estado_caja UNION "
+                                         + " select ec.id_estado_caja, ec.estado_caja from tbl_estado_caja ec "
+                                         + "    inner "
+                                         + "        join tbl_asociacion_estado_tipo_caja aetc "
+                                         + "      on ec.id_estado_caja = aetc.id_estado_caja "
+                                         + "  inner "
+                                         + "        join tbl_tipo_caja tc "
+                                         + "      on aetc.id_tipo_caja = tc.id_tipo_caja "
+                                         + "     where tc.id_tipo_caja = @id_tipo_caja ";
+                command.Parameters.AddWithValue("@id_tipo_caja", id_tipo_caja_seleccionada);
+                EstadosCaja.Load(command.ExecuteReader());
+                return EstadosCaja;
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                return null;
+            }
+            finally
+            {
+                connection.connection.Close();
+            }
+        }
+
+
+        public DataTable getEstadoCajaPorRol(ref string error, string id_caja)
         {
             try
             {
                 DataTable EstadoCaja = new DataTable();
+                DataTable DtEstadosValidacion = new DataTable();
+                string id_tipo_caja_seleccionada = "";
                 connection.connection.Open();
                 command.Parameters.Clear();
                 command.Connection = connection.connection;
-                command.CommandText = "SELECT 0 AS id_estado_caja, 'SELECCIONAR' AS estado_caja UNION "
-                                        + " select ec.*from tbl_estado_caja ec "
+
+                
+                //SI LA CAJA ESTA CERRADA NO DEBE APARECER EL ESTADO DE CIERRE
+                command.CommandText = "select id_estado_caja, id_tipo_caja from tbl_caja where id_caja = @id_caja";
+                command.Parameters.AddWithValue("@id_caja", id_caja);
+                DtEstadosValidacion.Load(command.ExecuteReader());
+
+                //SI LA CAJA YA ESTA RECIBIDA DEBE MOSTRAR INCREMENTO Y DECREMENTO
+                if (DtEstadosValidacion.Rows.Count > 0)
+                {
+                    foreach (DataRow item in DtEstadosValidacion.Rows)
+                    {
+                        if (item[0].ToString() == "3") //CAJA RECIBIDA
+                        {
+                            //SI LA CAJA ESTA ASIGNADA ESTOS ESTADOS NO DEBEN OCULTARSE
+                            Incremento = "0";
+                            Decremento = "0";
+                        }
+                        else if (item[0].ToString() == "1")
+                        {
+                            AsignacionCaja = "0";
+                        }
+
+                        id_tipo_caja_seleccionada = item[1].ToString();
+                    }
+                }
+
+
+                            command.CommandText = "SELECT 0 AS id_estado_caja, 'SELECCIONAR' AS estado_caja UNION "
+                                        + " select ec.id_estado_caja, ec.estado_caja from tbl_estado_caja ec "
                                         + "    inner "
                                         + "        join tbl_asociacion_estado_tipo_caja aetc "
                                         + "      on ec.id_estado_caja = aetc.id_estado_caja "
                                         + "  inner "
                                         + "        join tbl_tipo_caja tc "
                                         + "      on aetc.id_tipo_caja = tc.id_tipo_caja "
-                                        + "     where tc.id_tipo_caja = @id_tipo_caja and ec.estado_caja not in (@Disponible, @Recibida, @Incremento, @Decremento, @Cierre)";
+                                        + "     where tc.id_tipo_caja = @id_tipo_caja and ec.id_estado_caja not in (@Disponible, @Recibida, @Incremento, @Decremento, @Cierre, @Asignacion)";
 
-                command.Parameters.AddWithValue("@id_tipo_caja",2); // CLASS.cs_usuario.id_tipo_caja
+                command.Parameters.AddWithValue("@id_tipo_caja", id_tipo_caja_seleccionada);
                 command.Parameters.AddWithValue("@Disponible", Disponible);
                 command.Parameters.AddWithValue("@Recibida", CajaRecibida);
                 command.Parameters.AddWithValue("@Incremento", Incremento);
                 command.Parameters.AddWithValue("@Decremento", Decremento);
                 command.Parameters.AddWithValue("@Cierre", CierreCaja);
+                command.Parameters.AddWithValue("@Asignacion", AsignacionCaja);
                 EstadoCaja.Load(command.ExecuteReader());
                 return EstadoCaja;
             }
@@ -106,27 +183,27 @@ namespace PrestaVende.CLASS
             }
         }
 
-        public DataTable getEstadoAsignacionCaja(ref string error)
-        {
-            try
-            {
-                DataTable EstadoAreaEmpresa = new DataTable();
-                connection.connection.Open();
-                command.Connection = connection.connection;
-                command.CommandText = "SELECT 0 AS id, 'INACTIVO' AS estado UNION SELECT 1 AS id, 'ACTIVO' AS estado";
-                EstadoAreaEmpresa.Load(command.ExecuteReader());
-                return EstadoAreaEmpresa;
-            }
-            catch (Exception ex)
-            {
-                error = ex.ToString();
-                return null;
-            }
-            finally
-            {
-                connection.connection.Close();
-            }
-        }
+        //public DataTable getEstadoAsignacionCaja(ref string error)
+        //{
+        //    try
+        //    {
+        //        DataTable EstadoAreaEmpresa = new DataTable();
+        //        connection.connection.Open();
+        //        command.Connection = connection.connection;
+        //        command.CommandText = "SELECT 0 AS id, 'INACTIVO' AS estado UNION SELECT 1 AS id, 'ACTIVO' AS estado";
+        //        EstadoAreaEmpresa.Load(command.ExecuteReader());
+        //        return EstadoAreaEmpresa;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        error = ex.ToString();
+        //        return null;
+        //    }
+        //    finally
+        //    {
+        //        connection.connection.Close();
+        //    }
+        //}
 
 
         public DataTable getUsuarioAsignado(ref string error)
@@ -161,7 +238,7 @@ namespace PrestaVende.CLASS
                 command.CommandText = " select top (20) ac.id_asignacion_caja, "
                                                     + " ac.id_caja,                                                "
                                                     + " c.nombre_caja,                                             "
-                                                    + " ec.estado_caja,                                            "
+                                                    + " ec.estado_caja,                                              "
                                                     + " ac.monto,                                                  "
                                                     + " case                                                       "
                                                     + "	when ac.estado_asignacion = 1 then 'ACTIVO'                "
@@ -243,68 +320,31 @@ namespace PrestaVende.CLASS
             try
             {
                 DataTable DtDatosAsignacionCaja = new DataTable();
-                DataTable DtEstados = new DataTable();
-                string TipoCajaAsignacion = "";
+                DataTable DtTipoCaja = new DataTable();
+                DataTable DtCajaGeneral = new DataTable();
+                DataTable DtOperadionMatematica = new DataTable();
                 string EstadoCajaAsignacion = "";
                 bool General_Transaccional = false;
                 int TipoTransaccion = 0;
                 int rowsUpdated = 0;
-                int contadorFilasEstados = 0;
+                string id_tipo_caja = "";
+                string id_caja_general = "";
+                string operacion_matematica = "";
 
-                //OBTIENE ESTADOS POR TIPO DE CAJA
                 command.Connection = connection.connection;
                 connection.connection.Open();
                 command.Parameters.Clear();
-                command.Transaction = connection.connection.BeginTransaction();
-
-
-                command.CommandText =
-                                         " select a.id_estado_caja from tbl_estado_caja a                      "
-                                        + "         inner join tbl_caja b                                       "
-                                        + "         on a.id_tipo_caja = b.id_tipo_caja                          "
-                                        + "         where b.id_caja = @id_caja and estado_caja like '%recibida%'       "
-                                        + " UNION                                                               "
-                                        + " select a.id_estado_caja from tbl_estado_caja a                      "
-                                        + "         inner join tbl_caja b                                       "
-                                        + "         on a.id_tipo_caja = b.id_tipo_caja                          "
-                                        + "         where b.id_caja = @id_caja and estado_caja like '%asignación%'     "
-                                        + " UNION                                                               "
-                                        + " select a.id_estado_caja from tbl_estado_caja a                      "
-                                        + "         inner join tbl_caja b                                       "
-                                        + "         on a.id_tipo_caja = b.id_tipo_caja                          "
-                                        + "         where b.id_caja = @id_caja and estado_caja like '%cierre%'";
-                command.Parameters.AddWithValue("@id_caja", id_caja);
-                DtEstados.Load(command.ExecuteReader());
-                //connection.connection.Close();
-
-                if (DtEstados.Rows.Count > 2)
-                {
-                    foreach (DataRow item in DtEstados.Rows)
-                    {
-                        if (contadorFilasEstados == 0)
-                        {
-                            CajaRecibida = item[0].ToString();
-                        }
-                        else if (contadorFilasEstados == 1)
-                        {
-                            EstadoCajaAsignacion = item[0].ToString();
-                        }
-                        else if (contadorFilasEstados == 2)
-                        {
-                            CierreCaja = item[0].ToString();
-                        }
-                        contadorFilasEstados = contadorFilasEstados + 1;
-                    }
-                }
+                command.Transaction = connection.connection.BeginTransaction();             
 
                 command.Parameters.Clear();
                 command.CommandText = " INSERT INTO tbl_asignacion_caja (id_caja, id_estado_caja, monto,                    "
                                      + "       estado_asignacion, fecha_creacion, fecha_modificacion, usuario_asigna, id_usuario_asignado)      "
                                      + "       VALUES(@id_caja, @id_estado_caja, @monto,                                   "
                                      + "       @estado_asignacion, @fecha_creacion, @fecha_modificacion, @usuario_asigna, @id_usuario_asignado)";
-                if (BlnRecibir == true) //CUANDO LA CAJA ES RECIBIDA
+
+                if (BlnRecibir == true) //CUANDO LA CAJA SE CIERRA
                 {
-                    command.Parameters.AddWithValue("@id_estado_caja", CajaRecibida);
+                    command.Parameters.AddWithValue("@id_estado_caja", CierreCaja);
                     command.Parameters.AddWithValue("@id_usuario_asignado", CLASS.cs_usuario.id_usuario);
                 }
                 else
@@ -318,110 +358,71 @@ namespace PrestaVende.CLASS
                 command.Parameters.AddWithValue("@estado_asignacion", estado_asignacion);
                 command.Parameters.AddWithValue("@fecha_creacion", DateTime.Now);
                 command.Parameters.AddWithValue("@fecha_modificacion", DateTime.Now);
-                command.Parameters.AddWithValue("@usuario_asigna", usuario_asigna);
-
+                command.Parameters.AddWithValue("@usuario_asigna", CLASS.cs_usuario.usuario);
                 command.ExecuteNonQuery();
 
-                //OBTIENE TIPO DE CAJA y ESTADO CAJA
+                //OBTENIENDO TIPO DE CAJA
                 command.Parameters.Clear();
-                command.CommandText = " select id_tipo_caja from tbl_caja where id_caja = @id_caja ";
+                command.CommandText = "select id_tipo_caja from tbl_caja where id_caja = @id_caja";
                 command.Parameters.AddWithValue("@id_caja", id_caja);
-                DtDatosAsignacionCaja.Load(command.ExecuteReader());
+                DtTipoCaja.Load(command.ExecuteReader());
 
-                foreach (DataRow item in DtDatosAsignacionCaja.Rows)
+                if (DtTipoCaja.Rows.Count > 0)
                 {
-                    TipoCajaAsignacion = item[0].ToString();
+                    foreach (DataRow item in DtTipoCaja.Rows)
+                    {
+                        id_tipo_caja = item[0].ToString();
+                    }
                 }
 
-                //INSERTANDO TRANSACCION
+                //SE OBTINE ID DE CAJA GENERAL PARA REALIZAR LA SUMATORIA/RESTA
                 command.Parameters.Clear();
-                command.CommandText = " INSERT INTO tbl_transaccion (id_tipo_transaccion, id_caja ,monto, "
-                                      + " estado_transaccion, fecha_transaccion, usuario) "
-                                      + "  VALUES(@id_tipo_transaccion, @id_caja, @monto, "
-                                      + " @estado_transaccion, @fecha_transaccion, @usuario) ";
+                command.CommandText = "SELECT id_caja FROM tbl_caja WHERE id_sucursal = @id_sucursal and id_tipo_caja = 1 and estado = 1 ";
+                command.Parameters.AddWithValue("@id_sucursal", CLASS.cs_usuario.id_sucursal);
+                DtCajaGeneral.Load(command.ExecuteReader());
 
-                foreach (string item in TipoCajaGeneral)
+                if (DtCajaGeneral.Rows.Count > 0)
                 {
-                    if (TipoCajaAsignacion.ToString() == item)
+                    foreach (DataRow item in DtCajaGeneral.Rows)
                     {
-                        General_Transaccional = true; //GENERAL
+                        id_caja_general = item[0].ToString();
                     }
                 }
 
-
-
-
-                if (General_Transaccional == false) //TRANSACCIONAL
+                if (BlnRecibir == true) //CUANDO LA CAJA SE CIERRA
                 {
-                    if (BlnRecibir == true)
-                    {
-                        TipoTransaccion = TransaccionRecepcionCajaTransaccional;
-                    }
-                    else
-                    {
-                        if (EstadoCajaAsignacion == AsignacionCaja)
-                        {
-                            TipoTransaccion = TransaccionAperturaCajaTransaccional;
-                        }
-                        else if (EstadoCajaAsignacion == CierreCaja)
-                        {
-                            TipoTransaccion = TransaccionCierreCajaTransaccional;
-                        }
-                    }
-
-                }
-                else  //GENERAL
-                {
-                    if (BlnRecibir == true)
-                    {
-                        TipoTransaccion = TransaccionRecepcionCajaGeneral;
-                    }
-                    else
-                    {
-                        if (EstadoCajaAsignacion == AsignacionCaja)
-                        {
-                            TipoTransaccion = TransaccionAperturaCajaGeneral;
-                        }
-                        else if (EstadoCajaAsignacion == CierreCaja)
-                        {
-                            TipoTransaccion = TransaccionCierreCajaGeneral;
-                        }
-                    }
-                }
-
-                command.Parameters.Clear();
-                command.Parameters.AddWithValue("@id_tipo_transaccion", TipoTransaccion);
-                command.Parameters.AddWithValue("@id_caja", id_caja);
-                command.Parameters.AddWithValue("@monto", monto);
-                command.Parameters.AddWithValue("@estado_transaccion", 2);
-                command.Parameters.AddWithValue("@fecha_transaccion", DateTime.Now);
-                command.Parameters.AddWithValue("@usuario", usuario_asigna);
-                command.ExecuteNonQuery();
-
-                if (BlnRecibir == true) //CUANDO LA CAJA ES RECIBIDA
-                {
+                                       
+                    //MODIFICANDO SALDO ACTUAL DE CAJA TRANSACCIONAL
                     command.Parameters.Clear();
-                    command.CommandText = " UPDATE tbl_caja SET id_estado_caja = @id_estado_caja, fecha_modificacion = @fecha_modificacion"
-                                        + " WHERE id_caja = @id_caja";
-                    command.Parameters.AddWithValue("@id_estado_caja", CajaRecibida);
+                    command.CommandText = " UPDATE tbl_caja SET fecha_modificacion = @fecha_modificacion, saldo = saldo - @saldo, id_estado_caja = @id_estado_caja WHERE id_caja = @id_caja";
                     command.Parameters.AddWithValue("@id_caja", id_caja);
                     command.Parameters.AddWithValue("@fecha_modificacion", DateTime.Now);
+                    command.Parameters.AddWithValue("@saldo", monto);
+                    command.Parameters.AddWithValue("@id_estado_caja", CierreCaja);
                     rowsUpdated = command.ExecuteNonQuery();
 
+                    if (rowsUpdated <= 0)
+                    {
+                        command.Transaction.Rollback();
+                        return false;
+                    }
+
+                    //MODIFICANDO SALDO ACTUAL DE CAJA GENERAL
                     command.Parameters.Clear();
-                    command.CommandText = "UPDATE tbl_caja SET saldo = saldo - @saldo WHERE id_caja = @id_caja";
-                    command.Parameters.AddWithValue("@id_caja", id_caja);
+                    command.CommandText = " UPDATE tbl_caja SET fecha_modificacion = @fecha_modificacion, saldo = saldo + @saldo WHERE id_caja = @id_caja";
+                    command.Parameters.AddWithValue("@id_caja", id_caja_general);
+                    command.Parameters.AddWithValue("@fecha_modificacion", DateTime.Now);
                     command.Parameters.AddWithValue("@saldo", monto);
                     rowsUpdated = command.ExecuteNonQuery();
 
-                    command.Parameters.Clear();
-                    command.CommandText = "UPDATE tbl_caja SET saldo = saldo + @saldo WHERE id_tipo_caja = 1 AND id_sucursal= @id_sucursal";
-                    command.Parameters.AddWithValue("@id_caja", id_caja); 
-                    command.Parameters.AddWithValue("@id_sucursal", CLASS.cs_usuario.id_sucursal);
-                    command.Parameters.AddWithValue("@saldo", CLASS.cs_usuario.Saldo_caja);
-                    rowsUpdated = command.ExecuteNonQuery();
-
-                    command.CommandText = "UPDATE tbl_usuario SET caja_asignada = 1 WHERE id_usuario = @id_usuario";
+                    if (rowsUpdated <= 0)
+                    {
+                        command.Transaction.Rollback();
+                        return false;
+                    }
+                 
+                    //CUANDO SE CIERRA LA CAJA EL USUARIO YA NO DEBE TENER CAJA ASIGNADA
+                    command.CommandText = "UPDATE tbl_usuario SET caja_asignada = 0 WHERE id_usuario = @id_usuario";
                     command.Parameters.AddWithValue("@id_usuario", CLASS.cs_usuario.id_usuario);
                     rowsUpdated = command.ExecuteNonQuery();
 
@@ -433,16 +434,140 @@ namespace PrestaVende.CLASS
                 }
                 else
                 {
-                    command.Parameters.Clear();
-                    command.CommandText = " UPDATE tbl_caja SET id_estado_caja = @id_estado_caja, fecha_modificacion = @fecha_modificacion"
-                                        + " WHERE id_caja = @id_caja";
-                    command.Parameters.AddWithValue("@id_estado_caja", id_estado_caja);
-                    command.Parameters.AddWithValue("@id_caja", id_caja);
-                    command.Parameters.AddWithValue("@fecha_modificacion", fecha_creacion);
-                    command.ExecuteNonQuery();
+                    if (id_estado_caja == "2") //ESTADO ASIGNACION, SI SE ASIGNA LA CAJA EL MONTO DE ASIGNACION ES EL SALDO DE LA CAJA ACTUAL
+                    {
+                        //REALIZANDO ACTUALIZACION DE SALDO PARA LA CAJA TRANSACCIONAL
+                        command.Parameters.Clear();
+                        command.CommandText = " UPDATE tbl_caja SET SALDO = @SaldoAsignado, id_estado_caja = @id_estado_caja where id_caja = @id_caja ";
+                        command.Parameters.AddWithValue("@SaldoAsignado", monto);
+                        command.Parameters.AddWithValue("@id_caja", id_caja);
+                        command.Parameters.AddWithValue("@id_estado_caja", id_estado_caja);
+                        rowsUpdated = command.ExecuteNonQuery();
+
+                        if (rowsUpdated <= 0)
+                        {
+                            command.Transaction.Rollback();
+                            return false;
+                        }
+
+                        //REALIZANDO ACTUALIZACION DE SALDO PARA LA CAJA GENERAL
+                        command.Parameters.Clear();
+                        command.CommandText = " UPDATE tbl_caja SET SALDO = SALDO - @SaldoAsignado where id_caja = @id_caja ";
+                        command.Parameters.AddWithValue("@SaldoAsignado", monto);
+                        command.Parameters.AddWithValue("@id_caja", id_caja_general);
+                        rowsUpdated = command.ExecuteNonQuery();
+
+                        if (rowsUpdated <= 0)
+                        {
+                            command.Transaction.Rollback();
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        //SE OBTIENE OPERACION MATEMATICA SEGUN EL ESTADO SELECCIONADO 
+                        command.Parameters.Clear();
+                        command.CommandText = "SELECT operacion_matematica FROM tbl_estado_caja where id_estado_caja = @id_estado_caja";
+                        command.Parameters.AddWithValue("@id_estado_caja", id_estado_caja);
+                        DtOperadionMatematica.Load(command.ExecuteReader());
+
+                        if (DtOperadionMatematica.Rows.Count > 0)
+                        {
+                            foreach (DataRow item in DtOperadionMatematica.Rows)
+                            {
+                                operacion_matematica = item[0].ToString();
+                            }
+                        }
+
+
+                        //REALIZANDO ACTUALIZACION DE SALDO PARA LA CAJA TRANSACCIONAL DEPENDIENDO LA OPERACION MATEMATICA DE LOS ESTADOS QUE SE ASIGNEN
+                        command.Parameters.Clear();
+
+                        if (operacion_matematica == "+")
+                        {
+                            command.CommandText = " UPDATE tbl_caja SET SALDO = SALDO + @SaldoAsignado, id_estado_caja = @id_estado_caja where id_tipo_caja = @id_tipo_caja ";
+                        }
+                        else
+                        {
+                            command.CommandText = " UPDATE tbl_caja SET SALDO = SALDO - @SaldoAsignado, id_estado_caja = @id_estado_caja where id_tipo_caja = @id_tipo_caja ";
+                        }
+                       
+                        command.Parameters.AddWithValue("@id_tipo_caja", id_tipo_caja);
+                        command.Parameters.AddWithValue("@id_estado_caja", id_estado_caja);
+                        command.Parameters.AddWithValue("@SaldoAsignado", monto);
+                        rowsUpdated = command.ExecuteNonQuery();
+
+                        if (rowsUpdated <= 0)
+                        {
+                            command.Transaction.Rollback();
+                            return false;
+                        }
+                    }                   
                 }
 
 
+
+
+                ////INSERTANDO TRANSACCION
+                //command.Parameters.Clear();
+                //command.CommandText = " INSERT INTO tbl_transaccion (id_tipo_transaccion, id_caja ,monto, "
+                //                      + " estado_transaccion, fecha_transaccion, usuario) "
+                //                      + "  VALUES(@id_tipo_transaccion, @id_caja, @monto, "
+                //                      + " @estado_transaccion, @fecha_transaccion, @usuario) ";
+
+                //foreach (string item in TipoCajaGeneral)
+                //{
+                //    if (id_tipo_caja.ToString() == item)
+                //    {
+                //        General_Transaccional = true; //GENERAL
+                //    }
+                //}
+
+                //if (General_Transaccional == false) //TRANSACCIONAL
+                //{
+                //    if (BlnRecibir == true)
+                //    {
+                //        TipoTransaccion = TransaccionCierreCajaTransaccional;
+                //    }
+                //    else
+                //    {
+                //        //if (EstadoCajaAsignacion == AsignacionCaja)
+                //        //{
+                //        //    TipoTransaccion = TransaccionAperturaCajaTransaccional;
+                //        //}
+                //        //else if (EstadoCajaAsignacion == CierreCaja)
+                //        //{
+                //        //    TipoTransaccion = TransaccionCierreCajaTransaccional;
+                //        //}
+                //    }
+                //}
+                //else  //GENERAL
+                //{
+                //    if (BlnRecibir == true)
+                //    {
+                //        TipoTransaccion = TransaccionCierreCajaGeneral;
+                //    }
+                //    else
+                //    {
+                //        //if (EstadoCajaAsignacion == AsignacionCaja)
+                //        //{
+                //        //    TipoTransaccion = TransaccionAperturaCajaGeneral;
+                //        //}
+                //        //else if (EstadoCajaAsignacion == CierreCaja)
+                //        //{
+                //        //    TipoTransaccion = TransaccionCierreCajaGeneral;
+                //        //}
+                //    }
+                //}
+
+                //command.Parameters.Clear();
+                //command.Parameters.AddWithValue("@id_tipo_transaccion", TipoTransaccion);
+                //command.Parameters.AddWithValue("@id_caja", id_caja);
+                //command.Parameters.AddWithValue("@monto", monto);
+                //command.Parameters.AddWithValue("@estado_transaccion", 2);
+                //command.Parameters.AddWithValue("@fecha_transaccion", DateTime.Now);
+                //command.Parameters.AddWithValue("@usuario", usuario_asigna);
+                //command.ExecuteNonQuery();
 
 
                 command.Transaction.Commit();
@@ -519,7 +644,7 @@ namespace PrestaVende.CLASS
             }
         }
 
-        public bool recibirCaja(ref string error, string id_asignacion_caja)
+        public bool recibirAsignacionCaja(ref string error, string id_asignacion_caja, string monto)
         {
             try
             {
@@ -532,36 +657,59 @@ namespace PrestaVende.CLASS
                 command.Parameters.Clear();
 
 
-                command.CommandText = "UPDATE tbl_caja SET id_estado_caja = @id_estado_caja WHERE id_caja = @id_caja";
-                command.Parameters.AddWithValue("@id_estado_caja", CajaRecibida);
-                command.Parameters.AddWithValue("@id_caja", CLASS.cs_usuario.id_caja);
+                command.CommandText = "UPDATE tbl_asignacion_caja SET estado_asignacion = 1 WHERE id_asignacion_caja = @id_asignacion_caja";
+                command.Parameters.AddWithValue("@id_asignacion_caja", id_asignacion_caja);
                 rowsUpdated = command.ExecuteNonQuery();
 
                 if (rowsUpdated <= 0)
                 {
-                    command.Transaction.Rollback();
-                    return false;
+                    throw new SystemException("Error actualizando la tabla de asignacion de caja.");
                 }
                 command.Parameters.Clear();
-                command.CommandText = "UPDATE tbl_caja SET saldo = saldo - @saldo WHERE id_tipo_caja = 1 AND id_caja = @id_caja";
+                command.CommandText = "UPDATE tbl_caja SET id_estado_caja = 2, saldo = @monto_caja WHERE id_caja = @id_caja";
                 command.Parameters.AddWithValue("@id_caja", CLASS.cs_usuario.id_caja);
-                command.Parameters.AddWithValue("@saldo", CLASS.cs_usuario.Saldo_caja);
+                command.Parameters.AddWithValue("@monto_caja", monto);
                 rowsUpdated = command.ExecuteNonQuery();
 
                 if (rowsUpdated <= 0)
                 {
-                    command.Transaction.Rollback();
-                    return false;
+                    throw new SystemException("Error actualizando la tabla de caja.");
                 }
 
+                command.Parameters.Clear();
+                command.CommandText = "UPDATE tbl_caja SET saldo = saldo - @monto_caja_general WHERE id_sucursal = @id_sucursal AND id_tipo_caja = 1 AND id_estado_caja = 2";
+                command.Parameters.AddWithValue("@id_sucursal", CLASS.cs_usuario.id_sucursal);
+                command.Parameters.AddWithValue("@monto_caja_general", monto);
+                rowsUpdated = command.ExecuteNonQuery();
+
+                if (rowsUpdated <= 0)
+                {
+                    throw new SystemException("Error actualizando el saldo de la caja general.");
+                }
+
+                command.Parameters.Clear();
                 command.CommandText = "UPDATE tbl_usuario SET caja_asignada = 1 WHERE id_usuario = @id_usuario";
                 command.Parameters.AddWithValue("@id_usuario", CLASS.cs_usuario.id_usuario);
                 rowsUpdated = command.ExecuteNonQuery();
 
                 if (rowsUpdated <= 0)
                 {
-                    command.Transaction.Rollback();
-                    return false;
+                    throw new SystemException("Error actualizando la tabla de usuario en la recepcion.");
+                }
+
+                command.Parameters.Clear();
+                command.CommandText = "INSERT INTO tbl_transaccion (id_tipo_transaccion, id_caja, monto, estado_transaccion, fecha_transaccion, usuario, movimiento_saldo, id_sucursal) " +
+                                        "VALUES(5, @id_caja_transaccion, @monto, 1, GETDATE(), @usuario, @movimiento_saldo, @id_sucursal)";
+                command.Parameters.AddWithValue("@id_caja_transaccion", CLASS.cs_usuario.id_usuario);
+                command.Parameters.AddWithValue("@monto", monto);
+                command.Parameters.AddWithValue("@usuario", CLASS.cs_usuario.usuario);
+                command.Parameters.AddWithValue("@movimiento_saldo", monto);
+                command.Parameters.AddWithValue("@id_sucursal", CLASS.cs_usuario.id_sucursal);
+                rowsUpdated = command.ExecuteNonQuery();
+
+                if (rowsUpdated <= 0)
+                {
+                    throw new SystemException("Error actualizando la tabla de usuario en la recepcion.");
                 }
 
                 command.Transaction.Commit();
@@ -579,7 +727,88 @@ namespace PrestaVende.CLASS
             }
         }
 
+        public bool recibirCierreCaja(ref string error, string id_asignacion_caja, string monto)
+        {
+            try
+            {
+                int rowsUpdated = 0;
+                DataTable DtEstados = new DataTable();
 
+                connection.connection.Open();
+                command.Connection = connection.connection;
+                command.Transaction = connection.connection.BeginTransaction();
+                command.Parameters.Clear();
+
+
+                command.CommandText = "UPDATE tbl_asignacion_caja SET estado_asignacion = 1 WHERE id_asignacion_caja = @id_asignacion_caja";
+                command.Parameters.AddWithValue("@id_asignacion_caja", id_asignacion_caja);
+                rowsUpdated = command.ExecuteNonQuery();
+
+                if (rowsUpdated <= 0)
+                {
+                    throw new SystemException("Error actualizando la tabla de asignacion de caja.");
+                }
+                command.Parameters.Clear();
+                command.CommandText = "UPDATE tbl_caja SET id_estado_caja = 2, saldo = @monto_caja WHERE id_caja = @id_caja";
+                command.Parameters.AddWithValue("@id_caja", CLASS.cs_usuario.id_caja);
+                command.Parameters.AddWithValue("@monto_caja", monto);
+                rowsUpdated = command.ExecuteNonQuery();
+
+                if (rowsUpdated <= 0)
+                {
+                    throw new SystemException("Error actualizando la tabla de caja.");
+                }
+
+                command.Parameters.Clear();
+                command.CommandText = "UPDATE tbl_caja SET saldo = saldo - @monto_caja_general WHERE id_sucursal = @id_sucursal AND id_tipo_caja = 1 AND id_estado_caja = 2";
+                command.Parameters.AddWithValue("@id_sucursal", CLASS.cs_usuario.id_sucursal);
+                command.Parameters.AddWithValue("@monto_caja_general", monto);
+                rowsUpdated = command.ExecuteNonQuery();
+
+                if (rowsUpdated <= 0)
+                {
+                    throw new SystemException("Error actualizando el saldo de la caja general.");
+                }
+
+                command.Parameters.Clear();
+                command.CommandText = "UPDATE tbl_usuario SET caja_asignada = 1 WHERE id_usuario = @id_usuario";
+                command.Parameters.AddWithValue("@id_usuario", CLASS.cs_usuario.id_usuario);
+                rowsUpdated = command.ExecuteNonQuery();
+
+                if (rowsUpdated <= 0)
+                {
+                    throw new SystemException("Error actualizando la tabla de usuario en la recepcion.");
+                }
+
+                command.Parameters.Clear();
+                command.CommandText = "INSERT INTO tbl_transaccion (id_tipo_transaccion, id_caja, monto, estado_transaccion, fecha_transaccion, usuario, movimiento_saldo, id_sucursal) " +
+                                        "VALUES(5, @id_caja_transaccion, @monto, 1, GETDATE(), @usuario, @movimiento_saldo, @id_sucursal)";
+                command.Parameters.AddWithValue("@id_caja_transaccion", CLASS.cs_usuario.id_usuario);
+                command.Parameters.AddWithValue("@monto", monto);
+                command.Parameters.AddWithValue("@usuario", CLASS.cs_usuario.usuario);
+                command.Parameters.AddWithValue("@movimiento_saldo", monto);
+                command.Parameters.AddWithValue("@id_sucursal", CLASS.cs_usuario.id_sucursal);
+                rowsUpdated = command.ExecuteNonQuery();
+
+                if (rowsUpdated <= 0)
+                {
+                    throw new SystemException("Error actualizando la tabla de usuario en la recepcion.");
+                }
+
+                command.Transaction.Commit();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                command.Transaction.Rollback();
+                error = ex.ToString();
+                return false;
+            }
+            finally
+            {
+                connection.connection.Close();
+            }
+        }
 
         public string getIdCaja(string id_asignacion_caja)
         {

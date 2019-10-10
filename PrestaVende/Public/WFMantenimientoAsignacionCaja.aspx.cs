@@ -70,11 +70,11 @@ namespace PrestaVende.Public
                     {
                         hideOrShowDiv(true);
                         getIdAsignacion();
-                        getEstadoAsignacion();
+                        //getEstadoAsignacion();
                         getCaja();
                         getDataGrid();
                         getUsuarioAsignado();
-                        getEstadoCaja();
+                        //getEstadoCaja();
                     }
                 }
             }
@@ -187,22 +187,23 @@ namespace PrestaVende.Public
 
                     TableCell id_asignacion_caja = selectedRow.Cells[1];
                     DtAsignacionCaja = mAsignacionCaja.getDatosAsignacionCaja(ref error, id_asignacion_caja.Text.ToString());
-                    getEstadoCaja();
 
                     foreach (DataRow item in DtAsignacionCaja.Rows)
                     {
+                        getEstadosCajaUpdate(item[1].ToString());
+
                         ddidAsignacion.Text = mAsignacionCaja.getIDMaxAsignacionCaja(ref error);
                         ddIdCaja.SelectedValue = item[1].ToString();
                         ddIdEstadoCaja.SelectedValue = item[2].ToString();
-                        ddIdEstado.SelectedValue = item[4].ToString();
+                        //ddIdEstado.SelectedValue = item[4].ToString();
                         ddIdUsuarioAsignado.SelectedValue = item[8].ToString();
 
                         ddIdCaja.Enabled = false;
                         ddIdEstadoCaja.Visible = false;
                         ddIdUsuarioAsignado.Visible = false;
-                        ddIdEstado.Visible = false;
+                        //ddIdEstado.Visible = false;
                         lblCaja.Visible = true;
-                        lblEstado.Visible = false;
+                        //lblEstado.Visible = false;
                         lblEstadoCaja.Visible = false;
                         lblUsuarioAsignado.Visible = false;
                         ChbxRecibir.Visible = true;
@@ -212,6 +213,7 @@ namespace PrestaVende.Public
                     isUpdate = true;
                     hideOrShowDiv(false);
                     divSucceful.Visible = false;
+                    getDataGrid();
                 }
             }
             catch (Exception ex)
@@ -277,22 +279,22 @@ namespace PrestaVende.Public
             }
         }
 
-        protected void getEstadoAsignacion()
-        {
-            try
-            {
-                ddIdEstado.DataSource = mAsignacionCaja.getEstadoAsignacionCaja(ref error);
-                ddIdEstado.DataValueField = "id";
-                ddIdEstado.DataTextField = "estado";
-                ddIdEstado.DataBind();
-                ddIdEstado.SelectedValue = "1";
-            }
-            catch (Exception ex)
-            {
-                showError(ex.ToString());
-                throw;
-            }
-        }
+        //protected void getEstadoAsignacion()
+        //{
+        //    try
+        //    {
+        //        ddIdEstado.DataSource = mAsignacionCaja.getEstadoAsignacionCaja(ref error);
+        //        ddIdEstado.DataValueField = "id";
+        //        ddIdEstado.DataTextField = "estado";
+        //        ddIdEstado.DataBind();
+        //        ddIdEstado.SelectedValue = "1";
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        showError(ex.ToString());
+        //        throw;
+        //    }
+        //}
 
         protected void getUsuarioAsignado()
         {
@@ -311,11 +313,28 @@ namespace PrestaVende.Public
             }
         }
 
-        protected void getEstadoCaja()
+        protected void getEstadosCajaUpdate(string id_caja)
         {
             try
             {
-                ddIdEstadoCaja.DataSource = mAsignacionCaja.getEstadoCajaPorRol(ref error);
+                ddIdEstadoCaja.DataSource = mAsignacionCaja.getEstadosCajas(ref error, id_caja);
+                ddIdEstadoCaja.DataValueField = "id_estado_caja";
+                ddIdEstadoCaja.DataTextField = "estado_caja";
+                ddIdEstadoCaja.DataBind();
+                ddIdEstadoCaja.SelectedValue = "0";
+            }
+            catch (Exception ex)
+            {
+                showError(ex.ToString());
+                throw;
+            }
+        }
+
+        protected void getEstadoCaja(string id_caja)
+        {
+            try
+            {
+                ddIdEstadoCaja.DataSource = mAsignacionCaja.getEstadoCajaPorRol(ref error, id_caja);
                 ddIdEstadoCaja.DataValueField = "id_estado_caja";
                 ddIdEstadoCaja.DataTextField = "estado_caja";
                 ddIdEstadoCaja.DataBind();
@@ -333,7 +352,7 @@ namespace PrestaVende.Public
             try
             {
                 //getIdAsignacion();
-                ddIdEstado.SelectedValue = "1";
+                //ddIdEstado.SelectedValue = "1";
                 ddIdEstadoCaja.SelectedIndex = -1;
                 ddIdCaja.SelectedIndex = -1;
                 ddIdUsuarioAsignado.SelectedIndex = -1;
@@ -352,7 +371,7 @@ namespace PrestaVende.Public
             {
                 if (txtMonto.Text.ToString().Equals("0")) { showWarning("Usted debe ingresar un monto válido."); return false; }
                 else if (ddIdCaja.SelectedValue.Equals("0")) { showWarning("Usted debe seleccionar una caja válida."); return false; }
-                else if (ddIdEstadoCaja.SelectedValue.Equals("0")) { showWarning("Usted debe seleccionar un estado de caja válido."); return false; }
+                //else if (ddIdEstadoCaja.SelectedValue.Equals("0")) { showWarning("Usted debe seleccionar un estado de caja válido."); return false; }
                 else if (ddIdUsuarioAsignado.SelectedValue.Equals("0")) { showWarning("Usted debe seleccionar un usuario válido."); return false; }
 
                 else
@@ -397,6 +416,10 @@ namespace PrestaVende.Public
         }
         #endregion
 
+        protected void ddIdCaja_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            getEstadoCaja(ddIdCaja.SelectedValue);
+        }
     }
 }
 

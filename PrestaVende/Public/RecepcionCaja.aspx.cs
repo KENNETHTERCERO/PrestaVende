@@ -114,7 +114,7 @@ namespace PrestaVende.Public
         {
             try
             {
-                if (asignacion_caja.recibirCaja(ref error, id_asignacion))
+                if (asignacion_caja.recibirAsignacionCaja(ref error, id_asignacion, txtMontoRecepcion.Text.ToString()))
                 {
                     Response.Redirect("~/Public/WFPrincipal.aspx", false);
                 }
@@ -150,6 +150,7 @@ namespace PrestaVende.Public
         //    return true;
         //}
         #endregion
+
         #region controles
         protected void btnCancelarRecepcion_Click(object sender, EventArgs e)
         {
@@ -163,7 +164,7 @@ namespace PrestaVende.Public
             {
                 if (validarCheck())
                 {
-                    //insertar();
+                    recibirCaja();
                 }
             }
             catch (Exception ex)

@@ -11,6 +11,9 @@ namespace PrestaVende.Public
     public partial class WFBusquedaCliente : System.Web.UI.Page
     {
         private CLASS.cs_cliente cs_cliente = new CLASS.cs_cliente();
+        private CLASS.cs_manejo_pais cs_manejo_pais = new CLASS.cs_manejo_pais();
+        private CLASS.cs_manejo_medios cs_manejo_medio = new CLASS.cs_manejo_medios();
+        private CLASS.cs_profesion cs_profesion = new CLASS.cs_profesion();
         private string error = "";
         private static bool isUpdate = false;
 
@@ -36,6 +39,9 @@ namespace PrestaVende.Public
                     {
                         hideOrShowDiv(true);
                         getEstados();
+                        getPaises();
+                        getCategoriaMedio();
+                        getProfesion();
                     }
                 }
             }
@@ -191,7 +197,7 @@ namespace PrestaVende.Public
         {
             try
             {
-                string[] datosInsert = new string[10];
+                string[] datosInsert = new string[16];
 
                 datosInsert[0] = txtDPI.Text;
                 datosInsert[1] = txtNit.Text;
@@ -203,6 +209,12 @@ namespace PrestaVende.Public
                 datosInsert[7] = txtCorreoElectronico.Text;
                 datosInsert[8] = txtNumeroTelefono.Text;
                 datosInsert[9] = ddlEstado.SelectedValue.ToString();
+                datosInsert[10] = ddlPais.SelectedValue.ToString();
+                datosInsert[11] = ddlDepartamento.SelectedValue.ToString();
+                datosInsert[12] = ddlMunicipio.SelectedValue.ToString();
+                datosInsert[13] = ddlSubCategoriaMedio.SelectedValue.ToString();
+                datosInsert[14] = ddlCategoriaMedio.SelectedValue.ToString();
+                datosInsert[15] = ddlProfesion.SelectedValue.ToString();
 
                 if (cs_cliente.insertClient(ref error, datosInsert) > 0)
                 {
@@ -236,6 +248,7 @@ namespace PrestaVende.Public
                     datosUpdate[6] = txtNumeroTelefono.Text;
                     datosUpdate[7] = ddlEstado.SelectedValue.ToString();
                     datosUpdate[8] = lblIdClienteNumero.Text.ToString();
+                    datosUpdate[9] = ddlProfesion.SelectedValue.ToString();
 
                     if (cs_cliente.updateClient(ref error, datosUpdate) > 0)
                     {
@@ -324,6 +337,102 @@ namespace PrestaVende.Public
             {
                 showError(ex.ToString());
                 return false;
+            }
+        }
+
+        private void getPaises()
+        {
+            try
+            {
+                ddlPais.DataSource = cs_manejo_pais.get_pais();
+                ddlPais.DataValueField = "id_pais";
+                ddlPais.DataTextField = "pais";
+                ddlPais.DataBind();
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+
+        private void getDepartamento(string id_pais)
+        {
+            try
+            {
+                ddlDepartamento.DataSource = cs_manejo_pais.get_Departamento(id_pais);
+                ddlDepartamento.DataValueField = "id_departamento";
+                ddlDepartamento.DataTextField = "departamento";
+                ddlDepartamento.DataBind();
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+
+        private void getMunicipio(string id_departamento)
+        {
+            try
+            {
+                ddlMunicipio.DataSource = cs_manejo_pais.get_municipio(id_departamento);
+                ddlMunicipio.DataValueField = "id_municipio";
+                ddlMunicipio.DataTextField = "municipio";
+                ddlMunicipio.DataBind();
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+
+        private void getCategoriaMedio()
+        {
+            try
+            {
+                ddlCategoriaMedio.DataSource = cs_manejo_medio.getCategoriaMedio();
+                ddlCategoriaMedio.DataValueField = "id_categoria_medio";
+                ddlCategoriaMedio.DataTextField = "categoria_medio";
+                ddlCategoriaMedio.DataBind();
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+
+        private void getSubCategoriaMedio(string id_categoria_medio)
+        {
+            try
+            {
+                ddlSubCategoriaMedio.DataSource = cs_manejo_medio.getSubCategoriaMedio(id_categoria_medio);
+                ddlSubCategoriaMedio.DataValueField = "id_subcategoria_medio";
+                ddlSubCategoriaMedio.DataTextField = "subcategoria_medio";
+                ddlSubCategoriaMedio.DataBind();
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+
+        private void getProfesion()
+        {
+            try
+            {
+                ddlProfesion.DataSource = cs_profesion.getProfesiones();
+                ddlProfesion.DataValueField = "id_profesion";
+                ddlProfesion.DataTextField = "profesion";
+                ddlProfesion.DataBind();
+            }
+            catch (Exception ex)
+            {
+
+                throw;
             }
         }
         #endregion
@@ -443,6 +552,45 @@ namespace PrestaVende.Public
                 showError(ex.ToString());
             }
         }
+
+        protected void ddlPais_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                getDepartamento(ddlPais.SelectedValue.ToString());
+            }
+            catch (Exception ex)
+            {
+                showError(ex.ToString());
+            }
+        }
+
+        protected void ddlDepartamento_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                getMunicipio(ddlDepartamento.SelectedValue.ToString());
+            }
+            catch (Exception ex)
+            {
+                showError(ex.ToString());
+            }
+        }
+
+        protected void ddlCategoriaMedio_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                getSubCategoriaMedio(ddlCategoriaMedio.SelectedValue.ToString());
+            }
+            catch (Exception ex)
+            {
+                showError(ex.ToString());
+            }
+        }
+
         #endregion
+
+
     }
 }

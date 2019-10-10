@@ -352,24 +352,7 @@ namespace PrestaVende.Public
 
                 row["id_kilataje"] = ddlKilataje.SelectedValue.ToString();
                 dtTablaJoyas.Rows.Add(row);
-                int linea = 1;
-
-                if (dtTablaJoyas.Rows.Count > 1)
-                {
-                    decimal totalPrestamo = 0;
-                    foreach (DataRow item in dtTablaJoyas.Rows)
-                    {
-                        item["numero_linea"] = linea;
-                        linea++;
-                        totalPrestamo += Convert.ToDecimal(item["valor"].ToString());
-                    }
-                    lblTotalPrestamoQuetzales.Text = Math.Round(totalPrestamo, 2, MidpointRounding.AwayFromZero).ToString();
-                }
-                else
-                {
-                    lblTotalPrestamoQuetzales.Text = txtValor.Text;
-                }
-
+                calculaTotalPrestamo();
                 gvProductoJoya.DataSource = dtTablaJoyas;
                 gvProductoJoya.DataBind();
             }
@@ -391,13 +374,37 @@ namespace PrestaVende.Public
                 row["valor"          ] = txtValor.Text;
                 row["caracteristicas"] = txtCaracteristicas.Text;
                 row["id_marca"] = ddlMarca.SelectedValue.ToString();
-                //row[] = txtCaracteristicas.Text.ToString();
-                //row[] = txtCaracteristicas.Text.ToString();
-                //row["id_kilataje"] = txtCaracteristicas.Text.ToString();
+
                 dtTablaArticulos.Rows.Add(row);
+                calculaTotalPrestamo();
+
+                gvProductoElectrodomesticos.DataSource = dtTablaArticulos;
+                gvProductoElectrodomesticos.DataBind();
+            }
+            catch (Exception ex)
+            {
+                showError(ex.ToString());
+            }
+        }
+
+        private void calculaTotalPrestamo()
+        {
+            try
+            {
                 int linea = 1;
 
-                if (dtTablaArticulos.Rows.Count > 1)
+                if (dtTablaJoyas.Rows.Count > 1)
+                {
+                    decimal totalPrestamo = 0;
+                    foreach (DataRow item in dtTablaJoyas.Rows)
+                    {
+                        item["numero_linea"] = linea;
+                        linea++;
+                        totalPrestamo += Convert.ToDecimal(item["valor"].ToString());
+                    }
+                    lblTotalPrestamoQuetzales.Text = Math.Round(totalPrestamo, 2, MidpointRounding.AwayFromZero).ToString();
+                }
+                else if (dtTablaArticulos.Rows.Count > 1)
                 {
                     decimal totalPrestamo = 0;
                     foreach (DataRow item in dtTablaArticulos.Rows)
@@ -412,13 +419,11 @@ namespace PrestaVende.Public
                 {
                     lblTotalPrestamoQuetzales.Text = txtValor.Text;
                 }
-
-                gvProductoElectrodomesticos.DataSource = dtTablaArticulos;
-                gvProductoElectrodomesticos.DataBind();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                showError(ex.ToString());
+
+                throw;
             }
         }
 
@@ -664,6 +669,30 @@ namespace PrestaVende.Public
                 return DateTime.Now;
             }
         }
+
+        private bool validaCaja()
+        {
+            try
+            {
+                if (CLASS.cs_usuario.id_caja == 0)
+                {
+                    showWarning("Usted no tiene caja asignada.");
+                    return false;
+                }
+                else if (CLASS.cs_usuario.Saldo_caja < Convert.ToDecimal(lblTotalPrestamoQuetzales.Text.ToString()))
+                {
+                    showWarning("El saldo de su caja es menor al monto del prestamo que quiere emitir, solicite un incremento de capital.");
+                    return false;
+                }
+                else
+                    return true;
+            }
+            catch (Exception ex)
+            {
+                showError(ex.ToString());
+                return false;
+            }
+        }
         #endregion
 
         #region messages
@@ -782,8 +811,7 @@ namespace PrestaVende.Public
         {
             try
             {
-
-                if (ddlProducto.SelectedValue.ToString().Equals("1"))
+                if (ddlCategoria.SelectedValue.ToString().Equals("1") || ddlCategoria.Text.ToString().Equals("JOYAS"))
                 {
                     if (validateJewelry())
                     {
@@ -812,7 +840,10 @@ namespace PrestaVende.Public
             {
                 if (validateDataPrestamo())
                 {
-                    guardarPrestamo();
+                    if (validaCaja())
+                    {
+                        guardarPrestamo();
+                    }
                 }
             }
             catch (Exception ex)
@@ -831,6 +862,8 @@ namespace PrestaVende.Public
                     dtTablaArticulos.Rows[index].Delete();
                     gvProductoElectrodomesticos.DataSource = dtTablaJoyas;
                     gvProductoElectrodomesticos.DataBind();
+                    blockComboBox();
+                    calculaTotalPrestamo();
                 }
             }
             catch (Exception ex)
@@ -849,6 +882,8 @@ namespace PrestaVende.Public
                     dtTablaJoyas.Rows[index].Delete();
                     gvProductoJoya.DataSource = dtTablaJoyas;
                     gvProductoJoya.DataBind();
+                    blockComboBox();
+                    calculaTotalPrestamo();
                 }
             }
             catch (Exception ex)
@@ -856,6 +891,12 @@ namespace PrestaVende.Public
                 showError(ex.ToString());
             }
         }
+
+        protected void btnProyeccion_Click(object sender, EventArgs e)
+        {
+
+        }
+
         #endregion
     }
 }

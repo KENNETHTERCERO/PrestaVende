@@ -86,7 +86,7 @@
                                                         <big><asp:Label ID="lblCaja" runat="server" Text="CAJA"></asp:Label></big>
                                                     </td>
                                                     <td>
-                                                         <asp:DropDownList ID="ddIdCaja" runat="server" class="form-control"></asp:DropDownList>
+                                                         <asp:DropDownList ID="ddIdCaja" runat="server" class="form-control" AutoPostBack="true" OnSelectedIndexChanged="ddIdCaja_SelectedIndexChanged"></asp:DropDownList>
                                                     </td>
                                                 </tr>         
                                                 <tr>
@@ -94,7 +94,7 @@
                                                         <big><asp:Label ID="lblEstadoCaja" runat="server" Text="ESTADO CAJA "></asp:Label></big>
                                                     </td>
                                                     <td>
-                                                        <asp:DropDownList ID="ddIdEstadoCaja" runat="server" class="form-control"/>
+                                                        <asp:DropDownList ID="ddIdEstadoCaja" runat="server" class="form-control"   />
                                                     </td>
                                                 </tr>
 
@@ -105,17 +105,8 @@
                                                     <td>
                                                          <asp:TextBox ID="txtMonto" type="decimal" text="0" runat="server" class="form-control"></asp:TextBox>
                                                     </td>
-                                                </tr>      
-                                                
-                                                <tr>
-                                                    <td>
-                                                        <big><asp:Label ID="lblEstado" runat="server" Text="ESTADO"></asp:Label></big>
-                                                    </td>
-                                                    <td>
-                                                         <asp:DropDownList ID="ddIdEstado" runat="server" class="form-control"></asp:DropDownList>
-                                                    </td>
-                                                </tr>   
-
+                                                </tr>                                                                                                       
+                                                   
                                                 <tr>
                                                     <td>
                                                         <big><asp:Label ID="lblUsuarioAsignado" runat="server" Text="USUARIO ASIGNADO"></asp:Label></big>
@@ -126,7 +117,7 @@
                                                 </tr>   
                                                 <tr>
                                                    <td>
-                                                       <big><asp:Label ID="lblRecibir" runat="server" Text="RECIBIR"></asp:Label></big>
+                                                       <big><asp:Label ID="lblRecibir" runat="server" Text="CERRAR"></asp:Label></big>
                                                    </td>
                                                     <td>    
                                                          <asp:CheckBox ID="ChbxRecibir" runat="server" oncheckedchanged="ChbxRecibir_CheckedChanged" AutoPostBack="true" class="form-control">

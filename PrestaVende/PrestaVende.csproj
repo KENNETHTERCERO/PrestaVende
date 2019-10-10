@@ -137,7 +137,10 @@
     <Compile Include="CLASS\cs_factura.cs" />
     <Compile Include="CLASS\cs_liquidacion.cs" />
     <Compile Include="CLASS\cs_empresa.cs" />
+    <Compile Include="CLASS\cs_manejo_medios.cs" />
+    <Compile Include="CLASS\cs_manejo_pais.cs" />
     <Compile Include="CLASS\cs_prestamo.cs" />
+    <Compile Include="CLASS\cs_profesion.cs" />
     <Compile Include="CLASS\cs_serie.cs" />
     <Compile Include="CLASS\cs_tipo_caja.cs" />
     <Compile Include="CLASS\cs_areaempresa.cs" />
@@ -302,6 +305,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+    <Folder Include="Reports\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

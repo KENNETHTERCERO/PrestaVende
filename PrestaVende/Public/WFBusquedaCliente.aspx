@@ -87,7 +87,31 @@
                                                 </tr>
                                                 <tr>
                                                     <td>
-                                                        <big><asp:Label ID="lblDPI" runat="server" Text="DPI"></asp:Label></big>
+                                                        <big><asp:Label ID="lblPais" runat="server" Text="PAIS"></asp:Label></big>
+                                                    </td>
+                                                    <td>
+                                                        <asp:DropDownList ID="ddlPais" runat="server" class="form-control" AutoPostBack="true" OnSelectedIndexChanged="ddlPais_SelectedIndexChanged"></asp:DropDownList>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <big><asp:Label ID="lblDepartamento" runat="server" Text="DEPARTAMENTO"></asp:Label></big>
+                                                    </td>
+                                                    <td>
+                                                        <asp:DropDownList ID="ddlDepartamento" runat="server" class="form-control" AutoPostBack="true" OnSelectedIndexChanged="ddlDepartamento_SelectedIndexChanged"></asp:DropDownList>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <big><asp:Label ID="lblMunicipio" runat="server" Text="MUNICIPIO"></asp:Label></big>
+                                                    </td>
+                                                    <td>
+                                                        <asp:DropDownList ID="ddlMunicipio" runat="server" class="form-control"></asp:DropDownList>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <big><asp:Label ID="lblDPI" runat="server" Text="DPI/PASAPORTE"></asp:Label></big>
                                                     </td>
                                                     <td>
                                                         <asp:TextBox ID="txtDPI" runat="server" type="number" class="form-control" ContentPlaceHolder="0000000000000" AccessKey="" Font-Bold="True"></asp:TextBox>
@@ -135,6 +159,14 @@
                                                 </tr>
                                                 <tr>
                                                     <td>
+                                                        <big><asp:Label ID="lblProfesion" runat="server" Text="PROFESION"></asp:Label></big>
+                                                    </td>
+                                                    <td>
+                                                        <asp:DropDownList ID="ddlProfesion" runat="server" class="form-control" ></asp:DropDownList>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
                                                         <big><asp:Label ID="lblDireccion" runat="server" Text="DIRECCION"></asp:Label></big>
                                                     </td>
                                                     <td>
@@ -155,6 +187,22 @@
                                                     </td>
                                                     <td>
                                                         <asp:TextBox ID="txtNumeroTelefono" runat="server" class="form-control"></asp:TextBox>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <big><asp:Label ID="lblCategoriaMedio" runat="server" Text="MEDIO"></asp:Label></big>
+                                                    </td>
+                                                    <td>
+                                                        <asp:DropDownList ID="ddlCategoriaMedio" runat="server" class="form-control" AutoPostBack="true" OnSelectedIndexChanged="ddlCategoriaMedio_SelectedIndexChanged" ></asp:DropDownList>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <big><asp:Label ID="lblSubCategoriaMedio" runat="server" Text="SUB MEDIO"></asp:Label></big>
+                                                    </td>
+                                                    <td>
+                                                        <asp:DropDownList ID="ddlSubCategoriaMedio" runat="server" class="form-control"></asp:DropDownList>
                                                     </td>
                                                 </tr>
                                                 <tr>
