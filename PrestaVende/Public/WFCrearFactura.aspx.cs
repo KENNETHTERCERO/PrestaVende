@@ -80,6 +80,30 @@ namespace PrestaVende.Public
             }
         }
 
+        private void getDetalleFactura()
+        {
+            string id_prestamo = Request.QueryString["id_prestamo"];
+
+            DataSet ds = new DataSet();
+
+            ds = cs_factura.ObtenerDetalleFacturas(ref error, id_prestamo);
+
+            if(ds.Tables.Count > 0)
+            {
+                gvDetalleFactura.DataSource = ds.Tables[0];
+                gvDetalleFactura.DataBind();
+
+                DataTable dt = new DataTable();
+
+                dt = ds.Tables[1];
+
+                lblSubTotalFactura.Text = dt.Rows[0]["SubTotal"].ToString();
+                lblIVAFactura.Text = dt.Rows[0]["IVA"].ToString();
+                lblTotalFacturaV.Text = dt.Rows[0]["Total"].ToString();
+            }           
+
+        }
+
         #endregion
 
         protected void Page_Load(object sender, EventArgs e)
@@ -90,6 +114,7 @@ namespace PrestaVende.Public
             }
             else
             {
+                getDetalleFactura();
                 getPrestamo();
                 getTransaccion();
                 getSeries();

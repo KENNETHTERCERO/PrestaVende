@@ -144,15 +144,20 @@
                                         <table>
                                             <tr>
                                                 <td>
-                                                    <asp:GridView ID="gvProductoJoya" runat="server" Width="100%" CssClass="footable" AutoGenerateColumns="False" 
+                                                    <asp:GridView ID="gvDetalleFactura" runat="server" Width="100%" CssClass="footable" AutoGenerateColumns="False" 
                                                         ForeColor="#333333" GridLines="None">
                                                         <AlternatingRowStyle BackColor="White" />
                                                         <Columns>
-                                                            <asp:BoundField DataField="id_producto" HeaderText="<center>ID</center>" SortExpression="id_producto" HtmlEncode="false"/>
-                                                            <asp:BoundField DataField="peso" HeaderText="<center>Peso</center>" SortExpression="peso" HtmlEncode="false" />
-                                                            <asp:BoundField DataField="kilataje" HeaderText="<center>Kilataje</center>" SortExpression="kilataje" HtmlEncode="false" />
-                                                            <asp:BoundField DataField="valor" HeaderText="<center>Valor</center>" SortExpression="valor" HtmlEncode="false" />
-                                                            <asp:BoundField DataField="caracteristicas" HeaderText="<center>Caracteristicas</center>" SortExpression="caracteristicas"  HtmlEncode="false"/>
+                                                            <asp:BoundField DataField="id_prestamo_encabezado" HeaderText="<center>ID Prestamo</center>" SortExpression="id_prestamo_encabezado" HtmlEncode="false"/>
+                                                            <asp:BoundField DataField="numero_prestamo" HeaderText="<center>No Prestamo</center>" SortExpression="numero_prestamo" HtmlEncode="false" />
+                                                            <asp:BoundField DataField="fecha_proximo_pago" HeaderText="<center>Fecha Proximo Pago</center>" SortExpression="fecha_proximo_pago" HtmlEncode="false" />
+                                                            <asp:BoundField DataField="fecha_ultimo_pago" HeaderText="<center>Fecha Ultimo Pago</center>" SortExpression="fecha_ultimo_pago" HtmlEncode="false" />
+                                                            <asp:BoundField DataField="fecha_actual" HeaderText="<center>Fecha Actual</center>" SortExpression="fecha_actual"  HtmlEncode="false"/>
+                                                            <asp:BoundField DataField="diferencia_dias" HeaderText="<center>Dias</center>" SortExpression="diferencia_dias"  HtmlEncode="false"/>
+                                                            <asp:BoundField DataField="cargo" HeaderText="<center>Cargo</center>" SortExpression="cargo"  HtmlEncode="false"/>
+                                                            <asp:BoundField DataField="porcentaje" HeaderText="<center>Porcentaje</center>" SortExpression="porcentaje"  HtmlEncode="false"/>
+                                                            <asp:BoundField DataField="saldo_prestamo" HeaderText="<center>Saldo</center>" SortExpression="saldo_prestamo"  HtmlEncode="false"/>
+                                                            <asp:BoundField DataField="SubTotal" HeaderText="<center>SubTotal</center>" SortExpression="SubTotal"  HtmlEncode="false" DataFormatString="{0:N2}"/>
                                                         </Columns>
                                                         <EditRowStyle BackColor="#7C6F57" />
                                                         <FooterStyle BackColor="#1C5E55" Font-Bold="False" ForeColor="White" />

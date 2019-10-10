@@ -36,7 +36,6 @@ namespace PrestaVende.Public
         {
             try
             {
-
                 string id_prestamo = Request.QueryString["id_prestamo"];
 
                 gvFactura.DataSource = cs_factura.ObtenerFacturas(ref error, id_prestamo);
