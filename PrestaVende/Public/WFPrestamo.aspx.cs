@@ -843,6 +843,9 @@ namespace PrestaVende.Public
                     if (validaCaja())
                     {
                         guardarPrestamo();
+
+                        //Reports.Contrato rpt = new Reports.Contrato();
+                        //rpt.Parameter_id_sucursal = 1;
                     }
                 }
             }
