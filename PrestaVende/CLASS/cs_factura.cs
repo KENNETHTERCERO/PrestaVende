@@ -14,7 +14,7 @@ namespace PrestaVende.CLASS
 
         public cs_factura()
         {
-            //cs_usuario.id_sucursal;
+            
         }
 
         public DataTable ObtenerFacturas(ref string error, string id_prestamo)
@@ -44,6 +44,48 @@ namespace PrestaVende.CLASS
                 connection.connection.Close();
             }
             return dtReturnFacturas;
+        }
+
+        public DataSet ObtenerDetalleFacturas(ref string error, string id_prestamo)
+        {
+            //DataTable dtReturnFacturas = new DataTable("dtDetalleFacturas");
+            DataSet ds = new DataSet();
+            try
+            {
+                connection.connection.Open();
+                command.Connection = connection.connection;
+                command.Parameters.Clear();
+
+                SqlDataAdapter adapter;
+                SqlParameter param;                
+
+                command.CommandType = CommandType.StoredProcedure;
+                command.CommandText = "SP_CalculoCargosPrestamo";
+
+                param = new SqlParameter("@id_encabezado_prestamo", id_prestamo);
+                param.Direction = ParameterDirection.Input;
+                param.DbType = DbType.String;
+                command.Parameters.Add(param);
+
+                adapter = new SqlDataAdapter(command);
+                adapter.Fill(ds);
+
+                //command.CommandText = "exec SP_CalculoCargosPrestamo @id_prestamo";
+                //command.Parameters.AddWithValue("@id_prestamo", id_prestamo);
+                //dtReturnFacturas.Load(command.ExecuteReader());
+
+
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                return null;
+            }
+            finally
+            {
+                connection.connection.Close();
+            }
+            return ds;
         }
     }
 }
