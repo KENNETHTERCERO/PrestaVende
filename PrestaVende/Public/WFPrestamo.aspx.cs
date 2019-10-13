@@ -598,7 +598,7 @@ namespace PrestaVende.Public
                 if (cs_prestamo.guardar_prestamo(ref error, generaEncabezado(), dtTablaJoyas, ddlCategoria.SelectedValue.ToString()))
                 {
                     showSuccess("Se creo prestamo correctamente.");
-                    Response.Redirect("WFBusquedaCliente");
+                    Response.Redirect("WFListadoPrestamo?id_cliente=" + lblid_cliente.Text.ToString());
                 }
                 else
                     showError(error);
@@ -616,7 +616,7 @@ namespace PrestaVende.Public
                 if (cs_prestamo.guardar_prestamo(ref error, generaEncabezado(), dtTablaArticulos, ddlCategoria.SelectedValue.ToString()))
                 {
                     showSuccess("Se creo prestamo correctamente.");
-                    Response.Redirect("WFBusquedaCliente");
+                    Response.Redirect("WFListadoPrestamo?id_cliente=" + lblid_cliente.Text.ToString());
                 }
                 else
                     showError(error);
