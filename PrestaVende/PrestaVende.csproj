@@ -98,8 +98,11 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Public\CambioPrecioProducto.aspx" />
+    <Content Include="Public\FacturacionProductos.aspx" />
     <Content Include="Public\PrestaVende.Master" />
     <Content Include="Public\RecepcionCaja.aspx" />
+    <Content Include="Public\RecepcionLiquidaciones.aspx" />
     <Content Include="Public\WFBusquedaCliente.aspx" />
     <Content Include="Public\WFBusquedaClienteFacturacion.aspx" />
     <Content Include="Public\WFCrearFactura.aspx" />
@@ -135,6 +138,7 @@
     <Compile Include="CLASS\cs_caja.cs" />
     <Compile Include="CLASS\cs_casilla.cs" />
     <Compile Include="CLASS\cs_factura.cs" />
+    <Compile Include="CLASS\cs_inventario.cs" />
     <Compile Include="CLASS\cs_liquidacion.cs" />
     <Compile Include="CLASS\cs_empresa.cs" />
     <Compile Include="CLASS\cs_manejo_medios.cs" />
@@ -161,6 +165,20 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Public\CambioPrecioProducto.aspx.cs">
+      <DependentUpon>CambioPrecioProducto.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\CambioPrecioProducto.aspx.designer.cs">
+      <DependentUpon>CambioPrecioProducto.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\FacturacionProductos.aspx.cs">
+      <DependentUpon>FacturacionProductos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\FacturacionProductos.aspx.designer.cs">
+      <DependentUpon>FacturacionProductos.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Public\PrestaVende.Master.cs">
       <DependentUpon>PrestaVende.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -174,6 +192,13 @@
     </Compile>
     <Compile Include="Public\RecepcionCaja.aspx.designer.cs">
       <DependentUpon>RecepcionCaja.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\RecepcionLiquidaciones.aspx.cs">
+      <DependentUpon>RecepcionLiquidaciones.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\RecepcionLiquidaciones.aspx.designer.cs">
+      <DependentUpon>RecepcionLiquidaciones.aspx</DependentUpon>
     </Compile>
     <Compile Include="Public\WFBusquedaCliente.aspx.cs">
       <DependentUpon>WFBusquedaCliente.aspx</DependentUpon>

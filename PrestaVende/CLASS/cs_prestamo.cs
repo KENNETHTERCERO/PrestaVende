@@ -38,8 +38,18 @@ namespace PrestaVende.CLASS
                         {
                             if (update_saldo_caja(ref error, monto))
                             {
-                                command.Transaction.Commit();
-                                return true;
+                                if (update_casilla(ref error, encabezado[8]))
+                                {
+                                    if (update_sucursal_correlativo_prestamo(ref error))
+                                    {
+                                        command.Transaction.Commit();
+                                        return true;
+                                    }
+                                    else
+                                        throw new Exception("No se pudo actualizar el correlativo de pretamos.");
+                                }
+                                else
+                                    throw new Exception("No se pudo actualizar la casilla.");
                             }
                             else
                                 throw new Exception("No se pudo actualizar el saldo de la caja.");
@@ -180,6 +190,47 @@ namespace PrestaVende.CLASS
                 command.Parameters.AddWithValue("@monto_update", monto);
                 command.Parameters.AddWithValue("@id_caja_update", cs_usuario.id_caja);
 
+                update = command.ExecuteNonQuery();
+                if (update > 0)
+                    return true;
+                else
+                    return false;
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                return false;
+            }
+        }
+
+        private bool update_casilla(ref string error, string id_casilla)
+        {
+            try
+            {
+                int update = 0;
+                command.CommandText = "UPDATE tbl_casilla SET estado = 1 WHERE id_casilla = @id_casilla";
+                command.Parameters.AddWithValue("@@id_casilla", id_casilla);
+
+                update = command.ExecuteNonQuery();
+                if (update > 0)
+                    return true;
+                else
+                    return false;
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                return false;
+            }
+        }
+
+        private bool update_sucursal_correlativo_prestamo(ref string error)
+        {
+            try
+            {
+                int update = 0;
+                command.CommandText = "UPDATE tbl_sucursal SET correlativo_prestamo = correlativo_prestamo + 1 WHERE id_sucursal = @id_sucursal";
+                command.Parameters.AddWithValue("@id_sucursal", cs_usuario.id_sucursal);
                 update = command.ExecuteNonQuery();
                 if (update > 0)
                     return true;
