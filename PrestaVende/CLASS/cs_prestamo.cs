@@ -255,7 +255,7 @@ namespace PrestaVende.CLASS
                 connection.connection.Open();
                 command.Connection = connection.connection;
                 command.Parameters.Clear();
-                command.CommandText = "select pre.id_prestamo_encabezado,pre.numero_prestamo,cli.primer_nombre,cli.segundo_nombre,cli.primer_apellido,cli.segundo_apellido " +
+                command.CommandText = "select pre.id_prestamo_encabezado,pre.numero_prestamo,cli.primer_nombre,cli.segundo_nombre,cli.primer_apellido,cli.segundo_apellido, pre.id_cliente " +
                                        "from tbl_prestamo_encabezado pre " +
                                        "inner join tbl_cliente cli on cli.id_cliente = pre.id_cliente " +
                                        "where pre.estado_prestamo = 1 and pre.id_prestamo_encabezado = @id_prestamo";
