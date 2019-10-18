@@ -17,6 +17,7 @@ namespace PrestaVende.Public
         private static DataSet ds_global = new DataSet();
         private string error = "";
         private static string id_cliente = "0";
+        private static string saldo_prestamo = "0";
 
         #region funciones
 
@@ -31,6 +32,15 @@ namespace PrestaVende.Public
                     lblNombrePrestamo.Text = item[1].ToString();
                     lblNombreCliente.Text = item[2].ToString() + " " + item[3].ToString() + " " + item[4].ToString() + " " + item[5].ToString();
                     id_cliente = item[6].ToString();
+                    saldo_prestamo = item[7].ToString();
+
+                    string tipo_transaccion = getEquivalenteTransaccion(Request.QueryString["id_tipo"]);
+
+                    if(tipo_transaccion == "10")
+                    {
+                        txtAbonoCapital.Text = saldo_prestamo;
+                        lblAbonoCapital.Text = "MONTO CANCELACION";
+                    }
                 }
             }
             catch (Exception ex)
@@ -43,16 +53,19 @@ namespace PrestaVende.Public
         {
             string id_tipo_transaccion = "0";
 
-            switch (Request.QueryString["id_tipo"])
+            switch (transaccion)
             {
                 case "1":
                     id_tipo_transaccion = "8";
+                    lblAbonoCapital.Visible = false;
+                    txtAbonoCapital.Visible = false;
                     break;
                 case "2":
                     id_tipo_transaccion = "9";
                     break;
                 case "3":
                     id_tipo_transaccion = "10";
+                    txtAbonoCapital.Enabled = false;
                     break;
             }
 
@@ -181,14 +194,32 @@ namespace PrestaVende.Public
                     {
                         if (CLASS.cs_usuario.id_tipo_caja == 2)
                         {
-                            string id_tipo_transaccion = getEquivalenteTransaccion(Request.QueryString["id_tipo"]);
-                            string numero_prestamo = lblNombrePrestamo.Text;
-                            bool Resultado = false;
+                            decimal abono = 0;
+                            bool abonoB = false;
 
-                            Resultado = cs_factura.GuardarFactura(ref error, ds_global, id_serie, id_cliente, id_tipo_transaccion, CLASS.cs_usuario.id_caja, numero_prestamo);
+                            abonoB = decimal.TryParse(txtAbonoCapital.Text, out abono);
 
-                            string id_prestamo = Request.QueryString["id_prestamo"];
-                            Response.Redirect("WFFacturacion?id_prestamo=" + id_prestamo);
+                            if((txtAbonoCapital.Visible == true && abono >= 5) || (txtAbonoCapital.Visible == false))
+                            {
+                                decimal lSaldo_prestamo = decimal.Parse(saldo_prestamo);
+                                string id_tipo_transaccion = getEquivalenteTransaccion(Request.QueryString["id_tipo"]);
+
+                                if ((txtAbonoCapital.Visible == true && abono < lSaldo_prestamo && id_tipo_transaccion == "9") || (txtAbonoCapital.Visible == false) 
+                                      || (txtAbonoCapital.Visible == true && abono == lSaldo_prestamo && id_tipo_transaccion == "10"))
+                                {                                    
+                                    string numero_prestamo = lblNombrePrestamo.Text;
+                                    bool Resultado = false;
+
+                                    Resultado = cs_factura.GuardarFactura(ref error, ds_global, id_serie, id_cliente, id_tipo_transaccion, CLASS.cs_usuario.id_caja, numero_prestamo, abono.ToString());
+
+                                    string id_prestamo = Request.QueryString["id_prestamo"];
+                                    Response.Redirect("WFFacturacion?id_prestamo=" + id_prestamo);
+                                }
+                                else
+                                    showWarning("El abono ingresado no puede ser mayor o igual al saldo del prestamo.");
+                            }
+                            else
+                                showWarning("El abono ingresado es incorrecto.");
 
                         } else
                             showWarning("El tipo de caja asignada no es del tipo correcto para realizar la operación.");

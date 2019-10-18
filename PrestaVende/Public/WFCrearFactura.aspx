@@ -135,6 +135,14 @@
                                                         <big><asp:Label ID="lblTotalFacturaV" runat="server" Text="0"></asp:Label></big>
                                                     </td> 
                                                 </tr>
+                                                <tr>     
+                                                    <td>
+                                                        <asp:Label ID="lblAbonoCapital" runat="server" Text="ABONO A CAPITAL"></asp:Label>
+                                                    </td>
+                                                    <td>
+                                                        <asp:TextBox ID="txtAbonoCapital" runat="server" CssClass="form-control" Value="0.00" type="number" step="0.01"></asp:TextBox>
+                                                    </td>
+                                                </tr>
                                             </table>
                                         </div>
                                     </div>
