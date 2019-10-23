@@ -597,6 +597,10 @@ namespace PrestaVende.Public
             {
                 if (cs_prestamo.guardar_prestamo(ref error, generaEncabezado(), dtTablaJoyas, ddlCategoria.SelectedValue.ToString()))
                 {
+                    Reports.PrestamoGeneral rpt = new Reports.PrestamoGeneral();
+                    rpt.SetParameterValue("id_sucursal", "1");
+                    rpt.SetParameterValue("numero_prestamo", "10000000001");
+
                     showSuccess("Se creo prestamo correctamente.");
                     Response.Redirect("WFListadoPrestamo?id_cliente=" + lblid_cliente.Text.ToString());
                 }
@@ -843,9 +847,6 @@ namespace PrestaVende.Public
                     if (validaCaja())
                     {
                         guardarPrestamo();
-
-                        //Reports.Contrato rpt = new Reports.Contrato();
-                        //rpt.Parameter_id_sucursal = 1;
                     }
                 }
             }

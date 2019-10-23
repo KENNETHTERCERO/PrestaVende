@@ -162,12 +162,13 @@ namespace PrestaVende.CLASS
             try
             {
                 int insert = 0;
-                command.CommandText = "INSERT INTO tbl_transaccion (id_tipo_transaccion, id_caja, monto, numero_prestamo, estado_transaccion, fecha_transaccion, usuario, movimiento_saldo) " +
-                                                                "VALUES(7, @id_caja, @monto, @numero_prestamo_transaccion, 1, GETDATE(), @usuario_transaccion, (SELECT saldo - @monto FROM tbl_caja WHERE id_caja = @id_caja))";
+                command.CommandText = "INSERT INTO tbl_transaccion (id_tipo_transaccion, id_caja, monto, numero_prestamo, estado_transaccion, fecha_transaccion, usuario, movimiento_saldo, id_sucursal) " +
+                                                                "VALUES(7, @id_caja, @monto, @numero_prestamo_transaccion, 1, GETDATE(), @usuario_transaccion, (SELECT saldo - @monto FROM tbl_caja WHERE id_caja = @id_caja), @id_sucursal_transaccion)";
                 command.Parameters.AddWithValue("@id_caja",         cs_usuario.id_caja);
                 command.Parameters.AddWithValue("@monto",           monto);
                 command.Parameters.AddWithValue("@numero_prestamo_transaccion", numero_prestamo);
                 command.Parameters.AddWithValue("@usuario_transaccion",         cs_usuario.usuario);
+                command.Parameters.AddWithValue("@id_sucursal_transaccion", cs_usuario.id_sucursal);
                 insert = command.ExecuteNonQuery();
                 if (insert > 0)
                     return true;
