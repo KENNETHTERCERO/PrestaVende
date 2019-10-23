@@ -14,7 +14,10 @@ namespace PrestaVende.Public
         private CLASS.cs_factura cs_factura = new CLASS.cs_factura();
         private CLASS.cs_transaccion cs_transaccion = new CLASS.cs_transaccion();
         private CLASS.cs_serie cs_serie = new CLASS.cs_serie();
+        private static DataSet ds_global = new DataSet();
         private string error = "";
+        private static string id_cliente = "0";
+        private static string saldo_prestamo = "0";
 
         #region funciones
 
@@ -28,6 +31,16 @@ namespace PrestaVende.Public
                     lblnombre_prestamo.Text = item[1].ToString() + " - Cliente: " + item[2].ToString() + " " + item[3].ToString() + " " + item[4].ToString() + " " + item[5].ToString();
                     lblNombrePrestamo.Text = item[1].ToString();
                     lblNombreCliente.Text = item[2].ToString() + " " + item[3].ToString() + " " + item[4].ToString() + " " + item[5].ToString();
+                    id_cliente = item[6].ToString();
+                    saldo_prestamo = item[7].ToString();
+
+                    string tipo_transaccion = getEquivalenteTransaccion(Request.QueryString["id_tipo"]);
+
+                    if(tipo_transaccion == "10")
+                    {
+                        txtAbonoCapital.Text = saldo_prestamo;
+                        lblAbonoCapital.Text = "MONTO CANCELACION";
+                    }
                 }
             }
             catch (Exception ex)
@@ -36,25 +49,35 @@ namespace PrestaVende.Public
             }
         }
 
+        private string getEquivalenteTransaccion(string transaccion)
+        {
+            string id_tipo_transaccion = "0";
+
+            switch (transaccion)
+            {
+                case "1":
+                    id_tipo_transaccion = "8";
+                    lblAbonoCapital.Visible = false;
+                    txtAbonoCapital.Visible = false;
+                    break;
+                case "2":
+                    id_tipo_transaccion = "9";
+                    break;
+                case "3":
+                    id_tipo_transaccion = "10";
+                    txtAbonoCapital.Enabled = false;
+                    break;
+            }
+
+            return id_tipo_transaccion;
+        }
+
         private void getTransaccion()
         {
             try
             {
-                string id_tipo_transaccion = "0";
-
-                switch (Request.QueryString["id_tipo"])
-                {
-                    case "1":
-                        id_tipo_transaccion = "8";
-                        break;
-                    case "2":
-                        id_tipo_transaccion = "9";
-                        break;
-                    case "3":
-                        id_tipo_transaccion = "10";
-                        break;
-                }
-
+                string id_tipo_transaccion = getEquivalenteTransaccion(Request.QueryString["id_tipo"]);
+                
                 foreach (DataRow item in cs_transaccion.ObtenerTransaccion(ref error, id_tipo_transaccion).Rows)                
                     lblTransaccion.Text = item[1].ToString();                                
             }
@@ -82,20 +105,18 @@ namespace PrestaVende.Public
 
         private void getDetalleFactura()
         {
-            string id_prestamo = Request.QueryString["id_prestamo"];
+            string id_prestamo = Request.QueryString["id_prestamo"];                     
 
-            DataSet ds = new DataSet();
+            ds_global = cs_factura.ObtenerDetalleFacturas(ref error, id_prestamo);            
 
-            ds = cs_factura.ObtenerDetalleFacturas(ref error, id_prestamo);
-
-            if(ds.Tables.Count > 0)
+            if (ds_global.Tables.Count > 0)
             {
-                gvDetalleFactura.DataSource = ds.Tables[0];
+                gvDetalleFactura.DataSource = ds_global.Tables[0];
                 gvDetalleFactura.DataBind();
 
                 DataTable dt = new DataTable();
 
-                dt = ds.Tables[1];
+                dt = ds_global.Tables[1];
 
                 lblSubTotalFactura.Text = dt.Rows[0]["SubTotal"].ToString();
                 lblIVAFactura.Text = dt.Rows[0]["IVA"].ToString();
@@ -160,5 +181,62 @@ namespace PrestaVende.Public
                 showWarning(ex.ToString() + " " + error);
             }            
         }
+
+        protected void btnGuardarFactura_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string id_serie = ddlSerie.SelectedValue.ToString();
+
+                if (int.Parse(id_serie) > 0)
+                {
+                    if(CLASS.cs_usuario.id_caja > 0)
+                    {
+                        if (CLASS.cs_usuario.id_tipo_caja == 2)
+                        {
+                            decimal abono = 0;
+                            bool abonoB = false;
+
+                            abonoB = decimal.TryParse(txtAbonoCapital.Text, out abono);
+
+                            if((txtAbonoCapital.Visible == true && abono >= 5) || (txtAbonoCapital.Visible == false))
+                            {
+                                decimal lSaldo_prestamo = decimal.Parse(saldo_prestamo);
+                                string id_tipo_transaccion = getEquivalenteTransaccion(Request.QueryString["id_tipo"]);
+
+                                if ((txtAbonoCapital.Visible == true && abono < lSaldo_prestamo && id_tipo_transaccion == "9") || (txtAbonoCapital.Visible == false) 
+                                      || (txtAbonoCapital.Visible == true && abono == lSaldo_prestamo && id_tipo_transaccion == "10"))
+                                {                                    
+                                    string numero_prestamo = lblNombrePrestamo.Text;
+                                    bool Resultado = false;
+
+                                    Resultado = cs_factura.GuardarFactura(ref error, ds_global, id_serie, id_cliente, id_tipo_transaccion, CLASS.cs_usuario.id_caja, numero_prestamo, abono.ToString());
+
+                                    string id_prestamo = Request.QueryString["id_prestamo"];
+                                    Response.Redirect("WFFacturacion?id_prestamo=" + id_prestamo);
+                                }
+                                else
+                                    showWarning("El abono ingresado no puede ser mayor o igual al saldo del prestamo.");
+                            }
+                            else
+                                showWarning("El abono ingresado es incorrecto.");
+
+                        } else
+                            showWarning("El tipo de caja asignada no es del tipo correcto para realizar la operación.");
+
+                    } else
+                        showWarning("No tiene asignada una caja.");
+                    
+                } else
+                    showWarning("Seleccione una serie.");
+
+            }
+            catch (Exception ex)
+            {
+
+                showWarning(ex.ToString() + " " + error);
+            }
+        }
+
     }
 }
