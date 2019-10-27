@@ -22,6 +22,7 @@ namespace PrestaVende.CLASS
         private string AsignacionCaja = "2";
         private string CajaRecibida = "3";
         private string CierreCaja = "4";
+        private string CajaRecibidaGeneral = "6";
         private string Incremento = "7";
         private string Decremento = "8";
         private string AsignacionCajaGeneral = "";
@@ -259,7 +260,7 @@ namespace PrestaVende.CLASS
                                         + "			on r.id_rol = rtc.id_rol                                        "
                                         + "	where r.id_rol = @id_rol                                                ";
 
-                if (CLASS.cs_usuario.usuario.Contains("GERENTE"))
+                if (CLASS.cs_usuario.usuario.Contains("GERENTE") || CLASS.cs_usuario.usuario.Contains("gerente"))
                 {
                 }
                 else
@@ -315,7 +316,8 @@ namespace PrestaVende.CLASS
         }
 
         public bool insertAsignacionCaja(ref string error, string id_asignacion_caja, string id_caja, string id_estado_caja, string monto, string estado_asignacion,
-                                            string fecha_creacion, string fecha_modificacion, string usuario_asigna, string id_usuario_asignado, Boolean BlnRecibir)
+                                            string fecha_creacion, string fecha_modificacion, string usuario_asigna, string id_usuario_asignado, Boolean BlnRecibir,
+                                            string id_asignacion_recibida)
         {
             try
             {
@@ -334,7 +336,22 @@ namespace PrestaVende.CLASS
                 command.Connection = connection.connection;
                 connection.connection.Open();
                 command.Parameters.Clear();
-                command.Transaction = connection.connection.BeginTransaction();             
+                command.Transaction = connection.connection.BeginTransaction();
+
+                //OBTENIENDO TIPO DE CAJA
+                command.Parameters.Clear();
+                command.CommandText = "select id_tipo_caja from tbl_caja where id_caja = @id_caja";
+                command.Parameters.AddWithValue("@id_caja", id_caja);
+                DtTipoCaja.Load(command.ExecuteReader());
+
+                if (DtTipoCaja.Rows.Count > 0)
+                {
+                    foreach (DataRow item in DtTipoCaja.Rows)
+                    {
+                        id_tipo_caja = item[0].ToString();
+                    }
+                }
+
 
                 command.Parameters.Clear();
                 command.CommandText = " INSERT INTO tbl_asignacion_caja (id_caja, id_estado_caja, monto,                    "
@@ -342,10 +359,18 @@ namespace PrestaVende.CLASS
                                      + "       VALUES(@id_caja, @id_estado_caja, @monto,                                   "
                                      + "       @estado_asignacion, @fecha_creacion, @fecha_modificacion, @usuario_asigna, @id_usuario_asignado)";
 
-                if (BlnRecibir == true) //CUANDO LA CAJA SE CIERRA
+                if (BlnRecibir == true) //CUANDO LA CAJA SE RECIBE
                 {
-                    command.Parameters.AddWithValue("@id_estado_caja", CierreCaja);
+                    if (id_tipo_caja == "1")//CUANDO LA CAJA ES GENERAL
+                    {
+                        command.Parameters.AddWithValue("@id_estado_caja", CajaRecibidaGeneral);
+                        command.Parameters.AddWithValue("@id_usuario_asignado", CLASS.cs_usuario.id_usuario);
+                    }
+                    else //CUANDO LA CAJA ES TRANSACCIONAL
+                    { 
+                    command.Parameters.AddWithValue("@id_estado_caja", CajaRecibida);
                     command.Parameters.AddWithValue("@id_usuario_asignado", CLASS.cs_usuario.id_usuario);
+                    }
                 }
                 else
                 {
@@ -361,19 +386,7 @@ namespace PrestaVende.CLASS
                 command.Parameters.AddWithValue("@usuario_asigna", CLASS.cs_usuario.usuario);
                 command.ExecuteNonQuery();
 
-                //OBTENIENDO TIPO DE CAJA
-                command.Parameters.Clear();
-                command.CommandText = "select id_tipo_caja from tbl_caja where id_caja = @id_caja";
-                command.Parameters.AddWithValue("@id_caja", id_caja);
-                DtTipoCaja.Load(command.ExecuteReader());
-
-                if (DtTipoCaja.Rows.Count > 0)
-                {
-                    foreach (DataRow item in DtTipoCaja.Rows)
-                    {
-                        id_tipo_caja = item[0].ToString();
-                    }
-                }
+               
 
                 //SE OBTINE ID DE CAJA GENERAL PARA REALIZAR LA SUMATORIA/RESTA
                 command.Parameters.Clear();
@@ -391,39 +404,53 @@ namespace PrestaVende.CLASS
 
                 if (BlnRecibir == true) //CUANDO LA CAJA SE CIERRA
                 {
-                                       
-                    //MODIFICANDO SALDO ACTUAL DE CAJA TRANSACCIONAL
-                    command.Parameters.Clear();
-                    command.CommandText = " UPDATE tbl_caja SET fecha_modificacion = @fecha_modificacion, saldo = saldo - @saldo, id_estado_caja = @id_estado_caja WHERE id_caja = @id_caja";
-                    command.Parameters.AddWithValue("@id_caja", id_caja);
-                    command.Parameters.AddWithValue("@fecha_modificacion", DateTime.Now);
-                    command.Parameters.AddWithValue("@saldo", monto);
-                    command.Parameters.AddWithValue("@id_estado_caja", CierreCaja);
-                    rowsUpdated = command.ExecuteNonQuery();
 
-                    if (rowsUpdated <= 0)
+                    if (id_estado_caja == "4")
                     {
-                        command.Transaction.Rollback();
-                        return false;
+                        //MODIFICANDO SALDO ACTUAL DE CAJA TRANSACCIONAL
+                        command.Parameters.Clear();
+                        command.CommandText = " UPDATE tbl_caja SET fecha_modificacion = @fecha_modificacion, saldo = saldo - @saldo, id_estado_caja = @id_estado_caja WHERE id_caja = @id_caja";
+                        command.Parameters.AddWithValue("@id_caja", id_caja);
+                        command.Parameters.AddWithValue("@fecha_modificacion", DateTime.Now);
+                        command.Parameters.AddWithValue("@saldo", monto);
+                        command.Parameters.AddWithValue("@id_estado_caja", CierreCaja);
+                        rowsUpdated = command.ExecuteNonQuery();
+
+                        if (rowsUpdated <= 0)
+                        {
+                            command.Transaction.Rollback();
+                            return false;
+                        }
+
+                        //MODIFICANDO SALDO ACTUAL DE CAJA GENERAL
+                        command.Parameters.Clear();
+                        command.CommandText = " UPDATE tbl_caja SET fecha_modificacion = @fecha_modificacion, saldo = saldo + @saldo WHERE id_caja = @id_caja";
+                        command.Parameters.AddWithValue("@id_caja", id_caja_general);
+                        command.Parameters.AddWithValue("@fecha_modificacion", DateTime.Now);
+                        command.Parameters.AddWithValue("@saldo", monto);
+                        rowsUpdated = command.ExecuteNonQuery();
+
+                        if (rowsUpdated <= 0)
+                        {
+                            command.Transaction.Rollback();
+                            return false;
+                        }
+
+                        //CUANDO SE CIERRA LA CAJA EL USUARIO YA NO DEBE TENER CAJA ASIGNADA
+                        command.CommandText = "UPDATE tbl_usuario SET caja_asignada = 0 WHERE id_usuario = @id_usuario";
+                        command.Parameters.AddWithValue("@id_usuario", CLASS.cs_usuario.id_usuario);
+                        rowsUpdated = command.ExecuteNonQuery();
+
+                        if (rowsUpdated <= 0)
+                        {
+                            command.Transaction.Rollback();
+                            return false;
+                        }
                     }
 
-                    //MODIFICANDO SALDO ACTUAL DE CAJA GENERAL
-                    command.Parameters.Clear();
-                    command.CommandText = " UPDATE tbl_caja SET fecha_modificacion = @fecha_modificacion, saldo = saldo + @saldo WHERE id_caja = @id_caja";
-                    command.Parameters.AddWithValue("@id_caja", id_caja_general);
-                    command.Parameters.AddWithValue("@fecha_modificacion", DateTime.Now);
-                    command.Parameters.AddWithValue("@saldo", monto);
-                    rowsUpdated = command.ExecuteNonQuery();
-
-                    if (rowsUpdated <= 0)
-                    {
-                        command.Transaction.Rollback();
-                        return false;
-                    }
-                 
-                    //CUANDO SE CIERRA LA CAJA EL USUARIO YA NO DEBE TENER CAJA ASIGNADA
-                    command.CommandText = "UPDATE tbl_usuario SET caja_asignada = 0 WHERE id_usuario = @id_usuario";
-                    command.Parameters.AddWithValue("@id_usuario", CLASS.cs_usuario.id_usuario);
+                    //ACTUALIZANDO ESTADO ACTIVO A INACTIVO DE ASIGNACIÓN LA CUAL SE RECIBIRÁ
+                    command.CommandText = "UPDATE tbl_asignacion_caja SET estado_asignacion = 0 WHERE id_asignacion = @id_asignacion ";
+                    command.Parameters.AddWithValue("@id_asignacion", id_asignacion_recibida);
                     rowsUpdated = command.ExecuteNonQuery();
 
                     if (rowsUpdated <= 0)
@@ -505,7 +532,7 @@ namespace PrestaVende.CLASS
                     }                   
                 }
 
-
+                
 
 
                 ////INSERTANDO TRANSACCION
