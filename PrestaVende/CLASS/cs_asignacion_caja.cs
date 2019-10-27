@@ -727,7 +727,7 @@ namespace PrestaVende.CLASS
                 command.Parameters.Clear();
                 command.CommandText = "INSERT INTO tbl_transaccion (id_tipo_transaccion, id_caja, monto, estado_transaccion, fecha_transaccion, usuario, movimiento_saldo, id_sucursal) " +
                                         "VALUES(5, @id_caja_transaccion, @monto, 1, GETDATE(), @usuario, @movimiento_saldo, @id_sucursal)";
-                command.Parameters.AddWithValue("@id_caja_transaccion", CLASS.cs_usuario.id_usuario);
+                command.Parameters.AddWithValue("@id_caja_transaccion", CLASS.cs_usuario.id_caja);
                 command.Parameters.AddWithValue("@monto", monto);
                 command.Parameters.AddWithValue("@usuario", CLASS.cs_usuario.usuario);
                 command.Parameters.AddWithValue("@movimiento_saldo", monto);

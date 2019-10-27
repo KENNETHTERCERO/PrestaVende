@@ -38,8 +38,18 @@ namespace PrestaVende.CLASS
                         {
                             if (update_saldo_caja(ref error, monto))
                             {
-                                command.Transaction.Commit();
-                                return true;
+                                if (update_casilla(ref error, encabezado[8]))
+                                {
+                                    if (update_sucursal_correlativo_prestamo(ref error))
+                                    {
+                                        command.Transaction.Commit();
+                                        return true;
+                                    }
+                                    else
+                                        throw new Exception("No se pudo actualizar el correlativo de pretamos.");
+                                }
+                                else
+                                    throw new Exception("No se pudo actualizar la casilla.");
                             }
                             else
                                 throw new Exception("No se pudo actualizar el saldo de la caja.");
@@ -152,12 +162,13 @@ namespace PrestaVende.CLASS
             try
             {
                 int insert = 0;
-                command.CommandText = "INSERT INTO tbl_transaccion (id_tipo_transaccion, id_caja, monto, numero_prestamo, estado_transaccion, fecha_transaccion, usuario, movimiento_saldo) " +
-                                                                "VALUES(7, @id_caja, @monto, @numero_prestamo_transaccion, 1, GETDATE(), @usuario_transaccion, (SELECT saldo - @monto FROM tbl_caja WHERE id_caja = @id_caja))";
+                command.CommandText = "INSERT INTO tbl_transaccion (id_tipo_transaccion, id_caja, monto, numero_prestamo, estado_transaccion, fecha_transaccion, usuario, movimiento_saldo, id_sucursal) " +
+                                                                "VALUES(7, @id_caja, @monto, @numero_prestamo_transaccion, 1, GETDATE(), @usuario_transaccion, (SELECT saldo - @monto FROM tbl_caja WHERE id_caja = @id_caja), @id_sucursal_transaccion)";
                 command.Parameters.AddWithValue("@id_caja",         cs_usuario.id_caja);
                 command.Parameters.AddWithValue("@monto",           monto);
                 command.Parameters.AddWithValue("@numero_prestamo_transaccion", numero_prestamo);
                 command.Parameters.AddWithValue("@usuario_transaccion",         cs_usuario.usuario);
+                command.Parameters.AddWithValue("@id_sucursal_transaccion", cs_usuario.id_sucursal);
                 insert = command.ExecuteNonQuery();
                 if (insert > 0)
                     return true;
@@ -180,6 +191,47 @@ namespace PrestaVende.CLASS
                 command.Parameters.AddWithValue("@monto_update", monto);
                 command.Parameters.AddWithValue("@id_caja_update", cs_usuario.id_caja);
 
+                update = command.ExecuteNonQuery();
+                if (update > 0)
+                    return true;
+                else
+                    return false;
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                return false;
+            }
+        }
+
+        private bool update_casilla(ref string error, string id_casilla)
+        {
+            try
+            {
+                int update = 0;
+                command.CommandText = "UPDATE tbl_casilla SET estado = 1 WHERE id_casilla = @id_casilla";
+                command.Parameters.AddWithValue("@@id_casilla", id_casilla);
+
+                update = command.ExecuteNonQuery();
+                if (update > 0)
+                    return true;
+                else
+                    return false;
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                return false;
+            }
+        }
+
+        private bool update_sucursal_correlativo_prestamo(ref string error)
+        {
+            try
+            {
+                int update = 0;
+                command.CommandText = "UPDATE tbl_sucursal SET correlativo_prestamo = correlativo_prestamo + 1 WHERE id_sucursal = @id_sucursal";
+                command.Parameters.AddWithValue("@id_sucursal", cs_usuario.id_sucursal);
                 update = command.ExecuteNonQuery();
                 if (update > 0)
                     return true;
@@ -255,8 +307,8 @@ namespace PrestaVende.CLASS
                 connection.connection.Open();
                 command.Connection = connection.connection;
                 command.Parameters.Clear();
-                command.CommandText = "select pre.id_prestamo_encabezado,pre.numero_prestamo,cli.primer_nombre,cli.segundo_nombre,cli.primer_apellido,cli.segundo_apellido " +
-                                       "from tbl_prestamo_encabezado pre " +
+                command.CommandText = "select pre.id_prestamo_encabezado,pre.numero_prestamo,cli.primer_nombre,cli.segundo_nombre,cli.primer_apellido,cli.segundo_apellido, pre.id_cliente, " +
+                                       "pre.saldo_prestamo from tbl_prestamo_encabezado pre " +
                                        "inner join tbl_cliente cli on cli.id_cliente = pre.id_cliente " +
                                        "where pre.estado_prestamo = 1 and pre.id_prestamo_encabezado = @id_prestamo";
                 command.Parameters.AddWithValue("@id_prestamo", id_prestamo);

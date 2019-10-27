@@ -265,6 +265,15 @@ namespace PrestaVende.Public {
         protected global::System.Web.UI.WebControls.Label lblProducto;
         
         /// <summary>
+        /// imgBtnBuscaSubCliente control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton imgBtnBuscaSubCliente;
+        
+        /// <summary>
         /// ddlCategoria control.
         /// </summary>
         /// <remarks>
@@ -290,6 +299,42 @@ namespace PrestaVende.Public {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlProducto;
+        
+        /// <summary>
+        /// panelModalSubCliente control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel panelModalSubCliente;
+        
+        /// <summary>
+        /// Iframe1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlIframe Iframe1;
+        
+        /// <summary>
+        /// btnCancelMSubCliente control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnCancelMSubCliente;
+        
+        /// <summary>
+        /// btnAceptMSubCliente control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAceptMSubCliente;
         
         /// <summary>
         /// lblPeso control.
