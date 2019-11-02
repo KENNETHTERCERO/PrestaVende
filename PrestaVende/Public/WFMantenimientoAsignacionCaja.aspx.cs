@@ -40,6 +40,7 @@ namespace PrestaVende.Public
 
         private static string error = "";
         private static bool isUpdate = false;
+        private static string id_asignacion_recibida = "";
 
         private CLASS.cs_asignacion_caja mAsignacionCaja = new CLASS.cs_asignacion_caja();
 
@@ -190,6 +191,8 @@ namespace PrestaVende.Public
 
                     foreach (DataRow item in DtAsignacionCaja.Rows)
                     {
+                        id_asignacion_recibida = id_asignacion_caja.Text.ToString();
+
                         getEstadosCajaUpdate(item[1].ToString());
 
                         ddidAsignacion.Text = mAsignacionCaja.getIDMaxAsignacionCaja(ref error);
@@ -397,7 +400,7 @@ namespace PrestaVende.Public
                     blnRecibir = true;
                 }
 
-                if (mAsignacionCaja.insertAsignacionCaja(ref error, ddidAsignacion.Text, ddIdCaja.SelectedValue.ToString(), ddIdEstadoCaja.SelectedValue.ToString(), txtMonto.Text, "0", thisDay.ToString("MM/dd/yyyy HH:mm:ss"), thisDay.ToString("MM/dd/yyyy HH:mm:ss"), CLASS.cs_usuario.usuario, ddIdUsuarioAsignado.SelectedValue.ToString(), blnRecibir))                  
+                if (mAsignacionCaja.insertAsignacionCaja(ref error, ddidAsignacion.Text, ddIdCaja.SelectedValue.ToString(), ddIdEstadoCaja.SelectedValue.ToString(), txtMonto.Text, "0", thisDay.ToString("MM/dd/yyyy HH:mm:ss"), thisDay.ToString("MM/dd/yyyy HH:mm:ss"), CLASS.cs_usuario.usuario, ddIdUsuarioAsignado.SelectedValue.ToString(), blnRecibir, id_asignacion_recibida))                  
                 {
                     showSuccess("Se realizó la asignación de caja correctamente.");
                     return true;
