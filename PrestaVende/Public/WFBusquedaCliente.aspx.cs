@@ -16,6 +16,7 @@ namespace PrestaVende.Public
         private CLASS.cs_profesion cs_profesion = new CLASS.cs_profesion();
         private string error = "";
         private static bool isUpdate = false;
+        private static string accion = "";
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -37,11 +38,24 @@ namespace PrestaVende.Public
                     }
                     else
                     {
-                        hideOrShowDiv(true);
+                        accion = Request.QueryString["accion"];
+                        //hideOrShowDiv(true);
                         getEstados();
                         getPaises();
                         getCategoriaMedio();
                         getProfesion();
+
+                        if (accion.Equals("editar"))
+                        {
+                            isUpdate = true;
+                            string id_cliente = Request.QueryString["id_cliente"];
+                            editClient(id_cliente);
+                        }
+                        else
+                        {
+                            getIDMaxClient();
+                            isUpdate = false;
+                        }
                     }
                 }
             }
@@ -52,83 +66,12 @@ namespace PrestaVende.Public
         }
 
         #region funciones
-        
-        private void hideOrShowDiv(bool hidePanel)
+
+        private void editClient(string id_cliente)
         {
             try
             {
-                if (hidePanel.Equals(true))
-                {
-                    div_ingresa_datos.Visible = false;
-                    div_gridView.Visible = true;
-                    btnBack.Visible = true;
-                    btnCreateClient.Visible = true;
-                    btnAtras.Visible = false;
-                    btnGuardarUsuario.Visible = false;
-                }
-                else
-                {
-                    div_ingresa_datos.Visible = true;
-                    div_gridView.Visible = false;
-                    btnBack.Visible = false;
-                    btnCreateClient.Visible = false;
-                    btnAtras.Visible = true;
-                    btnGuardarUsuario.Visible = true;
-                }
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-
-        private void getClients()
-        {
-            try
-            {
-                string condicion = "";
-                if (validateTXTFind())
-                {
-                    condicion = "DPI LIKE '%" + txtBusquedaCliente.Text +"%' OR " +
-                                "nit LIKE '%" + txtBusquedaCliente.Text + "%' OR " +
-                                "primer_nombre + ' ' + primer_apellido LIKE '%" + txtBusquedaCliente.Text + "%' OR " +
-                                "primer_nombre + ' ' + segundo_apellido LIKE '%" + txtBusquedaCliente.Text + "%' OR " +
-                                "primer_nombre + ' ' + segundo_nombre + ' ' + primer_apellido LIKE '%" + txtBusquedaCliente.Text + "%' OR " +
-                                "primer_nombre + ' ' + segundo_nombre + ' ' + segundo_apellido LIKE '%" + txtBusquedaCliente.Text + "%' OR " +
-                                "segundo_nombre + ' ' + primer_apellido LIKE '%" + txtBusquedaCliente.Text + "%' OR " +
-                                "segundo_nombre + ' ' + segundo_apellido LIKE '%" + txtBusquedaCliente.Text + "%' OR " +
-                                "correo_electronico LIKE '%" + txtBusquedaCliente.Text + "%' OR " +
-                                "numero_telefono LIKE '%" + txtBusquedaCliente.Text + "%'";
-                    gvCliente.DataSource = cs_cliente.findClient(ref error, condicion);
-                    gvCliente.DataBind();
-                }
-            }
-            catch (Exception ex)
-            {
-                showError(ex.ToString());
-            }
-        }
-
-        private bool validateTXTFind()
-        {
-            if (txtBusquedaCliente.Text.ToString().Length == 0)
-            {
-                showWarning("Debe ingresar criterios de busqueda.");
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-        }
-
-        private void editClient(string id_usuario)
-        {
-            try
-            {
-                hideOrShowDiv(false);
-                DataTable dtCliente = cs_cliente.getSpecificClient(ref error, id_usuario);
+                DataTable dtCliente = cs_cliente.getSpecificClient(ref error, id_cliente);
                 foreach (DataRow item in dtCliente.Rows)
                 {
                     lblIdClienteNumero.Text = item[0].ToString();
@@ -136,12 +79,20 @@ namespace PrestaVende.Public
                     txtNit.Text = item[2].ToString();
                     txtPrimerNombre.Text = item[3].ToString();
                     txtSegundoNombre.Text = item[4].ToString();
-                    txtPrimerApellido.Text = item[5].ToString();
-                    txtSegundoApellido.Text = item[6].ToString();
-                    txtDireccion.Text = item[7].ToString();
-                    txtCorreoElectronico.Text = item[8].ToString();
-                    txtNumeroTelefono.Text = item[9].ToString();
-                    ddlEstado.SelectedValue = item[10].ToString();
+                    txtTercerNombre.Text = item[5].ToString();
+                    txtPrimerApellido.Text = item[6].ToString();
+                    txtSegundoApellido.Text = item[7].ToString();
+                    txtApellidoCasada.Text = item[8].ToString();
+                    txtDireccion.Text = item[9].ToString();
+                    txtCorreoElectronico.Text = item[10].ToString();
+                    txtNumeroTelefono.Text = item[11].ToString();
+                    ddlEstado.SelectedValue = item[12].ToString();
+                    ddlPais.SelectedValue = item[13].ToString();
+                    ddlDepartamento.SelectedValue = item[14].ToString();
+                    ddlMunicipio.SelectedValue = item[15].ToString();
+                    ddlSubCategoriaMedio.SelectedValue = item[16].ToString();
+                    ddlCategoriaMedio.SelectedValue = item[17].ToString();
+                    ddlProfesion.SelectedValue = item[18].ToString();
                 }
 
                 txtDPI.Enabled = false;
@@ -186,6 +137,11 @@ namespace PrestaVende.Public
                 txtCorreoElectronico.Text = "";
                 txtNumeroTelefono.Text = "";
                 ddlEstado.SelectedValue = "1";
+                ddlPais.SelectedValue = "0";
+                ddlDepartamento.SelectedValue = "0";
+                ddlMunicipio.SelectedValue = "0";
+                ddlCategoriaMedio.SelectedValue = "0";
+                ddlSubCategoriaMedio.SelectedValue = "0";
             }
             catch (Exception ex)
             {
@@ -203,18 +159,20 @@ namespace PrestaVende.Public
                 datosInsert[1] = txtNit.Text;
                 datosInsert[2] = txtPrimerNombre.Text;
                 datosInsert[3] = txtSegundoNombre.Text;
-                datosInsert[4] = txtPrimerApellido.Text;
-                datosInsert[5] = txtSegundoApellido.Text;
-                datosInsert[6] = txtDireccion.Text;
-                datosInsert[7] = txtCorreoElectronico.Text;
-                datosInsert[8] = txtNumeroTelefono.Text;
-                datosInsert[9] = ddlEstado.SelectedValue.ToString();
-                datosInsert[10] = ddlPais.SelectedValue.ToString();
-                datosInsert[11] = ddlDepartamento.SelectedValue.ToString();
-                datosInsert[12] = ddlMunicipio.SelectedValue.ToString();
-                datosInsert[13] = ddlSubCategoriaMedio.SelectedValue.ToString();
-                datosInsert[14] = ddlCategoriaMedio.SelectedValue.ToString();
-                datosInsert[15] = ddlProfesion.SelectedValue.ToString();
+                datosInsert[4] = txtTercerNombre.Text;
+                datosInsert[5] = txtPrimerApellido.Text;
+                datosInsert[6] = txtSegundoApellido.Text;
+                datosInsert[7] = txtApellidoCasada.Text;
+                datosInsert[8] = txtDireccion.Text;
+                datosInsert[9] = txtCorreoElectronico.Text;
+                datosInsert[10] = txtNumeroTelefono.Text;
+                datosInsert[11] = ddlEstado.SelectedValue.ToString();
+                datosInsert[12] = ddlPais.SelectedValue.ToString();
+                datosInsert[13] = ddlDepartamento.SelectedValue.ToString();
+                datosInsert[14] = ddlMunicipio.SelectedValue.ToString();
+                datosInsert[15] = ddlSubCategoriaMedio.SelectedValue.ToString();
+                datosInsert[16] = ddlCategoriaMedio.SelectedValue.ToString();
+                datosInsert[17] = ddlProfesion.SelectedValue.ToString();
 
                 if (cs_cliente.insertClient(ref error, datosInsert) > 0)
                 {
@@ -237,7 +195,7 @@ namespace PrestaVende.Public
             {
                 try
                 {
-                    string[] datosUpdate = new string[10];
+                    string[] datosUpdate = new string[17];
 
                     datosUpdate[0] = txtPrimerNombre.Text;
                     datosUpdate[1] = txtSegundoNombre.Text;
@@ -249,6 +207,13 @@ namespace PrestaVende.Public
                     datosUpdate[7] = ddlEstado.SelectedValue.ToString();
                     datosUpdate[8] = lblIdClienteNumero.Text.ToString();
                     datosUpdate[9] = ddlProfesion.SelectedValue.ToString();
+                    datosUpdate[10] = ddlPais.SelectedValue.ToString();
+                    datosUpdate[11] = ddlDepartamento.SelectedValue.ToString();
+                    datosUpdate[12] = ddlMunicipio.SelectedValue.ToString();
+                    datosUpdate[13] = ddlCategoriaMedio.SelectedValue.ToString();
+                    datosUpdate[14] = ddlSubCategoriaMedio.SelectedValue.ToString();
+                    datosUpdate[15] = txtTercerNombre.Text;
+                    datosUpdate[16] = txtApellidoCasada.Text;
 
                     if (cs_cliente.updateClient(ref error, datosUpdate) > 0)
                     {
@@ -283,7 +248,7 @@ namespace PrestaVende.Public
                 }
                 else
                 {
-                    hideOrShowDiv(true);
+                    //hideOrShowDiv(true);
                     showWarning("No se pudo obtener ID correctamente." + error);
                 }
             }
@@ -466,22 +431,8 @@ namespace PrestaVende.Public
             try
             {
                 clearControls();
-                hideOrShowDiv(false);
-                isUpdate = false;
-                txtBusquedaCliente.Text = "";
                 getIDMaxClient();
-            }
-            catch (Exception ex)
-            {
-                showError(ex.ToString());
-            }
-        }
-
-        protected void btnAtras_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                hideOrShowDiv(true);
+                isUpdate = false;
             }
             catch (Exception ex)
             {
@@ -494,42 +445,6 @@ namespace PrestaVende.Public
             Response.Redirect("WFPrincipal.aspx");
         }
 
-        protected void btnBuscarCliente_Click(object sender, EventArgs e)
-        {
-            getClients();
-        }
-
-        protected void gvCliente_RowCommand(object sender, GridViewCommandEventArgs e)
-        {
-            try
-            {
-                if (e.CommandName == "crear")
-                {
-                    int index = Convert.ToInt32(e.CommandArgument);
-
-                    GridViewRow selectedRow = gvCliente.Rows[index];
-                    TableCell id_cliente = selectedRow.Cells[2];
-                    Session["id_cliente_to_sub_cliente"] = id_cliente.Text.ToString();
-                    Response.Redirect("WFPrestamo.aspx?id_cliente=" + id_cliente.Text);
-
-                }
-                else if (e.CommandName == "editar")
-                {
-                    int index = Convert.ToInt32(e.CommandArgument);
-
-                    GridViewRow selectedRow = gvCliente.Rows[index];
-                    TableCell id_cliente = selectedRow.Cells[2];
-                    isUpdate = true;
-                    hideOrShowDiv(false);
-                    divSucceful.Visible = false;
-                    editClient(id_cliente.Text.ToString());
-                }
-            }
-            catch (Exception ex)
-            {
-                showError(ex.ToString());
-            }
-        }
 
         protected void btnGuardarUsuario_Click(object sender, EventArgs e)
         {
@@ -545,6 +460,8 @@ namespace PrestaVende.Public
                     {
                         insertClient();
                     }
+
+                    Response.Redirect("WFListadoPrestamo?id_cliente=" + lblIdClienteNumero.Text);
                 }
             }
             catch (Exception ex)

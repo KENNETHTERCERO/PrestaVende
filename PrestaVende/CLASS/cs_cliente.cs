@@ -110,26 +110,28 @@ namespace PrestaVende.CLASS
                 {
                     command.Parameters.Clear();
                     command.Transaction = connection.connection.BeginTransaction();
-                    command.CommandText = "INSERT INTO tbl_cliente (DPI, nit, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, direccion, correo_electronico, numero_telefono, estado, " + 
-                                                                    " id_pais, id_departamento, id_municipio, id_subcategoria_medio, id_categoria_medio, id_profesion) " +
-                                                            "VALUES(@DPI, @nit, @primer_nombre, @segundo_nombre, @primer_apellido, @segundo_apellido, @direccion, @correo_electronico, @numero_telefono, @estado, " +
-                                                                    "@id_pais, @id_departamento, @id_municipio, @id_subcategoria_medio, @id_categoria_medio, @id_profesion)";
+                    command.CommandText = "INSERT INTO tbl_cliente (DPI, nit, primer_nombre, segundo_nombre, tercer_nombre, primer_apellido, segundo_apellido, apellido_casada, direccion, correo_electronico, " +
+                                                                    "numero_telefono, estado, id_pais, id_departamento, id_municipio, id_subcategoria_medio, id_categoria_medio, id_profesion, fecha_creacion) " +
+                                                            "VALUES(@DPI, @nit, @primer_nombre, @segundo_nombre, @tercer_nombre, @primer_apellido, @segundo_apellido, @apellido_casada, @direccion, @correo_electronico, " +
+                                                                    "@numero_telefono, @estado, @id_pais, @id_departamento, @id_municipio, @id_subcategoria_medio, @id_categoria_medio, @id_profesion, GETDATE())";
                     command.Parameters.AddWithValue("@DPI", datos[0]);
                     command.Parameters.AddWithValue("@nit", datos[1]);
                     command.Parameters.AddWithValue("@primer_nombre", datos[2]);
                     command.Parameters.AddWithValue("@segundo_nombre", datos[3]);
-                    command.Parameters.AddWithValue("@primer_apellido", datos[4]);
-                    command.Parameters.AddWithValue("@segundo_apellido", datos[5]);
-                    command.Parameters.AddWithValue("@direccion", datos[6]);
-                    command.Parameters.AddWithValue("@correo_electronico", datos[7]);
-                    command.Parameters.AddWithValue("@numero_telefono", datos[8]);
-                    command.Parameters.AddWithValue("@estado", datos[9]);
-                    command.Parameters.AddWithValue("@id_pais", datos[10]);
-                    command.Parameters.AddWithValue("@id_departamento", datos[11]);
-                    command.Parameters.AddWithValue("@id_municipio", datos[12]);
-                    command.Parameters.AddWithValue("@id_subcategoria_medio", datos[13]);
-                    command.Parameters.AddWithValue("@id_categoria_medio", datos[14]);
-                    command.Parameters.AddWithValue("@id_profesion", datos[15]);
+                    command.Parameters.AddWithValue("@tercer_nombre", datos[4]);
+                    command.Parameters.AddWithValue("@primer_apellido", datos[5]);
+                    command.Parameters.AddWithValue("@segundo_apellido", datos[6]);
+                    command.Parameters.AddWithValue("@apellido_casada", datos[7]);
+                    command.Parameters.AddWithValue("@direccion", datos[8]);
+                    command.Parameters.AddWithValue("@correo_electronico", datos[9]);
+                    command.Parameters.AddWithValue("@numero_telefono", datos[10]);
+                    command.Parameters.AddWithValue("@estado", datos[11]);
+                    command.Parameters.AddWithValue("@id_pais", datos[12]);
+                    command.Parameters.AddWithValue("@id_departamento", datos[13]);
+                    command.Parameters.AddWithValue("@id_municipio", datos[14]);
+                    command.Parameters.AddWithValue("@id_subcategoria_medio", datos[15]);
+                    command.Parameters.AddWithValue("@id_categoria_medio", datos[16]);
+                    command.Parameters.AddWithValue("@id_profesion", datos[17]);
                     returnInt = command.ExecuteNonQuery();
 
                     if (returnInt > 0)
@@ -172,13 +174,21 @@ namespace PrestaVende.CLASS
                 command.CommandText = "UPDATE tbl_cliente SET " +
                                             "primer_nombre = @primer_nombre, " +
                                             "segundo_nombre = @segundo_nombre, " +
+                                            "tercer_nombre = @tercer_nombre, " +
                                             "primer_apellido = @primer_apellido, " +
                                             "segundo_apellido = @segundo_apellido, " +
+                                            "apellido_casada = @apellido_casada, " +
                                             "direccion = @direccion, " +
                                             "correo_electronico = @correo_electronico, " +
                                             "numero_telefono = @numero_telefono, " +
                                             "estado = @estado, " +
-                                            "id_profesion = @id_profesion " +
+                                            "id_profesion = @id_profesion, " +
+                                            "id_pais = @id_pais, " +
+                                            "id_departamento = @id_departamento, " +
+                                            "id_municipio = @id_municipio, " +
+                                            "id_subcategoria_medio = @id_subcategoria_medio, " +
+                                            "id_categoria_medio = @id_categoria_medio, " +
+                                            "fecha_modificacion = getdate() " +
                                       "WHERE id_cliente = @id_cliente";
 
                 command.Parameters.AddWithValue("@primer_nombre", datos[0]);
@@ -191,6 +201,13 @@ namespace PrestaVende.CLASS
                 command.Parameters.AddWithValue("@estado", datos[7]);
                 command.Parameters.AddWithValue("@id_cliente", datos[8]);
                 command.Parameters.AddWithValue("@id_profesion", datos[9]);
+                command.Parameters.AddWithValue("@id_pais", datos[10]);
+                command.Parameters.AddWithValue("@id_departamento", datos[11]);
+                command.Parameters.AddWithValue("@id_municipio", datos[12]);
+                command.Parameters.AddWithValue("@id_categoria_medio", datos[13]);
+                command.Parameters.AddWithValue("@id_subcategoria_medio", datos[14]);
+                command.Parameters.AddWithValue("@tercer_nombre", datos[15]);
+                command.Parameters.AddWithValue("@apellido_casada", datos[16]);
                 returnInt = command.ExecuteNonQuery();
 
                 if (returnInt > 0)

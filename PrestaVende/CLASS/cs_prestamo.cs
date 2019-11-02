@@ -325,5 +325,30 @@ namespace PrestaVende.CLASS
             }
             return dtReturnClient;
         }
+
+        public DataTable GetContrato(ref string error, string id_prestamo)
+        {
+            DataTable dtContrato = new DataTable("dtContrato");
+            try
+            {
+                connection.connection.Open();
+                command.Connection = connection.connection;
+                command.Parameters.Clear();
+                command.CommandText = "exec sp_contrato_prestamo @id_sucursal, @id_prestamo";
+                command.Parameters.AddWithValue("@id_prestamo", id_prestamo);
+                command.Parameters.AddWithValue("@id_sucursal", cs_usuario.id_sucursal);
+                dtContrato.Load(command.ExecuteReader());
+                return dtContrato;
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                return null;
+            }
+            finally
+            {
+                connection.connection.Close();
+            }
+        }
     }
 }

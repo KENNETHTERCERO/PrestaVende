@@ -12,7 +12,7 @@ namespace PrestaVende.CLASS
 
         //private string connectionString = @"Data Source=DESKTOP-GUBN2LO\SQLPALKI;Initial Catalog=DEVCACSUSDB;Persist Security Info=True;User ID=sa;Password=tercero#3";//Connection Kenneth Tercero
 #if DEBUG
-        //private static string connectionString = @"Data Source=DESKTOP-VEQ9H2G\ITECSA;Initial Catalog=PRESTAVENDEDB;Persist Security Info=True;User ID=usuario;Password=contra"; //Conecction Server SQL
+        //private static string connectionString = @"Data Source=DESKTOP-VEQ9H2G\ITECSA;Initial Catalog=PRESTAVENDEDB;Persist Security Info=True;User ID=sa;Password=tercero#3"; //Conecction Server SQL
         //private static string ConstConnectionString = @"Data Source=DESKTOP-VEQ9H2G\ITECSA;Initial Catalog=PRESTAVENDEDB;Persist Security Info=True;User ID=sa;Password=tercero#3"; //Conecction Server SQL
 
         //private static string connectionString = @"Data Source=LAPTOP-R6UMVN3B;Initial Catalog=PRESTAVENDEDB;Persist Security Info=True;User ID=sa;Password='FunkoPop,06'"; //Conecction Server SQL

@@ -337,6 +337,15 @@ namespace PrestaVende.Public {
         protected global::System.Web.UI.WebControls.Button btnAceptMSubCliente;
         
         /// <summary>
+        /// ModalPopupExtender2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::AjaxControlToolkit.ModalPopupExtender ModalPopupExtender2;
+        
+        /// <summary>
         /// lblPeso control.
         /// </summary>
         /// <remarks>
@@ -506,6 +515,24 @@ namespace PrestaVende.Public {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnAgregar;
+        
+        /// <summary>
+        /// txtMontoARecalcular control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtMontoARecalcular;
+        
+        /// <summary>
+        /// btnRecalcularValorPrestamoTotal control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnRecalcularValorPrestamoTotal;
         
         /// <summary>
         /// div_gridView control.
