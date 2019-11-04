@@ -40,6 +40,9 @@ namespace PrestaVende.Public
                 foreach (DataRow item in cs_cliente.getSpecificClient(ref error, id_cliente).Rows)
                 {
                     lblnombre_cliente.Text = item[3].ToString() + " " + item[4].ToString() + " " + item[5].ToString() + " " + item[6].ToString();
+                    lblDireccionTexto.Text = item[9].ToString();
+                    lblTelefonoTexto.Text = item[11].ToString();
+                    lblFechaCreacionTexto.Text = item[19].ToString();
                 }
             }
             catch (Exception ex)
@@ -106,5 +109,15 @@ namespace PrestaVende.Public
             return true;
         }
         #endregion
+
+        protected void btnEditarCliente_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("WFBusquedaCliente?accion=editar&id_cliente=" + lblid_cliente.Text);
+        }
+
+        protected void btnNuevoPrestamo_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("WFPrestamo?id_cliente=" + lblid_cliente.Text);
+        }
     }
 }

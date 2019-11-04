@@ -236,7 +236,7 @@
                                                         <div>
                                                                     <asp:ImageButton ID="imgBtnBuscaSubCliente" runat="server" 
                                                                         AlternateText="Busca Sub cliente" 
-                                                                        ImageUrl="~/Public/Vista/Images/maennerkrankheiten.png"
+                                                                        ImageUrl="~/Public/image/candado.png"
                                                                         Height="50" Width="50" Visible="true"/>
                                                                 </div>
                                                     </td>
@@ -254,12 +254,12 @@
                                                     <td>
                                                         <div>
                                                             <%--aqui va la parte de modal windows--%>
-                                                            <asp:Panel ID="panelModalSubCliente" class="modalPopup" runat="server" Style="display: none; width:800px; height:400px; overflow:scroll; resize: vertical;" align="center">
+                                                            <asp:Panel ID="panelModalSubCliente" class="modalPopup" runat="server" Style="display: none; width:400px; height:400px; overflow:scroll; resize: vertical;" align="center">
                                                                 <div class="header">
-                                                                    Buscar sub cliente
+                                                                    Autorización encargado
                                                                 </div>
                                                                 <div class="body">
-                                                                    <iframe style="width: 700px; height: 300px;" id="Iframe1" src="WFBusquedaSubCliente.aspx" runat="server"></iframe>
+                                                                    <iframe style="width: 300px; height: 300px;" id="Iframe1" src="AutorizacionEncargado.aspx" runat="server"></iframe>
                                                                 </div>
                                                                 <div class="footer" align="center">
                                                                     <table>
@@ -268,7 +268,7 @@
                                                                                 <asp:Button ID="btnCancelMSubCliente" runat="server" Text="Cancelar" class="no" />
                                                                             </td>
                                                                             <td>
-                                                                                <asp:Button ID="btnAceptMSubCliente" runat="server" Text="Aceptar" class="yes" OnClick="btnAceptMSubCliente_Click" />
+                                                                                <asp:Button ID="btnAceptMSubCliente" runat="server" Text="Aceptar" class="yes" OnClick="btnAcept_Click"/>
                                                                             </td>
                                                                         </tr>
                                                                     </table>
@@ -362,6 +362,12 @@
                                                     </td>
                                                     <td>
                                                         <asp:Button ID="btnAgregar" runat="server" CssClass="btn btn-success" Text="AGREGAR ARTICULO" OnClick="btnAgregar_Click" />
+                                                    </td>
+                                                    <td>
+                                                        <asp:TextBox ID="txtMontoARecalcular" type="number" step="0.01" runat="server" CssClass="form-control" Visible="false"></asp:TextBox>
+                                                    </td>
+                                                    <td>
+                                                        <asp:Button ID="btnRecalcularValorPrestamoTotal" runat="server" CssClass="btn btn-primary" Text="RECALCULAR" Visible="false" OnClick="btnRecalcularValorPrestamoTotal_Click"/>
                                                     </td>
                                                 </tr>
                                             </table>

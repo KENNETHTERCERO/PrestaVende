@@ -597,9 +597,6 @@ namespace PrestaVende.Public
             {
                 if (cs_prestamo.guardar_prestamo(ref error, generaEncabezado(), dtTablaJoyas, ddlCategoria.SelectedValue.ToString()))
                 {
-                    Reports.PrestamoGeneral rpt = new Reports.PrestamoGeneral();
-                    rpt.SetParameterValue("id_sucursal", "1");
-                    rpt.SetParameterValue("numero_prestamo", "10000000001");
 
                     showSuccess("Se creo prestamo correctamente.");
                     Response.Redirect("WFListadoPrestamo?id_cliente=" + lblid_cliente.Text.ToString());
@@ -902,5 +899,16 @@ namespace PrestaVende.Public
         }
 
         #endregion
+
+        protected void btnRecalcularValorPrestamoTotal_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void btnAcept_Click(object sender, EventArgs e)
+        {
+            //getClientes(Session["id_cliente"].ToString());
+            //ErrorOnPage(false);
+        }
     }
 }

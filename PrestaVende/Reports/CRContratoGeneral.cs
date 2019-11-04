@@ -16,14 +16,14 @@ namespace PrestaVende.Reports {
     using CrystalDecisions.CrystalReports.Engine;
     
     
-    public class CRContratoPrestamo : ReportClass {
+    public class CRContratoGeneral : ReportClass {
         
-        public CRContratoPrestamo() {
+        public CRContratoGeneral() {
         }
         
         public override string ResourceName {
             get {
-                return "CRContratoPrestamo.rpt";
+                return "CRContratoGeneral.rpt";
             }
             set {
                 // Do nothing
@@ -41,7 +41,7 @@ namespace PrestaVende.Reports {
         
         public override string FullResourceName {
             get {
-                return "PrestaVende.Reports.CRContratoPrestamo.rpt";
+                return "PrestaVende.Reports.CRContratoGeneral.rpt";
             }
             set {
                 // Do nothing
@@ -90,9 +90,9 @@ namespace PrestaVende.Reports {
     }
     
     [System.Drawing.ToolboxBitmapAttribute(typeof(CrystalDecisions.Shared.ExportOptions), "report.bmp")]
-    public class CachedCRContratoPrestamo : Component, ICachedReport {
+    public class CachedCRContratoGeneral : Component, ICachedReport {
         
-        public CachedCRContratoPrestamo() {
+        public CachedCRContratoGeneral() {
         }
         
         [Browsable(false)]
@@ -129,7 +129,7 @@ namespace PrestaVende.Reports {
         }
         
         public virtual CrystalDecisions.CrystalReports.Engine.ReportDocument CreateReport() {
-            CRContratoPrestamo rpt = new CRContratoPrestamo();
+            CRContratoGeneral rpt = new CRContratoGeneral();
             rpt.Site = this.Site;
             return rpt;
         }

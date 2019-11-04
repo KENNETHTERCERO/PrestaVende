@@ -34,8 +34,6 @@ namespace PrestaVende.Public
                     }
                     else
                     {
-                        hideOrShowDiv(true);
-                        getEstados();
                     }
                 }
             }
@@ -46,36 +44,6 @@ namespace PrestaVende.Public
         }
 
         #region funciones
-
-        private void hideOrShowDiv(bool hidePanel)
-        {
-            try
-            {
-                if (hidePanel.Equals(true))
-                {
-                    div_ingresa_datos.Visible = false;
-                    div_gridView.Visible = true;
-                    btnBack.Visible = true;
-                    btnCreateClient.Visible = true;
-                    btnAtras.Visible = false;
-                    btnGuardarUsuario.Visible = false;
-                }
-                else
-                {
-                    div_ingresa_datos.Visible = true;
-                    div_gridView.Visible = false;
-                    btnBack.Visible = false;
-                    btnCreateClient.Visible = false;
-                    btnAtras.Visible = true;
-                    btnGuardarUsuario.Visible = true;
-                }
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
 
         private void getClients()
         {
@@ -117,215 +85,9 @@ namespace PrestaVende.Public
             }
         }
 
-        private void editClient(string id_usuario)
-        {
-            try
-            {
-                hideOrShowDiv(false);
-                DataTable dtCliente = cs_cliente.getSpecificClient(ref error, id_usuario);
-                foreach (DataRow item in dtCliente.Rows)
-                {
-                    lblIdClienteNumero.Text = item[0].ToString();
-                    txtDPI.Text = item[1].ToString();
-                    txtNit.Text = item[2].ToString();
-                    txtPrimerNombre.Text = item[3].ToString();
-                    txtSegundoNombre.Text = item[4].ToString();
-                    txtPrimerApellido.Text = item[5].ToString();
-                    txtSegundoApellido.Text = item[6].ToString();
-                    txtDireccion.Text = item[7].ToString();
-                    txtCorreoElectronico.Text = item[8].ToString();
-                    txtNumeroTelefono.Text = item[9].ToString();
-                    ddlEstado.SelectedValue = item[10].ToString();
-                }
 
-                txtDPI.Enabled = false;
-                txtNit.Enabled = false;
-            }
-            catch (Exception ex)
-            {
-                showError(ex.ToString());
-            }
-        }
 
-        private void getEstados()
-        {
-            try
-            {
-                ddlEstado.DataSource = cs_cliente.getStateClient(ref error);
-                ddlEstado.DataValueField = "id";
-                ddlEstado.DataTextField = "descripcion";
-                ddlEstado.DataBind();
-                ddlEstado.SelectedValue = "1";
-            }
-            catch (Exception ex)
-            {
-                showError(error + ' ' + ex.ToString());
-            }
-        }
 
-        private void clearControls()
-        {
-            try
-            {
-                lblIdClienteNumero.Text = "0";
-                txtDPI.Text = "";
-                txtDPI.Enabled = true;
-                txtNit.Text = "";
-                txtNit.Enabled = true;
-                txtPrimerNombre.Text = "";
-                txtSegundoNombre.Text = "";
-                txtPrimerApellido.Text = "";
-                txtSegundoApellido.Text = "";
-                txtDireccion.Text = "";
-                txtCorreoElectronico.Text = "";
-                txtNumeroTelefono.Text = "";
-                ddlEstado.SelectedValue = "1";
-            }
-            catch (Exception ex)
-            {
-                showError(ex.ToString());
-            }
-        }
-
-        private void insertClient()
-        {
-            try
-            {
-                string[] datosInsert = new string[10];
-
-                datosInsert[0] = txtDPI.Text;
-                datosInsert[1] = txtNit.Text;
-                datosInsert[2] = txtPrimerNombre.Text;
-                datosInsert[3] = txtSegundoNombre.Text;
-                datosInsert[4] = txtPrimerApellido.Text;
-                datosInsert[5] = txtSegundoApellido.Text;
-                datosInsert[6] = txtDireccion.Text;
-                datosInsert[7] = txtCorreoElectronico.Text;
-                datosInsert[8] = txtNumeroTelefono.Text;
-                datosInsert[9] = ddlEstado.SelectedValue.ToString();
-
-                if (cs_cliente.insertClient(ref error, datosInsert) > 0)
-                {
-                    showSuccess("Se creo cliente sin problema.");
-                }
-                else
-                {
-                    showError(error);
-                }
-            }
-            catch (Exception ex)
-            {
-                showError(ex.ToString());
-            }
-        }
-
-        private void editClient()
-        {
-            try
-            {
-                try
-                {
-                    string[] datosUpdate = new string[10];
-
-                    datosUpdate[0] = txtPrimerNombre.Text;
-                    datosUpdate[1] = txtSegundoNombre.Text;
-                    datosUpdate[2] = txtPrimerApellido.Text;
-                    datosUpdate[3] = txtSegundoApellido.Text;
-                    datosUpdate[4] = txtDireccion.Text;
-                    datosUpdate[5] = txtCorreoElectronico.Text;
-                    datosUpdate[6] = txtNumeroTelefono.Text;
-                    datosUpdate[7] = ddlEstado.SelectedValue.ToString();
-                    datosUpdate[8] = lblIdClienteNumero.Text.ToString();
-
-                    if (cs_cliente.updateClient(ref error, datosUpdate) > 0)
-                    {
-                        showSuccess("Se edito cliente sin problema.");
-                    }
-                    else
-                    {
-                        showError(error);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    showError(ex.ToString());
-                }
-            }
-            catch (Exception ex)
-            {
-                showError(ex.ToString());
-            }
-        }
-
-        private void getIDMaxClient()
-        {
-            try
-            {
-                string id_max;
-                error = "";
-                id_max = cs_cliente.getMaxIDClient(ref error);
-                if (error == "")
-                {
-                    lblIdClienteNumero.Text = id_max;
-                }
-                else
-                {
-                    hideOrShowDiv(true);
-                    showWarning("No se pudo obtener ID correctamente." + error);
-                }
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-
-        private bool validateDataText()
-        {
-            try
-            {
-                if (txtDPI.Text.ToString().Length == 0)
-                {
-                    showWarning("Debe ingresar un numero de DPI para poder guardar cliente.");
-                    return false;
-                }
-                else if (txtDPI.Text.ToString().Length < 13)
-                {
-                    showWarning("Debe agregar el numero de DPI completo.");
-                    return false;
-                }
-                else if (txtNit.Text.ToString().Length == 0)
-                {
-                    showWarning("Debe agregar el NIT para poder guardar.");
-                    return false;
-                }
-                else if (txtPrimerNombre.Text.ToString().Length == 0)
-                {
-                    showWarning("Debe agregar el primer nombre para poder guardar.");
-                    return false;
-                }
-                else if (txtPrimerApellido.Text.ToString().Length == 0)
-                {
-                    showWarning("Debe agregar el primer apellido para poder guardar.");
-                    return false;
-                }
-                else if (txtNumeroTelefono.Text.ToString().Length == 0)
-                {
-                    showWarning("Debe agregar el numero de telefono para poder guardar.");
-                    return false;
-                }
-                else
-                {
-                    return true;
-                }
-            }
-            catch (Exception ex)
-            {
-                showError(ex.ToString());
-                return false;
-            }
-        }
         #endregion
 
         #region messages
@@ -356,11 +118,7 @@ namespace PrestaVende.Public
         {
             try
             {
-                clearControls();
-                hideOrShowDiv(false);
-                isUpdate = false;
-                txtBusquedaCliente.Text = "";
-                getIDMaxClient();
+                Response.Redirect("WFBusquedaCliente?accion=nuevo");
             }
             catch (Exception ex)
             {
@@ -372,7 +130,7 @@ namespace PrestaVende.Public
         {
             try
             {
-                hideOrShowDiv(true);
+                
             }
             catch (Exception ex)
             {
@@ -411,9 +169,7 @@ namespace PrestaVende.Public
                     GridViewRow selectedRow = gvCliente.Rows[index];
                     TableCell id_cliente = selectedRow.Cells[2];
                     isUpdate = true;
-                    hideOrShowDiv(false);
                     divSucceful.Visible = false;
-                    editClient(id_cliente.Text.ToString());
                 }
             }
             catch (Exception ex)
@@ -426,17 +182,6 @@ namespace PrestaVende.Public
         {
             try
             {
-                if (validateDataText())
-                {
-                    if (isUpdate)
-                    {
-                        editClient();
-                    }
-                    else
-                    {
-                        insertClient();
-                    }
-                }
             }
             catch (Exception ex)
             {

@@ -13,7 +13,42 @@
                                 <asp:Button ID="btnBack" runat="server" Width="200px" Text="Regresar" class="btn btn-default" Visible="true" OnClick="btnBack_Click"/>
                                 <br />
                                 <br />
+                                <asp:Button ID="btnNuevoPrestamo" runat="server" Width="200px" Text="Nuevo prestamo" class="btn btn-success" Visible="true" OnClick="btnNuevoPrestamo_Click"/>
                                 <br />
+                                <br />
+                                <div style="background-color: cornflowerblue; border-radius: 5px;">
+                                    <table style="color:white; ">
+                                        <tr>
+                                            <td>
+                                                Prestamos
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <h4 style="color: limegreen;">Activos</h4> 
+                                            </td>
+                                            <td>
+                                                &nbsp;&nbsp;<asp:Label ID="lblPrestamosActivosNumero" runat="server" Text="0" style="color: limegreen;"></asp:Label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <h4 style="color: yellow;">Cancelados</h4>
+                                            </td>
+                                            <td>
+                                                &nbsp;&nbsp;<asp:Label ID="lblPrestamosCanceladosNumero" runat="server" Text="0" Style="color: yellow;"></asp:Label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <h4 style="color: red;">Liquidados</h4>
+                                            </td>
+                                            <td>
+                                                &nbsp;&nbsp;<asp:Label ID="lblPrestamosLiquidadosNumero" runat="server" Text="0" Style="color: red;"></asp:Label>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
                             </div>
                         </center>
                     </div>
@@ -42,17 +77,42 @@
                         <br />
                         <div class="panel panel-primary">
                             <div class="panel-heading">
+                                <h1>Prestamos&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h1>
                                 <table>
                                     <tr>
                                         <td>
-                                            <h1>Prestamos&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h1>
-                                        </td>
-                                        <td>
-                                            <big><asp:Label ID="lblCliente" runat="server">Cliente:&nbsp;&nbsp;</asp:Label></big>
+                                            <big><asp:Label ID="lblCliente" runat="server">CLIENTE:&nbsp;&nbsp;</asp:Label></big>
                                         </td>
                                         <td>
                                             <big><asp:Label ID="lblid_cliente" runat="server" Text="0"></asp:Label></big>
                                             <big><asp:Label ID="lblnombre_cliente" runat="server"></asp:Label></big>
+                                        </td>
+                                        <td>
+                                            <asp:Button ID="btnEditarCliente" runat="server" Width="200px" Text="Editar Cliente" style="color: white;" class="btn btn-link" Visible="true" OnClick="btnEditarCliente_Click"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <big><asp:Label ID="lblDireccion" runat="server">DIRECCION:&nbsp;&nbsp;</asp:Label></big>
+                                        </td>
+                                        <td>
+                                            <asp:Label ID="lblDireccionTexto" runat="server"></asp:Label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <big><asp:Label ID="lblTelefono" runat="server">TELEFONO:&nbsp;&nbsp;</asp:Label></big>
+                                        </td>
+                                        <td>
+                                            <asp:Label ID="lblTelefonoTexto" runat="server"></asp:Label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <big><asp:Label ID="lblFecha" runat="server">FECHA CREACION:&nbsp;&nbsp;</asp:Label></big>
+                                        </td>
+                                        <td>
+                                            <asp:Label ID="lblFechaCreacionTexto" runat="server"></asp:Label>
                                         </td>
                                     </tr>
                                  </table>
