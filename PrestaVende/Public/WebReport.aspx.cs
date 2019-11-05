@@ -47,7 +47,7 @@ namespace PrestaVende.Public
                         CrystalReportViewer1.ReportSource = prestamoGeneral;//document;
                         CrystalReportViewer1.DataBind();
                         CrystalReportViewer1.RefreshReport();
-                        prestamoGeneral.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "Packing list de recoleccion No." + numero_prestamo);
+                        prestamoGeneral.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "Contrato No." + numero_prestamo);
                     }
                     catch (Exception ex)
                     {

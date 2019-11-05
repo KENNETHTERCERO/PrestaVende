@@ -61,6 +61,7 @@ namespace PrestaVende.Public
                         setColumnsDifferentJewelry();
                         txtPesoDescuento.Text = "0";
                         getCasillas();
+                        getNumeroPrestamo();
                     }
                 }
             }
@@ -71,6 +72,18 @@ namespace PrestaVende.Public
         }
 
         #region funciones
+        private void getNumeroPrestamo()
+        {
+            try
+            {
+                lblNumeroPrestamoNumero.Text = cs_prestamo.getMaxNumeroPrestamo(ref error);
+            }
+            catch (Exception ex)
+            {
+                showWarning(ex.ToString() + " " + error);
+            }
+        }
+
         private void getMarca()
         {
             try
@@ -595,11 +608,17 @@ namespace PrestaVende.Public
         {
             try
             {
-                if (cs_prestamo.guardar_prestamo(ref error, generaEncabezado(), dtTablaJoyas, ddlCategoria.SelectedValue.ToString()))
+                string numero_prestamo_guardado = "";
+                if (cs_prestamo.guardar_prestamo(ref error, generaEncabezado(), dtTablaJoyas, ddlCategoria.SelectedValue.ToString(), ref numero_prestamo_guardado))
                 {
-
+                    lblNumeroPrestamoNumero.Text = numero_prestamo_guardado;
                     showSuccess("Se creo prestamo correctamente.");
-                    Response.Redirect("WFListadoPrestamo?id_cliente=" + lblid_cliente.Text.ToString());
+                    string script = "window.open('WebReport.aspx?tipo_reporte=1" + "&numero_prestamo=" + lblNumeroPrestamoNumero.Text + "');";
+                    ScriptManager.RegisterClientScriptBlock(this, GetType(), "", script, true);
+
+                    string scriptText = "alert('my message'); window.location='WFListadoPrestamo.aspx?id_cliente="+ lblid_cliente.Text+ "'";
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alertMessage", scriptText, true);
+                    //Response.Redirect("WFListadoPrestamo?id_cliente=" + lblid_cliente.Text.ToString());
                 }
                 else
                     showError(error);
@@ -614,10 +633,17 @@ namespace PrestaVende.Public
         {
             try
             {
-                if (cs_prestamo.guardar_prestamo(ref error, generaEncabezado(), dtTablaArticulos, ddlCategoria.SelectedValue.ToString()))
+                string numero_prestamo_guardado = "";
+                if (cs_prestamo.guardar_prestamo(ref error, generaEncabezado(), dtTablaArticulos, ddlCategoria.SelectedValue.ToString(),ref numero_prestamo_guardado))
                 {
+                    lblNumeroPrestamoNumero.Text = numero_prestamo_guardado;
                     showSuccess("Se creo prestamo correctamente.");
-                    Response.Redirect("WFListadoPrestamo?id_cliente=" + lblid_cliente.Text.ToString());
+                    string script = "window.open('WebReport.aspx?tipo_reporte=1" + "&numero_prestamo=" + lblNumeroPrestamoNumero.Text + "');";
+                    ScriptManager.RegisterClientScriptBlock(this, GetType(), "", script, true);
+
+                    string scriptText = "alert('my message'); window.location='WFListadoPrestamo.aspx?id_cliente=" + lblid_cliente.Text + "'";
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alertMessage", scriptText, true);
+                    //Response.Redirect("WFListadoPrestamo?id_cliente=" + lblid_cliente.Text.ToString());
                 }
                 else
                     showError(error);

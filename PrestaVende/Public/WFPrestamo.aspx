@@ -170,13 +170,11 @@
                         <div class="panel panel-primary">
                             <div class="panel-heading">
                                 <div style="position: relative;">
+                                    <h1>Creación de préstamo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h1>
                                                 <table>
                                                     <tr>
                                                         <td>
-                                                            <h1>Creación de préstamo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h1>
-                                                        </td>
-                                                        <td>
-                                                            <big><asp:Label ID="lblCliente" runat="server">Cliente:&nbsp;&nbsp;</asp:Label></big>
+                                                            <big><asp:Label ID="lblCliente" runat="server">CLIENTE:&nbsp;&nbsp;</asp:Label></big>
                                                         </td>
                                                         <td>
                                                             <big><asp:Label ID="lblid_cliente" runat="server" Text="0"></asp:Label></big>
