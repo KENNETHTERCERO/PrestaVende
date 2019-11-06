@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Public/PrestaVende.Master" AutoEventWireup="true" CodeFile="WFMantenimientoAsignacionCaja.aspx.cs" Inherits="PrestaVende.Public.WFMantenimientoAsignacionCaja" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Public/PrestaVende.Master" AutoEventWireup="true" CodeBehind="WFMantenimientoProducto.aspx.cs" Inherits="PrestaVende.Public.WFMantenimientoProducto" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -57,14 +57,14 @@
                                                 <table>
                                                     <tr>
                                                         <td>
-                                                            <h1>Mantenimiento Asignación de Caja &nbsp;&nbsp;</h1>
+                                                            <h1>Mantenimiento Producto &nbsp;&nbsp;</h1>
                                                         </td>
                                                         <td></td>
                                                     </tr>
                                                 </table>
                                             </div>
                             </div>
-                            <div class="panel-body" >
+                            <div class="panel-body">
                                 <center>
                                     <br />
                                     <br />
@@ -73,59 +73,57 @@
                                             <table>
                                                 <tr>
                                                     <td>
-                                                        <big><asp:Label ID="lblIdAsignacion" runat="server" Text="ID ASIGNACIÓN"></asp:Label></big>
+                                                        <big><asp:Label ID="lblIdProducto" runat="server" Text="ID PRODUCTO"></asp:Label></big>
                                                     </td>
                                                     <td>
                                                         <center>
-                                                        <asp:Label ID="ddidAsignacion" runat="server" Text="0"  ></asp:Label>
+                                                        <asp:Label ID="ddidProducto" runat="server" Text="0"  ></asp:Label>
                                                         </center>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td>
-                                                        <big><asp:Label ID="lblCaja" runat="server" Text="CAJA"></asp:Label></big>
+                                                        <big><asp:Label ID="lblSubCategoria" runat="server" Text="CATEGORIA"></asp:Label></big>
                                                     </td>
                                                     <td>
-                                                         <asp:DropDownList ID="ddIdCaja" runat="server" class="form-control" AutoPostBack="true" OnSelectedIndexChanged="ddIdCaja_SelectedIndexChanged"></asp:DropDownList>
+                                                         <asp:DropDownList ID="ddidCategoria" AutoPostBack="true" runat="server" class="form-control" OnSelectedIndexChanged="ddidCategoria_TextChanged"></asp:DropDownList>
                                                     </td>
                                                 </tr>         
                                                 <tr>
                                                     <td>
-                                                        <big><asp:Label ID="lblEstadoCaja" runat="server" Text="ESTADO CAJA "></asp:Label></big>
+                                                        <big><asp:Label ID="lblIdSubCategoria" runat="server" Text="SUB CATEGORIA"></asp:Label></big>
                                                     </td>
                                                     <td>
-                                                        <asp:DropDownList ID="ddIdEstadoCaja" runat="server" class="form-control"   />
+                                                        <asp:DropDownList ID="ddIdSubCategoria" runat="server" class="form-control"></asp:DropDownList>
                                                     </td>
                                                 </tr>
 
                                                 <tr>
                                                     <td>
-                                                        <big><asp:Label ID="lblMonto" runat="server" Text="MONTO"></asp:Label></big>
+                                                        <big><asp:Label ID="lblProducto" runat="server" Text="DESCRIPCION PRODUCTO"></asp:Label></big>
                                                     </td>
                                                     <td>
-                                                         <asp:TextBox ID="txtMonto" type="decimal" text="0" runat="server" class="form-control"></asp:TextBox>
-                                                    </td>
-                                                </tr>                                                                                                       
-                                                   
-                                                <tr>
-                                                    <td>
-                                                        <big><asp:Label ID="lblUsuarioAsignado" runat="server" Text="USUARIO ASIGNADO"></asp:Label></big>
-                                                    </td>
-                                                    <td>
-                                                         <asp:DropDownList ID="ddIdUsuarioAsignado" runat="server" class="form-control"></asp:DropDownList>
-                                                    </td>
-                                                </tr>   
-                                                <tr>
-                                                   <td>
-                                                       <big><asp:Label ID="lblRecibir" runat="server" Text="RECIBIR"></asp:Label></big>
-                                                   </td>
-                                                    <td>    
-                                                         <asp:CheckBox ID="ChbxRecibir" runat="server" oncheckedchanged="ChbxRecibir_CheckedChanged" AutoPostBack="true" class="form-control">
-
-                                                         </asp:CheckBox>
+                                                        <asp:TextBox ID="txtDescripcionProducto" runat="server" class="form-control"/>
                                                     </td>
                                                 </tr>
-                                                                                                                                                                                                                                                                                 
+
+                                                <tr>
+                                                    <td>
+                                                        <big><asp:Label ID="lblPrecioSugerido" runat="server" Text="PRECIO SUGERIDO"></asp:Label></big>
+                                                    </td>
+                                                    <td>
+                                                        <asp:TextBox ID="txtPrecioSugerido" runat="server" class="form-control"/>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>
+                                                        <big><asp:Label ID="lblEstado" runat="server" Text="ESTADO"></asp:Label></big>
+                                                    </td>
+                                                    <td>
+                                                         <asp:DropDownList ID="ddlEstado" runat="server" class="form-control"></asp:DropDownList>
+                                                    </td>
+                                                </tr>                                                                                                                                                                                                                                       
                                               </table>
                                         </div>
                                     </div>                                       
@@ -135,22 +133,19 @@
                                         <table>
                                             <tr>
                                                 <td>
-                                                    <div style="overflow:auto; width:100%; height:300px; align:left;">
-                                                    <asp:GridView ID="GrdVAsignacionCaja" runat="server" Width="100%" CssClass="footable" AutoGenerateColumns="False" 
-                                                        ForeColor="#333333" GridLines="None" OnRowCommand="gvSize_RowCommand" OnSelectedIndexChanged="GrdVAsignacionCaja_SelectedIndexChanged">
+                                                    <asp:GridView ID="GrdVProducto" runat="server" Width="100%" CssClass="footable" AutoGenerateColumns="False" 
+                                                        ForeColor="#333333" GridLines="None" OnRowCommand="gvSize_RowCommand">
                                                         <AlternatingRowStyle BackColor="White" />
                                                         <Columns>
                                                             <asp:ButtonField ButtonType="Button" FooterStyle-BackColor="#ff9a32" CommandName="select" HeaderText="" Text="->" >
                                                             <FooterStyle BackColor="#FF9A32" />
                                                             </asp:ButtonField>
-                                                                <asp:BoundField DataField="id_asignacion_caja" HeaderText="<center>ID</center>" SortExpression="id_asignacion_caja" HtmlEncode="false"/>                                                            
-                                                                <asp:BoundField DataField="id_caja" HeaderText="<center>NO CAJA</center>" SortExpression="id_caja" HtmlEncode="false" />
-                                                                <asp:BoundField DataField="nombre_caja" HeaderText="<center>CAJA</center>" SortExpression="nombre_caja" HtmlEncode="false" />
-                                                                <asp:BoundField DataField="estado_caja" HeaderText="<center>ESTADO CAJA</center>" SortExpression="estado_caja"  HtmlEncode="false"/>
-                                                                <asp:BoundField DataField="monto" HeaderText="<center>MONTO</center>" SortExpression="monto"  HtmlEncode="false"/>                                                                
-                                                                <asp:BoundField DataField="estado_asignacion" HeaderText="<center>ESTADO</center>" SortExpression="estado_asignacion"  HtmlEncode="false"/>
-                                                                <asp:BoundField DataField="usuario_asigna" HeaderText="<center>USUARIO ASIGNA</center>" SortExpression="usuario_asigna"  HtmlEncode="false"/>
-                                                                <asp:BoundField DataField="usuario_asignado" HeaderText="<center>USUARIO ASIGNADO</center>" SortExpression="usuario_asignado"  HtmlEncode="false"/>
+                                                                <asp:BoundField DataField="id_producto" HeaderText="<center> ID </center>" SortExpression="id_producto" HtmlEncode="false"/>                                                                                                                            
+                                                                <asp:BoundField DataField="categoria" HeaderText="<center> CATEGORIA </center>" SortExpression="categoria" HtmlEncode="false" />
+                                                                <asp:BoundField DataField="sub_categoria" HeaderText="<center> SUB CATEGORIA </center>" SortExpression="sub_categoria" HtmlEncode="false" />    
+                                                                <asp:BoundField DataField="producto" HeaderText="<center> PRODUCTO </center>" SortExpression="producto" HtmlEncode="false" />    
+                                                                <asp:BoundField DataField="precio_sugerido" HeaderText="<center> PRECIO SUGERIDO </center>" SortExpression="precio_sugerido"  HtmlEncode="false"/>                                                                
+                                                                <asp:BoundField DataField="estado" HeaderText="<center> ESTADO </center>" SortExpression="estado"  HtmlEncode="false"/>                                                                
                                                         </Columns>
                                                         <EditRowStyle BackColor="#7C6F57" />
                                                         <FooterStyle BackColor="#1C5E55" Font-Bold="False" ForeColor="White" />
@@ -159,7 +154,6 @@
                                                         <RowStyle BackColor="#E3EAEB" />
                                                         <SelectedRowStyle BackColor="#ff9a32" Font-Bold="True" ForeColor="#333333" />
                                                     </asp:GridView>
-                                                    </div>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -176,7 +170,8 @@
                     <div class="col-sm-2 sidenav">
                     </div>
                 </div>
-            </div>           
+            </div>
+           
         </ContentTemplate>
     </asp:UpdatePanel>
 </asp:Content>

@@ -16,14 +16,14 @@ namespace PrestaVende.Reports {
     using CrystalDecisions.CrystalReports.Engine;
     
     
-    public class Contrato : ReportClass {
+    public class CRContratoGeneral : ReportClass {
         
-        public Contrato() {
+        public CRContratoGeneral() {
         }
         
         public override string ResourceName {
             get {
-                return "Contrato.rpt";
+                return "CRContratoGeneral.rpt";
             }
             set {
                 // Do nothing
@@ -41,7 +41,7 @@ namespace PrestaVende.Reports {
         
         public override string FullResourceName {
             get {
-                return "PrestaVende.Reports.Contrato.rpt";
+                return "PrestaVende.Reports.CRContratoGeneral.rpt";
             }
             set {
                 // Do nothing
@@ -87,20 +87,12 @@ namespace PrestaVende.Reports {
                 return this.ReportDefinition.Sections[4];
             }
         }
-        
-        [Browsable(false)]
-        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_id_sucursal {
-            get {
-                return this.DataDefinition.ParameterFields[0];
-            }
-        }
     }
     
     [System.Drawing.ToolboxBitmapAttribute(typeof(CrystalDecisions.Shared.ExportOptions), "report.bmp")]
-    public class CachedContrato : Component, ICachedReport {
+    public class CachedCRContratoGeneral : Component, ICachedReport {
         
-        public CachedContrato() {
+        public CachedCRContratoGeneral() {
         }
         
         [Browsable(false)]
@@ -137,7 +129,7 @@ namespace PrestaVende.Reports {
         }
         
         public virtual CrystalDecisions.CrystalReports.Engine.ReportDocument CreateReport() {
-            Contrato rpt = new Contrato();
+            CRContratoGeneral rpt = new CRContratoGeneral();
             rpt.Site = this.Site;
             return rpt;
         }

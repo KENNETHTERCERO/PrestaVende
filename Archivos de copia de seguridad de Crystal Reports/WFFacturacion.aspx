@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Public/PrestaVende.Master" AutoEventWireup="true" CodeBehind="WFBusquedaClienteFacturacion.aspx.cs" Inherits="PrestaVende.Public.WFBusquedaClienteFacturacion" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Public/PrestaVende.Master" AutoEventWireup="true" CodeBehind="WFFacturacion.aspx.cs" Inherits="PrestaVende.Public.WFFacturacion" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -10,19 +10,19 @@
                         <center>
                         <h2>Opciones</h2>
                             <div class=".btn-group-vertical">
+                                <asp:Button ID="btnCobroIntereses" runat="server" Width="200px" Text="Renovacion" class="btn btn-success" Visible="true" OnClick="btnCobroIntereses_Click"/>
+                                <br />
+                                <br />
+                                <br />
+                                <asp:Button ID="btnAbonoCapital" runat="server" Width="200px" Text="Abono a Capital" class="btn btn-primary" Visible="true" OnClick="btnAbonoCapital_Click"/>
+                                <br />
+                                <br />
+                                <br />
+                                <asp:Button ID="btnCancelacion" runat="server" Width="200px" Text="Cancelacion" class="btn btn-danger" Visible="true" OnClick="btnCancelacion_Click"/>
+                                <br />
+                                <br />
+                                <br />
                                 <asp:Button ID="btnBack" runat="server" Width="200px" Text="Regresar" class="btn btn-default" Visible="true" OnClick="btnBack_Click"/>
-                                <br />
-                                <br />
-                                <br />
-                                <asp:Button ID="btnCreateClient" runat="server" Width="200px" Text="Crear cliente" class="btn btn-primary" Visible="true" OnClick="btnCreateClient_Click"/>
-                                <br />
-                                <br />
-                                <br />
-                                <asp:Button ID="btnGuardarUsuario" runat="server" Width="200px" Text="Guardar cliente" class="btn btn-info" Visible="false" OnClick="btnGuardarUsuario_Click"/>
-                                <br />
-                                <br />
-                                <br />
-                                <asp:Button ID="btnAtras" runat="server" Width="200px" Text="Cancelar" class="btn btn-warning" Visible="false" OnClick="btnAtras_Click" />
                                 <br />
                                 <br />
                                 <br />
@@ -54,48 +54,38 @@
                         <br />
                         <div class="panel panel-primary">
                             <div class="panel-heading">
-                                <div style="position: relative;">
-                                    <table>
-                                        <tr>
-                                            <td>
-                                                <h1>Búsqueda de cliente&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h1>
-                                            </td>
-                                            <td>
-                                                <asp:TextBox ID="txtBusquedaCliente" runat="server" class="form-control" Width="300px" ContentPlaceHolder="Ingresar criterio de busqueda"></asp:TextBox>
-                                            </td>
-                                            <td>
-                                                <asp:Button ID="btnBuscarCliente" runat="server" class="btn btn-success" Text="Buscar cliente" OnClick="btnBuscarCliente_Click" />
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <h1>Facturas&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h1>
+                                        </td>
+                                        <td>
+                                            <big><asp:Label ID="lblPrestamo" runat="server">Prestamo:&nbsp;&nbsp;</asp:Label></big>
+                                        </td>
+                                        <td>
+                                            <big><asp:Label ID="lblnombre_prestamo" runat="server"></asp:Label></big>
+                                        </td>
+                                    </tr>
+                                 </table>
                             </div>
                             <div class="panel-body">
                                 <center>
                                     <br />
                                     <br />
+
                                     <div id="div_gridView" runat="server" visible="True">
                                         <br />
                                         <table>
                                             <tr>
                                                 <td>
-                                                    <asp:GridView ID="gvCliente" runat="server" Width="100%" CssClass="footable" AutoGenerateColumns="False" 
-                                                        ForeColor="#333333" GridLines="None" OnRowCommand="gvCliente_RowCommand" OnSelectedIndexChanged="gvCliente_SelectedIndexChanged" >
+                                                    <asp:GridView ID="gvFactura" runat="server" Width="100%" CssClass="footable" AutoGenerateColumns="False" 
+                                                        ForeColor="#333333" GridLines="None" OnRowCommand="gvPrestamo_RowCommand" >
                                                         <AlternatingRowStyle BackColor="White" />
-                                                        <Columns>
-                                                            <asp:ButtonField ButtonType="Button" ControlStyle-CssClass="btn btn-success" FooterStyle-BackColor="#ff9a32" CommandName="crear" HeaderText="<center>Crear<br/>Factura </center>" Text="->" >
-                                                            <FooterStyle BackColor="#FF9A32" />
-                                                            </asp:ButtonField>
-                                                            <asp:ButtonField ButtonType="Button" Visible="false" ControlStyle-CssClass="btn btn-success" FooterStyle-BackColor="#ff9a32" CommandName="editar" HeaderText="<center>Editar<br/>cliente</center>" Text="<>" >
-                                                            <FooterStyle BackColor="#FF9A32" />
-                                                            </asp:ButtonField>
-                                                            <asp:BoundField DataField="id_cliente" HeaderText="<center>ID</center>" SortExpression="id_cliente" HtmlEncode="false"/>
-                                                            <asp:BoundField DataField="DPI" HeaderText="<center>DPI</center>" SortExpression="DPI" HtmlEncode="false" />
-                                                            <asp:BoundField DataField="nit" HeaderText="<center>NIT</center>" SortExpression="nit" HtmlEncode="false" />
-                                                            <asp:BoundField DataField="nombre_completo" HeaderText="<center>NOMBRE</center>" SortExpression="nombre_completo" HtmlEncode="false" />
-                                                            <asp:BoundField DataField="direccion" HeaderText="<center>DIRECCION</center>" SortExpression="direecion"  HtmlEncode="false"/>
-                                                            <asp:BoundField DataField="estadoLetras" HeaderText="<center>Estado</center>" SortExpression="estadoLetras"  HtmlEncode="false"/>
-                                                            <asp:BoundField DataField="estado" HeaderText="<center>IES</center>" SortExpression="estado" HtmlEncode="false" Visible="true"/>
+                                                        <Columns>                                                            
+                                                            <asp:BoundField DataField="serie" HeaderText="<center>Serie</center>" SortExpression="serie" HtmlEncode="false" />
+                                                            <asp:BoundField DataField="numero_factura" HeaderText="<center>No. Factura</center>" SortExpression="numero_factura" HtmlEncode="false" />
+                                                            <asp:BoundField DataField="numero_prestamo" HeaderText="<center>Prestamo</center>" SortExpression="numero_prestamo" HtmlEncode="false" />
+                                                            <asp:BoundField DataField="fecha_transaccion" HeaderText="<center>Fecha</center>" SortExpression="fecha_transaccion"  HtmlEncode="false"/>                                                            
                                                         </Columns>
                                                         <EditRowStyle BackColor="#7C6F57" />
                                                         <FooterStyle BackColor="#1C5E55" Font-Bold="False" ForeColor="White" />
@@ -124,4 +114,3 @@
         </ContentTemplate>
     </asp:UpdatePanel>
 </asp:Content>
-

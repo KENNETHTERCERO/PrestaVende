@@ -40,6 +40,9 @@ namespace PrestaVende.Public
                 foreach (DataRow item in cs_cliente.getSpecificClient(ref error, id_cliente).Rows)
                 {
                     lblnombre_cliente.Text = item[3].ToString() + " " + item[4].ToString() + " " + item[5].ToString() + " " + item[6].ToString();
+                    lblDireccionTexto.Text = item[9].ToString();
+                    lblTelefonoTexto.Text = item[11].ToString();
+                    lblFechaCreacionTexto.Text = item[19].ToString();
                 }
             }
             catch (Exception ex)
@@ -48,6 +51,59 @@ namespace PrestaVende.Public
             }
         }
 
+        private void getNumeroPrestamosCancelados()
+        {
+            try
+            {
+                string id_cliente = Request.QueryString["id_cliente"];
+                lblid_cliente.Text = id_cliente;
+                foreach (DataRow item in cs_prestamo.getCountPrestamosCancelados(ref error, id_cliente).Rows)
+                {
+                    lblPrestamosCanceladosNumero.Text = item[0].ToString();
+                    lblPrestamosCanceladosMonto.Text = item[1].ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                showError(ex.ToString());
+            }
+        }
+
+        private void getNumeroPrestamosActivos()
+        {
+            try
+            {
+                string id_cliente = Request.QueryString["id_cliente"];
+                lblid_cliente.Text = id_cliente;
+                foreach (DataRow item in cs_prestamo.getCountPrestamosActivos(ref error, id_cliente).Rows)
+                {
+                    lblPrestamosActivosNumero.Text = item[0].ToString();
+                    lblPrestamosActivosMonto.Text = item[1].ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                showError(ex.ToString());
+            }
+        }
+
+        private void getNumeroPrestamosLiquidados()
+        {
+            try
+            {
+                string id_cliente = Request.QueryString["id_cliente"];
+                lblid_cliente.Text = id_cliente;
+                foreach (DataRow item in cs_prestamo.getCountPrestamosLiquidados(ref error, id_cliente).Rows)
+                {
+                    lblPrestamosLiquidadosNumero.Text = item[0].ToString();
+                    lblPrestamosLiquidadosMonto.Text = item[1].ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                showError(ex.ToString());
+            }
+        }
         #endregion
 
         #region controls
@@ -55,6 +111,9 @@ namespace PrestaVende.Public
         {
             getClient();
             getPrestamo();
+            getNumeroPrestamosActivos();
+            getNumeroPrestamosCancelados();
+            getNumeroPrestamosLiquidados();
         }
         
         protected void btnBack_Click(object sender, EventArgs e)
@@ -106,5 +165,15 @@ namespace PrestaVende.Public
             return true;
         }
         #endregion
+
+        protected void btnEditarCliente_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("WFBusquedaCliente?accion=editar&id_cliente=" + lblid_cliente.Text);
+        }
+
+        protected void btnNuevoPrestamo_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("WFPrestamo?id_cliente=" + lblid_cliente.Text);
+        }
     }
 }

@@ -12,7 +12,7 @@ namespace PrestaVende.CLASS
         cs_connection connection = new cs_connection();
         SqlCommand command = new SqlCommand();
 
-        public bool guardar_prestamo(ref string error, string[] encabezado, DataTable detalle, string tipo_prenda)
+        public bool guardar_prestamo(ref string error, string[] encabezado, DataTable detalle, string tipo_prenda, ref string numero_prestamo_guardado)
         {
             try
             {
@@ -42,8 +42,16 @@ namespace PrestaVende.CLASS
                                 {
                                     if (update_sucursal_correlativo_prestamo(ref error))
                                     {
-                                        command.Transaction.Commit();
-                                        return true;
+                                        numero_prestamo_guardado = getNumeroPrestamoGuardado(ref error);
+                                        if (!numero_prestamo.Equals("error") || !numero_prestamo_guardado.Equals(""))
+                                        {
+                                            command.Transaction.Commit();
+                                            return true;
+                                        }
+                                        else
+                                        {
+                                            throw new Exception("No se pudo obtener el numero de prestamo guardado.");
+                                        }
                                     }
                                     else
                                         throw new Exception("No se pudo actualizar el correlativo de pretamos.");
@@ -80,8 +88,10 @@ namespace PrestaVende.CLASS
             try
             {
                 int insert = 0;
+                string fecha_modificada = "";
+                fecha_modificada = Convert.ToDateTime(datosEnc[3].ToString()).Year.ToString() + "/" + Convert.ToDateTime(datosEnc[3].ToString()).Month.ToString() + "/" + Convert.ToDateTime(datosEnc[3].ToString()).Day.ToString();
                 command.Parameters.Clear();
-                command.CommandText = "INSERT INTO tbl_prestamo_encabezado (id_sucursal, id_cliente, numero_prestamo, total_prestamo, fecha_creacion_prestamo, estado_prestamo, fecha_proximo_pago, saldo_prestamo, usuario, id_plan_prestamo, id_interes, id_casilla) " +
+                command.CommandText = "INSERT INTO tbl_prestamo_encabezado (id_sucursal, id_cliente, numero_prestamo, total_prestamo, fecha_creacion_prestamo, estado_prestamo, fecha_proximo_pago, saldo_prestamo, usuario, id_plan_prestamo, id_interes, id_casilla, fecha_ultimo_pago, fecha_modificacion_prestamo) " +
                                             "VALUES( " +
                                             "@id_sucursal_enc,         "+  
                                             "@id_cliente,              "+
@@ -89,18 +99,21 @@ namespace PrestaVende.CLASS
                                             "@total_prestamo,          " +
                                             "GETDATE(),                "+
                                             "@estado_prestamo,         "+
-                                            "@fecha_proximo_pago,      "+
+                                            "CAST(@fecha_proximo_pago AS date),      "+
                                             "@saldo_prestamo,          "+
                                             "@usuario,                 "+
                                             "@id_plan_prestamo,        "+
                                             "@id_interes,              "+
-                                            "@id_casilla )";
+                                            "@id_casilla, "+
+                                            "GETDATE()," +
+                                            "GETDATE() " +
+                                            " )";
                 command.Parameters.AddWithValue("@id_sucursal_enc",     cs_usuario.id_sucursal);
                 command.Parameters.AddWithValue("@numero_prestamo",     numero_prestamo);
                 command.Parameters.AddWithValue("@id_cliente",          datosEnc[0]);
                 command.Parameters.AddWithValue("@total_prestamo",      datosEnc[1]);
                 command.Parameters.AddWithValue("@estado_prestamo",     datosEnc[2]);
-                command.Parameters.AddWithValue("@fecha_proximo_pago",  datosEnc[3]);
+                command.Parameters.AddWithValue("@fecha_proximo_pago", fecha_modificada);
                 command.Parameters.AddWithValue("@saldo_prestamo",      datosEnc[4]);
                 command.Parameters.AddWithValue("@usuario",             datosEnc[5]);
                 command.Parameters.AddWithValue("@id_plan_prestamo",    datosEnc[6]);
@@ -162,12 +175,13 @@ namespace PrestaVende.CLASS
             try
             {
                 int insert = 0;
-                command.CommandText = "INSERT INTO tbl_transaccion (id_tipo_transaccion, id_caja, monto, numero_prestamo, estado_transaccion, fecha_transaccion, usuario, movimiento_saldo) " +
-                                                                "VALUES(7, @id_caja, @monto, @numero_prestamo_transaccion, 1, GETDATE(), @usuario_transaccion, (SELECT saldo - @monto FROM tbl_caja WHERE id_caja = @id_caja))";
+                command.CommandText = "INSERT INTO tbl_transaccion (id_tipo_transaccion, id_caja, monto, numero_prestamo, estado_transaccion, fecha_transaccion, usuario, movimiento_saldo, id_sucursal) " +
+                                                                "VALUES(7, @id_caja, @monto, @numero_prestamo_transaccion, 1, GETDATE(), @usuario_transaccion, (SELECT saldo - @monto FROM tbl_caja WHERE id_caja = @id_caja), @id_sucursal_transaccion)";
                 command.Parameters.AddWithValue("@id_caja",         cs_usuario.id_caja);
                 command.Parameters.AddWithValue("@monto",           monto);
                 command.Parameters.AddWithValue("@numero_prestamo_transaccion", numero_prestamo);
                 command.Parameters.AddWithValue("@usuario_transaccion",         cs_usuario.usuario);
+                command.Parameters.AddWithValue("@id_sucursal_transaccion", cs_usuario.id_sucursal);
                 insert = command.ExecuteNonQuery();
                 if (insert > 0)
                     return true;
@@ -241,6 +255,128 @@ namespace PrestaVende.CLASS
             {
                 error = ex.ToString();
                 return false;
+            }
+        }
+
+        public string getNumeroPrestamoGuardado(ref string error)
+        {
+            try
+            {
+                string numero_prestamo = "";
+                command.Parameters.Clear();
+                command.CommandText = "SELECT correlativo_prestamo FROM tbl_sucursal WHERE id_sucursal = @id_sucursalGuardado";
+                command.Parameters.AddWithValue("@id_sucursalGuardado", CLASS.cs_usuario.id_sucursal);
+                numero_prestamo = command.ExecuteScalar().ToString();
+                return numero_prestamo;
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                return "error";
+            }
+        }
+
+        public string getMaxNumeroPrestamo(ref string error)
+        {
+            try
+            {
+                string numero_prestamo = "";
+
+                connection.connection.Open();
+                command.Connection = connection.connection;
+                command.Parameters.Clear();
+                command.Transaction = connection.connection.BeginTransaction();
+                command.CommandText = "SELECT correlativo_prestamo + 1 FROM tbl_sucursal WHERE id_sucursal = @id_sucursal";
+                command.Parameters.AddWithValue("@id_sucursal", CLASS.cs_usuario.id_sucursal);
+                numero_prestamo = command.ExecuteScalar().ToString();
+                return numero_prestamo;
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                return "error";
+            }
+            finally
+            {
+                connection.connection.Close();
+            }
+        }
+
+        public DataTable getCountPrestamosActivos(ref string error, string id_cliente)
+        {
+            try
+            {
+                DataTable dtPrestamosLiquidados = new DataTable("prestamosLiquidados");
+
+                connection.connection.Open();
+                command.Connection = connection.connection;
+                command.Parameters.Clear();
+                command.Transaction = connection.connection.BeginTransaction();
+                command.CommandText = "SELECT COUNT(id_sucursal), SUM(total_prestamo) FROM  tbl_prestamo_encabezado WHERE estado_prestamo = 1 AND id_cliente = @id_cliente";
+                command.Parameters.AddWithValue("@id_cliente", id_cliente);
+                dtPrestamosLiquidados.Load(command.ExecuteReader());
+                return dtPrestamosLiquidados;
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                return null;
+            }
+            finally
+            {
+                connection.connection.Close();
+            }
+        }
+
+        public DataTable getCountPrestamosCancelados(ref string error, string id_cliente)
+        {
+            try
+            {
+                DataTable dtPrestamosLiquidados = new DataTable("prestamosCancelados");
+
+                connection.connection.Open();
+                command.Connection = connection.connection;
+                command.Parameters.Clear();
+                command.Transaction = connection.connection.BeginTransaction();
+                command.CommandText = "SELECT COUNT(id_sucursal), SUM(total_prestamo) FROM  tbl_prestamo_encabezado WHERE estado_prestamo = 2 AND id_cliente = @id_cliente";
+                command.Parameters.AddWithValue("@id_cliente", id_cliente);
+                dtPrestamosLiquidados.Load(command.ExecuteReader());
+                return dtPrestamosLiquidados;
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                return null;
+            }
+            finally
+            {
+                connection.connection.Close();
+            }
+        }
+
+        public DataTable getCountPrestamosLiquidados(ref string error, string id_cliente)
+        {
+            try
+            {
+                DataTable dtPrestamosLiquidados = new DataTable("prestamosLiquidados");
+
+                connection.connection.Open();
+                command.Connection = connection.connection;
+                command.Parameters.Clear();
+                command.Transaction = connection.connection.BeginTransaction();
+                command.CommandText = "SELECT COUNT(id_sucursal), SUM(total_prestamo) FROM  tbl_prestamo_encabezado WHERE estado_prestamo = 3 AND id_cliente = @id_cliente";
+                command.Parameters.AddWithValue("@id_cliente", id_cliente);
+                dtPrestamosLiquidados.Load(command.ExecuteReader());
+                return dtPrestamosLiquidados;
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                return null;
+            }
+            finally
+            {
+                connection.connection.Close();
             }
         }
 
@@ -323,6 +459,31 @@ namespace PrestaVende.CLASS
                 connection.connection.Close();
             }
             return dtReturnClient;
+        }
+
+        public DataTable GetContrato(ref string error, string id_prestamo)
+        {
+            DataTable dtContrato = new DataTable("dtContrato");
+            try
+            {
+                connection.connection.Open();
+                command.Connection = connection.connection;
+                command.Parameters.Clear();
+                command.CommandText = "exec sp_contrato_prestamo @id_sucursal, @id_prestamo";
+                command.Parameters.AddWithValue("@id_prestamo", id_prestamo);
+                command.Parameters.AddWithValue("@id_sucursal", cs_usuario.id_sucursal);
+                dtContrato.Load(command.ExecuteReader());
+                return dtContrato;
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                return null;
+            }
+            finally
+            {
+                connection.connection.Close();
+            }
         }
     }
 }

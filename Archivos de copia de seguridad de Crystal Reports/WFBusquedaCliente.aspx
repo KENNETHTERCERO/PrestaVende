@@ -18,11 +18,11 @@
                                 <br />
                                 <br />
                                 <br />
-                                <asp:Button ID="btnGuardarUsuario" runat="server" Width="200px" Text="Guardar cliente" class="btn btn-info" Visible="true" OnClick="btnGuardarUsuario_Click"/>
+                                <asp:Button ID="btnGuardarUsuario" runat="server" Width="200px" Text="Guardar cliente" class="btn btn-info" Visible="false" OnClick="btnGuardarUsuario_Click"/>
                                 <br />
                                 <br />
                                 <br />
-                                <asp:Button ID="btnAtras" runat="server" Width="200px" Text="Cancelar" class="btn btn-warning" Visible="false" />
+                                <asp:Button ID="btnAtras" runat="server" Width="200px" Text="Cancelar" class="btn btn-warning" Visible="false" OnClick="btnAtras_Click" />
                                 <br />
                                 <br />
                                 <br />
@@ -58,7 +58,13 @@
                                                 <table>
                                                     <tr>
                                                         <td>
-                                                            <h1>Edición de cliente&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h1>
+                                                            <h1>Búsqueda de cliente&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h1>
+                                                        </td>
+                                                        <td>
+                                                            <asp:TextBox ID="txtBusquedaCliente" runat="server" class="form-control" Width="300px" ContentPlaceHolder="Ingresar criterio de busqueda"></asp:TextBox>
+                                                        </td>
+                                                        <td>
+                                                            <asp:Button ID="btnBuscarCliente" runat="server" class="btn btn-success" Text="Buscar cliente" OnClick="btnBuscarCliente_Click" />
                                                         </td>
                                                     </tr>
                                                 </table>
@@ -68,7 +74,7 @@
                                 <center>
                                     <br />
                                     <br />
-                                    <div id="div_ingresa_datos" runat="server" visible="true">
+                                    <div id="div_ingresa_datos" runat="server" visible="false">
                                         <div>
                                             <table>
                                                 <tr>
@@ -108,7 +114,7 @@
                                                         <big><asp:Label ID="lblDPI" runat="server" Text="DPI/PASAPORTE"></asp:Label></big>
                                                     </td>
                                                     <td>
-                                                        <asp:TextBox ID="txtDPI" runat="server" type="text" class="form-control" ContentPlaceHolder="0000000000000" AccessKey="" Font-Bold="True"></asp:TextBox>
+                                                        <asp:TextBox ID="txtDPI" runat="server" type="number" class="form-control" ContentPlaceHolder="0000000000000" AccessKey="" Font-Bold="True"></asp:TextBox>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -137,14 +143,6 @@
                                                 </tr>
                                                 <tr>
                                                     <td>
-                                                        <big><asp:Label ID="lblTercerNombre" runat="server" Text="TERCER NOMBRE "></asp:Label></big>
-                                                    </td>
-                                                    <td>
-                                                        <asp:TextBox ID="txtTercerNombre" runat="server" class="form-control"></asp:TextBox>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
                                                         <big><asp:Label ID="lblPrimerApellido" runat="server" Text="PRIMER APELLIDO"></asp:Label></big>
                                                     </td>
                                                     <td>
@@ -157,14 +155,6 @@
                                                     </td>
                                                     <td>
                                                         <asp:TextBox ID="txtSegundoApellido" runat="server" class="form-control"></asp:TextBox>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <big><asp:Label ID="lblApellidoCasada" runat="server" Text="APELLIDO CASADA"></asp:Label></big>
-                                                    </td>
-                                                    <td>
-                                                        <asp:TextBox ID="txtApellidoCasada" runat="server" class="form-control"></asp:TextBox>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -225,6 +215,44 @@
                                                 </tr>
                                             </table>
                                         </div>
+                                    </div>
+                                        
+                                    <div id="div_gridView" runat="server" visible="false">
+                                        <br />
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <asp:GridView ID="gvCliente" runat="server" Width="100%" CssClass="footable" AutoGenerateColumns="False" 
+                                                        ForeColor="#333333" GridLines="None" OnRowCommand="gvCliente_RowCommand" >
+                                                        <AlternatingRowStyle BackColor="White" />
+                                                        <Columns>
+                                                            <asp:ButtonField ButtonType="Button" ControlStyle-CssClass="btn btn-success" FooterStyle-BackColor="#ff9a32" CommandName="crear" HeaderText="<center>Crear<br/>préstamo </center>" Text="->" >
+                                                            <FooterStyle BackColor="#FF9A32" />
+                                                            </asp:ButtonField>
+                                                            <asp:ButtonField ButtonType="Button" ControlStyle-CssClass="btn btn-success" FooterStyle-BackColor="#ff9a32" CommandName="editar" HeaderText="<center>Editar<br/>cliente</center>" Text="<>" >
+                                                            <FooterStyle BackColor="#FF9A32" />
+                                                            </asp:ButtonField>
+                                                            <asp:BoundField DataField="id_cliente" HeaderText="<center>ID</center>" SortExpression="id_cliente" HtmlEncode="false"/>
+                                                            <asp:BoundField DataField="DPI" HeaderText="<center>DPI</center>" SortExpression="DPI" HtmlEncode="false" />
+                                                            <asp:BoundField DataField="nit" HeaderText="<center>NIT</center>" SortExpression="nit" HtmlEncode="false" />
+                                                            <asp:BoundField DataField="nombre_completo" HeaderText="<center>NOMBRE</center>" SortExpression="nombre_completo" HtmlEncode="false" />
+                                                            <asp:BoundField DataField="direccion" HeaderText="<center>DIRECCION</center>" SortExpression="direecion"  HtmlEncode="false"/>
+                                                            <asp:BoundField DataField="estadoLetras" HeaderText="<center>Estado</center>" SortExpression="estadoLetras"  HtmlEncode="false"/>
+                                                            <asp:BoundField DataField="estado" HeaderText="<center>IES</center>" SortExpression="estado" HtmlEncode="false" Visible="true"/>
+                                                        </Columns>
+                                                        <EditRowStyle BackColor="#7C6F57" />
+                                                        <FooterStyle BackColor="#1C5E55" Font-Bold="False" ForeColor="White" />
+                                                        <HeaderStyle BackColor="#016965" Font-Bold="False" ForeColor="White" HorizontalAlign="Center" />
+                                                        <PagerStyle BackColor="#666666" ForeColor="White" HorizontalAlign="Center" />
+                                                        <RowStyle BackColor="#E3EAEB" />
+                                                        <SelectedRowStyle BackColor="#ff9a32" Font-Bold="True" ForeColor="#333333" />
+                                                    </asp:GridView>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                            </tr>
+                                        </table>
                                     </div>
                                 </center>
                             </div>
