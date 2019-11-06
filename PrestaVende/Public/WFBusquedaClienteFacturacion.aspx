@@ -1,5 +1,40 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Public/PrestaVende.Master" AutoEventWireup="true" CodeBehind="WFBusquedaClienteFacturacion.aspx.cs" Inherits="PrestaVende.Public.WFBusquedaClienteFacturacion" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <%--<script>
+    function button_click(objTextBox,objBtnID)
+    {
+        if(window.event.keyCode==13)
+        {
+            document.getElementById(objBtnID).focus();
+            document.getElementById(objBtnID).click();
+        }
+    }
+</script>--%>
+
+    <script type="text/javascript">
+        function doClick(buttonName,e)
+        {
+            //the purpose of this function is to allow the enter key to 
+            //point to the correct button to click.
+            var key;
+
+             if(window.event)
+                  key = window.event.keyCode;     //IE
+             else
+                  key = e.which;     //firefox
+
+            if (key == 13)
+            {
+                //Get the button the user wants to have clicked
+                var btn = document.getElementById(buttonName);
+                if (btn != null)
+                { //If we find the button click it
+                    btn.click();
+                    event.keyCode = 0
+                }
+            }
+       }
+    </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:UpdatePanel runat="server" ID="uPanel">
@@ -55,19 +90,21 @@
                         <div class="panel panel-primary">
                             <div class="panel-heading">
                                 <div style="position: relative;">
-                                    <table>
-                                        <tr>
-                                            <td>
-                                                <h1>Búsqueda de cliente&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h1>
-                                            </td>
-                                            <td>
-                                                <asp:TextBox ID="txtBusquedaCliente" runat="server" class="form-control" Width="300px" ContentPlaceHolder="Ingresar criterio de busqueda"></asp:TextBox>
-                                            </td>
-                                            <td>
-                                                <asp:Button ID="btnBuscarCliente" runat="server" class="btn btn-success" Text="Buscar cliente" OnClick="btnBuscarCliente_Click" />
-                                            </td>
-                                        </tr>
-                                    </table>
+                                    <asp:Panel id="panSearch" runat="server" DefaultButton="btnBuscarCliente">
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <h1>Búsqueda de cliente&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h1>
+                                                </td>
+                                                <td>
+                                                    <asp:TextBox ID="txtBusquedaCliente" runat="server" class="form-control" Width="300px"></asp:TextBox>
+                                                </td>
+                                                <td>
+                                                    <asp:Button ID="btnBuscarCliente" runat="server" class="btn btn-success" Text="Buscar cliente" OnClick="btnBuscarCliente_Click" />
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </asp:Panel>
                                 </div>
                             </div>
                             <div class="panel-body">

@@ -57,7 +57,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <asp:Button runat="server" ID="btnAutorizar" Text="Autorizar" class="btn btn-primary"/>
+                            <asp:Button runat="server" ID="btnAutorizar" Text="Autorizar" class="btn btn-primary" OnClick="btnAutorizar_Click"/>
                         </td>
                     </tr>
                 </table>

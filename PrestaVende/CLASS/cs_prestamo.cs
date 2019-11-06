@@ -91,7 +91,7 @@ namespace PrestaVende.CLASS
                 string fecha_modificada = "";
                 fecha_modificada = Convert.ToDateTime(datosEnc[3].ToString()).Year.ToString() + "/" + Convert.ToDateTime(datosEnc[3].ToString()).Month.ToString() + "/" + Convert.ToDateTime(datosEnc[3].ToString()).Day.ToString();
                 command.Parameters.Clear();
-                command.CommandText = "INSERT INTO tbl_prestamo_encabezado (id_sucursal, id_cliente, numero_prestamo, total_prestamo, fecha_creacion_prestamo, estado_prestamo, fecha_proximo_pago, saldo_prestamo, usuario, id_plan_prestamo, id_interes, id_casilla, fecha_ultimo_pago, fecha_modificacion_prestamo) " +
+                command.CommandText = "INSERT INTO tbl_prestamo_encabezado (id_sucursal, id_cliente, numero_prestamo, total_prestamo, fecha_creacion_prestamo, estado_prestamo, fecha_proximo_pago, saldo_prestamo, usuario, id_plan_prestamo, id_interes, id_casilla, fecha_ultimo_pago, fecha_modificacion_prestamo, avaluo_original) " +
                                             "VALUES( " +
                                             "@id_sucursal_enc,         "+  
                                             "@id_cliente,              "+
@@ -106,8 +106,8 @@ namespace PrestaVende.CLASS
                                             "@id_interes,              "+
                                             "@id_casilla, "+
                                             "GETDATE()," +
-                                            "GETDATE() " +
-                                            " )";
+                                            "GETDATE(), " +
+                                            "@avaluo_original )";
                 command.Parameters.AddWithValue("@id_sucursal_enc",     cs_usuario.id_sucursal);
                 command.Parameters.AddWithValue("@numero_prestamo",     numero_prestamo);
                 command.Parameters.AddWithValue("@id_cliente",          datosEnc[0]);
@@ -119,6 +119,7 @@ namespace PrestaVende.CLASS
                 command.Parameters.AddWithValue("@id_plan_prestamo",    datosEnc[6]);
                 command.Parameters.AddWithValue("@id_interes",          datosEnc[7]);
                 command.Parameters.AddWithValue("@id_casilla",          datosEnc[8]);
+                command.Parameters.AddWithValue("@avaluo_original",     datosEnc[9]);
                 insert = Convert.ToInt32(command.ExecuteNonQuery());
                 if (insert > 0)
                 {

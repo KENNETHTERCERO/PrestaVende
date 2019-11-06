@@ -34,6 +34,7 @@ namespace PrestaVende.Public
                     }
                     else
                     {
+                        this.txtBusquedaCliente.Attributes.Add("onkeypress", "button_click(this,'" + this.btnBuscarCliente.ClientID + "', event)");
                     }
                 }
             }

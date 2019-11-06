@@ -22,9 +22,9 @@ namespace PrestaVende.CLASS
         private static string connectionString = @"Data Source=sql5047.site4now.net;Initial Catalog=DB_A4F0BE_prestavendedb;User Id=DB_A4F0BE_prestavendedb_admin;Password=tercero#3;"; //Conecction Server SQL
         private static string ConstConnectionString = @"Data Source=sql5047.site4now.net;Initial Catalog=DB_A4F0BE_prestavendedb;User Id=DB_A4F0BE_prestavendedb_admin;Password=tercero#3;"; //Conecction Server SQL
 #else
-                                                    
-        private static string connectionString = @"Data Source=SQL5045.site4now.net;Initial Catalog=DB_A4CC78_prestavendedb;User Id=DB_A4CC78_prestavendedb_admin;Password=access#1;"; //Conecction Server SQL
-        private static string ConstConnectionString = @"Data Source=SQL5045.site4now.net;Initial Catalog=DB_A4CC78_prestavendedb;User Id=DB_A4CC78_prestavendedb_admin;Password=access#1;"; //Conecction Server SQL
+
+        private static string connectionString = @"Data Source=sql5047.site4now.net;Initial Catalog=DB_A4F0BE_prestavendedb;User Id=DB_A4F0BE_prestavendedb_admin;Password=tercero#3;"; //Conecction Server SQL
+        private static string ConstConnectionString = @"Data Source=sql5047.site4now.net;Initial Catalog=DB_A4F0BE_prestavendedb;User Id=DB_A4F0BE_prestavendedb_admin;Password=tercero#3;"; //Conecction Server SQL
 #endif
 
 
