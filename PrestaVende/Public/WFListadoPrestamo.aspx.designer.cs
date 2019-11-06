@@ -49,6 +49,15 @@ namespace PrestaVende.Public {
         protected global::System.Web.UI.WebControls.Label lblPrestamosActivosNumero;
         
         /// <summary>
+        /// lblPrestamosActivosMonto control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblPrestamosActivosMonto;
+        
+        /// <summary>
         /// lblPrestamosCanceladosNumero control.
         /// </summary>
         /// <remarks>
@@ -58,6 +67,15 @@ namespace PrestaVende.Public {
         protected global::System.Web.UI.WebControls.Label lblPrestamosCanceladosNumero;
         
         /// <summary>
+        /// lblPrestamosCanceladosMonto control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblPrestamosCanceladosMonto;
+        
+        /// <summary>
         /// lblPrestamosLiquidadosNumero control.
         /// </summary>
         /// <remarks>
@@ -65,6 +83,15 @@ namespace PrestaVende.Public {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblPrestamosLiquidadosNumero;
+        
+        /// <summary>
+        /// lblPrestamosLiquidadosMonto control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblPrestamosLiquidadosMonto;
         
         /// <summary>
         /// divWarning control.

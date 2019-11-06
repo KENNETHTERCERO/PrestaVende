@@ -96,6 +96,8 @@ namespace PrestaVende.CLASS
             {
                 int id_factura_encabezado = 0;
                 string numero_factura = "";
+                string fecha_proximo_pago = "";
+                string fecha_ultimo_pago = "";
                 string[] encabezado = new string[12];
 
                 connection.connection.Open();
@@ -119,6 +121,8 @@ namespace PrestaVende.CLASS
                 encabezado[8] = numero_prestamo;
                 encabezado[9] = (id_tipo_transaccion == "9") ? abono : "0"; 
                 encabezado[10] = (id_tipo_transaccion == "10") ? abono : "0";
+                fecha_proximo_pago = DatosFactura.Tables[0].Rows[0]["calculo_fecha_proximo_pago"].ToString();
+                fecha_ultimo_pago = DatosFactura.Tables[0].Rows[0]["calculo_fecha_ultimo_pago"].ToString();
 
                 id_factura_encabezado = insert_factura_encabezado(ref error, encabezado);
 
@@ -130,7 +134,7 @@ namespace PrestaVende.CLASS
                         {
                             if (update_saldo_caja(ref error, encabezado[3].ToString(), abono))
                             {
-                                if (update_prestamo(ref error, numero_prestamo, abono, id_tipo_transaccion))
+                                if (update_prestamo(ref error, numero_prestamo, abono, id_tipo_transaccion,fecha_proximo_pago,fecha_ultimo_pago))
                                 {
                                     if (update_correlativo_serie(ref error, id_serie, numero_factura))
                                     {
@@ -405,7 +409,7 @@ namespace PrestaVende.CLASS
             }
         }
 
-        private bool update_prestamo(ref string error, string numero_prestamo, string abono, string id_tipo_transaccion)
+        private bool update_prestamo(ref string error, string numero_prestamo, string abono, string id_tipo_transaccion, string fecha_proximo_pago, string fecha_ultimo_pago)
         {
             try
             {
@@ -413,14 +417,16 @@ namespace PrestaVende.CLASS
 
                 int update = 0;
                 command.Parameters.Clear();
-                command.CommandText = "UPDATE tbl_prestamo_encabezado SET fecha_proximo_pago = dbo.fecha_proximo_pago(GETDATE(),id_plan_prestamo), " +
-                                      "fecha_modificacion_prestamo = GETDATE(),fecha_ultimo_pago = CONVERT(DATE, GETDATE()), saldo_prestamo = saldo_prestamo - @abono, " + 
+                command.CommandText = "UPDATE tbl_prestamo_encabezado SET fecha_proximo_pago = CONVERT(DATE,@fecha_proximo_pago,103), " +
+                                      "fecha_modificacion_prestamo = GETDATE(),fecha_ultimo_pago = CONVERT(DATE,@fecha_ultimo_pago,103), saldo_prestamo = saldo_prestamo - @abono, " + 
                                       "estado_prestamo = @estado_prestamo " +
                                       "WHERE id_sucursal = @id_sucursal AND numero_prestamo = @numero_prestamo";
                 command.Parameters.AddWithValue("@numero_prestamo", numero_prestamo);
                 command.Parameters.AddWithValue("@id_sucursal", cs_usuario.id_sucursal);
                 command.Parameters.AddWithValue("@abono", abono);
                 command.Parameters.AddWithValue("@estado_prestamo", estado_prestamo);
+                command.Parameters.AddWithValue("@fecha_proximo_pago", fecha_proximo_pago);
+                command.Parameters.AddWithValue("@fecha_ultimo_pago", fecha_ultimo_pago);
 
                 update = command.ExecuteNonQuery();
                 if (update > 0)

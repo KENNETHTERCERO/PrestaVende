@@ -25,10 +25,13 @@
                                         </tr>
                                         <tr>
                                             <td>
-                                                <h4 style="color: limegreen;">Activos</h4> 
+                                                <h4 style="color: darkgreen;">Activos</h4> 
                                             </td>
                                             <td>
-                                                &nbsp;&nbsp;<asp:Label ID="lblPrestamosActivosNumero" runat="server" Text="0" style="color: limegreen;"></asp:Label>
+                                                &nbsp;&nbsp;<asp:Label ID="lblPrestamosActivosNumero" runat="server" Text="0" style="color: darkgreen;"></asp:Label>
+                                            </td>
+                                            <td>
+                                                &nbsp;Q&nbsp;<asp:Label ID="lblPrestamosActivosMonto" runat="server" Text="0" style="color: darkgreen;"></asp:Label>
                                             </td>
                                         </tr>
                                         <tr>
@@ -38,6 +41,9 @@
                                             <td>
                                                 &nbsp;&nbsp;<asp:Label ID="lblPrestamosCanceladosNumero" runat="server" Text="0" Style="color: yellow;"></asp:Label>
                                             </td>
+                                            <td>
+                                                &nbsp;Q&nbsp;<asp:Label ID="lblPrestamosCanceladosMonto" runat="server" Text="0" style="color: limegreen;"></asp:Label>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td>
@@ -45,6 +51,9 @@
                                             </td>
                                             <td>
                                                 &nbsp;&nbsp;<asp:Label ID="lblPrestamosLiquidadosNumero" runat="server" Text="0" Style="color: red;"></asp:Label>
+                                            </td>
+                                            <td>
+                                                &nbsp;Q&nbsp;<asp:Label ID="lblPrestamosLiquidadosMonto" runat="server" Text="0" style="color: limegreen;"></asp:Label>
                                             </td>
                                         </tr>
                                     </table>

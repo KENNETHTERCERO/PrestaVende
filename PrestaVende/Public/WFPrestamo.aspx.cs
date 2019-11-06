@@ -61,6 +61,7 @@ namespace PrestaVende.Public
                         setColumnsDifferentJewelry();
                         txtPesoDescuento.Text = "0";
                         getCasillas();
+                        getNumeroPrestamo();
                     }
                 }
             }
@@ -71,6 +72,18 @@ namespace PrestaVende.Public
         }
 
         #region funciones
+        private void getNumeroPrestamo()
+        {
+            try
+            {
+                lblNumeroPrestamoNumero.Text = cs_prestamo.getMaxNumeroPrestamo(ref error);
+            }
+            catch (Exception ex)
+            {
+                showWarning(ex.ToString() + " " + error);
+            }
+        }
+
         private void getMarca()
         {
             try
@@ -595,11 +608,17 @@ namespace PrestaVende.Public
         {
             try
             {
-                if (cs_prestamo.guardar_prestamo(ref error, generaEncabezado(), dtTablaJoyas, ddlCategoria.SelectedValue.ToString()))
+                string numero_prestamo_guardado = "";
+                if (cs_prestamo.guardar_prestamo(ref error, generaEncabezado(), dtTablaJoyas, ddlCategoria.SelectedValue.ToString(), ref numero_prestamo_guardado))
                 {
-
+                    lblNumeroPrestamoNumero.Text = numero_prestamo_guardado;
                     showSuccess("Se creo prestamo correctamente.");
-                    Response.Redirect("WFListadoPrestamo?id_cliente=" + lblid_cliente.Text.ToString());
+                    string script = "window.open('WebReport.aspx?tipo_reporte=1" + "&numero_prestamo=" + lblNumeroPrestamoNumero.Text + "');";
+                    ScriptManager.RegisterClientScriptBlock(this, GetType(), "", script, true);
+
+                    string scriptText = "alert('my message'); window.location='WFListadoPrestamo.aspx?id_cliente="+ lblid_cliente.Text+ "'";
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alertMessage", scriptText, true);
+                    //Response.Redirect("WFListadoPrestamo?id_cliente=" + lblid_cliente.Text.ToString());
                 }
                 else
                     showError(error);
@@ -614,10 +633,17 @@ namespace PrestaVende.Public
         {
             try
             {
-                if (cs_prestamo.guardar_prestamo(ref error, generaEncabezado(), dtTablaArticulos, ddlCategoria.SelectedValue.ToString()))
+                string numero_prestamo_guardado = "";
+                if (cs_prestamo.guardar_prestamo(ref error, generaEncabezado(), dtTablaArticulos, ddlCategoria.SelectedValue.ToString(),ref numero_prestamo_guardado))
                 {
+                    lblNumeroPrestamoNumero.Text = numero_prestamo_guardado;
                     showSuccess("Se creo prestamo correctamente.");
-                    Response.Redirect("WFListadoPrestamo?id_cliente=" + lblid_cliente.Text.ToString());
+                    string script = "window.open('WebReport.aspx?tipo_reporte=1" + "&numero_prestamo=" + lblNumeroPrestamoNumero.Text + "');";
+                    ScriptManager.RegisterClientScriptBlock(this, GetType(), "", script, true);
+
+                    string scriptText = "alert('my message'); window.location='WFListadoPrestamo.aspx?id_cliente=" + lblid_cliente.Text + "'";
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alertMessage", scriptText, true);
+                    //Response.Redirect("WFListadoPrestamo?id_cliente=" + lblid_cliente.Text.ToString());
                 }
                 else
                     showError(error);
@@ -633,9 +659,19 @@ namespace PrestaVende.Public
             try
             {
                 string[] encabezado = new string[12];
-
+                decimal montoOriginal = 0, nuevoMonto = 0;
+                if (txtMontoARecalcular.Visible)
+                {
+                    montoOriginal = Convert.ToDecimal(lblTotalPrestamoQuetzales.Text);
+                    nuevoMonto = Convert.ToDecimal(txtMontoARecalcular.Text);
+                }
+                else
+                {
+                    montoOriginal = Convert.ToDecimal(lblTotalPrestamoQuetzales.Text);
+                    nuevoMonto = Convert.ToDecimal(lblTotalPrestamoQuetzales.Text);
+                }
                 encabezado[0] = lblid_cliente.Text.ToString();
-                encabezado[1] = lblTotalPrestamoQuetzales.Text;
+                encabezado[1] = nuevoMonto.ToString();
                 encabezado[2] = "1";
                 encabezado[3] = getFechaProximoPago().ToString();
                 encabezado[4] = lblTotalPrestamoQuetzales.Text;
@@ -643,7 +679,7 @@ namespace PrestaVende.Public
                 encabezado[6] = ddlTipoPrestamo.SelectedValue.ToString();
                 encabezado[7] = ddlIntereses.SelectedValue.ToString();
                 encabezado[8] = ddlCasilla.SelectedValue.ToString();
-                //encabezado[] = ;
+                encabezado[9] = montoOriginal.ToString();
                 //encabezado[] = ;
                 //encabezado[] = ;
                 return encabezado;
@@ -692,6 +728,40 @@ namespace PrestaVende.Public
             {
                 showError(ex.ToString());
                 return false;
+            }
+        }
+
+        private void recalculoMontoPrestamo()
+        {
+            try
+            {
+                decimal montoFila = 0, porcentaje = 0;
+                if (gvProductoElectrodomesticos.Rows.Count > 0)
+                {
+                    foreach (GridViewRow item in gvProductoElectrodomesticos.Rows)
+                    {
+                        porcentaje = 0;
+                        porcentaje = Math.Round(Convert.ToDecimal(item.Cells[5].Text.ToString()) / Convert.ToDecimal( lblTotalPrestamoQuetzales.Text.ToString()), 4);
+                        montoFila = porcentaje * Convert.ToDecimal(txtMontoARecalcular.Text.ToString());
+                        montoFila = Math.Round(montoFila, 2);
+                        item.Cells[5].Text = montoFila.ToString();
+                    }
+                }
+                else
+                {
+                    foreach (GridViewRow item in gvProductoJoya.Rows)
+                    {
+                        porcentaje = 0;
+                        porcentaje = Math.Round(Convert.ToDecimal(item.Cells[5].Text.ToString()) / Convert.ToDecimal(lblTotalPrestamoQuetzales.Text.ToString()), 4);
+                        montoFila = porcentaje * Convert.ToDecimal(txtMontoARecalcular.Text.ToString());
+                        montoFila = Math.Round(montoFila, 2);
+                        item.Cells[5].Text = montoFila.ToString();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                showError(ex.ToString());
             }
         }
         #endregion
@@ -898,17 +968,28 @@ namespace PrestaVende.Public
 
         }
 
-        #endregion
-
         protected void btnRecalcularValorPrestamoTotal_Click(object sender, EventArgs e)
         {
-
+            recalculoMontoPrestamo();
         }
 
         protected void btnAcept_Click(object sender, EventArgs e)
         {
-            //getClientes(Session["id_cliente"].ToString());
-            //ErrorOnPage(false);
+            try
+            {
+                if (CLASS.cs_usuario.autorizado)
+                {
+                    txtMontoARecalcular.Visible = true;
+                    btnRecalcularValorPrestamoTotal.Visible = true;
+                    CLASS.cs_usuario.autorizado = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                showError(ex.ToString());
+            }
         }
+
+        #endregion
     }
 }

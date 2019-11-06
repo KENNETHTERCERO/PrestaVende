@@ -499,7 +499,7 @@ namespace PrestaVende.DATASET {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public dtContratoPrestamoRow AdddtContratoPrestamoRow(string fecha_prestamo, string id_cliente, string nombre_cliente, string dias_prestamo, string monto_prestamo, string dias_liquidacion, string intereses, string manejo_cuenta, string resguardo, string contrato, string empresa, string nombre_apellido, string DPI, string numero_prestamo, string id_sucursal) {
+            public dtContratoPrestamoRow AdddtContratoPrestamoRow(string fecha_prestamo, string id_cliente, string nombre_cliente, string dias_prestamo, string monto_prestamo, string dias_liquidacion, string intereses, string manejo_cuenta, string resguardo, string contrato, string empresa, string nombre_apellido, string DPI, long numero_prestamo, string id_sucursal) {
                 dtContratoPrestamoRow rowdtContratoPrestamoRow = ((dtContratoPrestamoRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         fecha_prestamo,
@@ -585,7 +585,7 @@ namespace PrestaVende.DATASET {
                 base.Columns.Add(this.columnnombre_apellido);
                 this.columnDPI = new global::System.Data.DataColumn("DPI", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnDPI);
-                this.columnnumero_prestamo = new global::System.Data.DataColumn("numero_prestamo", typeof(string), null, global::System.Data.MappingType.Element);
+                this.columnnumero_prestamo = new global::System.Data.DataColumn("numero_prestamo", typeof(long), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnnumero_prestamo);
                 this.columnid_sucursal = new global::System.Data.DataColumn("id_sucursal", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnid_sucursal);
@@ -939,10 +939,10 @@ namespace PrestaVende.DATASET {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string numero_prestamo {
+            public long numero_prestamo {
                 get {
                     try {
-                        return ((string)(this[this.tabledtContratoPrestamo.numero_prestamoColumn]));
+                        return ((long)(this[this.tabledtContratoPrestamo.numero_prestamoColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
                         throw new global::System.Data.StrongTypingException("The value for column \'numero_prestamo\' in table \'dtContratoPrestamo\' is DBNull.", e);
