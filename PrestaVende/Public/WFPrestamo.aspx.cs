@@ -752,10 +752,10 @@ namespace PrestaVende.Public
                     foreach (GridViewRow item in gvProductoJoya.Rows)
                     {
                         porcentaje = 0;
-                        porcentaje = Math.Round(Convert.ToDecimal(item.Cells[5].Text.ToString()) / Convert.ToDecimal(lblTotalPrestamoQuetzales.Text.ToString()), 4);
+                        porcentaje = Math.Round(Convert.ToDecimal(item.Cells[9].Text.ToString()) / Convert.ToDecimal(lblTotalPrestamoQuetzales.Text.ToString()), 4);
                         montoFila = porcentaje * Convert.ToDecimal(txtMontoARecalcular.Text.ToString());
                         montoFila = Math.Round(montoFila, 2);
-                        item.Cells[5].Text = montoFila.ToString();
+                        item.Cells[9].Text = montoFila.ToString();
                     }
                 }
             }
