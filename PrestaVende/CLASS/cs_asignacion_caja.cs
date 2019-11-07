@@ -90,7 +90,7 @@ namespace PrestaVende.CLASS
                 {
                     foreach (DataRow item in DtEstadosValidacion.Rows)
                     {
-                        id_tipo_caja_seleccionada = item[1].ToString();
+                        id_tipo_caja_seleccionada = item[0].ToString();
                     }
                 }
 
@@ -166,14 +166,14 @@ namespace PrestaVende.CLASS
                                         + "  inner "
                                         + "        join tbl_tipo_caja tc "
                                         + "      on aetc.id_tipo_caja = tc.id_tipo_caja "
-                                        + "     where tc.id_tipo_caja = @id_tipo_caja and ec.id_estado_caja not in (@Disponible, @Recibida, @Incremento, @Decremento, @Cierre, @Asignacion)";
+                                        + "     where tc.id_tipo_caja = @id_tipo_caja and ec.id_estado_caja not in (@Disponible, @Recibida, @Incremento, @Decremento, @Asignacion)";
 
                 command.Parameters.AddWithValue("@id_tipo_caja", id_tipo_caja_seleccionada);
                 command.Parameters.AddWithValue("@Disponible", Disponible);
                 command.Parameters.AddWithValue("@Recibida", CajaRecibida);
                 command.Parameters.AddWithValue("@Incremento", Incremento);
                 command.Parameters.AddWithValue("@Decremento", Decremento);
-                command.Parameters.AddWithValue("@Cierre", CierreCaja);
+                //command.Parameters.AddWithValue("@Cierre", CierreCaja);
                 command.Parameters.AddWithValue("@Asignacion", AsignacionCaja);
                 EstadoCaja.Load(command.ExecuteReader());
                 return EstadoCaja;
