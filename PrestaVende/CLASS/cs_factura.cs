@@ -111,7 +111,7 @@ namespace PrestaVende.CLASS
                 numero_factura = command.ExecuteScalar().ToString();
 
                 encabezado[0] = id_serie;
-                encabezado[1] = numero_factura;
+                encabezado[1] = numero_factura; 
                 encabezado[2] = id_cliente;
                 encabezado[3] = DatosFactura.Tables[1].Rows[0]["Total"].ToString().Replace(",", ".");
                 encabezado[4] = DatosFactura.Tables[1].Rows[0]["SubTotal"].ToString().Replace(",", ".");
