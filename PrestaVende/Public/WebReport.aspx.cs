@@ -12,6 +12,7 @@ namespace PrestaVende.Public
     public partial class WebReport : System.Web.UI.Page
     {
         private CLASS.cs_prestamo cs_prestamo = new CLASS.cs_prestamo();
+        private CLASS.cs_factura cs_factura = new CLASS.cs_factura();
         private string error = "";
 
         protected void Page_Load(object sender, EventArgs e)
@@ -56,23 +57,38 @@ namespace PrestaVende.Public
                     
                 }
             }//finaliza if de packing list en pdf
-             //    else if (Convert.ToInt32(tipo_reporte) == 2) //2 reporte de etiquetas en pdf
-             //    {
-             //        etiquetas = new CLASS.cs_etiquetas();
-             //        string numero_recoleccion = Request.QueryString.Get("numero_recoleccion");
-             //        //ReportDocument rpt_izquierda = new ReportDocument();
-             //        //ReportDocument rpt_derecha = new ReportDocument();
-             //        ReportDocument rpt_all_etiquetas = new ReportDocument();
-             //        DataTable dt_rpt_izquierda = new DataTable("dt_izquierda");
-             //        DataTable dt_rpt_derecha = new DataTable("dt_derecha");
-             //        rpt_all_etiquetas.Load(Server.MapPath("~/Public/Vista/Reports/rpt_all_etiquetas.rpt"));
-             //        dt_rpt_izquierda = etiquetas.getDataEtiqueta(ref error, numero_recoleccion, "1");
-             //        dt_rpt_derecha = etiquetas.getDataEtiqueta(ref error, numero_recoleccion, "2");
-             //        rpt_all_etiquetas.Subreports[0].SetDataSource(dt_rpt_derecha);
-             //        rpt_all_etiquetas.Subreports[1].SetDataSource(dt_rpt_izquierda);
-             //        CrystalReportViewer1.ReportSource = rpt_all_etiquetas;
-             //        rpt_all_etiquetas.ExportToHttpResponse(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat, Response, false, "Etiquetas de recoleccion No." + numero_recoleccion);
-             //    }//finalizareporte de etiquetas en pdf
+            else if (Convert.ToInt32(tipo_reporte) == 2) //2 reporte de etiquetas en pdf
+            {
+                DataTable factura = new DataTable("factura");
+                string id_factura = Request.QueryString.Get("id_factura");
+                factura = cs_factura.ObtenerFactura(ref error, id_factura);
+
+                if (factura.Rows.Count <= 0)
+                {
+                    error = "Error obteniendo datos de contrato." + error;
+                    throw new Exception("");
+                }
+                else
+                {
+                    try
+                    {
+                        Reports.CRFacturaIntereses ReporteFactura = new Reports.CRFacturaIntereses();
+                                                
+                        ReporteFactura.Load(Server.MapPath("~/Reports/CRFacturaIntereses.rpt"));                        
+                        ReporteFactura.SetDataSource(factura);
+                        CrystalReportViewer1.ReportSource = ReporteFactura;//document;
+                        CrystalReportViewer1.DataBind();
+                        CrystalReportViewer1.RefreshReport();
+                        ReporteFactura.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "");
+                    }
+                    catch (Exception ex)
+                    {
+                        error = ex.ToString();
+                    }
+
+                }
+
+            }//finalizareporte de etiquetas en pdf
              //    else if (Convert.ToInt32(tipo_reporte) == 3)//3 reporte de packing list en excel
              //    {
              //        pack = new CLASS.cs_packing_list();

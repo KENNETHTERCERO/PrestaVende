@@ -208,12 +208,18 @@ namespace PrestaVende.Public
                                       || (txtAbonoCapital.Visible == true && abono == lSaldo_prestamo && id_tipo_transaccion == "10"))
                                 {                                    
                                     string numero_prestamo = lblNombrePrestamo.Text;
-                                    bool Resultado = false;
+                                    string Resultado = "";
+                                    string id_prestamo = Request.QueryString["id_prestamo"];
 
                                     Resultado = cs_factura.GuardarFactura(ref error, ds_global, id_serie, id_cliente, id_tipo_transaccion, CLASS.cs_usuario.id_caja, numero_prestamo, abono.ToString());
 
-                                    string id_prestamo = Request.QueryString["id_prestamo"];
-                                    Response.Redirect("WFFacturacion?id_prestamo=" + id_prestamo);
+                                    showSuccess("Se creo prestamo correctamente.");
+                                    string script = "window.open('WebReport.aspx?tipo_reporte=2" + "&id_factura=" + Resultado + "');";
+                                    ScriptManager.RegisterClientScriptBlock(this, GetType(), "", script, true);
+
+                                    //string scriptText = "alert('my message'); window.location='WFFacturacion.aspx?id_prestamo=" + id_prestamo.ToString() + "'";
+                                    //ScriptManager.RegisterStartupScript(this, this.GetType(), "alertMessage", scriptText, true);
+                                    
                                 }
                                 else
                                     showWarning("El abono ingresado no puede ser mayor o igual al saldo del prestamo.");

@@ -46,6 +46,35 @@ namespace PrestaVende.CLASS
             return dtReturnFacturas;
         }
 
+        public DataTable ObtenerFactura(ref string error, string id_factura)
+        {
+            DataTable dtReturnFacturas = new DataTable("dtFacturas");
+            try
+            {
+                connection.connection.Open();
+                command.Connection = connection.connection;
+                command.Parameters.Clear();
+                command.CommandText = "select (c.primer_nombre + ' ' + c.segundo_nombre + ' ' + c.primer_apellido + ' ' + c.segundo_apellido) as CLiente, c.direccion, c.nit, "
+                                        + "1 as Cantidad, fd.descripcion_detalle, fd.total_fila, fe.total_factura, fe.monto_abono_capital, fe.monto_cancelacion "
+                                        + "from tbl_factura_encabezado fe "
+                                        + "inner join tbl_factura_detalle fd on fe.id_factura_encabezado = fd.id_factura_encabezado "
+                                        + "inner join tbl_cliente c on c.id_cliente = fe.id_cliente "
+                                        + "where fe.id_factura_encabezado = @id_factura";
+                command.Parameters.AddWithValue("@id_factura", id_factura);
+                dtReturnFacturas.Load(command.ExecuteReader());
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                return null;
+            }
+            finally
+            {
+                connection.connection.Close();
+            }
+            return dtReturnFacturas;
+        }
+
         public DataSet ObtenerDetalleFacturas(ref string error, string id_prestamo)
         {
             //DataTable dtReturnFacturas = new DataTable("dtDetalleFacturas");
@@ -88,13 +117,13 @@ namespace PrestaVende.CLASS
             return ds;
         }
 
-        public bool GuardarFactura(ref string error, DataSet DatosFactura, string id_serie, string id_cliente, string id_tipo_transaccion, int id_caja, string numero_prestamo, string abono)
+        public string GuardarFactura(ref string error, DataSet DatosFactura, string id_serie, string id_cliente, string id_tipo_transaccion, int id_caja, string numero_prestamo, string abono)
         {
             bool Resultado = false;
+            int id_factura_encabezado = 0;
 
             try
-            {
-                int id_factura_encabezado = 0;
+            {                
                 string numero_factura = "";
                 string fecha_proximo_pago = "";
                 string fecha_ultimo_pago = "";
@@ -194,7 +223,8 @@ namespace PrestaVende.CLASS
             {
                 connection.connection.Close();
             }
-            return Resultado;
+            
+            return Convert.ToString(id_factura_encabezado);
         }
 
         private int insert_factura_encabezado(ref string error, string[] datosEnc)
@@ -254,10 +284,11 @@ namespace PrestaVende.CLASS
                 int inserts = 0;
                 foreach (DataRow item in detalle.Rows)
                 {
-                    comando = "INSERT INTO tbl_factura_detalle (id_factura_encabezado, numero_prestamo, numero_linea, cantidad, precio, total_fila, sub_total_fila, iva_fila, bien_servicio) " +
+                    comando = "INSERT INTO tbl_factura_detalle (id_factura_encabezado, numero_prestamo, numero_linea, cantidad, precio, total_fila, sub_total_fila, iva_fila, bien_servicio, descripcion_detalle) " +
                         $"VALUES({id_factura_encabezado}, {numero_prestamo}, {(inserts + 1).ToString()}, {item["Cantidad"].ToString()}, {item["Precio"].ToString()}, {item["SubTotal"].ToString()}" +
-                        $",{(decimal.Parse(item["SubTotal"].ToString()) - decimal.Parse(item["IVA"].ToString())).ToString()}, {item["IVA"].ToString()}, 'S')";
-                    
+                        $",{(decimal.Parse(item["SubTotal"].ToString()) - decimal.Parse(item["IVA"].ToString())).ToString()}, {item["IVA"].ToString()}, 'S', '{item["cargo"].ToString()}')";
+
+
                     command.CommandText = comando;
                     inserts += command.ExecuteNonQuery();
                 }

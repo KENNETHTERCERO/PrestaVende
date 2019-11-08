@@ -150,6 +150,17 @@
     <Content Include="DATASET\DSContratoPrestamo.xss">
       <DependentUpon>DSContratoPrestamo.xsd</DependentUpon>
     </Content>
+    <Content Include="DATASET\DSFacturaIntereses.xsc">
+      <DependentUpon>DSFacturaIntereses.xsd</DependentUpon>
+    </Content>
+    <None Include="DATASET\DSFacturaIntereses.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DSFacturaIntereses.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="DATASET\DSFacturaIntereses.xss">
+      <DependentUpon>DSFacturaIntereses.xsd</DependentUpon>
+    </Content>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -195,6 +206,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DSContratoPrestamo.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DATASET\DSFacturaIntereses.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DSFacturaIntereses.xsd</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -374,6 +390,12 @@
       <DependentUpon>CRContratoGeneral.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Reports\CRFacturaIntereses.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CRFacturaIntereses.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="WebLogin.aspx.cs">
       <DependentUpon>WebLogin.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -393,6 +415,10 @@
     <EmbeddedResource Include="Reports\CRContratoGeneral.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>CRContratoGeneral.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\CRFacturaIntereses.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>CRFacturaIntereses.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
