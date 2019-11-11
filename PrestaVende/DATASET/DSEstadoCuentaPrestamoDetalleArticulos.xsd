@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DSEstadoCuentaPrestamoDetalleArticulos" targetNamespace="http://tempuri.org/DSEstadoCuentaPrestamoDetalleArticulos.xsd" xmlns:mstns="http://tempuri.org/DSEstadoCuentaPrestamoDetalleArticulos.xsd" xmlns="http://tempuri.org/DSEstadoCuentaPrestamoDetalleArticulos.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DSEstadoCuentaPrestamoDetalleArticulos" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="DSEstadoCuentaPrestamoDetalleArticulos" msprop:Generator_UserDSName="DSEstadoCuentaPrestamoDetalleArticulos">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="dtEstadoCuentaPrestamoDetalleArticulos" msprop:Generator_TableClassName="dtEstadoCuentaPrestamoDetalleArticulosDataTable" msprop:Generator_TableVarName="tabledtEstadoCuentaPrestamoDetalleArticulos" msprop:Generator_TablePropName="dtEstadoCuentaPrestamoDetalleArticulos" msprop:Generator_RowDeletingName="dtEstadoCuentaPrestamoDetalleArticulosRowDeleting" msprop:Generator_RowChangingName="dtEstadoCuentaPrestamoDetalleArticulosRowChanging" msprop:Generator_RowEvHandlerName="dtEstadoCuentaPrestamoDetalleArticulosRowChangeEventHandler" msprop:Generator_RowDeletedName="dtEstadoCuentaPrestamoDetalleArticulosRowDeleted" msprop:Generator_UserTableName="dtEstadoCuentaPrestamoDetalleArticulos" msprop:Generator_RowChangedName="dtEstadoCuentaPrestamoDetalleArticulosRowChanged" msprop:Generator_RowEvArgName="dtEstadoCuentaPrestamoDetalleArticulosRowChangeEvent" msprop:Generator_RowClassName="dtEstadoCuentaPrestamoDetalleArticulosRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="id_prestamo_detalle" msprop:Generator_ColumnVarNameInTable="columnid_prestamo_detalle" msprop:Generator_ColumnPropNameInRow="id_prestamo_detalle" msprop:Generator_ColumnPropNameInTable="id_prestamo_detalleColumn" msprop:Generator_UserColumnName="id_prestamo_detalle" type="xs:string" minOccurs="0" />
+              <xs:element name="numero_linea" msprop:Generator_ColumnVarNameInTable="columnnumero_linea" msprop:Generator_ColumnPropNameInRow="numero_linea" msprop:Generator_ColumnPropNameInTable="numero_lineaColumn" msprop:Generator_UserColumnName="numero_linea" type="xs:string" minOccurs="0" />
+              <xs:element name="producto" msprop:Generator_ColumnVarNameInTable="columnproducto" msprop:Generator_ColumnPropNameInRow="producto" msprop:Generator_ColumnPropNameInTable="productoColumn" msprop:Generator_UserColumnName="producto" type="xs:string" minOccurs="0" />
+              <xs:element name="caracteristicas" msprop:Generator_ColumnVarNameInTable="columncaracteristicas" msprop:Generator_ColumnPropNameInRow="caracteristicas" msprop:Generator_ColumnPropNameInTable="caracteristicasColumn" msprop:Generator_UserColumnName="caracteristicas" type="xs:string" minOccurs="0" />
+              <xs:element name="kilataje" msprop:Generator_ColumnVarNameInTable="columnkilataje" msprop:Generator_ColumnPropNameInRow="kilataje" msprop:Generator_ColumnPropNameInTable="kilatajeColumn" msprop:Generator_UserColumnName="kilataje" type="xs:string" minOccurs="0" />
+              <xs:element name="gramos" msprop:Generator_ColumnVarNameInTable="columngramos" msprop:Generator_ColumnPropNameInRow="gramos" msprop:Generator_ColumnPropNameInTable="gramosColumn" msprop:Generator_UserColumnName="gramos" type="xs:string" minOccurs="0" />
+              <xs:element name="monto_linea" msprop:Generator_ColumnVarNameInTable="columnmonto_linea" msprop:Generator_ColumnPropNameInRow="monto_linea" msprop:Generator_ColumnPropNameInTable="monto_lineaColumn" msprop:Generator_UserColumnName="monto_linea" type="xs:string" minOccurs="0" />
+              <xs:element name="marca" msprop:Generator_ColumnVarNameInTable="columnmarca" msprop:Generator_ColumnPropNameInRow="marca" msprop:Generator_ColumnPropNameInTable="marcaColumn" msprop:Generator_UserColumnName="marca" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
