@@ -63,7 +63,7 @@ namespace PrestaVende.CLASS
 	                                        "usu.primer_nombre," +      //4, 5
 	                                        "usu.primer_apellido, " +   //5, 6
 	                                        "usu.id_rol, " +            //6, 7
-                                            "usu.estado, " +            //7, 8
+                                            "usu.estado, " +            //7, 8  
                                             "ISNULL(asi.id_caja, 0), " +           //8, 9
                                             "ISNULL(asi.id_asignacion_caja, 0), " +  //9, 10
                                             "ISNULL(asi.estado_asignacion, 0), " + //10, 11
