@@ -87,6 +87,7 @@ namespace PrestaVende.Public
                 CLASS.cs_usuario.primer_nombre = "";
                 CLASS.cs_usuario.primer_apellido = "";
                 CLASS.cs_usuario.Saldo_caja = 0;
+                CLASS.cs_usuario.id_tipo_caja = 0;
             }
             catch (Exception ex)
             {

@@ -41,6 +41,7 @@ namespace PrestaVende.Public
         private static string error = "";
         private static bool isUpdate = false;
         private static string id_asignacion_recibida = "";
+        private int IntCajaActualUsuario = 0;
 
         private CLASS.cs_asignacion_caja mAsignacionCaja = new CLASS.cs_asignacion_caja();
 
@@ -48,6 +49,27 @@ namespace PrestaVende.Public
 
 
         #region eventos
+
+        private void OpcionSalir()
+        {
+            try
+            {
+                CLASS.cs_usuario.id_usuario = 0;
+                CLASS.cs_usuario.id_empresa = 0;
+                CLASS.cs_usuario.id_sucursal = 0;
+                CLASS.cs_usuario.id_rol = 0;
+                CLASS.cs_usuario.id_caja = 0;
+                CLASS.cs_usuario.usuario = "";
+                CLASS.cs_usuario.primer_nombre = "";
+                CLASS.cs_usuario.primer_apellido = "";
+                CLASS.cs_usuario.Saldo_caja = 0;
+                CLASS.cs_usuario.id_tipo_caja = 0;
+            }
+            catch (Exception ex)
+            {
+                //showError(ex.ToString());
+            }
+        }
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -129,6 +151,14 @@ namespace PrestaVende.Public
                 ddIdCaja.Enabled = true;
                 ChbxRecibir.Visible = false;
                 lblRecibir.Visible = false;
+                lblMontoActual.Visible = false;
+                txtMontoActual.Visible = false;
+                ddIdEstadoCaja.DataSource = "";
+                ddIdEstadoCaja.Visible = true;
+                lblEstadoCaja.Visible = true;
+                ddIdUsuarioAsignado.Visible = true;
+                lblUsuarioAsignado.Visible = true;
+
             }
             catch (Exception)
             {
@@ -147,9 +177,17 @@ namespace PrestaVende.Public
                        //ACTUALIZA REGISTRO
                        if (insertAsignacionCaja())
                        {
-                           hideOrShowDiv(true);
-                           getDataGrid();
-                           isUpdate = false;
+                            if ((ddIdEstadoCaja.SelectedValue.ToString() == "4") && (IntCajaActualUsuario == Convert.ToInt32(ddIdCaja.SelectedValue.ToString()))) //CUANDO ESTA EN ESTADO DE CIERRE DE LA MISMA CAJA SALE
+                            {
+                                OpcionSalir();
+                                Response.Redirect("~/WebLogin.aspx", false);
+                            }
+                            else
+                            {
+                                hideOrShowDiv(true);
+                                getDataGrid();
+                                isUpdate = false;
+                            }                           
                        }
                     }
                     else
@@ -179,44 +217,59 @@ namespace PrestaVende.Public
         {
             try
             {
+
                 if (e.CommandName == "select")
                 {
                     cleanControls();
                     int index = Convert.ToInt32(e.CommandArgument);
-                    DataTable DtAsignacionCaja;
+                    DataTable DtAsignacionCaja = new DataTable();
                     GridViewRow selectedRow = GrdVAsignacionCaja.Rows[index];
 
                     TableCell id_asignacion_caja = selectedRow.Cells[1];
-                    DtAsignacionCaja = mAsignacionCaja.getDatosAsignacionCaja(ref error, id_asignacion_caja.Text.ToString());
 
-                    foreach (DataRow item in DtAsignacionCaja.Rows)
+
+                    if (mAsignacionCaja.getValidandoEstadoAsignacion(ref error, id_asignacion_caja.Text.ToString()) == "1")
                     {
-                        id_asignacion_recibida = id_asignacion_caja.Text.ToString();
 
-                        getEstadosCajaUpdate(item[1].ToString());
+                        DtAsignacionCaja = mAsignacionCaja.getDatosAsignacionCaja(ref error, id_asignacion_caja.Text.ToString());
 
-                        ddidAsignacion.Text = mAsignacionCaja.getIDMaxAsignacionCaja(ref error);
-                        ddIdCaja.SelectedValue = item[1].ToString();
-                        ddIdEstadoCaja.SelectedValue = item[2].ToString();
-                        //ddIdEstado.SelectedValue = item[4].ToString();
-                        ddIdUsuarioAsignado.SelectedValue = item[8].ToString();
+                        foreach (DataRow item in DtAsignacionCaja.Rows)
+                        {
+                            id_asignacion_recibida = id_asignacion_caja.Text.ToString();
 
-                        ddIdCaja.Enabled = false;
-                        ddIdEstadoCaja.Visible = false;
-                        ddIdUsuarioAsignado.Visible = false;
-                        //ddIdEstado.Visible = false;
-                        lblCaja.Visible = true;
-                        //lblEstado.Visible = false;
-                        lblEstadoCaja.Visible = false;
-                        lblUsuarioAsignado.Visible = false;
-                        ChbxRecibir.Visible = true;
-                        lblRecibir.Visible = true;
+                            getEstadosCajaUpdate(item[1].ToString());
+
+                            ddidAsignacion.Text = mAsignacionCaja.getIDMaxAsignacionCaja(ref error);
+                            ddIdCaja.SelectedValue = item[1].ToString();
+                            ddIdEstadoCaja.SelectedValue = item[2].ToString();
+                            //ddIdEstado.SelectedValue = item[4].ToString();
+                            ddIdUsuarioAsignado.SelectedValue = item[8].ToString();
+                            txtMontoActual.Text = item[9].ToString();
+
+                            ddIdCaja.Enabled = false;
+                            ddIdEstadoCaja.Visible = false;
+                            ddIdUsuarioAsignado.Visible = false;
+                            //ddIdEstado.Visible = false;
+                            lblCaja.Visible = true;
+                            //lblEstado.Visible = false;
+                            lblEstadoCaja.Visible = false;
+                            lblUsuarioAsignado.Visible = false;
+                            ChbxRecibir.Visible = true;
+                            lblRecibir.Visible = true;
+                            txtMontoActual.Enabled = false;
+                            txtMontoActual.Visible = true;
+                            lblMontoActual.Visible = true;
+                        }
+
+                        isUpdate = true;
+                        hideOrShowDiv(false);
+                        divSucceful.Visible = false;
+                        getDataGrid();
                     }
-
-                    isUpdate = true;
-                    hideOrShowDiv(false);
-                    divSucceful.Visible = false;
-                    getDataGrid();
+                    else
+                    {
+                        showWarning("Asignación ya fue recibida.");
+                    }
                 }
             }
             catch (Exception ex)
@@ -400,7 +453,7 @@ namespace PrestaVende.Public
                     blnRecibir = true;
                 }
 
-                if (mAsignacionCaja.insertAsignacionCaja(ref error, ddidAsignacion.Text, ddIdCaja.SelectedValue.ToString(), ddIdEstadoCaja.SelectedValue.ToString(), txtMonto.Text, "0", thisDay.ToString("MM/dd/yyyy HH:mm:ss"), thisDay.ToString("MM/dd/yyyy HH:mm:ss"), CLASS.cs_usuario.usuario, ddIdUsuarioAsignado.SelectedValue.ToString(), blnRecibir, id_asignacion_recibida))                  
+                if (mAsignacionCaja.insertAsignacionCaja(ref error, ddidAsignacion.Text, ddIdCaja.SelectedValue.ToString(), ddIdEstadoCaja.SelectedValue.ToString(), txtMonto.Text, "1", thisDay.ToString("MM/dd/yyyy HH:mm:ss"), thisDay.ToString("MM/dd/yyyy HH:mm:ss"), CLASS.cs_usuario.usuario, ddIdUsuarioAsignado.SelectedValue.ToString(), blnRecibir, id_asignacion_recibida, ref IntCajaActualUsuario))                  
                 {
                     showSuccess("Se realizó la asignación de caja correctamente.");
                     return true;
