@@ -274,6 +274,24 @@ namespace PrestaVende.Public {
         protected global::System.Web.UI.WebControls.Label lblTotalFacturaV;
         
         /// <summary>
+        /// Control lblInteres.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblInteres;
+        
+        /// <summary>
+        /// Control lblValorInteres.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblValorInteres;
+        
+        /// <summary>
         /// Control lblAbonoCapital.
         /// </summary>
         /// <remarks>

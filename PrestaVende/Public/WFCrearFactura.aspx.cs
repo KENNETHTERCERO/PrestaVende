@@ -31,6 +31,7 @@ namespace PrestaVende.Public
                     lblnombre_prestamo.Text = item[1].ToString() + " - Cliente: " + item[2].ToString() + " " + item[3].ToString() + " " + item[4].ToString() + " " + item[5].ToString();
                     lblNombrePrestamo.Text = item[1].ToString();
                     lblNombreCliente.Text = item[2].ToString() + " " + item[3].ToString() + " " + item[4].ToString() + " " + item[5].ToString();
+                    lblValorInteres.Text = item[8].ToString();
                     id_cliente = item[6].ToString();
                     saldo_prestamo = item[7].ToString();
 
@@ -96,6 +97,13 @@ namespace PrestaVende.Public
                 ddlSerie.DataValueField = "id_serie";
                 ddlSerie.DataTextField = "serie";
                 ddlSerie.DataBind();
+
+                int id_serie = int.Parse(ddlSerie.SelectedValue.ToString());
+
+                if (id_serie > 0)
+                    lblNumeroPrestamoNumeroFactura.Text = (cs_serie.getCorrelativoSerie(ref error, id_serie) + 1).ToString();
+                else
+                    lblNumeroPrestamoNumeroFactura.Text = "0";
             }
             catch (Exception ex)
             {

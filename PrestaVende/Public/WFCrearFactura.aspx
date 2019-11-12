@@ -137,6 +137,14 @@
                                                 </tr>
                                                 <tr>     
                                                     <td>
+                                                        <asp:Label ID="lblInteres" runat="server" Text="INTERES"></asp:Label>
+                                                    </td>
+                                                    <td>
+                                                        <asp:Label ID="lblValorInteres" runat="server" Text="0"></asp:Label>
+                                                    </td>
+                                                </tr>
+                                                <tr>     
+                                                    <td>
                                                         <asp:Label ID="lblAbonoCapital" runat="server" Text="ABONO A CAPITAL"></asp:Label>
                                                     </td>
                                                     <td>
