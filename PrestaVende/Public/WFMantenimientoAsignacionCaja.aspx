@@ -100,6 +100,15 @@
 
                                                 <tr>
                                                     <td>
+                                                        <big><asp:Label ID="lblMontoActual" runat="server" Text="MONTO ACTUAL"></asp:Label></big>
+                                                    </td>
+                                                    <td>
+                                                         <asp:TextBox ID="txtMontoActual" type="decimal" text="0" runat="server" class="form-control"></asp:TextBox>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>
                                                         <big><asp:Label ID="lblMonto" runat="server" Text="MONTO"></asp:Label></big>
                                                     </td>
                                                     <td>

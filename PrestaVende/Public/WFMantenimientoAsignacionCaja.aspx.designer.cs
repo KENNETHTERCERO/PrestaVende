@@ -191,7 +191,7 @@ namespace PrestaVende.Public {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtMonto;
-        
+
         /// <summary>
         /// lblEstado control.
         /// </summary>
@@ -199,6 +199,26 @@ namespace PrestaVende.Public {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
+        /// 
+        protected global::System.Web.UI.WebControls.Label lblMontoActual;
+
+        /// <summary>
+        /// txtMonto control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtMontoActual;
+
+        /// <summary>
+        /// lblEstado control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+
         protected global::System.Web.UI.WebControls.Label lblEstado;
         
         /// <summary>
