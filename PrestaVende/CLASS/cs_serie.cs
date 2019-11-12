@@ -39,8 +39,7 @@ namespace PrestaVende.CLASS
                 DataTable Serie = new DataTable();
                 connection.connection.Open();
                 command.Connection = connection.connection;
-                command.CommandText = "SELECT 0 AS id_serie, 'SELECCIONAR' AS serie UNION "
-                                    + "SELECT  id_serie,serie"
+                command.CommandText = "SELECT  id_serie,serie"
                                     + " FROM tbl_serie       "
                                     + " WHERE estado = 1 AND id_sucursal = @id_sucursal";
                 command.Parameters.AddWithValue("@id_sucursal", id_sucursal);
