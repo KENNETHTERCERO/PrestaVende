@@ -44,6 +44,7 @@ namespace PrestaVende.Public
                         getPaises();
                         getCategoriaMedio();
                         getProfesion();
+                        getNacionalidad();
 
                         if (accion.Equals("editar"))
                         {
@@ -88,11 +89,14 @@ namespace PrestaVende.Public
                     txtNumeroTelefono.Text = item[11].ToString();
                     ddlEstado.SelectedValue = item[12].ToString();
                     ddlPais.SelectedValue = item[13].ToString();
+                    getDepartamento(ddlPais.SelectedValue.ToString());
                     ddlDepartamento.SelectedValue = item[14].ToString();
+                    getMunicipio(ddlDepartamento.SelectedValue.ToString());
                     ddlMunicipio.SelectedValue = item[15].ToString();
                     ddlSubCategoriaMedio.SelectedValue = item[16].ToString();
                     ddlCategoriaMedio.SelectedValue = item[17].ToString();
                     ddlProfesion.SelectedValue = item[18].ToString();
+                    ddlNacionalidad.SelectedValue = item[21].ToString();
                 }
 
                 txtDPI.Enabled = false;
@@ -153,7 +157,7 @@ namespace PrestaVende.Public
         {
             try
             {
-                string[] datosInsert = new string[16];
+                string[] datosInsert = new string[19];
 
                 datosInsert[0] = txtDPI.Text;
                 datosInsert[1] = txtNit.Text;
@@ -173,6 +177,7 @@ namespace PrestaVende.Public
                 datosInsert[15] = ddlSubCategoriaMedio.SelectedValue.ToString();
                 datosInsert[16] = ddlCategoriaMedio.SelectedValue.ToString();
                 datosInsert[17] = ddlProfesion.SelectedValue.ToString();
+                datosInsert[18] = ddlNacionalidad.SelectedValue.ToString();
 
                 if (cs_cliente.insertClient(ref error, datosInsert) > 0)
                 {
@@ -193,40 +198,34 @@ namespace PrestaVende.Public
         {
             try
             {
-                try
+                string[] datosUpdate = new string[18];
+
+                datosUpdate[0] = txtPrimerNombre.Text;
+                datosUpdate[1] = txtSegundoNombre.Text;
+                datosUpdate[2] = txtPrimerApellido.Text;
+                datosUpdate[3] = txtSegundoApellido.Text;
+                datosUpdate[4] = txtDireccion.Text;
+                datosUpdate[5] = txtCorreoElectronico.Text;
+                datosUpdate[6] = txtNumeroTelefono.Text;
+                datosUpdate[7] = ddlEstado.SelectedValue.ToString();
+                datosUpdate[8] = lblIdClienteNumero.Text.ToString();
+                datosUpdate[9] = ddlProfesion.SelectedValue.ToString();
+                datosUpdate[10] = ddlPais.SelectedValue.ToString();
+                datosUpdate[11] = ddlDepartamento.SelectedValue.ToString();
+                datosUpdate[12] = ddlMunicipio.SelectedValue.ToString();
+                datosUpdate[13] = ddlCategoriaMedio.SelectedValue.ToString();
+                datosUpdate[14] = ddlSubCategoriaMedio.SelectedValue.ToString();
+                datosUpdate[15] = txtTercerNombre.Text;
+                datosUpdate[16] = txtApellidoCasada.Text;
+                datosUpdate[17] = ddlNacionalidad.SelectedValue.ToString();
+
+                if (cs_cliente.updateClient(ref error, datosUpdate) > 0)
                 {
-                    string[] datosUpdate = new string[17];
-
-                    datosUpdate[0] = txtPrimerNombre.Text;
-                    datosUpdate[1] = txtSegundoNombre.Text;
-                    datosUpdate[2] = txtPrimerApellido.Text;
-                    datosUpdate[3] = txtSegundoApellido.Text;
-                    datosUpdate[4] = txtDireccion.Text;
-                    datosUpdate[5] = txtCorreoElectronico.Text;
-                    datosUpdate[6] = txtNumeroTelefono.Text;
-                    datosUpdate[7] = ddlEstado.SelectedValue.ToString();
-                    datosUpdate[8] = lblIdClienteNumero.Text.ToString();
-                    datosUpdate[9] = ddlProfesion.SelectedValue.ToString();
-                    datosUpdate[10] = ddlPais.SelectedValue.ToString();
-                    datosUpdate[11] = ddlDepartamento.SelectedValue.ToString();
-                    datosUpdate[12] = ddlMunicipio.SelectedValue.ToString();
-                    datosUpdate[13] = ddlCategoriaMedio.SelectedValue.ToString();
-                    datosUpdate[14] = ddlSubCategoriaMedio.SelectedValue.ToString();
-                    datosUpdate[15] = txtTercerNombre.Text;
-                    datosUpdate[16] = txtApellidoCasada.Text;
-
-                    if (cs_cliente.updateClient(ref error, datosUpdate) > 0)
-                    {
-                        showSuccess("Se edito cliente sin problema.");
-                    }
-                    else
-                    {
-                        showError(error);
-                    }
+                    showSuccess("Se edito cliente sin problema.");
                 }
-                catch (Exception ex)
+                else
                 {
-                    showError(ex.ToString());
+                    showError(error);
                 }
             }
             catch (Exception ex)
@@ -302,6 +301,22 @@ namespace PrestaVende.Public
             {
                 showError(ex.ToString());
                 return false;
+            }
+        }
+
+        private void getNacionalidad()
+        {
+            try
+            {
+                ddlNacionalidad.DataSource = cs_manejo_pais.get_nacionalidad();
+                ddlNacionalidad.DataValueField = "id_pais";
+                ddlNacionalidad.DataTextField = "nacionalidad";
+                ddlNacionalidad.DataBind();
+            }
+            catch (Exception ex)
+            {
+
+                throw;
             }
         }
 
@@ -440,12 +455,6 @@ namespace PrestaVende.Public
             }
         }
 
-        protected void btnBack_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("WFPrincipal.aspx");
-        }
-
-
         protected void btnGuardarUsuario_Click(object sender, EventArgs e)
         {
             try
@@ -506,8 +515,7 @@ namespace PrestaVende.Public
             }
         }
 
+
         #endregion
-
-
     }
 }

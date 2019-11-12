@@ -164,6 +164,30 @@ namespace PrestaVende.CLASS
             }
         }
 
+        public string getIDInteresCategoria(ref string error, string id_categoria)
+        {
+            try
+            {
+                DataTable getNombreCategoria = new DataTable();
+                connection.connection.Open();
+                command.Connection = connection.connection;
+                command.CommandText = "SELECT id_interes fROM TBL_CATEGORIA " +
+                                        " WHERE id_categoria = @id_categoria";
+                command.Parameters.AddWithValue("@id_categoria", id_categoria);
+                return command.ExecuteScalar().ToString();
+
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                return "";
+            }
+            finally
+            {
+                connection.connection.Close();
+            }
+        }
+
         public DataTable getEstadoProducto(ref string error)
         {
             try

@@ -121,7 +121,7 @@
                         <center>
                         <h2>Opciones</h2>
                             <div class=".btn-group-vertical">
-                                <asp:Button ID="btnBack" runat="server" Width="200px" Text="Regresar" CssClass="btn btn-default" Visible="true" OnClick="btnBack_Click"/>
+                                <button id="btnBack" onclick="goBack()" style="width: 200px;" class="btn btn-default">Regresar</button>
                                 <br />
                                 <br />
                                 <br />
@@ -133,7 +133,42 @@
                                 <br />
                                 <br />
                                 <br />
-                                <asp:Button ID="btnProyeccion" runat="server" Width="200px" Text="Proyeccion" CssClass="btn btn-danger" Visible="true" OnClick="btnProyeccion_Click" />
+                                <asp:Button ID="btnProyeccion" runat="server" Width="200px" Text="Proyeccion" CssClass="btn btn-danger" Visible="true" />
+                                <div>
+                                <%--aqui va la parte de modal windows--%>
+                                <asp:Panel ID="panelProyeccion" class="modalPopup" runat="server" Style="display: none; width:750px; height:400px; overflow:scroll; resize: vertical;" align="center">
+                                    <div class="header">
+                                        Proyección pago de intereses.
+                                    </div>
+                                    <div class="body">
+                                        <iframe style="width: 700px; height: 300px;" id="Iframe2" src="ProyeccionInteres.aspx" runat="server"></iframe>
+                                    </div>
+                                    <div class="footer" align="center">
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <asp:Button ID="btnCancelProyeccion" runat="server" Text="Cancelar" class="no" />
+                                                </td>
+                                                <td>
+                                                    <asp:Button ID="btnAceptProyeccion" runat="server" Text="Aceptar" class="yes"/>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </asp:Panel>
+                                <ajaxToolkit:ModalPopupExtender 
+                                    ID="ModalPopupExtenderProyeccion"
+                                    runat="server"
+                                    CancelControlID="btnCancelProyeccion"
+                                    PopupControlID="panelProyeccion"
+                                    TargetControlID="btnProyeccion"
+                                    BackgroundCssClass="modalBackground"
+                                    PopupDragHandleControlID="panelProyeccion"
+                                    Drag="true"
+                                    RepositionMode="RepositionOnWindowResizeAndScroll"
+                                    DropShadow="false">
+                                </ajaxToolkit:ModalPopupExtender>
+                            </div>
                                 <br />
                                 <br />
                                 <br />
@@ -317,6 +352,9 @@
                                                     <td>
                                                         <asp:Label ID="lblObservaciones" runat="server" Text="OBSERVACIONES"></asp:Label>
                                                     </td>
+                                                    <td>
+                                                        <asp:Label ID="lblRedondeo" runat="server" Text="REDONDEO" Visible="false"></asp:Label>
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td>
@@ -324,7 +362,12 @@
                                                     </td>
                                                     <td>
                                                         <asp:TextBox ID="txtObservaciones" runat="server" class="form-control"></asp:TextBox>
-                                                        
+                                                    </td>
+                                                    <td>
+                                                        <asp:TextBox ID="txtRedondeo" type="number" min="0" max="10" runat="server" Width="200px" class="form-control" Visible="false"></asp:TextBox>
+                                                    </td>
+                                                    <td>
+                                                        <asp:Button ID="btnRedondear" runat="server" CssClass="btn btn-warning" Text="REDONDEAR" Visible="false" OnClick="btnRedondear_Click"/>
                                                     </td>
                                                 </tr>
                                                 <tr>

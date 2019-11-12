@@ -14,11 +14,11 @@
                                 <br />
                                 <br />
                                 <br />
+                                <asp:Button ID="btnLiquidar" runat="server" Width="200px" Text="Liquidar" class="btn btn-info" Visible="false" OnClick="btnLiquidar_Click"/>                                
+                                <br />
+                                <br />
+                                <br />
                                 <asp:Button ID="btnCreate" runat="server" Width="200px" Text="Crear" class="btn btn-success" Visible="false" OnClick="btnCreate_Click"/>
-                                <br />
-                                <br />
-                                <br />
-                                <asp:Button ID="btnGuardar" runat="server" Width="200px" Text="Guardar" class="btn btn-info" Visible="false" OnClick="btnGuardar_Click"/>
                                 <br />
                                 <br />
                                 <br />
@@ -28,7 +28,7 @@
                                 <br />
                             </div>
                         </center>
-                    </div>
+                       </div>
                     <div class="col-sm-8 text-left">
                         <div>
                             <div align="center" runat="server" id="divWarning" visible="false" class="alert alert-warning alert-dismissable fade in">
@@ -54,7 +54,7 @@
                         <div class="panel panel-primary">
                             <div class="panel-heading">
                                 <div style="position: relative;">
-                                                <table>
+                                                <table >
                                                     <tr>
                                                         <td>
                                                             <h1>Mantenimiento Liquidaciones &nbsp;&nbsp;</h1>
@@ -64,91 +64,26 @@
                                                 </table>
                                             </div>
                             </div>
-                            <div class="panel-body">
+                            <div class="panel-body" >
                                 <center>
                                     <br />
                                     <br />
-                                    <div id="div_ingresa_datos" runat="server" visible="true">
-                                        <div>
-                                            <table>
-                                                <tr>
-                                                    <td>
-                                                        <big><asp:Label ID="lblIdLiquidacion" runat="server" Text="ID LIQUIDACIÓN"></asp:Label></big>
-                                                    </td>
-                                                    <td>
-                                                        <center>
-                                                        <asp:Label ID="ddidLiquidacion" runat="server" Text="0"  ></asp:Label>
-                                                        </center>
-                                                    </td>
-                                                </tr>
-                                                <%--<tr>
-                                                    <td>
-                                                        <big><asp:Label ID="lblSucursal" runat="server" Text="SUCURSAL"></asp:Label></big>
-                                                    </td>
-                                                    <td>
-                                                         <asp:DropDownList ID="ddidSucursal" runat="server" class="form-control"></asp:DropDownList>
-                                                    </td>
-                                                </tr> --%>        
-                                                <tr>
-
-                                                    <td>
-                                                        <big><asp:Label ID="lblNumeroPrestamo" runat="server" Text="NO. PRESTAMO"></asp:Label></big>
-                                                    </td>
-                                                    <td>
-                                                        <asp:TextBox ID="txtNumeroPrestamo" type="number" text="0" runat="server" class="form-control"/>
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-
-                                                    <td>
-                                                        <big><asp:Label ID="lblMontoLiquidacion" runat="server" Text="MONTO LIQUIDACIÓN"></asp:Label></big>
-                                                    </td>
-                                                    <td>
-                                                        <asp:TextBox ID="txtMontoLiquidacion" type="decimal" text="0" runat="server" class="form-control"/>
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>
-                                                        <big><asp:Label ID="lblEstado" runat="server" Text="ESTADO"></asp:Label></big>
-                                                    </td>
-                                                    <td>
-                                                         <asp:DropDownList ID="ddlEstado" runat="server" class="form-control"></asp:DropDownList>
-                                                    </td>
-                                                </tr>   
-                                                
-                                                <tr>
-                                                   <td>
-                                                       <big><asp:Label ID="lblAnular" runat="server" Text="ANULAR"></asp:Label></big>
-                                                   </td>
-                                                    <td>    
-                                                         <asp:CheckBox ID="ChbxAnular" runat="server" oncheckedchanged="ChbxAnular_CheckedChanged" AutoPostBack="true" class="form-control">
-
-                                                         </asp:CheckBox>
-                                                    </td>
-                                                </tr>                                                                                                                                                                                                                                    
-                                              </table>
-                                        </div>
-                                    </div>                                       
-
+                                    
                                     <div id="div_gridView" runat="server" visible ="false">
                                         <br />
                                         <table>
                                             <tr>
                                                 <td>
                                                     <asp:GridView ID="GrdVLiquidacion" runat="server" Width="100%" CssClass="footable" AutoGenerateColumns="False" 
-                                                        ForeColor="#333333" GridLines="None" OnRowCommand="gvSize_RowCommand">
+                                                        ForeColor="#333333" GridLines="None" >
                                                         <AlternatingRowStyle BackColor="White" />
                                                         <Columns>
-                                                            <asp:ButtonField ButtonType="Button" FooterStyle-BackColor="#ff9a32" CommandName="select" HeaderText="" Text="->" >
-                                                            <FooterStyle BackColor="#FF9A32" />
-                                                            </asp:ButtonField>
-                                                                <asp:BoundField DataField="id_liquidacion" HeaderText="<center>ID</center>" SortExpression="id_liquidacion" HtmlEncode="false"/>                                                            
+                                                               <asp:BoundField DataField="id_prestamo_encabezado" HeaderText="<center>ID</center>" SortExpression="id_liquidacion" HtmlEncode="false"/>                                                            
                                                                 <%--<asp:BoundField DataField="sucursal" HeaderText="<center>SUCURSAL</center>" SortExpression="sucursal" HtmlEncode="false" />--%>
                                                                 <asp:BoundField DataField="numero_prestamo" HeaderText="<center>NUMERO DE PRESTAMO</center>" SortExpression="numero_prestamo" HtmlEncode="false" />
-                                                                <asp:BoundField DataField="monto_liquidacion" HeaderText="<center>MONTO</center>" SortExpression="monto_liquidacion"  HtmlEncode="false"/>                                                                
-                                                                <asp:BoundField DataField="estadoLiquidacion" HeaderText="<center>ESTADO</center>" SortExpression="estadoLiquidacion"  HtmlEncode="false"/>                                                                
+                                                                <asp:BoundField DataField="total_prestamo" HeaderText="<center>TOTAL PRESTAMO</center>" SortExpression="total_prestamo"  HtmlEncode="false"/>                                                                
+                                                                <asp:BoundField DataField="saldo_prestamo" HeaderText="<center>SALDO ACTUAL</center>" SortExpression="saldo_prestamo"  HtmlEncode="false"/>                                                                
+                                                                <asp:BoundField DataField="estado_prestamo" HeaderText="<center>ESTADO</center>" SortExpression="estado_prestamo"  HtmlEncode="false"/>                                                                
                                                         </Columns>
                                                         <EditRowStyle BackColor="#7C6F57" />
                                                         <FooterStyle BackColor="#1C5E55" Font-Bold="False" ForeColor="White" />

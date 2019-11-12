@@ -10,7 +10,7 @@
                         <center>
                         <h2>Opciones</h2>
                             <div class=".btn-group-vertical">
-                                <asp:Button ID="btnBack" runat="server" Width="200px" Text="Regresar" class="btn btn-default" Visible="true" OnClick="btnBack_Click"/>
+                                <button id="btnBack" onclick="goBack()" style="width: 200px;" class="btn btn-default">Regresar</button>
                                 <br />
                                 <br />
                                 <br />
@@ -19,10 +19,6 @@
                                 <br />
                                 <br />
                                 <asp:Button ID="btnGuardarUsuario" runat="server" Width="200px" Text="Guardar cliente" class="btn btn-info" Visible="true" OnClick="btnGuardarUsuario_Click"/>
-                                <br />
-                                <br />
-                                <br />
-                                <asp:Button ID="btnAtras" runat="server" Width="200px" Text="Cancelar" class="btn btn-warning" Visible="false" />
                                 <br />
                                 <br />
                                 <br />
@@ -81,26 +77,10 @@
                                                 </tr>
                                                 <tr>
                                                     <td>
-                                                        <big><asp:Label ID="lblPais" runat="server" Text="PAIS"></asp:Label></big>
+                                                        <big><asp:Label ID="lblNacionalidad" runat="server" Text="NACIONALIDAD"></asp:Label></big>
                                                     </td>
                                                     <td>
-                                                        <asp:DropDownList ID="ddlPais" runat="server" class="form-control" AutoPostBack="true" OnSelectedIndexChanged="ddlPais_SelectedIndexChanged"></asp:DropDownList>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <big><asp:Label ID="lblDepartamento" runat="server" Text="DEPARTAMENTO"></asp:Label></big>
-                                                    </td>
-                                                    <td>
-                                                        <asp:DropDownList ID="ddlDepartamento" runat="server" class="form-control" AutoPostBack="true" OnSelectedIndexChanged="ddlDepartamento_SelectedIndexChanged"></asp:DropDownList>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <big><asp:Label ID="lblMunicipio" runat="server" Text="MUNICIPIO"></asp:Label></big>
-                                                    </td>
-                                                    <td>
-                                                        <asp:DropDownList ID="ddlMunicipio" runat="server" class="form-control"></asp:DropDownList>
+                                                        <asp:DropDownList ID="ddlNacionalidad" runat="server" class="form-control" AutoPostBack="true"></asp:DropDownList>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -177,7 +157,31 @@
                                                 </tr>
                                                 <tr>
                                                     <td>
-                                                        <big><asp:Label ID="lblDireccion" runat="server" Text="DIRECCION"></asp:Label></big>
+                                                        <big><asp:Label ID="lblPais" runat="server" Text="PAIS RESIDENCIA"></asp:Label></big>
+                                                    </td>
+                                                    <td>
+                                                        <asp:DropDownList ID="ddlPais" runat="server" class="form-control" AutoPostBack="true" OnSelectedIndexChanged="ddlPais_SelectedIndexChanged"></asp:DropDownList>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <big><asp:Label ID="lblDepartamento" runat="server" Text="DEPARTAMENTO RESIDENCIA"></asp:Label></big>
+                                                    </td>
+                                                    <td>
+                                                        <asp:DropDownList ID="ddlDepartamento" runat="server" class="form-control" AutoPostBack="true" OnSelectedIndexChanged="ddlDepartamento_SelectedIndexChanged"></asp:DropDownList>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <big><asp:Label ID="lblMunicipio" runat="server" Text="MUNICIPIO RESIDENCIA"></asp:Label></big>
+                                                    </td>
+                                                    <td>
+                                                        <asp:DropDownList ID="ddlMunicipio" runat="server" class="form-control"></asp:DropDownList>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <big><asp:Label ID="lblDireccion" runat="server" Text="DIRECCION RESIDENCIA"></asp:Label></big>
                                                     </td>
                                                     <td>
                                                         <asp:TextBox ID="txtDireccion" runat="server" class="form-control"></asp:TextBox>
