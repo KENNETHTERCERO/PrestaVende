@@ -139,11 +139,6 @@ namespace PrestaVende.Public
             }
         }
 
-        protected void btnBack_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("WFPrincipal.aspx");
-        }
-
         protected void btnBuscarCliente_Click(object sender, EventArgs e)
         {
             getClients();

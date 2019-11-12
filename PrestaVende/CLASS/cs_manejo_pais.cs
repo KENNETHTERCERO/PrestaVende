@@ -34,6 +34,28 @@ namespace PrestaVende.CLASS
             }
         }
 
+        public DataTable get_nacionalidad()
+        {
+            try
+            {
+                DataTable returnTable = new DataTable("nacionalidades");
+                connection.connection.Open();
+                command.Connection = connection.connection;
+                command.CommandText = "SELECT 0 AS id_pais, 'SELECCIONAR' AS nacionalidad UNION " +
+                                        "SELECT id_pais, nacionalidad From tbl_pais";
+                returnTable.Load(command.ExecuteReader());
+                return returnTable;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+            finally
+            {
+                connection.connection.Close();
+            }
+        }
+
         public DataTable get_Departamento(string id_pais)
         {
             try

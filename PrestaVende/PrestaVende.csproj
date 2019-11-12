@@ -119,6 +119,7 @@
     <Content Include="Public\FacturacionProductos.aspx" />
     <Content Include="Public\image\candado.png" />
     <Content Include="Public\PrestaVende.Master" />
+    <Content Include="Public\ProyeccionInteres.aspx" />
     <Content Include="Public\RecepcionCaja.aspx" />
     <Content Include="Public\RecepcionLiquidaciones.aspx" />
     <Content Include="Public\WebReport.aspx" />
@@ -292,6 +293,13 @@
     <Compile Include="Public\PrestaVende.Master.designer.cs">
       <DependentUpon>PrestaVende.Master</DependentUpon>
     </Compile>
+    <Compile Include="Public\ProyeccionInteres.aspx.cs">
+      <DependentUpon>ProyeccionInteres.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\ProyeccionInteres.aspx.designer.cs">
+      <DependentUpon>ProyeccionInteres.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Public\RecepcionCaja.aspx.cs">
       <DependentUpon>RecepcionCaja.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -456,6 +464,12 @@
       <DependentUpon>CRFacturaIntereses.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Reports\CRProyeccionIntereses.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CRProyeccionIntereses.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="WebLogin.aspx.cs">
       <DependentUpon>WebLogin.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -487,6 +501,10 @@
     <EmbeddedResource Include="Reports\CRFacturaIntereses.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>CRFacturaIntereses.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\CRProyeccionIntereses.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>CRProyeccionIntereses.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

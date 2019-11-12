@@ -39,5 +39,28 @@ namespace PrestaVende.CLASS
                 connection.connection.Close();
             }
         }
+
+        public string getIdInteres(ref string error, string monto)
+        {
+            try
+            {
+                string id_interes = "";
+                connection.connection.Open();
+                command.Connection = connection.connection;
+                command.CommandText = "select top 1 ISNULL(id_plan_prestamo, 0) From tbl_plan_prestamo WHERE @monto between minimo AND maximo";
+                command.Parameters.AddWithValue("@monto", monto);
+                id_interes = command.ExecuteScalar().ToString();
+                return id_interes;
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                return "";
+            }
+            finally
+            {
+                connection.connection.Close();
+            }
+        }
     }
 }
