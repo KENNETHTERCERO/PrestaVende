@@ -175,6 +175,51 @@ namespace PrestaVende.Public {
         protected global::System.Web.UI.WebControls.Label lblNombrePrestamo;
         
         /// <summary>
+        /// Control panelModalSubCliente.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel panelModalSubCliente;
+        
+        /// <summary>
+        /// Control Iframe1.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlIframe Iframe1;
+        
+        /// <summary>
+        /// Control btnCancelMSubCliente.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnCancelMSubCliente;
+        
+        /// <summary>
+        /// Control btnAceptMSubCliente.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAceptMSubCliente;
+        
+        /// <summary>
+        /// Control ModalPopupExtender2.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::AjaxControlToolkit.ModalPopupExtender ModalPopupExtender2;
+        
+        /// <summary>
         /// Control lblSerie.
         /// </summary>
         /// <remarks>

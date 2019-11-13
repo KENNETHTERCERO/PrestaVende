@@ -218,6 +218,7 @@ namespace PrestaVende.CLASS
                 error = ex.ToString();
                 Resultado = false;
                 command.Transaction.Rollback();
+                return string.Empty;
             }
             finally
             {
