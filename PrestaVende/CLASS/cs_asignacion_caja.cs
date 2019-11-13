@@ -386,7 +386,7 @@ namespace PrestaVende.CLASS
 
 
                 command.Parameters.Clear();
-                command.CommandText = " INSERT INTO tbl_asignacion_caja (id_caja, id_estado_caja, monto,                    "
+                command.CommandText = " INSERT INTO tbl_asignacion_caja (id_caja, id_estado_caja, monto,           upd         "
                                      + "       estado_asignacion, fecha_creacion, fecha_modificacion, usuario_asigna, id_usuario_asignado)      "
                                      + "       VALUES(@id_caja, @id_estado_caja, @monto,                                   "
                                      + "       @estado_asignacion, @fecha_creacion, @fecha_modificacion, @usuario_asigna, @id_usuario_asignado)";
@@ -537,16 +537,17 @@ namespace PrestaVende.CLASS
 
                         if (operacion_matematica == "+")
                         {
-                            command.CommandText = " UPDATE tbl_caja SET SALDO = SALDO + @SaldoAsignado, id_estado_caja = @id_estado_caja where id_tipo_caja = @id_tipo_caja ";
+                            command.CommandText = " UPDATE tbl_caja SET SALDO = SALDO + @SaldoAsignado, id_estado_caja = @id_estado_caja where id_tipo_caja = @id_tipo_caja and id_caja = @id_caja";
                         }
                         else
                         {
-                            command.CommandText = " UPDATE tbl_caja SET SALDO = SALDO - @SaldoAsignado, id_estado_caja = @id_estado_caja where id_tipo_caja = @id_tipo_caja ";
+                            command.CommandText = " UPDATE tbl_caja SET SALDO = SALDO - @SaldoAsignado, id_estado_caja = @id_estado_caja where id_tipo_caja = @id_tipo_caja and id_caja = @id_caja";
                         }
                         EstadoCajaOperacion = id_estado_caja;
                         command.Parameters.AddWithValue("@id_tipo_caja", id_tipo_caja);
                         command.Parameters.AddWithValue("@id_estado_caja", id_estado_caja);
                         command.Parameters.AddWithValue("@SaldoAsignado", monto);
+                        command.Parameters.AddWithValue("@id_caja", id_caja);
                         rowsUpdated = command.ExecuteNonQuery();
 
                         if (rowsUpdated <= 0)
