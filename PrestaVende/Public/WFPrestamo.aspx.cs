@@ -255,6 +255,10 @@ namespace PrestaVende.Public
                 txtObservaciones.Visible    = true;
                 txtPesoDescuento.Visible    = true;
                 txtPesoConDescuento.Visible = true;
+                txtValor.Enabled            = false;
+                lblRedondeo.Visible         = true;
+                txtRedondeo.Visible         = true;
+                btnRedondear.Visible        = true;
                 //---------------------------------
                 //Ocultar controles de productos diferentes a joyas
                 lblMarca.Visible            = false;
@@ -283,12 +287,16 @@ namespace PrestaVende.Public
                 txtObservaciones.Visible    = false;
                 txtPesoDescuento.Visible    = false;
                 txtPesoConDescuento.Visible = false;
+                lblRedondeo.Visible         = false;
+                txtRedondeo.Visible         = false;
+                btnRedondear.Visible        = false;
                 //---------------------------------
                 //Ocultar controles de productos diferentes a joyas
                 lblMarca.Visible            = true;
                 lblCaracteristicas.Visible  = true;
                 ddlMarca.Visible            = true;
                 txtCaracteristicas.Visible  = true;
+                txtValor.Enabled            = true;
             }
             catch (Exception ex)
             {
@@ -311,6 +319,7 @@ namespace PrestaVende.Public
                 txtObservaciones.Visible    = false;
                 txtPesoDescuento.Visible    = false;
                 txtPesoConDescuento.Visible = false;
+
                 //---------------------------------
                 //Ocultar controles de productos diferentes a joyas
                 lblMarca.Visible            = false;
@@ -764,6 +773,43 @@ namespace PrestaVende.Public
                 showError(ex.ToString());
             }
         }
+
+        private void aplicarRedondeo()
+        {
+            try
+            {
+                if (txtValor.Text.ToString().Length <= 0 || txtValor.Text.ToString().Equals("0"))
+                {
+                    showWarning("Debe seleccionar un producto, agregar peso y descuento, seleccionar kilataje antes de realizar redondeo.");
+                }
+                else
+                {
+                    decimal txtValorAvaluo = 0, valorRedondeo = 0;
+                    txtValorAvaluo = Convert.ToDecimal(txtValor.Text.ToString());
+                    valorRedondeo = Convert.ToDecimal(txtRedondeo.Text.ToString());
+                    txtValor.Text = Convert.ToString(txtValorAvaluo + valorRedondeo);
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+
+        private void validaSeleccionTipoPlanPrestamo()
+        {
+            try
+            {
+                decimal totalPrestamo = 0;
+                totalPrestamo = Convert.ToDecimal(lblTotalPrestamoQuetzales.Text.ToString());
+                ddlTipoPrestamo.SelectedValue = cs_interes.getIdInteres(ref error, totalPrestamo.ToString());
+            }
+            catch (Exception ex)
+            {
+                showError(ex.ToString());
+            }
+        }
         #endregion
 
         #region messages
@@ -800,6 +846,8 @@ namespace PrestaVende.Public
                 {
                     hideAllControls();
                 }
+                ddlIntereses.SelectedValue = cs_producto.getIDInteresCategoria(ref error, ddlCategoria.SelectedValue);
+                ddlIntereses.Enabled = false;
                 getProductos("0");
                 ddlSubCategoria.Focus();
             }
@@ -873,11 +921,6 @@ namespace PrestaVende.Public
             getPrecioProducto();
         }
 
-        protected void btnBack_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("WFPrincipal.aspx", true);
-        }
-
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
             try
@@ -896,6 +939,7 @@ namespace PrestaVende.Public
                         addArticuloDifferentJoya();
                     }
                 }
+                validaSeleccionTipoPlanPrestamo();
                 blockComboBox();
                 cleanControls();
             }
@@ -935,6 +979,7 @@ namespace PrestaVende.Public
                     gvProductoElectrodomesticos.DataBind();
                     blockComboBox();
                     calculaTotalPrestamo();
+                    validaSeleccionTipoPlanPrestamo();
                 }
             }
             catch (Exception ex)
@@ -955,17 +1000,13 @@ namespace PrestaVende.Public
                     gvProductoJoya.DataBind();
                     blockComboBox();
                     calculaTotalPrestamo();
+                    validaSeleccionTipoPlanPrestamo();
                 }
             }
             catch (Exception ex)
             {
                 showError(ex.ToString());
             }
-        }
-
-        protected void btnProyeccion_Click(object sender, EventArgs e)
-        {
-
         }
 
         protected void btnRecalcularValorPrestamoTotal_Click(object sender, EventArgs e)
@@ -990,6 +1031,10 @@ namespace PrestaVende.Public
             }
         }
 
+        protected void btnRedondear_Click(object sender, EventArgs e)
+        {
+            aplicarRedondeo();
+        }
         #endregion
     }
 }

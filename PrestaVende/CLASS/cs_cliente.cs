@@ -111,9 +111,9 @@ namespace PrestaVende.CLASS
                     command.Parameters.Clear();
                     command.Transaction = connection.connection.BeginTransaction();
                     command.CommandText = "INSERT INTO tbl_cliente (DPI, nit, primer_nombre, segundo_nombre, tercer_nombre, primer_apellido, segundo_apellido, apellido_casada, direccion, correo_electronico, " +
-                                                                    "numero_telefono, estado, id_pais, id_departamento, id_municipio, id_subcategoria_medio, id_categoria_medio, id_profesion, fecha_creacion) " +
+                                                                    "numero_telefono, estado, id_pais, id_departamento, id_municipio, id_subcategoria_medio, id_categoria_medio, id_profesion, fecha_creacion, id_pais_nacionalidad) " +
                                                             "VALUES(@DPI, @nit, @primer_nombre, @segundo_nombre, @tercer_nombre, @primer_apellido, @segundo_apellido, @apellido_casada, @direccion, @correo_electronico, " +
-                                                                    "@numero_telefono, @estado, @id_pais, @id_departamento, @id_municipio, @id_subcategoria_medio, @id_categoria_medio, @id_profesion, GETDATE())";
+                                                                    "@numero_telefono, @estado, @id_pais, @id_departamento, @id_municipio, @id_subcategoria_medio, @id_categoria_medio, @id_profesion, GETDATE(), @id_pais_nacionalidad)";
                     command.Parameters.AddWithValue("@DPI", datos[0]);
                     command.Parameters.AddWithValue("@nit", datos[1]);
                     command.Parameters.AddWithValue("@primer_nombre", datos[2]);
@@ -132,6 +132,7 @@ namespace PrestaVende.CLASS
                     command.Parameters.AddWithValue("@id_subcategoria_medio", datos[15]);
                     command.Parameters.AddWithValue("@id_categoria_medio", datos[16]);
                     command.Parameters.AddWithValue("@id_profesion", datos[17]);
+                    command.Parameters.AddWithValue("@id_pais_nacionalidad", datos[18]);
                     returnInt = command.ExecuteNonQuery();
 
                     if (returnInt > 0)
@@ -145,8 +146,6 @@ namespace PrestaVende.CLASS
                     error = "El DPI o Nit ya existe en el catalogo de clientes, por favor busquelo.";
                     return returnInt;
                 }
-
-                
             }
             catch (Exception ex)
             {
@@ -188,7 +187,8 @@ namespace PrestaVende.CLASS
                                             "id_municipio = @id_municipio, " +
                                             "id_subcategoria_medio = @id_subcategoria_medio, " +
                                             "id_categoria_medio = @id_categoria_medio, " +
-                                            "fecha_modificacion = getdate() " +
+                                            "fecha_modificacion = getdate(), " +
+                                            "id_pais_nacionalidad = @id_pais_nacionalidad " +
                                       "WHERE id_cliente = @id_cliente";
 
                 command.Parameters.AddWithValue("@primer_nombre", datos[0]);
@@ -208,6 +208,7 @@ namespace PrestaVende.CLASS
                 command.Parameters.AddWithValue("@id_subcategoria_medio", datos[14]);
                 command.Parameters.AddWithValue("@tercer_nombre", datos[15]);
                 command.Parameters.AddWithValue("@apellido_casada", datos[16]);
+                command.Parameters.AddWithValue("@id_pais_nacionalidad", datos[17]);
                 returnInt = command.ExecuteNonQuery();
 
                 if (returnInt > 0)

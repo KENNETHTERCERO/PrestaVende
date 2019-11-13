@@ -102,7 +102,7 @@ namespace PrestaVende
                     {
                         fecha_hoy = DateTime.Now;
 
-                        if (fecha_asignacion.Date < fecha_hoy.Date)
+                        if (fecha_asignacion.Date < fecha_hoy.Date && CLASS.cs_usuario.id_rol == 5)
                         {
                             showWarning("Usted aun tiene la caja asignada, por favor solicite al gerente que la cierre.");
                         }

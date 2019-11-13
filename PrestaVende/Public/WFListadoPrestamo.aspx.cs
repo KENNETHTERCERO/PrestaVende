@@ -116,11 +116,6 @@ namespace PrestaVende.Public
             getNumeroPrestamosLiquidados();
         }
         
-        protected void btnBack_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("WFPrincipal.aspx");
-        }
-
         protected void gvPrestamo_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             try
@@ -140,6 +135,16 @@ namespace PrestaVende.Public
             {
                 showError(ex.ToString());
             }
+        }
+
+        protected void btnEditarCliente_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("WFBusquedaCliente?accion=editar&id_cliente=" + lblid_cliente.Text);
+        }
+
+        protected void btnNuevoPrestamo_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("WFPrestamo?id_cliente=" + lblid_cliente.Text);
         }
         #endregion
 
@@ -166,14 +171,6 @@ namespace PrestaVende.Public
         }
         #endregion
 
-        protected void btnEditarCliente_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("WFBusquedaCliente?accion=editar&id_cliente=" + lblid_cliente.Text);
-        }
-
-        protected void btnNuevoPrestamo_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("WFPrestamo?id_cliente=" + lblid_cliente.Text);
-        }
+        
     }
 }

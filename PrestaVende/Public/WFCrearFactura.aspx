@@ -79,6 +79,14 @@
                                                     </td>
                                                     <td>
                                                         <asp:Label ID="lblIdPrestamo" runat="server" Text="PRESTAMO"></asp:Label>
+                                                    </td>                                                    
+                                                    <td>
+                                                        <div>
+                                                            <asp:ImageButton ID="imgBtnBuscaSubSemana" runat="server" 
+                                                                AlternateText="Busca Sub Semana" 
+                                                                ImageUrl="~/Public/image/candado.png"
+                                                                Height="50" Width="50" Visible="true" OnClick="imgBtnBuscaSubSemana_Click"/>
+                                                        </div>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -87,7 +95,7 @@
                                                     </td>
                                                     <td>
                                                         <big><asp:Label ID="lblNombrePrestamo" runat="server" Text="0"></asp:Label></big>
-                                                    </td>                                                    
+                                                    </td>                                                                                                   
                                                 </tr>
                                                 <tr>
                                                     <td>
@@ -99,7 +107,6 @@
                                                     <td>
                                                         <asp:Label ID="lblTipoTransaccion" runat="server" Text="TIPO TRANSACCION"></asp:Label>
                                                     </td>
-                                                    
                                                 </tr>
                                                 <tr>
                                                     <td>
@@ -134,6 +141,17 @@
                                                     <td>
                                                         <big><asp:Label ID="lblTotalFacturaV" runat="server" Text="0"></asp:Label></big>
                                                     </td> 
+                                                </tr>
+                                                <tr>     
+                                                    <td>
+                                                        <big><asp:Label ID="lblInteres" runat="server" Text="INTERES"></asp:Label></big>
+                                                    </td>
+                                                    <td>
+                                                        <big><asp:Label ID="lblValorInteres" runat="server" Text="0"></asp:Label></big>
+                                                    </td>
+                                                    <td>
+                                                        <asp:DropDownList ID="ddlSemanas" runat="server" CssClass="form-control" Visible="false" OnSelectedIndexChanged="ddlSemanas_SelectedIndexChanged"></asp:DropDownList>
+                                                    </td > 
                                                 </tr>
                                                 <tr>     
                                                     <td>

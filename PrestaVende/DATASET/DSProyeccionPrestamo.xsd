@@ -1,16 +1,30 @@
-﻿<?xml version="1.0" encoding="utf-8" ?> 
-<xs:schema id="DSProyeccionPrestamo" 
-                  targetNamespace="http://tempuri.org/DSProyeccionPrestamo.xsd"
-                  elementFormDefault="qualified"
-                  attributeFormDefault="qualified"
-                  xmlns="http://tempuri.org/DSProyeccionPrestamo.xsd"
-                  xmlns:mstns="http://tempuri.org/DSProyeccionPrestamo.xsd"
-                  xmlns:xs="http://www.w3.org/2001/XMLSchema"
-                  xmlns:msdata="urn:schemas-microsoft-com:xml-msdata"
-                  xmlns:msprop="urn:schemas-microsoft-com:xml-msprop">
-    <xs:element name="DSProyeccionPrestamo" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true">
-        <xs:complexType>
-            <xs:choice minOccurs="0" maxOccurs="unbounded"></xs:choice>
-        </xs:complexType>
-    </xs:element>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DSProyeccionPrestamo" targetNamespace="http://tempuri.org/DSProyeccionPrestamo.xsd" xmlns:mstns="http://tempuri.org/DSProyeccionPrestamo.xsd" xmlns="http://tempuri.org/DSProyeccionPrestamo.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DSProyeccionPrestamo" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="DSProyeccionPrestamo" msprop:Generator_UserDSName="DSProyeccionPrestamo">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="dtProyeccion" msprop:Generator_TableClassName="dtProyeccionDataTable" msprop:Generator_TableVarName="tabledtProyeccion" msprop:Generator_TablePropName="dtProyeccion" msprop:Generator_RowDeletingName="dtProyeccionRowDeleting" msprop:Generator_RowChangingName="dtProyeccionRowChanging" msprop:Generator_RowEvHandlerName="dtProyeccionRowChangeEventHandler" msprop:Generator_RowDeletedName="dtProyeccionRowDeleted" msprop:Generator_UserTableName="dtProyeccion" msprop:Generator_RowChangedName="dtProyeccionRowChanged" msprop:Generator_RowEvArgName="dtProyeccionRowChangeEvent" msprop:Generator_RowClassName="dtProyeccionRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="id_semana" msprop:Generator_ColumnVarNameInTable="columnid_semana" msprop:Generator_ColumnPropNameInRow="id_semana" msprop:Generator_ColumnPropNameInTable="id_semanaColumn" msprop:Generator_UserColumnName="id_semana" type="xs:int" minOccurs="0" />
+              <xs:element name="semana" msprop:Generator_ColumnVarNameInTable="columnsemana" msprop:Generator_ColumnPropNameInRow="semana" msprop:Generator_ColumnPropNameInTable="semanaColumn" msprop:Generator_UserColumnName="semana" type="xs:string" minOccurs="0" />
+              <xs:element name="fechas" msprop:Generator_ColumnVarNameInTable="columnfechas" msprop:Generator_ColumnPropNameInRow="fechas" msprop:Generator_ColumnPropNameInTable="fechasColumn" msprop:Generator_UserColumnName="fechas" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="intereses" msprop:Generator_ColumnVarNameInTable="columnintereses" msprop:Generator_ColumnPropNameInRow="intereses" msprop:Generator_ColumnPropNameInTable="interesesColumn" msprop:Generator_UserColumnName="intereses" type="xs:decimal" minOccurs="0" />
+              <xs:element name="total_a_cancelar" msprop:Generator_ColumnVarNameInTable="columntotal_a_cancelar" msprop:Generator_ColumnPropNameInRow="total_a_cancelar" msprop:Generator_ColumnPropNameInTable="total_a_cancelarColumn" msprop:Generator_UserColumnName="total_a_cancelar" type="xs:decimal" minOccurs="0" />
+              <xs:element name="id_interes" msprop:Generator_ColumnVarNameInTable="columnid_interes" msprop:Generator_ColumnPropNameInRow="id_interes" msprop:Generator_ColumnPropNameInTable="id_interesColumn" msprop:Generator_UserColumnName="id_interes" type="xs:long" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>
