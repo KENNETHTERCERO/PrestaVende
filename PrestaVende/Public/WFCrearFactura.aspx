@@ -95,7 +95,44 @@
                                                     </td>
                                                     <td>
                                                         <big><asp:Label ID="lblNombrePrestamo" runat="server" Text="0"></asp:Label></big>
-                                                    </td>                                                                                                   
+                                                    </td> 
+                                                    <td>
+                                                        <div>
+                                                            <%--aqui va la parte de modal windows--%>
+                                                            <asp:Panel ID="panelModalSubCliente" class="modalPopup" runat="server" Style="display: none; width:400px; height:400px; overflow:scroll; resize: vertical;" align="center">
+                                                                <div class="header">
+                                                                    Autorización encargado
+                                                                </div>
+                                                                <div class="body">
+                                                                    <iframe style="width: 300px; height: 300px;" id="Iframe1" src="AutorizacionEncargado.aspx" runat="server"></iframe>
+                                                                </div>
+                                                                <div class="footer" align="center">
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <asp:Button ID="btnCancelMSubCliente" runat="server" Text="Cancelar" class="no" />
+                                                                            </td>
+                                                                            <td>
+                                                                                <asp:Button ID="btnAceptMSubCliente" runat="server" Text="Aceptar" class="yes" OnClick="btnAcept_Click"/>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </div>
+                                                            </asp:Panel>
+                                                            <ajaxToolkit:ModalPopupExtender 
+                                                                ID="ModalPopupExtender2" 
+                                                                runat="server"
+                                                                CancelControlID="btnCancelMSubCliente"
+                                                                PopupControlID="panelModalSubCliente"
+                                                                TargetControlID="imgBtnBuscaSubSemana"
+                                                                BackgroundCssClass="modalBackground"
+                                                                PopupDragHandleControlID="panelModalSubCliente"
+                                                                Drag="true"
+                                                                RepositionMode="RepositionOnWindowResizeAndScroll"
+                                                                DropShadow="false">
+                                                            </ajaxToolkit:ModalPopupExtender>
+                                                        </div>
+                                                    </td>                                                                                                  
                                                 </tr>
                                                 <tr>
                                                     <td>
@@ -150,7 +187,7 @@
                                                         <big><asp:Label ID="lblValorInteres" runat="server" Text="0"></asp:Label></big>
                                                     </td>
                                                     <td>
-                                                        <asp:DropDownList ID="ddlSemanas" runat="server" CssClass="form-control" Visible="false" OnSelectedIndexChanged="ddlSemanas_SelectedIndexChanged"></asp:DropDownList>
+                                                        <asp:DropDownList ID="ddlSemanas" runat="server" CssClass="form-control" AutoPostBack="true" Visible="false" OnSelectedIndexChanged="ddlSemanas_SelectedIndexChanged"></asp:DropDownList>
                                                     </td > 
                                                 </tr>
                                                 <tr>     
@@ -182,7 +219,7 @@
                                                             <asp:BoundField DataField="cargo" HeaderText="<center>Cargo</center>" SortExpression="cargo"  HtmlEncode="false"/>
                                                             <asp:BoundField DataField="saldo_prestamo" HeaderText="<center>Saldo</center>" SortExpression="saldo_prestamo"  HtmlEncode="false"/>
                                                             <asp:BoundField DataField="Cantidad" HeaderText="<center>Semanas</center>" SortExpression="Cantidad" HtmlEncode="false"/>
-                                                            <asp:BoundField DataField="Precio" HeaderText="<center>Sub Total</center>" SortExpression="Precio"  HtmlEncode="false"/>                                                            
+                                                            <asp:BoundField DataField="Precio" HeaderText="<center>Sub Total</center>" SortExpression="Precio"  HtmlEncode="false" DataFormatString="{0:N2}"/>                                                            
                                                             <asp:BoundField DataField="SubTotal" HeaderText="<center>Total</center>" SortExpression="SubTotal"  HtmlEncode="false" DataFormatString="{0:N2}"/>
                                                         </Columns>
                                                         <EditRowStyle BackColor="#7C6F57" />

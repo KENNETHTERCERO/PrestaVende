@@ -444,7 +444,7 @@ namespace PrestaVende.CLASS
                 command.Connection = connection.connection;
                 command.Parameters.Clear();
                 command.CommandText = "select pre.id_prestamo_encabezado,pre.numero_prestamo,cli.primer_nombre,cli.segundo_nombre,cli.primer_apellido,cli.segundo_apellido, pre.id_cliente, " +
-                                       "pre.saldo_prestamo,(c.factor * 100) AS factor from tbl_prestamo_encabezado pre " +
+                                       "pre.saldo_prestamo,(c.factor * 100) AS factor,pre.total_prestamo from tbl_prestamo_encabezado pre " +
                                        "inner join tbl_cliente cli on cli.id_cliente = pre.id_cliente " +
                                        "inner join tbl_sucursal su on su.id_sucursal = pre.id_sucursal " +
                                        "inner join tbl_cargo c on c.id_interes = pre.id_interes and c.id_empresa = su.id_empresa " +

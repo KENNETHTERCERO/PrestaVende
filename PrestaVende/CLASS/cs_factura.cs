@@ -203,7 +203,7 @@ namespace PrestaVende.CLASS
                             }
                             else
                                 throw new Exception("No se pudo actualizar el saldo de la caja.");                            
-                        }
+                        } 
                         else
                             throw new Exception("No se pudo insertar transaccion de la factura.");
                     }
@@ -218,6 +218,7 @@ namespace PrestaVende.CLASS
                 error = ex.ToString();
                 Resultado = false;
                 command.Transaction.Rollback();
+                return string.Empty;
             }
             finally
             {
