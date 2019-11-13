@@ -256,7 +256,7 @@ namespace PrestaVende.Public
                                     string id_prestamo = Request.QueryString["id_prestamo"];
 
                                     Resultado = cs_factura.GuardarFactura(ref error, ds_global, id_serie, id_cliente, id_tipo_transaccion, CLASS.cs_usuario.id_caja, numero_prestamo, abono.ToString());
-
+                                     
                                     if(Resultado == string.Empty)
                                     {
                                         showWarning("Error al generar la factura.");

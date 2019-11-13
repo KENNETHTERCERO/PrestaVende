@@ -120,7 +120,7 @@
                                                                 </div>
                                                             </asp:Panel>
                                                             <ajaxToolkit:ModalPopupExtender 
-                                                                ID="ModalPopupExtender2"
+                                                                ID="ModalPopupExtender2" 
                                                                 runat="server"
                                                                 CancelControlID="btnCancelMSubCliente"
                                                                 PopupControlID="panelModalSubCliente"
