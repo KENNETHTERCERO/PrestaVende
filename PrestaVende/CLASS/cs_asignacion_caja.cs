@@ -364,6 +364,7 @@ namespace PrestaVende.CLASS
                 string id_tipo_caja = "";
                 string id_caja_general = "";
                 string operacion_matematica = "";
+                Decimal SaldoActualCaja = 0;
 
                 command.Connection = connection.connection;
                 connection.connection.Open();
@@ -386,7 +387,7 @@ namespace PrestaVende.CLASS
 
 
                 command.Parameters.Clear();
-                command.CommandText = " INSERT INTO tbl_asignacion_caja (id_caja, id_estado_caja, monto,           upd         "
+                command.CommandText = " INSERT INTO tbl_asignacion_caja (id_caja, id_estado_caja, monto,"
                                      + "       estado_asignacion, fecha_creacion, fecha_modificacion, usuario_asigna, id_usuario_asignado)      "
                                      + "       VALUES(@id_caja, @id_estado_caja, @monto,                                   "
                                      + "       @estado_asignacion, @fecha_creacion, @fecha_modificacion, @usuario_asigna, @id_usuario_asignado)";
@@ -438,7 +439,7 @@ namespace PrestaVende.CLASS
                     }
                 }
 
-                if (BlnRecibir == true) //CUANDO LA CAJA SE CIERRA
+                if (BlnRecibir == true) //CUANDO LA CAJA SE RECIBE
                 {
 
                     if (id_estado_caja == CierreCaja)
@@ -512,6 +513,33 @@ namespace PrestaVende.CLASS
                         {
                             throw new SystemException("Error actualizando la tabla de usuario en la recepcion.");
                         }
+
+                        if (id_tipo_caja != "1" && id_tipo_caja != "4")
+                        {
+                            command.Parameters.Clear();
+                            command.CommandText = "select saldo from tbl_caja where id_caja = @id_caja";
+                            command.Parameters.AddWithValue("@id_caja", id_caja_general);
+                            SaldoActualCaja = Convert.ToDecimal(command.ExecuteScalar().ToString());
+
+
+                            //INSERTANDO TRANSACCION
+                            command.Parameters.Clear();
+                            command.CommandText = " INSERT INTO tbl_transaccion (id_tipo_transaccion, id_caja ,monto, "
+                                                  + " estado_transaccion, fecha_transaccion, usuario, movimiento_saldo, id_usuario) "
+                                                  + "  VALUES(@id_tipo_transaccion, @id_caja, @monto, "
+                                                  + " @estado_transaccion, @fecha_transaccion, @usuario, @movimiento_saldo, @id_usuario) ";
+
+                            command.Parameters.Clear();
+                            command.Parameters.AddWithValue("@id_tipo_transaccion", TipoTransaccion);
+                            command.Parameters.AddWithValue("@id_caja", id_caja_general);
+                            command.Parameters.AddWithValue("@monto", monto);
+                            command.Parameters.AddWithValue("@estado_transaccion", 1);
+                            command.Parameters.AddWithValue("@fecha_transaccion", DateTime.Now);
+                            command.Parameters.AddWithValue("@usuario", usuario_asigna);
+                            command.Parameters.AddWithValue("@movimiento_saldo", (SaldoActualCaja - Convert.ToDecimal(monto)));
+                            command.Parameters.AddWithValue("@id_sucursal", CLASS.cs_usuario.id_sucursal);
+                            command.ExecuteNonQuery();
+                        }                        
                     }
                     else if (id_estado_caja == Incremento || id_estado_caja == Decremento) //ESTADO ASIGNACION, si se recibe la asignacion cambia a caja recibida
                     {
@@ -586,69 +614,40 @@ namespace PrestaVende.CLASS
                             return false;
                         }
 
-                        //REALIZANDO ACTUALIZACION DE SALDO PARA LA CAJA GENERAL
-                        command.Parameters.Clear();
-                        command.CommandText = " UPDATE tbl_caja SET SALDO = SALDO - @SaldoAsignado where id_caja = @id_caja ";
-                        command.Parameters.AddWithValue("@SaldoAsignado", monto);
-                        command.Parameters.AddWithValue("@id_caja", id_caja_general);
-                        rowsUpdated = command.ExecuteNonQuery();
-
-                        if (rowsUpdated <= 0)
+                        if (id_tipo_caja != "1" && id_tipo_caja != "4")
                         {
-                            command.Transaction.Rollback();
-                            return false;
+                            //REALIZANDO ACTUALIZACION DE SALDO PARA LA CAJA GENERAL
+                            command.Parameters.Clear();
+                            command.CommandText = " UPDATE tbl_caja SET SALDO = SALDO - @SaldoAsignado where id_caja = @id_caja ";
+                            command.Parameters.AddWithValue("@SaldoAsignado", monto);
+                            command.Parameters.AddWithValue("@id_caja", id_caja_general);
+                            rowsUpdated = command.ExecuteNonQuery();
+
+                            if (rowsUpdated <= 0)
+                            {
+                                command.Transaction.Rollback();
+                                return false;
+                            }
                         }
+                        
                     }
-                    else
-                    {
-                        //    //SE OBTIENE OPERACION MATEMATICA SEGUN EL ESTADO SELECCIONADO 
-                        //    command.Parameters.Clear();
-                        //    EstadoCajaOperacion = id_estado_caja;
-                        //    command.CommandText = "SELECT operacion_matematica FROM tbl_estado_caja where id_estado_caja = @id_estado_caja";
-                        //    command.Parameters.AddWithValue("@id_estado_caja", id_estado_caja);
-                        //    DtOperadionMatematica.Load(command.ExecuteReader());
-
-                        //    if (DtOperadionMatematica.Rows.Count > 0)
-                        //    {
-                        //        foreach (DataRow item in DtOperadionMatematica.Rows)
-                        //        {
-                        //            operacion_matematica = item[0].ToString();
-                        //        }
-                        //    }
-
-
-                        //    //REALIZANDO ACTUALIZACION DE SALDO PARA LA CAJA TRANSACCIONAL DEPENDIENDO LA OPERACION MATEMATICA DE LOS ESTADOS QUE SE ASIGNEN
-                        //    command.Parameters.Clear();
-
-                        //    if (operacion_matematica == "+")
-                        //    {
-                        //        command.CommandText = " UPDATE tbl_caja SET SALDO = SALDO + @SaldoAsignado, id_estado_caja = @id_estado_caja where id_tipo_caja = @id_tipo_caja ";
-                        //    }
-                        //    else
-                        //    {
-                        //        command.CommandText = " UPDATE tbl_caja SET SALDO = SALDO - @SaldoAsignado, id_estado_caja = @id_estado_caja where id_tipo_caja = @id_tipo_caja ";
-                        //    }
-                        //    EstadoCajaOperacion = id_estado_caja;
-                        //    command.Parameters.AddWithValue("@id_tipo_caja", id_tipo_caja);
-                        //    command.Parameters.AddWithValue("@id_estado_caja", id_estado_caja);
-                        //    command.Parameters.AddWithValue("@SaldoAsignado", monto);
-                        //    rowsUpdated = command.ExecuteNonQuery();
-
-                        //    if (rowsUpdated <= 0)
-                        //    {
-                        //        command.Transaction.Rollback();
-                        //        return false;
-                        //    }
-                        //}                   
-                    }
+                    
                 }
-                
+
+                if (BlnRecibir == true)
+                {
+                    command.Parameters.Clear();
+                    command.CommandText = "select saldo from tbl_caja where id_caja = @id_caja";
+                    command.Parameters.AddWithValue("@id_caja", id_caja);
+                    SaldoActualCaja = Convert.ToDecimal(command.ExecuteScalar().ToString());
+
+
                     //INSERTANDO TRANSACCION
                     command.Parameters.Clear();
                     command.CommandText = " INSERT INTO tbl_transaccion (id_tipo_transaccion, id_caja ,monto, "
-                                          + " estado_transaccion, fecha_transaccion, usuario) "
+                                          + " estado_transaccion, fecha_transaccion, usuario, movimiento_saldo, id_usuario) "
                                           + "  VALUES(@id_tipo_transaccion, @id_caja, @monto, "
-                                          + " @estado_transaccion, @fecha_transaccion, @usuario) ";
+                                          + " @estado_transaccion, @fecha_transaccion, @usuario, @movimiento_saldo, @id_usuario) ";
 
 
                     if (EstadoCajaOperacion != "2")
@@ -656,51 +655,61 @@ namespace PrestaVende.CLASS
 
                         if (id_tipo_caja == "2") //Caja Transaccional Prestamos
                         {
-                            if (EstadoCajaOperacion == "3")
+                            if (EstadoCajaOperacion == "2")
                             {
                                 TipoTransaccion = TransaccionAperturaCapitalCajaTransaccionalPrestamo;
+                                SaldoActualCaja = Convert.ToDecimal(monto);
                             }
                             else
                             {
                                 TipoTransaccion = TransaccionCierreCapitalCajaTransaccionalPrestamo;
+                                SaldoActualCaja = SaldoActualCaja - Convert.ToDecimal(monto);
                             }
                         }
                         else if (id_tipo_caja == "1") //Caja General Sucursal
                         {
-                            if (EstadoCajaOperacion == "3")
+                            if (EstadoCajaOperacion == "2")
                             {
                                 TipoTransaccion = TransaccionAperturaCajaGeneral;
+                                SaldoActualCaja = Convert.ToDecimal(monto);
                             }
                             else if (EstadoCajaOperacion == "4")
                             {
                                 TipoTransaccion = TransaccionCierreCajaGeneral;
+                                SaldoActualCaja = SaldoActualCaja - Convert.ToDecimal(monto);
                             }
                             else if (EstadoCajaOperacion == "7")
                             {
                                 TipoTransaccion = TransaccionIncrementoCapitalCajaGeneral;
+                                SaldoActualCaja = SaldoActualCaja + Convert.ToDecimal(monto);
                             }
                             else
                             {
                                 TipoTransaccion = TransaccionDecrementoCapitalCajaGeneral;
+                                SaldoActualCaja = SaldoActualCaja - Convert.ToDecimal(monto);
                             }
                         }
                         else if (id_tipo_caja == "5") //Caja Transaccional 
                         {
-                            if (EstadoCajaOperacion == "3")
+                            if (EstadoCajaOperacion == "2")
                             {
                                 TipoTransaccion = TransaccionAperturaCajaTransaccional;
+                                SaldoActualCaja = Convert.ToDecimal(monto);
                             }
                             else if (EstadoCajaOperacion == "4")
                             {
                                 TipoTransaccion = TransaccionCierreCajaTransaccional;
+                                SaldoActualCaja = SaldoActualCaja - Convert.ToDecimal(monto);
                             }
                             else if (EstadoCajaOperacion == "7")
                             {
                                 TipoTransaccion = TransaccionIncrementoCapitalCajaTransaccional;
+                                SaldoActualCaja = SaldoActualCaja + Convert.ToDecimal(monto);
                             }
                             else
                             {
                                 TipoTransaccion = TransaccionDecrementoCapitalCajaTransaccional;
+                                SaldoActualCaja = SaldoActualCaja - Convert.ToDecimal(monto);
                             }
                         }
 
@@ -711,12 +720,12 @@ namespace PrestaVende.CLASS
                         command.Parameters.AddWithValue("@estado_transaccion", 1);
                         command.Parameters.AddWithValue("@fecha_transaccion", DateTime.Now);
                         command.Parameters.AddWithValue("@usuario", usuario_asigna);
+                        command.Parameters.AddWithValue("@movimiento_saldo", (SaldoActualCaja + monto));
+                        command.Parameters.AddWithValue("@id_sucursal", CLASS.cs_usuario.id_sucursal);
                         command.ExecuteNonQuery();
                     }
-
-
-
-
+                }
+               
                     command.Transaction.Commit();
                     return true;
 
