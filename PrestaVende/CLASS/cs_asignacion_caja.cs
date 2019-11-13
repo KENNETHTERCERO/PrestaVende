@@ -496,7 +496,7 @@ namespace PrestaVende.CLASS
                     {
                         //MODIFICANDO SALDO ACTUAL DE CAJA TRANSACCIONAL
                         command.Parameters.Clear();
-                        EstadoCajaOperacion = CierreCaja;
+                        EstadoCajaOperacion = CajaRecibida;
                         command.CommandText = " UPDATE tbl_caja SET fecha_modificacion = @fecha_modificacion, id_estado_caja = @id_estado_caja WHERE id_caja = @id_caja";
                         command.Parameters.AddWithValue("@id_caja", id_caja);
                         command.Parameters.AddWithValue("@fecha_modificacion", DateTime.Now);
@@ -525,18 +525,19 @@ namespace PrestaVende.CLASS
                             //INSERTANDO TRANSACCION
                             command.Parameters.Clear();
                             command.CommandText = " INSERT INTO tbl_transaccion (id_tipo_transaccion, id_caja ,monto, "
-                                                  + " estado_transaccion, fecha_transaccion, usuario, movimiento_saldo, id_usuario) "
+                                                  + " estado_transaccion, fecha_transaccion, usuario, movimiento_saldo, id_sucursal) "
                                                   + "  VALUES(@id_tipo_transaccion, @id_caja, @monto, "
-                                                  + " @estado_transaccion, @fecha_transaccion, @usuario, @movimiento_saldo, @id_usuario) ";
+                                                  + " @estado_transaccion, @fecha_transaccion, @usuario, @movimiento_saldo, @id_sucursal) ";
 
                             command.Parameters.Clear();
+                            TipoTransaccion = TransaccionDecrementoCapitalCajaGeneral;
                             command.Parameters.AddWithValue("@id_tipo_transaccion", TipoTransaccion);
                             command.Parameters.AddWithValue("@id_caja", id_caja_general);
                             command.Parameters.AddWithValue("@monto", monto);
                             command.Parameters.AddWithValue("@estado_transaccion", 1);
                             command.Parameters.AddWithValue("@fecha_transaccion", DateTime.Now);
                             command.Parameters.AddWithValue("@usuario", usuario_asigna);
-                            command.Parameters.AddWithValue("@movimiento_saldo", (SaldoActualCaja - Convert.ToDecimal(monto)));
+                            command.Parameters.AddWithValue("@movimiento_saldo", (SaldoActualCaja));
                             command.Parameters.AddWithValue("@id_sucursal", CLASS.cs_usuario.id_sucursal);
                             command.ExecuteNonQuery();
                         }                        
@@ -645,9 +646,9 @@ namespace PrestaVende.CLASS
                     //INSERTANDO TRANSACCION
                     command.Parameters.Clear();
                     command.CommandText = " INSERT INTO tbl_transaccion (id_tipo_transaccion, id_caja ,monto, "
-                                          + " estado_transaccion, fecha_transaccion, usuario, movimiento_saldo, id_usuario) "
+                                          + " estado_transaccion, fecha_transaccion, usuario, movimiento_saldo, id_sucursal) "
                                           + "  VALUES(@id_tipo_transaccion, @id_caja, @monto, "
-                                          + " @estado_transaccion, @fecha_transaccion, @usuario, @movimiento_saldo, @id_usuario) ";
+                                          + " @estado_transaccion, @fecha_transaccion, @usuario, @movimiento_saldo, @id_sucursal) ";
 
 
                     if (EstadoCajaOperacion != "2")
@@ -720,7 +721,7 @@ namespace PrestaVende.CLASS
                         command.Parameters.AddWithValue("@estado_transaccion", 1);
                         command.Parameters.AddWithValue("@fecha_transaccion", DateTime.Now);
                         command.Parameters.AddWithValue("@usuario", usuario_asigna);
-                        command.Parameters.AddWithValue("@movimiento_saldo", (SaldoActualCaja + monto));
+                        command.Parameters.AddWithValue("@movimiento_saldo", (SaldoActualCaja + Convert.ToDecimal(monto)));
                         command.Parameters.AddWithValue("@id_sucursal", CLASS.cs_usuario.id_sucursal);
                         command.ExecuteNonQuery();
                     }
