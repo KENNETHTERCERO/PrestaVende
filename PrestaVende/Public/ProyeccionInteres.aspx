@@ -8,26 +8,7 @@
 </head>
 <body>
     <form id="form1" runat="server">
-        <div>
-            <div align="center" runat="server" id="divWarning" visible="false" class="alert alert-warning alert-dismissable fade in">
-                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                <strong>
-                    <asp:Label runat="server" ID="lblWarning" Text=""></asp:Label></strong>
-            </div>
-
-            <div align="center" runat="server" id="divError" visible="false" class="alert alert-danger alert-dismissable fade in">
-                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                <strong>
-                    <asp:Label runat="server" ID="lblError" Text=""></asp:Label></strong>
-            </div>
-
-            <div align="center" runat="server" id="divSucceful" visible="false" class="alert alert-success alert-dismissable fade in">
-                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                <strong>
-                    <asp:Label runat="server" ID="lblSuccess" Text=""></asp:Label></strong>
-            </div>
-        </div>
-        <div>
+    <div>
         <asp:GridView ID="gvProyeccion" runat="server" Width="100%" CssClass="footable" AutoGenerateColumns="False" ForeColor="#333333" GridLines="None">
             <AlternatingRowStyle BackColor="White" />
             <Columns>

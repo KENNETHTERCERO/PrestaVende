@@ -9,7 +9,6 @@ namespace PrestaVende.CLASS
 {
     public class cs_prestamo
     {
-        public static string id_interes_proyeccion = "", monto_proyeccion = "", id_plan_prestamo_proyeccion = "";
         cs_connection connection = new cs_connection();
         SqlCommand command = new SqlCommand();
 
@@ -489,32 +488,5 @@ namespace PrestaVende.CLASS
                 connection.connection.Close();
             }
         }
-
-        public DataTable getDTProyeccion(ref string error)
-        {
-            DataTable dtContrato = new DataTable("dtProyeccion");
-            try
-            {
-                connection.connection.Open();
-                command.Connection = connection.connection;
-                command.Parameters.Clear();
-                command.CommandText = "exec SP_proyeccion_intereses @id_interes, @monto, @id_plan_prestamo";
-                command.Parameters.AddWithValue("@id_interes", cs_prestamo.id_interes_proyeccion);
-                command.Parameters.AddWithValue("@monto", cs_prestamo.monto_proyeccion);
-                command.Parameters.AddWithValue("@id_plan_prestamo", cs_prestamo.id_plan_prestamo_proyeccion);
-                dtContrato.Load(command.ExecuteReader());
-                return dtContrato;
-            }
-            catch (Exception ex)
-            {
-                error = ex.ToString();
-                return null;
-            }
-            finally
-            {
-                connection.connection.Close();
-            }
-        }
-
     }
 }

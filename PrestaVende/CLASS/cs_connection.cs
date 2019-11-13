@@ -12,18 +12,19 @@ namespace PrestaVende.CLASS
 
         //private string connectionString = @"Data Source=DESKTOP-GUBN2LO\SQLPALKI;Initial Catalog=DEVCACSUSDB;Persist Security Info=True;User ID=sa;Password=tercero#3";//Connection Kenneth Tercero
 #if DEBUG
-        private static string connectionString = @"Data Source=DESKTOP-VEQ9H2G\ITECSA;Initial Catalog=PRESTAVENDEDB;Persist Security Info=True;User ID=sa;Password=tercero#3"; //Conecction Server SQL
-        private static string ConstConnectionString = @"Data Source=DESKTOP-VEQ9H2G\ITECSA;Initial Catalog=PRESTAVENDEDB;Persist Security Info=True;User ID=sa;Password=tercero#3"; //Conecction Server SQL
+        //private static string connectionString = @"Data Source=DESKTOP-VEQ9H2G\ITECSA;Initial Catalog=PRESTAVENDEDB;Persist Security Info=True;User ID=sa;Password=tercero#3"; //Conecction Server SQL
+        //private static string ConstConnectionString = @"Data Source=DESKTOP-VEQ9H2G\ITECSA;Initial Catalog=PRESTAVENDEDB;Persist Security Info=True;User ID=sa;Password=tercero#3"; //Conecction Server SQL
 
-        //private static string connectionString = @"Data Source=LAPTOP-R6UMVN3B;Initial Catalog=DB_A4F0BE_prestavendedb;Persist Security Info=True;User ID=sa;Password='FunkoPop,06'";  //Conecction Server SQL
-        //private static string ConstConnectionString = @"Data Source=LAPTOP-R6UMVN3B;Initial Catalog=DB_A4F0BE_prestavendedb;Persist Security Info=True;User ID=sa;Password='FunkoPop,06'"; //Conecction Server SQL
+
+        private static string connectionString = @"Data Source=LAPTOP-R6UMVN3B;Initial Catalog=DB_A4F0BE_prestavendedb;Persist Security Info=True;User ID=sa;Password='FunkoPop,06'";  //Conecction Server SQL
+        private static string ConstConnectionString = @"Data Source=LAPTOP-R6UMVN3B;Initial Catalog=DB_A4F0BE_prestavendedb;Persist Security Info=True;User ID=sa;Password='FunkoPop,06'"; //Conecction Server SQL
 
         //private static string connectionString = @"Data Source=sql5047.site4now.net;Initial Catalog=DB_A4F0BE_prestavendedb;User Id=DB_A4F0BE_prestavendedb_admin;Password=tercero#3;"; //Conecction Server SQL
         //private static string ConstConnectionString = @"Data Source=sql5047.site4now.net;Initial Catalog=DB_A4F0BE_prestavendedb;User Id=DB_A4F0BE_prestavendedb_admin;Password=tercero#3;"; //Conecction Server SQL
 #else
 
-        private static string connectionString = @"Data Source=.\MSSQLSERVER2017;Initial Catalog=prestavendedb;User Id=sa_prestavende;Password=Tercero#3;"; //Conecction Server SQL
-        private static string ConstConnectionString = @"Data Source=.\MSSQLSERVER2017;Initial Catalog=prestavendedb;User Id=sa_prestavende;Password=Tercero#3;"; //Conecction Server SQL
+        private static string connectionString = @"Data Source=sql5047.site4now.net;Initial Catalog=DB_A4F0BE_prestavendedb;User Id=DB_A4F0BE_prestavendedb_admin;Password=tercero#3;"; //Conecction Server SQL
+        private static string ConstConnectionString = @"Data Source=sql5047.site4now.net;Initial Catalog=DB_A4F0BE_prestavendedb;User Id=DB_A4F0BE_prestavendedb_admin;Password=tercero#3;"; //Conecction Server SQL
 #endif
 
 
