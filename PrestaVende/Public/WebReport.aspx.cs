@@ -24,7 +24,7 @@ namespace PrestaVende.Public
 
         private void managedReport(string tipo_reporte)
         {
-            if (Convert.ToInt32(tipo_reporte) == 1)//1 reporte de packing list en pdf
+            if (Convert.ToInt32(tipo_reporte) == 1)//Contrato
             {
                 DataTable contrato = new DataTable("contrato");
                 string numero_prestamo = Request.QueryString.Get("numero_prestamo");
@@ -38,12 +38,8 @@ namespace PrestaVende.Public
                 {
                     try
                     {
-                        //DataTable resumenPacking = new DataTable();
                         Reports.CRContratoGeneral prestamoGeneral = new Reports.CRContratoGeneral();
-
-                        //resumenPacking = pack.getDataResumePackingList(ref error, numero_recoleccion);
                         prestamoGeneral.Load(Server.MapPath("~/Reports/CRContratoGeneral.rpt"));
-                        //prestamoGeneral.Subreports[0].SetDataSource(resumenPacking);
                         prestamoGeneral.SetDataSource(contrato);
                         CrystalReportViewer1.ReportSource = prestamoGeneral;//document;
                         CrystalReportViewer1.DataBind();

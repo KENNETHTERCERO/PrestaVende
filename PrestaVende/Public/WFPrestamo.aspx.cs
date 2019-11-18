@@ -10,16 +10,16 @@ namespace PrestaVende.Public
 {
     public partial class WFPrestamo : System.Web.UI.Page
     {
-        private CLASS.cs_cliente        cs_cliente = new CLASS.cs_cliente();
-        private CLASS.cs_categoria      cs_categoria = new CLASS.cs_categoria();
-        private CLASS.cs_subcategoria   cs_subcategoria = new CLASS.cs_subcategoria();
-        private CLASS.cs_producto       cs_producto = new CLASS.cs_producto();
-        private CLASS.cs_plan_prestamo  cs_plan_prestamo = new CLASS.cs_plan_prestamo();
-        private CLASS.cs_interes        cs_interes = new CLASS.cs_interes();
-        private CLASS.cs_kilataje       cs_kilataje = new CLASS.cs_kilataje();
-        private CLASS.cs_marca          cs_marca = new CLASS.cs_marca();
-        private CLASS.cs_casilla        cs_casilla = new CLASS.cs_casilla();
-        private CLASS.cs_prestamo       cs_prestamo = new CLASS.cs_prestamo();
+        private CLASS.cs_cliente cs_cliente = new CLASS.cs_cliente();
+        private CLASS.cs_categoria cs_categoria = new CLASS.cs_categoria();
+        private CLASS.cs_subcategoria cs_subcategoria = new CLASS.cs_subcategoria();
+        private CLASS.cs_producto cs_producto = new CLASS.cs_producto();
+        private CLASS.cs_plan_prestamo cs_plan_prestamo = new CLASS.cs_plan_prestamo();
+        private CLASS.cs_interes cs_interes = new CLASS.cs_interes();
+        private CLASS.cs_kilataje cs_kilataje = new CLASS.cs_kilataje();
+        private CLASS.cs_marca cs_marca = new CLASS.cs_marca();
+        private CLASS.cs_casilla cs_casilla = new CLASS.cs_casilla();
+        private CLASS.cs_prestamo cs_prestamo = new CLASS.cs_prestamo();
 
         private static DataTable dtTablaJoyas;
         private static DataTable dtTablaArticulos;
@@ -196,7 +196,7 @@ namespace PrestaVende.Public
                 ddlProducto.DataSource = cs_producto.getProducto(ref error, id_subcategoria);
                 ddlProducto.DataValueField = "id_producto";
                 ddlProducto.DataTextField = "producto";
-                ddlProducto.DataBind(); 
+                ddlProducto.DataBind();
             }
             catch (Exception ex)
             {
@@ -210,7 +210,7 @@ namespace PrestaVende.Public
             {
                 string id_cliente = Request.QueryString["id_cliente"];
                 lblid_cliente.Text = id_cliente;
-                foreach(DataRow item in cs_cliente.getSpecificClient(ref error, id_cliente).Rows)
+                foreach (DataRow item in cs_cliente.getSpecificClient(ref error, id_cliente).Rows)
                 {
                     lblnombre_cliente.Text = item[3].ToString() + " " + item[4].ToString() + " " + item[5].ToString() + " " + item[6].ToString();
                 }
@@ -245,26 +245,26 @@ namespace PrestaVende.Public
             try
             {
                 //Ver controles de Joyas ----------
-                lblPeso.Visible             = true;
-                lblKilataje.Visible         = true;
-                lblObservaciones.Visible    = true;
-                lblPesoDescuento.Visible    = true;
+                lblPeso.Visible = true;
+                lblKilataje.Visible = true;
+                lblObservaciones.Visible = true;
+                lblPesoDescuento.Visible = true;
                 lblPesoConDescuento.Visible = true;
-                txtPeso.Visible             = true;
-                ddlKilataje.Visible         = true;
-                txtObservaciones.Visible    = true;
-                txtPesoDescuento.Visible    = true;
+                txtPeso.Visible = true;
+                ddlKilataje.Visible = true;
+                txtObservaciones.Visible = true;
+                txtPesoDescuento.Visible = true;
                 txtPesoConDescuento.Visible = true;
-                txtValor.Enabled            = false;
-                lblRedondeo.Visible         = true;
-                txtRedondeo.Visible         = true;
-                btnRedondear.Visible        = true;
+                txtValor.Enabled = false;
+                lblRedondeo.Visible = true;
+                txtRedondeo.Visible = true;
+                btnRedondear.Visible = true;
                 //---------------------------------
                 //Ocultar controles de productos diferentes a joyas
-                lblMarca.Visible            = false;
-                lblCaracteristicas.Visible  = false;
-                ddlMarca.Visible            = false;
-                txtCaracteristicas.Visible  = false;
+                lblMarca.Visible = false;
+                lblCaracteristicas.Visible = false;
+                ddlMarca.Visible = false;
+                txtCaracteristicas.Visible = false;
             }
             catch (Exception ex)
             {
@@ -277,26 +277,26 @@ namespace PrestaVende.Public
             try
             {
                 //Ver controles de Joyas ----------
-                lblPeso.Visible             = false;
-                lblKilataje.Visible         = false;
-                lblObservaciones.Visible    = false;
-                lblPesoDescuento.Visible    = false;
+                lblPeso.Visible = false;
+                lblKilataje.Visible = false;
+                lblObservaciones.Visible = false;
+                lblPesoDescuento.Visible = false;
                 lblPesoConDescuento.Visible = false;
-                txtPeso.Visible             = false;
-                ddlKilataje.Visible         = false;
-                txtObservaciones.Visible    = false;
-                txtPesoDescuento.Visible    = false;
+                txtPeso.Visible = false;
+                ddlKilataje.Visible = false;
+                txtObservaciones.Visible = false;
+                txtPesoDescuento.Visible = false;
                 txtPesoConDescuento.Visible = false;
-                lblRedondeo.Visible         = false;
-                txtRedondeo.Visible         = false;
-                btnRedondear.Visible        = false;
+                lblRedondeo.Visible = false;
+                txtRedondeo.Visible = false;
+                btnRedondear.Visible = false;
                 //---------------------------------
                 //Ocultar controles de productos diferentes a joyas
-                lblMarca.Visible            = true;
-                lblCaracteristicas.Visible  = true;
-                ddlMarca.Visible            = true;
-                txtCaracteristicas.Visible  = true;
-                txtValor.Enabled            = true;
+                lblMarca.Visible = true;
+                lblCaracteristicas.Visible = true;
+                ddlMarca.Visible = true;
+                txtCaracteristicas.Visible = true;
+                txtValor.Enabled = true;
             }
             catch (Exception ex)
             {
@@ -309,23 +309,23 @@ namespace PrestaVende.Public
             try
             {
                 //Ver controles de Joyas ----------
-                lblPeso.Visible             = false;
-                lblKilataje.Visible         = false;
-                lblObservaciones.Visible    = false;
-                lblPesoDescuento.Visible    = false;
+                lblPeso.Visible = false;
+                lblKilataje.Visible = false;
+                lblObservaciones.Visible = false;
+                lblPesoDescuento.Visible = false;
                 lblPesoConDescuento.Visible = false;
-                txtPeso.Visible             = false;
-                ddlKilataje.Visible         = false;
-                txtObservaciones.Visible    = false;
-                txtPesoDescuento.Visible    = false;
+                txtPeso.Visible = false;
+                ddlKilataje.Visible = false;
+                txtObservaciones.Visible = false;
+                txtPesoDescuento.Visible = false;
                 txtPesoConDescuento.Visible = false;
 
                 //---------------------------------
                 //Ocultar controles de productos diferentes a joyas
-                lblMarca.Visible            = false;
-                lblCaracteristicas.Visible  = false;
-                ddlMarca.Visible            = false;
-                txtCaracteristicas.Visible  = false;
+                lblMarca.Visible = false;
+                lblCaracteristicas.Visible = false;
+                ddlMarca.Visible = false;
+                txtCaracteristicas.Visible = false;
             }
             catch (Exception ex)
             {
@@ -389,11 +389,11 @@ namespace PrestaVende.Public
             try
             {
                 row = dtTablaArticulos.NewRow();
-                row["id_producto"]     = ddlProducto.SelectedValue.ToString();
-                row["numero_linea"          ] = 1;
-                row["producto"       ] = ddlProducto.SelectedItem.Text.ToString();
-                row["marca"          ] = ddlMarca.SelectedItem.Text.ToString();
-                row["valor"          ] = txtValor.Text;
+                row["id_producto"] = ddlProducto.SelectedValue.ToString();
+                row["numero_linea"] = 1;
+                row["producto"] = ddlProducto.SelectedItem.Text.ToString();
+                row["marca"] = ddlMarca.SelectedItem.Text.ToString();
+                row["valor"] = txtValor.Text;
                 row["caracteristicas"] = txtCaracteristicas.Text;
                 row["id_marca"] = ddlMarca.SelectedValue.ToString();
 
@@ -441,6 +441,7 @@ namespace PrestaVende.Public
                 {
                     lblTotalPrestamoQuetzales.Text = txtValor.Text;
                 }
+                getDataProyeccion();
             }
             catch (Exception)
             {
@@ -454,15 +455,15 @@ namespace PrestaVende.Public
             try
             {
                 dtTablaJoyas.Columns.Add("id_producto");
-                dtTablaJoyas.Columns.Add("numero_linea"          );
-                dtTablaJoyas.Columns.Add("joya"           );
-                dtTablaJoyas.Columns.Add("kilataje"       );
-                dtTablaJoyas.Columns.Add("peso"           );
-                dtTablaJoyas.Columns.Add("descuento"      );
-                dtTablaJoyas.Columns.Add("pesoReal"       );
-                dtTablaJoyas.Columns.Add("valor"          );
+                dtTablaJoyas.Columns.Add("numero_linea");
+                dtTablaJoyas.Columns.Add("joya");
+                dtTablaJoyas.Columns.Add("kilataje");
+                dtTablaJoyas.Columns.Add("peso");
+                dtTablaJoyas.Columns.Add("descuento");
+                dtTablaJoyas.Columns.Add("pesoReal");
+                dtTablaJoyas.Columns.Add("valor");
                 dtTablaJoyas.Columns.Add("caracteristicas");
-                dtTablaJoyas.Columns.Add("id_kilataje"    );
+                dtTablaJoyas.Columns.Add("id_kilataje");
             }
             catch (Exception ex)
             {
@@ -474,11 +475,11 @@ namespace PrestaVende.Public
         {
             try
             {
-                dtTablaArticulos.Columns.Add("id_producto"    );
-                dtTablaArticulos.Columns.Add("numero_linea"   );
-                dtTablaArticulos.Columns.Add("producto"       );
-                dtTablaArticulos.Columns.Add("marca"          );
-                dtTablaArticulos.Columns.Add("valor"          );
+                dtTablaArticulos.Columns.Add("id_producto");
+                dtTablaArticulos.Columns.Add("numero_linea");
+                dtTablaArticulos.Columns.Add("producto");
+                dtTablaArticulos.Columns.Add("marca");
+                dtTablaArticulos.Columns.Add("valor");
                 dtTablaArticulos.Columns.Add("caracteristicas");
                 dtTablaArticulos.Columns.Add("id_marca");
                 //dtTablaArticulos.Columns.Add();
@@ -584,7 +585,7 @@ namespace PrestaVende.Public
         {
             try
             {
-                if (ddlTipoPrestamo.SelectedValue.ToString().Equals("0")){showWarning("Debe seleccionar que tipo de prestamo necesita guardar."); return false;}
+                if (ddlTipoPrestamo.SelectedValue.ToString().Equals("0")) { showWarning("Debe seleccionar que tipo de prestamo necesita guardar."); return false; }
                 else if (ddlCasilla.SelectedValue.ToString().Equals("0")) { showWarning("Usted debe seleccionar una casilla para poder guardar."); return false; }
                 else if (ddlIntereses.SelectedValue.ToString().Equals("0")) { showWarning("Usted debe seleccionar que intereses necesita para el prestamo para poder guardar."); return false; }
                 else if (gvProductoElectrodomesticos.Rows.Count.ToString().Equals("0") && gvProductoJoya.Rows.Count.ToString().Equals("0")) { showWarning("Usted debe agregar por lo menos un producto para poder guardar."); return false; }
@@ -625,7 +626,7 @@ namespace PrestaVende.Public
                     string script = "window.open('WebReport.aspx?tipo_reporte=1" + "&numero_prestamo=" + lblNumeroPrestamoNumero.Text + "');";
                     ScriptManager.RegisterClientScriptBlock(this, GetType(), "", script, true);
 
-                    string scriptText = "alert('my message'); window.location='WFListadoPrestamo.aspx?id_cliente="+ lblid_cliente.Text+ "'";
+                    string scriptText = "alert('my message'); window.location='WFListadoPrestamo.aspx?id_cliente=" + lblid_cliente.Text + "'";
                     ScriptManager.RegisterStartupScript(this, this.GetType(), "alertMessage", scriptText, true);
                     //Response.Redirect("WFListadoPrestamo?id_cliente=" + lblid_cliente.Text.ToString());
                 }
@@ -643,7 +644,7 @@ namespace PrestaVende.Public
             try
             {
                 string numero_prestamo_guardado = "";
-                if (cs_prestamo.guardar_prestamo(ref error, generaEncabezado(), dtTablaArticulos, ddlCategoria.SelectedValue.ToString(),ref numero_prestamo_guardado))
+                if (cs_prestamo.guardar_prestamo(ref error, generaEncabezado(), dtTablaArticulos, ddlCategoria.SelectedValue.ToString(), ref numero_prestamo_guardado))
                 {
                     lblNumeroPrestamoNumero.Text = numero_prestamo_guardado;
                     showSuccess("Se creo prestamo correctamente.");
@@ -750,7 +751,7 @@ namespace PrestaVende.Public
                     foreach (GridViewRow item in gvProductoElectrodomesticos.Rows)
                     {
                         porcentaje = 0;
-                        porcentaje = Math.Round(Convert.ToDecimal(item.Cells[5].Text.ToString()) / Convert.ToDecimal( lblTotalPrestamoQuetzales.Text.ToString()), 4);
+                        porcentaje = Math.Round(Convert.ToDecimal(item.Cells[5].Text.ToString()) / Convert.ToDecimal(lblTotalPrestamoQuetzales.Text.ToString()), 4);
                         montoFila = porcentaje * Convert.ToDecimal(txtMontoARecalcular.Text.ToString());
                         montoFila = Math.Round(montoFila, 2);
                         item.Cells[5].Text = montoFila.ToString();
@@ -761,10 +762,10 @@ namespace PrestaVende.Public
                     foreach (GridViewRow item in gvProductoJoya.Rows)
                     {
                         porcentaje = 0;
-                        porcentaje = Math.Round(Convert.ToDecimal(item.Cells[9].Text.ToString()) / Convert.ToDecimal(lblTotalPrestamoQuetzales.Text.ToString()), 4);
+                        porcentaje = Math.Round(Convert.ToDecimal(item.Cells[8].Text.ToString()) / Convert.ToDecimal(lblTotalPrestamoQuetzales.Text.ToString()), 4);
                         montoFila = porcentaje * Convert.ToDecimal(txtMontoARecalcular.Text.ToString());
                         montoFila = Math.Round(montoFila, 2);
-                        item.Cells[9].Text = montoFila.ToString();
+                        item.Cells[8].Text = montoFila.ToString();
                     }
                 }
             }
@@ -802,7 +803,11 @@ namespace PrestaVende.Public
             try
             {
                 decimal totalPrestamo = 0;
-                totalPrestamo = Convert.ToDecimal(lblTotalPrestamoQuetzales.Text.ToString());
+                if (lblTotalPrestamoQuetzales.Text.ToString().Equals("") || lblTotalPrestamoQuetzales.Text.ToString().Equals("0"))
+                    totalPrestamo = 0;
+                else
+                    totalPrestamo = Convert.ToDecimal(lblTotalPrestamoQuetzales.Text.ToString());
+
                 ddlTipoPrestamo.SelectedValue = cs_interes.getIdInteres(ref error, totalPrestamo.ToString());
             }
             catch (Exception ex)
@@ -949,6 +954,22 @@ namespace PrestaVende.Public
             }
         }
 
+        private void getDataProyeccion()
+        {
+            try
+            {
+                CLASS.cs_prestamo.id_interes_proyeccion = ddlIntereses.SelectedValue;
+                CLASS.cs_prestamo.monto_proyeccion = lblTotalPrestamoQuetzales.Text;
+                CLASS.cs_prestamo.id_plan_prestamo_proyeccion = ddlTipoPrestamo.SelectedValue;
+                gvProyeccion.DataSource = cs_prestamo.getDTProyeccion(ref error);
+                gvProyeccion.DataBind();
+            }
+            catch (Exception ex)
+            {
+                showError(error + " / " + ex.ToString());
+            }
+        }
+
         protected void btnGuardarPrestamo_Click(object sender, EventArgs e)
         {
             try
@@ -1036,5 +1057,10 @@ namespace PrestaVende.Public
             aplicarRedondeo();
         }
         #endregion
+
+        protected void btnProyeccion_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
