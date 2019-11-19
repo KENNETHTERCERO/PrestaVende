@@ -775,6 +775,42 @@ namespace PrestaVende.Public
             }
         }
 
+        private void recalculoRedondeoPrestamo()
+        {
+            try
+            {
+                decimal montoRedondeo = 0, porcentaje = 0, sumaTotalPrestamo = 0, montoPorFilaConRedondeo = 0;
+                if (gvProductoElectrodomesticos.Rows.Count > 0)
+                {
+                    foreach (GridViewRow item in gvProductoElectrodomesticos.Rows)
+                    {
+                        porcentaje = 0;
+                        porcentaje = Math.Round(Convert.ToDecimal(item.Cells[5].Text.ToString()) / Convert.ToDecimal(lblTotalPrestamoQuetzales.Text.ToString()), 4);
+                        montoRedondeo = porcentaje * Convert.ToDecimal(txtRedondeo.Text.ToString());
+                        montoPorFilaConRedondeo = Convert.ToDecimal(item.Cells[5]) + Math.Round(montoRedondeo, 2);
+                        item.Cells[5].Text = montoPorFilaConRedondeo.ToString();
+                    }
+                }
+                else
+                {
+                    foreach (GridViewRow item in gvProductoJoya.Rows)
+                    {
+                        porcentaje = 0;
+                        porcentaje = Math.Round(Convert.ToDecimal(item.Cells[8].Text.ToString()) / Convert.ToDecimal(lblTotalPrestamoQuetzales.Text.ToString()), 4);
+                        montoRedondeo = porcentaje * Convert.ToDecimal(txtRedondeo.Text.ToString());
+                        montoPorFilaConRedondeo = Convert.ToDecimal(item.Cells[8]) + Math.Round(montoRedondeo, 2);
+                        item.Cells[8].Text = montoPorFilaConRedondeo.ToString();
+                    }
+                }
+                sumaTotalPrestamo = Convert.ToDecimal(lblTotalPrestamoQuetzales.Text.ToString()) + Convert.ToDecimal(txtRedondeo.Text.ToString());
+                lblTotalPrestamoQuetzales.Text = sumaTotalPrestamo.ToString();
+            }
+            catch (Exception ex)
+            {
+                showError(ex.ToString());
+            }
+        }
+
         private void aplicarRedondeo()
         {
             try
@@ -1055,7 +1091,7 @@ namespace PrestaVende.Public
 
         protected void btnRedondear_Click(object sender, EventArgs e)
         {
-            aplicarRedondeo();
+            recalculoRedondeoPrestamo();
         }
         #endregion
 
