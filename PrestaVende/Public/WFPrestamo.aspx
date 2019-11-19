@@ -377,7 +377,7 @@
                                                         <asp:DropDownList ID="ddlKilataje" runat="server" AutoPostBack="true" class="form-control" OnSelectedIndexChanged="ddlKilataje_SelectedIndexChanged"></asp:DropDownList>
                                                     </td>
                                                     <td>
-                                                        <asp:TextBox ID="txtObservaciones" runat="server" class="form-control"></asp:TextBox>
+                                                        <asp:TextBox ID="txtObservaciones" TextMode="multiline" Columns="50" Rows="5" runat="server" class="form-control"></asp:TextBox>
                                                     </td>
                                                     <td>
                                                         <asp:TextBox ID="txtRedondeo" type="number" min="0" max="10" runat="server" Width="200px" class="form-control" Visible="false"></asp:TextBox>
@@ -399,7 +399,7 @@
                                                         <asp:DropDownList ID="ddlMarca" runat="server" class="form-control"></asp:DropDownList>
                                                     </td>
                                                     <td>
-                                                        <asp:TextBox ID="txtCaracteristicas" runat="server" CssClass="form-control"></asp:TextBox>
+                                                        <asp:TextBox ID="txtCaracteristicas" runat="server" TextMode="multiline" Columns="50" Rows="5" CssClass="form-control"></asp:TextBox>
                                                     </td>
                                                 </tr>
                                                 <tr>

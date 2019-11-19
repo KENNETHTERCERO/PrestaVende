@@ -809,6 +809,7 @@ namespace PrestaVende.Public
                     totalPrestamo = Convert.ToDecimal(lblTotalPrestamoQuetzales.Text.ToString());
 
                 ddlTipoPrestamo.SelectedValue = cs_interes.getIdInteres(ref error, totalPrestamo.ToString());
+                ddlTipoPrestamo.Enabled = false;
             }
             catch (Exception ex)
             {
