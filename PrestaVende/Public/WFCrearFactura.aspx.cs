@@ -46,6 +46,7 @@ namespace PrestaVende.Public
                     {
                         txtAbonoCapital.Text = saldo_prestamo;
                         lblAbonoCapital.Text = "MONTO CANCELACION";
+                        imgBtnBuscaSubSemana.Visible = false;
                     }
                 }
             }

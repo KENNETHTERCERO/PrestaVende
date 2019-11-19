@@ -21,6 +21,8 @@ namespace PrestaVende.CLASS
 
         //private static string connectionString = @"Data Source=CINDYGAITAN;Initial Catalog=PRESTAVENDEDB;Persist Security Info=True;User ID=sa;Password='Agosto.2019'"; //Conecction Server SQL
         //private static string ConstConnectionString = @"Data Source=CINDYGAITAN;Initial Catalog=PRESTAVENDEDB;Persist Security Info=True;User ID=sa;Password='Agosto.2019'"; //Conecction Server SQL
+        private static string connectionString = @"Data Source=prestavende.com;Initial Catalog=prestavendedb;User Id=sa_prestavende;Password=Tercero#3;"; //Conecction Server SQL
+        private static string ConstConnectionString = @"Data Source=prestavende.com;Initial Catalog=prestavendedb;User Id=sa_prestavende;Password=Tercero#3;"; //Conecction Server SQL
 #else
         private static string connectionString = @"Data Source=prestavende.com;Initial Catalog=prestavendedb;User Id=sa_prestavende;Password=Tercero#3;"; //Conecction Server SQL
         private static string ConstConnectionString = @"Data Source=prestavende.com;Initial Catalog=prestavendedb;User Id=sa_prestavende;Password=Tercero#3;"; //Conecction Server SQL

@@ -22,16 +22,16 @@ namespace PrestaVende.Public {
         protected global::System.Web.UI.UpdatePanel uPanel;
         
         /// <summary>
-        /// btnBack control.
+        /// Control btnBack.
         /// </summary>
         /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnBack;
         
         /// <summary>
-        /// btnGuardarFactura control.
+        /// Control btnGuardarFactura.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
