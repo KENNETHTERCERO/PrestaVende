@@ -9,8 +9,8 @@
                     <div class="col-sm-2 sidenav">
                         <center>
                         <h2>Opciones</h2>
-                            <div class=".btn-group-vertical">
-                                <asp:Button ID="btnBack" runat="server" Width="200px" Text="Regresar" class="btn btn-default" Visible="true"/>
+                            <div class=".btn-group-vertical">                                
+                                <button id="btnBack" onclick="goBack()" style="width: 200px;" class="btn btn-default">Regresar</button>
                                 <br />
                                 <br />
                                 <br />
