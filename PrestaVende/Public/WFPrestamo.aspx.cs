@@ -787,7 +787,7 @@ namespace PrestaVende.Public
                         porcentaje = 0;
                         porcentaje = Math.Round(Convert.ToDecimal(item.Cells[5].Text.ToString()) / Convert.ToDecimal(lblTotalPrestamoQuetzales.Text.ToString()), 4);
                         montoRedondeo = porcentaje * Convert.ToDecimal(txtRedondeo.Text.ToString());
-                        montoPorFilaConRedondeo = Convert.ToDecimal(item.Cells[5]) + Math.Round(montoRedondeo, 2);
+                        montoPorFilaConRedondeo = Convert.ToDecimal(item.Cells[5].Text.ToString()) + Math.Round(montoRedondeo, 2);
                         item.Cells[5].Text = montoPorFilaConRedondeo.ToString();
                     }
                 }
@@ -798,7 +798,7 @@ namespace PrestaVende.Public
                         porcentaje = 0;
                         porcentaje = Math.Round(Convert.ToDecimal(item.Cells[8].Text.ToString()) / Convert.ToDecimal(lblTotalPrestamoQuetzales.Text.ToString()), 4);
                         montoRedondeo = porcentaje * Convert.ToDecimal(txtRedondeo.Text.ToString());
-                        montoPorFilaConRedondeo = Convert.ToDecimal(item.Cells[8]) + Math.Round(montoRedondeo, 2);
+                        montoPorFilaConRedondeo = Convert.ToDecimal(item.Cells[8].Text.ToString()) + Math.Round(montoRedondeo, 2);
                         item.Cells[8].Text = montoPorFilaConRedondeo.ToString();
                     }
                 }
