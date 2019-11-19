@@ -84,32 +84,36 @@ namespace PrestaVende.Public
 
                 }
 
-            }//finalizareporte de etiquetas en pdf
-             //    else if (Convert.ToInt32(tipo_reporte) == 3)//3 reporte de packing list en excel
-             //    {
-             //        pack = new CLASS.cs_packing_list();
-             //        DataTable packing = new DataTable("packing");
-             //        string numero_recoleccion = Request.QueryString.Get("numero_recoleccion");
-             //        packing = pack.getAllDataPackingList(ref error, numero_recoleccion);
-             //        if (packing.Rows.Count <= 0)
-             //        {
-             //            error = "Error obteniendo packing list" + error;
-             //            throw new Exception("");
-             //        }
-             //        else
-             //        {
-             //            DataTable resumenPacking = new DataTable();
-             //            Reports.rpt_packing_list document = new Reports.rpt_packing_list();
-             //            document.Load(Server.MapPath("~/Public/Vista/Reports/rpt_packing_list.rpt"));
-             //            resumenPacking = pack.getDataResumePackingList(ref error, numero_recoleccion);
-             //            document.Subreports[0].SetDataSource(resumenPacking);
-             //            document.SetDataSource(packing);
-             //            CrystalReportViewer1.ReportSource = document;
-             //            CrystalReportViewer1.DataBind();
-             //            CrystalReportViewer1.RefreshReport();
-             //            document.ExportToHttpResponse(ExportFormatType.Excel, Response, false, "Packing list de recoleccion No." + numero_recoleccion);
-             //        }
-             //    }//Finaliza reporte de packint list en excel
+            }
+            else if (Convert.ToInt32(tipo_reporte) == 3)//3 reporte de packing list en excel
+            {
+                DataTable contrato = new DataTable("estadoCuentaPrestamo");
+                string numero_prestamo = Request.QueryString.Get("numero_prestamo");
+                contrato = cs_prestamo.GetContrato(ref error, numero_prestamo);
+                if (contrato.Rows.Count <= 0)
+                {
+                    error = "Error obteniendo datos de contrato." + error;
+                    throw new Exception("");
+                }
+                else
+                {
+                    try
+                    {
+                        Reports.CRContratoGeneral prestamoGeneral = new Reports.CRContratoGeneral();
+                        prestamoGeneral.Load(Server.MapPath("~/Reports/CRContratoGeneral.rpt"));
+                        prestamoGeneral.SetDataSource(contrato);
+                        CrystalReportViewer1.ReportSource = prestamoGeneral;//document;
+                        CrystalReportViewer1.DataBind();
+                        CrystalReportViewer1.RefreshReport();
+                        prestamoGeneral.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "Estado de cuenta No." + numero_prestamo);
+                    }
+                    catch (Exception ex)
+                    {
+                        error = ex.ToString();
+                    }
+
+                }
+            }
              //    else if (Convert.ToInt32(tipo_reporte) == 4)//Reporte pedidos en pdf
              //    {
              //        pedido = new CLASS.cs_reportes_pedido();
