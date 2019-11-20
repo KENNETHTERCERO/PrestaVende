@@ -195,6 +195,17 @@
     <Content Include="DATASET\DSProyeccionPrestamo.xss">
       <DependentUpon>DSProyeccionPrestamo.xsd</DependentUpon>
     </Content>
+    <Content Include="DATASET\DtsTransaccionesCaja.xsc">
+      <DependentUpon>DtsTransaccionesCaja.xsd</DependentUpon>
+    </Content>
+    <None Include="DATASET\DtsTransaccionesCaja.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DtsTransaccionesCaja.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="DATASET\DtsTransaccionesCaja.xss">
+      <DependentUpon>DtsTransaccionesCaja.xsd</DependentUpon>
+    </Content>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -260,6 +271,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DSProyeccionPrestamo.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DATASET\DtsTransaccionesCaja.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DtsTransaccionesCaja.xsd</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
