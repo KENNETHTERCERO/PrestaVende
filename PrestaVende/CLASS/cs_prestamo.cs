@@ -490,6 +490,31 @@ namespace PrestaVende.CLASS
             }
         }
 
+        public DataTable GetDataEtiquetaPrestamo(ref string error, string numero_prestamo)
+        {
+            DataTable dtEtiqueta = new DataTable("dtEtiqueta");
+            try
+            {
+                connection.connection.Open();
+                command.Connection = connection.connection;
+                command.Parameters.Clear();
+                command.CommandText = "exec sp_imprime_etiqueta @id_sucursal, @numero_prestamo";
+                command.Parameters.AddWithValue("@numero_prestamo", numero_prestamo);
+                command.Parameters.AddWithValue("@id_sucursal", cs_usuario.id_sucursal);
+                dtEtiqueta.Load(command.ExecuteReader());
+                return dtEtiqueta;
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                return null;
+            }
+            finally
+            {
+                connection.connection.Close();
+            }
+        }
+
         public DataTable getDTProyeccion(ref string error)
         {
             DataTable dtContrato = new DataTable("dtProyeccion");

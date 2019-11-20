@@ -441,7 +441,7 @@ namespace PrestaVende.Public
                 {
                     lblTotalPrestamoQuetzales.Text = txtValor.Text;
                 }
-                getDataProyeccion();
+                getDataProyeccion("AgregarArticulo");
             }
             catch (Exception)
             {
@@ -651,6 +651,9 @@ namespace PrestaVende.Public
                     string script = "window.open('WebReport.aspx?tipo_reporte=1" + "&numero_prestamo=" + lblNumeroPrestamoNumero.Text + "');";
                     ScriptManager.RegisterClientScriptBlock(this, GetType(), "", script, true);
 
+                    string scriptEtiqueta = "window.open('WebReport.aspx?tipo_reporte=4" + "&numero_prestamo=" + lblNumeroPrestamoNumero.Text + "');";
+                    ScriptManager.RegisterClientScriptBlock(this, GetType(), "", scriptEtiqueta, true);
+
                     string scriptText = "alert('my message'); window.location='WFListadoPrestamo.aspx?id_cliente=" + lblid_cliente.Text + "'";
                     ScriptManager.RegisterStartupScript(this, this.GetType(), "alertMessage", scriptText, true);
                     //Response.Redirect("WFListadoPrestamo?id_cliente=" + lblid_cliente.Text.ToString());
@@ -768,6 +771,7 @@ namespace PrestaVende.Public
                         item.Cells[8].Text = montoFila.ToString();
                     }
                 }
+                getDataProyeccion("Recalculo");
             }
             catch (Exception ex)
             {
@@ -991,15 +995,27 @@ namespace PrestaVende.Public
             }
         }
 
-        private void getDataProyeccion()
+        private void getDataProyeccion(string boton)
         {
             try
             {
-                CLASS.cs_prestamo.id_interes_proyeccion = ddlIntereses.SelectedValue;
-                CLASS.cs_prestamo.monto_proyeccion = lblTotalPrestamoQuetzales.Text;
-                CLASS.cs_prestamo.id_plan_prestamo_proyeccion = ddlTipoPrestamo.SelectedValue;
-                gvProyeccion.DataSource = cs_prestamo.getDTProyeccion(ref error);
-                gvProyeccion.DataBind();
+                if (boton.Equals("AgregarArticulo"))
+                {
+                    CLASS.cs_prestamo.id_interes_proyeccion = ddlIntereses.SelectedValue;
+                    CLASS.cs_prestamo.monto_proyeccion = lblTotalPrestamoQuetzales.Text;
+                    CLASS.cs_prestamo.id_plan_prestamo_proyeccion = ddlTipoPrestamo.SelectedValue;
+                    gvProyeccion.DataSource = cs_prestamo.getDTProyeccion(ref error);
+                    gvProyeccion.DataBind();
+                }
+                else
+                {
+                    CLASS.cs_prestamo.id_interes_proyeccion = ddlIntereses.SelectedValue;
+                    CLASS.cs_prestamo.monto_proyeccion = txtMontoARecalcular.Text;
+                    CLASS.cs_prestamo.id_plan_prestamo_proyeccion = ddlTipoPrestamo.SelectedValue;
+                    gvProyeccion.DataSource = cs_prestamo.getDTProyeccion(ref error);
+                    gvProyeccion.DataBind();
+                }
+                
             }
             catch (Exception ex)
             {
