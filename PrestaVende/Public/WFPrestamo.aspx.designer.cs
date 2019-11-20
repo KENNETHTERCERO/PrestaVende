@@ -58,13 +58,13 @@ namespace PrestaVende.Public {
         protected global::System.Web.UI.WebControls.Panel panelProyeccion;
         
         /// <summary>
-        /// Iframe2 control.
+        /// gvProyeccion control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlIframe Iframe2;
+        protected global::System.Web.UI.WebControls.GridView gvProyeccion;
         
         /// <summary>
         /// btnCancelProyeccion control.

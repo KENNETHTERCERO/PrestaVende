@@ -9,6 +9,7 @@ namespace PrestaVende.CLASS
 {
     public class cs_prestamo
     {
+        public static string id_interes_proyeccion = "", monto_proyeccion = "", id_plan_prestamo_proyeccion = "";
         cs_connection connection = new cs_connection();
         SqlCommand command = new SqlCommand();
 
@@ -18,7 +19,7 @@ namespace PrestaVende.CLASS
             {
                 string numero_prestamo = "", monto = "";
                 int id_prestamo_encabezado = 0;
-               
+
                 connection.connection.Open();
                 command.Connection = connection.connection;
                 command.Parameters.Clear();
@@ -93,33 +94,33 @@ namespace PrestaVende.CLASS
                 command.Parameters.Clear();
                 command.CommandText = "INSERT INTO tbl_prestamo_encabezado (id_sucursal, id_cliente, numero_prestamo, total_prestamo, fecha_creacion_prestamo, estado_prestamo, fecha_proximo_pago, saldo_prestamo, usuario, id_plan_prestamo, id_interes, id_casilla, fecha_ultimo_pago, fecha_modificacion_prestamo, avaluo_original) " +
                                             "VALUES( " +
-                                            "@id_sucursal_enc,         "+  
-                                            "@id_cliente,              "+
+                                            "@id_sucursal_enc,         " +
+                                            "@id_cliente,              " +
                                             "@numero_prestamo,         " +
                                             "@total_prestamo,          " +
-                                            "GETDATE(),                "+
-                                            "@estado_prestamo,         "+
-                                            "CAST(@fecha_proximo_pago AS date),      "+
-                                            "@saldo_prestamo,          "+
-                                            "@usuario,                 "+
-                                            "@id_plan_prestamo,        "+
-                                            "@id_interes,              "+
-                                            "@id_casilla, "+
+                                            "GETDATE(),                " +
+                                            "@estado_prestamo,         " +
+                                            "CAST(@fecha_proximo_pago AS date),      " +
+                                            "@saldo_prestamo,          " +
+                                            "@usuario,                 " +
+                                            "@id_plan_prestamo,        " +
+                                            "@id_interes,              " +
+                                            "@id_casilla, " +
                                             "GETDATE()," +
                                             "GETDATE(), " +
                                             "@avaluo_original )";
-                command.Parameters.AddWithValue("@id_sucursal_enc",     cs_usuario.id_sucursal);
-                command.Parameters.AddWithValue("@numero_prestamo",     numero_prestamo);
-                command.Parameters.AddWithValue("@id_cliente",          datosEnc[0]);
-                command.Parameters.AddWithValue("@total_prestamo",      datosEnc[1]);
-                command.Parameters.AddWithValue("@estado_prestamo",     datosEnc[2]);
+                command.Parameters.AddWithValue("@id_sucursal_enc", cs_usuario.id_sucursal);
+                command.Parameters.AddWithValue("@numero_prestamo", numero_prestamo);
+                command.Parameters.AddWithValue("@id_cliente", datosEnc[0]);
+                command.Parameters.AddWithValue("@total_prestamo", datosEnc[1]);
+                command.Parameters.AddWithValue("@estado_prestamo", datosEnc[2]);
                 command.Parameters.AddWithValue("@fecha_proximo_pago", fecha_modificada);
-                command.Parameters.AddWithValue("@saldo_prestamo",      datosEnc[4]);
-                command.Parameters.AddWithValue("@usuario",             datosEnc[5]);
-                command.Parameters.AddWithValue("@id_plan_prestamo",    datosEnc[6]);
-                command.Parameters.AddWithValue("@id_interes",          datosEnc[7]);
-                command.Parameters.AddWithValue("@id_casilla",          datosEnc[8]);
-                command.Parameters.AddWithValue("@avaluo_original",     datosEnc[9]);
+                command.Parameters.AddWithValue("@saldo_prestamo", datosEnc[4]);
+                command.Parameters.AddWithValue("@usuario", datosEnc[5]);
+                command.Parameters.AddWithValue("@id_plan_prestamo", datosEnc[6]);
+                command.Parameters.AddWithValue("@id_interes", datosEnc[7]);
+                command.Parameters.AddWithValue("@id_casilla", datosEnc[8]);
+                command.Parameters.AddWithValue("@avaluo_original", datosEnc[9]);
                 insert = Convert.ToInt32(command.ExecuteNonQuery());
                 if (insert > 0)
                 {
@@ -178,10 +179,10 @@ namespace PrestaVende.CLASS
                 int insert = 0;
                 command.CommandText = "INSERT INTO tbl_transaccion (id_tipo_transaccion, id_caja, monto, numero_prestamo, estado_transaccion, fecha_transaccion, usuario, movimiento_saldo, id_sucursal) " +
                                                                 "VALUES(7, @id_caja, @monto, @numero_prestamo_transaccion, 1, GETDATE(), @usuario_transaccion, (SELECT saldo - @monto FROM tbl_caja WHERE id_caja = @id_caja), @id_sucursal_transaccion)";
-                command.Parameters.AddWithValue("@id_caja",         cs_usuario.id_caja);
-                command.Parameters.AddWithValue("@monto",           monto);
+                command.Parameters.AddWithValue("@id_caja", cs_usuario.id_caja);
+                command.Parameters.AddWithValue("@monto", monto);
                 command.Parameters.AddWithValue("@numero_prestamo_transaccion", numero_prestamo);
-                command.Parameters.AddWithValue("@usuario_transaccion",         cs_usuario.usuario);
+                command.Parameters.AddWithValue("@usuario_transaccion", cs_usuario.usuario);
                 command.Parameters.AddWithValue("@id_sucursal_transaccion", cs_usuario.id_sucursal);
                 insert = command.ExecuteNonQuery();
                 if (insert > 0)
@@ -488,5 +489,32 @@ namespace PrestaVende.CLASS
                 connection.connection.Close();
             }
         }
+
+        public DataTable getDTProyeccion(ref string error)
+        {
+            DataTable dtContrato = new DataTable("dtProyeccion");
+            try
+            {
+                connection.connection.Open();
+                command.Connection = connection.connection;
+                command.Parameters.Clear();
+                command.CommandText = "exec SP_proyeccion_intereses @id_interes, @monto, @id_plan_prestamo";
+                command.Parameters.AddWithValue("@id_interes", cs_prestamo.id_interes_proyeccion);
+                command.Parameters.AddWithValue("@monto", cs_prestamo.monto_proyeccion);
+                command.Parameters.AddWithValue("@id_plan_prestamo", cs_prestamo.id_plan_prestamo_proyeccion);
+                dtContrato.Load(command.ExecuteReader());
+                return dtContrato;
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                return null;
+            }
+            finally
+            {
+                connection.connection.Close();
+            }
+        }
+
     }
 }

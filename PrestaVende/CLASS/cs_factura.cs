@@ -203,7 +203,7 @@ namespace PrestaVende.CLASS
                             }
                             else
                                 throw new Exception("No se pudo actualizar el saldo de la caja.");                            
-                        }
+                        } 
                         else
                             throw new Exception("No se pudo insertar transaccion de la factura.");
                     }
