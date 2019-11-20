@@ -26,7 +26,7 @@ namespace PrestaVende.CLASS
                                        + " where a.id_sucursal = @id_sucursal "
                                        + " and a.estado_prestamo in (1,4)";
                 command.Parameters.AddWithValue("@id_sucursal", CLASS.cs_usuario.id_sucursal);
-                Liquidacion.Load(command.ExecuteReader());
+                Liquidacion.Load(command.ExecuteReader()); 
                 return Liquidacion;
             }
             catch (Exception ex)
