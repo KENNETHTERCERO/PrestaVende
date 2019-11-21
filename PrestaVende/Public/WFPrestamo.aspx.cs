@@ -626,8 +626,11 @@ namespace PrestaVende.Public
                     string script = "window.open('WebReport.aspx?tipo_reporte=1" + "&numero_prestamo=" + lblNumeroPrestamoNumero.Text + "');";
                     ScriptManager.RegisterClientScriptBlock(this, GetType(), "", script, true);
 
-                    string scriptText = "alert('my message'); window.location='WFListadoPrestamo.aspx?id_cliente=" + lblid_cliente.Text + "'";
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alertMessage", scriptText, true);
+                    //string scriptEtiqueta = "window.open('WebReport.aspx?tipo_reporte=4" + "&numero_prestamo=" + lblNumeroPrestamoNumero.Text + "');";
+                    //ScriptManager.RegisterClientScriptBlock(this, GetType(), "", scriptEtiqueta, true);
+
+                    //string scriptText = "alert('my message'); window.location='WFListadoPrestamo.aspx?id_cliente=" + lblid_cliente.Text + "'";
+                    //ScriptManager.RegisterStartupScript(this, this.GetType(), "alertMessage", scriptText, true);
                     //Response.Redirect("WFListadoPrestamo?id_cliente=" + lblid_cliente.Text.ToString());
                 }
                 else
@@ -849,7 +852,7 @@ namespace PrestaVende.Public
                     totalPrestamo = Convert.ToDecimal(lblTotalPrestamoQuetzales.Text.ToString());
 
                 ddlTipoPrestamo.SelectedValue = cs_interes.getIdInteres(ref error, totalPrestamo.ToString());
-                ddlTipoPrestamo.Enabled = false;
+                //ddlTipoPrestamo.Enabled = false;
             }
             catch (Exception ex)
             {
@@ -932,6 +935,7 @@ namespace PrestaVende.Public
 
                 txtPesoConDescuento.Text = Math.Round(Convert.ToDecimal(txtPeso.Text.ToString()) - Convert.ToDecimal(txtPesoDescuento.Text.ToString()), 2).ToString();
                 txtPesoDescuento.Focus();
+                getPrecioProducto();
             }
             catch (Exception ex)
             {
@@ -955,6 +959,7 @@ namespace PrestaVende.Public
 
                 txtPesoConDescuento.Text = Math.Round(Convert.ToDecimal(txtPeso.Text.ToString()) - Convert.ToDecimal(txtPesoDescuento.Text.ToString()), 2).ToString();
                 ddlKilataje.Focus();
+                getPrecioProducto();
             }
             catch (Exception ex)
             {
@@ -965,6 +970,7 @@ namespace PrestaVende.Public
         protected void ddlKilataje_SelectedIndexChanged(object sender, EventArgs e)
         {
             getPrecioProducto();
+            txtObservaciones.Focus();
         }
 
         protected void btnAgregar_Click(object sender, EventArgs e)

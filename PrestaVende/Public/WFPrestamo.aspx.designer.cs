@@ -463,6 +463,15 @@ namespace PrestaVende.Public {
         protected global::System.Web.UI.WebControls.Label lblRedondeo;
         
         /// <summary>
+        /// btnRedondear control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnRedondear;
+        
+        /// <summary>
         /// ddlKilataje control.
         /// </summary>
         /// <remarks>
@@ -488,15 +497,6 @@ namespace PrestaVende.Public {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtRedondeo;
-        
-        /// <summary>
-        /// btnRedondear control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnRedondear;
         
         /// <summary>
         /// lblMarca control.
