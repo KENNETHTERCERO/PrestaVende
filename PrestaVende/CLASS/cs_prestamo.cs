@@ -416,12 +416,20 @@ namespace PrestaVende.CLASS
                 command.Parameters.Clear();
                 command.CommandText = "select pre.id_prestamo_encabezado,pre.numero_prestamo,suc.sucursal,pre.total_prestamo,CONVERT(VARCHAR(10), pre.fecha_creacion_prestamo, 103) AS fecha_creacion_prestamo, " +
                                             "CONVERT(VARCHAR(10), pre.fecha_proximo_pago, 103) AS fecha_proximo_pago,pre.saldo_prestamo,pla.plan_prestamo, " +
-                                            "cli.primer_nombre + ' ' + cli.segundo_nombre + ' ' + cli.primer_apellido + ' ' + cli.segundo_apellido AS Cliente " +
+                                            "(select top 1 cat.categoria                            " +
+                                                "From tbl_prestamo_encabezado AS enc                                                                " +
+                                                "INNER JOIN tbl_prestamo_detalle AS det ON det.id_prestamo_encabezado = enc.id_prestamo_encabezado  " +
+                                                "INNER JOIN tbl_producto AS pro ON pro.id_producto = det.id_producto                                " +
+                                                "INNER JOIN tbl_subcategoria AS sub ON sub.id_sub_categoria = pro.id_sub_categoria                  " +
+                                                "INNER JOIN tbl_categoria AS cat ON cat.id_categoria = sub.id_sub_categoria                         " +
+                                                "WHERE enc.numero_prestamo = pre.numero_prestamo AND enc.id_sucursal = pre.id_sucursal) AS garantia " +
                                             "from tbl_prestamo_encabezado pre " +
                                             "inner join tbl_sucursal suc on suc.id_sucursal = pre.id_sucursal " +
                                             "inner join tbl_plan_prestamo pla on pla.id_plan_prestamo = pre.id_plan_prestamo " +
                                             "inner join tbl_cliente cli on cli.id_cliente = pre.id_cliente " +
-                                            "where pre.estado_prestamo = 1 and pre.id_cliente = " + id_cliente;
+                                            "where pre.estado_prestamo = 1 " +
+                                            "AND pre.id_sucursal = " + cs_usuario.id_sucursal + " " +
+                                            "and pre.id_cliente = " + id_cliente;
                 dtReturnPrestamos.Load(command.ExecuteReader());
             }
             catch (Exception ex)
