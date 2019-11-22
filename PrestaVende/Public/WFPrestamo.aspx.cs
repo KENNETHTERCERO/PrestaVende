@@ -624,14 +624,16 @@ namespace PrestaVende.Public
                     lblNumeroPrestamoNumero.Text = numero_prestamo_guardado;
                     showSuccess("Se creo prestamo correctamente.");
                     string script = "window.open('WebReport.aspx?tipo_reporte=1" + "&numero_prestamo=" + lblNumeroPrestamoNumero.Text + "');";
-                    ScriptManager.RegisterClientScriptBlock(this, GetType(), "", script, true);
+                    ScriptManager.RegisterClientScriptBlock(this, GetType(), "OpenWindow", script, true);
 
-                    //string scriptEtiqueta = "window.open('WebReport.aspx?tipo_reporte=4" + "&numero_prestamo=" + lblNumeroPrestamoNumero.Text + "');";
-                    //ScriptManager.RegisterClientScriptBlock(this, GetType(), "", scriptEtiqueta, true);
+                    string scriptEstadoCuenta = "window.open('WebReport.aspx?tipo_reporte=3" + "&numero_prestamo=" + lblNumeroPrestamoNumero.Text + "');";
+                    ScriptManager.RegisterClientScriptBlock(this, GetType(), "NewWindow", scriptEstadoCuenta, true);
 
-                    //string scriptText = "alert('my message'); window.location='WFListadoPrestamo.aspx?id_cliente=" + lblid_cliente.Text + "'";
-                    //ScriptManager.RegisterStartupScript(this, this.GetType(), "alertMessage", scriptText, true);
-                    //Response.Redirect("WFListadoPrestamo?id_cliente=" + lblid_cliente.Text.ToString());
+                    string scriptEtiqueta = "window.open('WebReport.aspx?tipo_reporte=4" + "&numero_prestamo=" + lblNumeroPrestamoNumero.Text + "');";
+                    ScriptManager.RegisterClientScriptBlock(this, GetType(), "OpenWindowEtiqueta", scriptEtiqueta, true);
+
+                    string scriptText = "alert('my message'); window.location='WFListadoPrestamo.aspx?id_cliente=" + lblid_cliente.Text + "'";
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alertMessage", scriptText, true);
                 }
                 else
                     showError(error);
@@ -652,14 +654,16 @@ namespace PrestaVende.Public
                     lblNumeroPrestamoNumero.Text = numero_prestamo_guardado;
                     showSuccess("Se creo prestamo correctamente.");
                     string script = "window.open('WebReport.aspx?tipo_reporte=1" + "&numero_prestamo=" + lblNumeroPrestamoNumero.Text + "');";
-                    ScriptManager.RegisterClientScriptBlock(this, GetType(), "", script, true);
+                    ScriptManager.RegisterClientScriptBlock(this, GetType(), "OpenWindow", script, true);
+
+                    string scriptEstadoCuenta = "window.open('WebReport.aspx?tipo_reporte=3" + "&numero_prestamo=" + lblNumeroPrestamoNumero.Text + "');";
+                    ScriptManager.RegisterClientScriptBlock(this, GetType(), "NewWindow", scriptEstadoCuenta, true);
 
                     string scriptEtiqueta = "window.open('WebReport.aspx?tipo_reporte=4" + "&numero_prestamo=" + lblNumeroPrestamoNumero.Text + "');";
-                    ScriptManager.RegisterClientScriptBlock(this, GetType(), "", scriptEtiqueta, true);
+                    ScriptManager.RegisterClientScriptBlock(this, GetType(), "OpenWindowEtiqueta", scriptEtiqueta, true);
 
                     string scriptText = "alert('my message'); window.location='WFListadoPrestamo.aspx?id_cliente=" + lblid_cliente.Text + "'";
                     ScriptManager.RegisterStartupScript(this, this.GetType(), "alertMessage", scriptText, true);
-                    //Response.Redirect("WFListadoPrestamo?id_cliente=" + lblid_cliente.Text.ToString());
                 }
                 else
                     showError(error);

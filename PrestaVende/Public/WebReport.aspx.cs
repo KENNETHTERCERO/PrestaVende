@@ -87,10 +87,10 @@ namespace PrestaVende.Public
             }
             else if (Convert.ToInt32(tipo_reporte) == 3)//3 estado de cuenta prestamo
             {
-                DataTable contrato = new DataTable("estadoCuentaPrestamo");
+                DataTable estadoCuenta = new DataTable("estadoCuentaPrestamo");
                 string numero_prestamo = Request.QueryString.Get("numero_prestamo");
-                contrato = cs_prestamo.GetContrato(ref error, numero_prestamo);
-                if (contrato.Rows.Count <= 0)
+                estadoCuenta = cs_prestamo.GetEstadoCuentaPrestamoEncabezado(ref error, numero_prestamo);
+                if (estadoCuenta.Rows.Count <= 0)
                 {
                     error = "Error obteniendo datos de contrato." + error;
                     throw new Exception("");
@@ -99,13 +99,21 @@ namespace PrestaVende.Public
                 {
                     try
                     {
-                        Reports.CRContratoGeneral prestamoGeneral = new Reports.CRContratoGeneral();
-                        prestamoGeneral.Load(Server.MapPath("~/Reports/CRContratoGeneral.rpt"));
-                        prestamoGeneral.SetDataSource(contrato);
-                        CrystalReportViewer1.ReportSource = prestamoGeneral;//document;
+                        DataTable estadoCuentaDetalle = new DataTable("estadoCuentaPrestamoDetalle");
+                        estadoCuenta = cs_prestamo.GetEstadoCuentaPrestamoDetalle(ref error, numero_prestamo);
+                        DataTable proyeccion = new DataTable("dtProyeccion");
+                        proyeccion = cs_prestamo.getDTProyeccion(ref error);
+
+                        Reports.CREstadoCuentaPrestamo EstadoCuentaPrestamo = new Reports.CREstadoCuentaPrestamo();
+
+                        EstadoCuentaPrestamo.Load(Server.MapPath("~/Reports/CREstadoCuentaPrestamo.rpt"));
+                        EstadoCuentaPrestamo.Subreports[0].SetDataSource(estadoCuentaDetalle);
+                        EstadoCuentaPrestamo.Subreports[1].SetDataSource(proyeccion);
+                        EstadoCuentaPrestamo.SetDataSource(estadoCuenta);
+                        CrystalReportViewer1.ReportSource = EstadoCuentaPrestamo;//document;
                         CrystalReportViewer1.DataBind();
                         CrystalReportViewer1.RefreshReport();
-                        prestamoGeneral.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "Estado de cuenta No." + numero_prestamo);
+                        EstadoCuentaPrestamo.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "Estado de cuenta No." + numero_prestamo);
                     }
                     catch (Exception ex)
                     {

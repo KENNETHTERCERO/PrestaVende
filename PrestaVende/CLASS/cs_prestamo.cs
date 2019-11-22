@@ -541,5 +541,54 @@ namespace PrestaVende.CLASS
             }
         }
 
+        public DataTable GetEstadoCuentaPrestamoEncabezado(ref string error, string numero_prestamo)
+        {
+            DataTable dtEstadoCuentaEncabezado = new DataTable("EstadoCuentaEncabezado");
+            try
+            {
+                connection.connection.Open();
+                command.Connection = connection.connection;
+                command.Parameters.Clear();
+                command.CommandText = "exec sp_estado_cuenta_prestamo_encabezado @id_sucursal, @numero_prestamo";
+                command.Parameters.AddWithValue("@numero_prestamo", numero_prestamo);
+                command.Parameters.AddWithValue("@id_sucursal", cs_usuario.id_sucursal);
+                dtEstadoCuentaEncabezado.Load(command.ExecuteReader());
+                return dtEstadoCuentaEncabezado;
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                return null;
+            }
+            finally
+            {
+                connection.connection.Close();
+            }
+        }
+
+        public DataTable GetEstadoCuentaPrestamoDetalle(ref string error, string numero_prestamo)
+        {
+            DataTable dtEstadoCuentaDetalle = new DataTable("EstadoCuentaDetalle");
+            try
+            {
+                connection.connection.Open();
+                command.Connection = connection.connection;
+                command.Parameters.Clear();
+                command.CommandText = "exec sp_estado_cuenta_prestamo_detalle @id_sucursal, @numero_prestamo";
+                command.Parameters.AddWithValue("@numero_prestamo", numero_prestamo);
+                command.Parameters.AddWithValue("@id_sucursal", cs_usuario.id_sucursal);
+                dtEstadoCuentaDetalle.Load(command.ExecuteReader());
+                return dtEstadoCuentaDetalle;
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                return null;
+            }
+            finally
+            {
+                connection.connection.Close();
+            }
+        }
     }
 }
