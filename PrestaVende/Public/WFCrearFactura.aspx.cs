@@ -28,8 +28,9 @@ namespace PrestaVende.Public
                 string id_prestamo = Request.QueryString["id_prestamo"];
                 foreach (DataRow item in cs_prestamo.ObtenerPrestamoEspecifico(ref error, id_prestamo).Rows)
                 {
-                    lblnombre_prestamo.Text = item[1].ToString() + " - Cliente: " + item[2].ToString() + " " + item[3].ToString() + " " + item[4].ToString() + " " + item[5].ToString();
+                    //lblnombre_prestamo.Text = item[1].ToString() + " - Cliente: " + item[2].ToString() + " " + item[3].ToString() + " " + item[4].ToString() + " " + item[5].ToString();
                     lblNombrePrestamo.Text = item[1].ToString();
+                    lblCodigoCliente.Text = item[1].ToString();
                     lblNombreCliente.Text = item[2].ToString() + " " + item[3].ToString() + " " + item[4].ToString() + " " + item[5].ToString();
                     lblValorInteres.Text = item[8].ToString() + "%";
                     id_cliente = item[6].ToString();
