@@ -154,9 +154,6 @@
     <Content Include="DATASET\DSFacturaIntereses.xsc">
       <DependentUpon>DSFacturaIntereses.xsd</DependentUpon>
     </Content>
-    <Content Include="DATASET\DSEstadoCuentaPrestamo.xsc">
-      <DependentUpon>DSEstadoCuentaPrestamo.xsd</DependentUpon>
-    </Content>
     <None Include="DATASET\DSEstadoCuentaPrestamo.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>DSEstadoCuentaPrestamo.Designer.cs</LastGenOutput>
@@ -176,6 +173,17 @@
     <Content Include="DATASET\DSEstadoCuentaPrestamoDetalleArticulos.xss">
       <DependentUpon>DSEstadoCuentaPrestamoDetalleArticulos.xsd</DependentUpon>
     </Content>
+    <Content Include="DATASET\DSEtiquetaPrestamo.xsc">
+      <DependentUpon>DSEtiquetaPrestamo.xsd</DependentUpon>
+    </Content>
+    <None Include="DATASET\DSEtiquetaPrestamo.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DSEtiquetaPrestamo.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="DATASET\DSEtiquetaPrestamo.xss">
+      <DependentUpon>DSEtiquetaPrestamo.xsd</DependentUpon>
+    </Content>
     <None Include="DATASET\DSFacturaIntereses.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
@@ -194,6 +202,17 @@
     </None>
     <Content Include="DATASET\DSProyeccionPrestamo.xss">
       <DependentUpon>DSProyeccionPrestamo.xsd</DependentUpon>
+    </Content>
+    <Content Include="DATASET\DtsTransaccionesCaja.xsc">
+      <DependentUpon>DtsTransaccionesCaja.xsd</DependentUpon>
+    </Content>
+    <None Include="DATASET\DtsTransaccionesCaja.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DtsTransaccionesCaja.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="DATASET\DtsTransaccionesCaja.xss">
+      <DependentUpon>DtsTransaccionesCaja.xsd</DependentUpon>
     </Content>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -241,6 +260,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DSContratoPrestamo.xsd</DependentUpon>
     </Compile>
+    <Compile Include="DATASET\DSEstadoCuentaPrestamo.cs">
+      <DependentUpon>DSEstadoCuentaPrestamo.xsd</DependentUpon>
+    </Compile>
     <Compile Include="DATASET\DSEstadoCuentaPrestamo.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -251,6 +273,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DSEstadoCuentaPrestamoDetalleArticulos.xsd</DependentUpon>
     </Compile>
+    <Compile Include="DATASET\DSEtiquetaPrestamo.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DSEtiquetaPrestamo.xsd</DependentUpon>
+    </Compile>
     <Compile Include="DATASET\DSFacturaIntereses.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -260,6 +287,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DSProyeccionPrestamo.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DATASET\DtsTransaccionesCaja.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DtsTransaccionesCaja.xsd</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -458,6 +490,12 @@
       <DependentUpon>CREstadoCuentaPrestamoDetalleArticulos.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Reports\CREtiquetaPrestamo.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CREtiquetaPrestamo.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Reports\CRFacturaIntereses.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -497,6 +535,10 @@
     <EmbeddedResource Include="Reports\CREstadoCuentaPrestamoDetalleArticulos.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>CREstadoCuentaPrestamoDetalleArticulos.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\CREtiquetaPrestamo.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>CREtiquetaPrestamo.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\CRFacturaIntereses.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

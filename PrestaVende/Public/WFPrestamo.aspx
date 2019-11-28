@@ -188,7 +188,7 @@
                                 <br />
                                 <br />
                                 <br />
-                                <asp:Button ID="btnVerEstadoDeCuenta" runat="server" Width="200px" Text="Cancelar" CssClass="btn btn-warning" Visible="true" />
+                                <asp:Button ID="btnVerEstadoDeCuenta" runat="server" Width="200px" Text="Cancelar" CssClass="btn btn-warning" Visible="False" />
                                 <br />
                                 <br />
                                 <br />
@@ -369,7 +369,10 @@
                                                         <asp:Label ID="lblObservaciones" runat="server" Text="OBSERVACIONES"></asp:Label>
                                                     </td>
                                                     <td>
-                                                        <asp:Label ID="lblRedondeo" runat="server" Text="REDONDEO" Visible="false"></asp:Label>
+                                                        <asp:Label ID="lblRedondeo" runat="server" Text="" Visible="false"></asp:Label>
+                                                    </td>
+                                                    <td>
+                                                        <asp:Button ID="btnRedondear" runat="server" CssClass="btn btn-warning" Text="REDONDEAR" Visible="false" OnClick="btnRedondear_Click"/>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -380,11 +383,12 @@
                                                         <asp:TextBox ID="txtObservaciones" TextMode="multiline" Columns="50" Rows="5" runat="server" class="form-control"></asp:TextBox>
                                                     </td>
                                                     <td>
-                                                        <asp:TextBox ID="txtRedondeo" type="number" min="0" max="10" runat="server" Width="200px" class="form-control" Visible="false"></asp:TextBox>
+
                                                     </td>
                                                     <td>
-                                                        <asp:Button ID="btnRedondear" runat="server" CssClass="btn btn-warning" Text="REDONDEAR" Visible="false" OnClick="btnRedondear_Click"/>
+                                                        <asp:TextBox ID="txtRedondeo" type="number" min="0" max="10" runat="server" Width="200px" class="form-control" Visible="false"></asp:TextBox>
                                                     </td>
+                                                    
                                                 </tr>
                                                 <tr>
                                                     <td>
