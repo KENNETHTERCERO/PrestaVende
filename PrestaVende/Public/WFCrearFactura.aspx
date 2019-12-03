@@ -75,11 +75,11 @@
                                             <table>
                                                 <tr>
                                                     <td colspan="2">
-                                                        <asp:Label ID="lblCliente" runat="server" Text="CLIENTE"></asp:Label>
+                                                        <asp:Label ID="lblCliente" runat="server" Text="CLIENTE" Font-Bold="true"></asp:Label>
                                                     </td>
-                                                    <td></td>
+                                                    <td style="width:40px"></td>
                                                     <td>
-                                                        <asp:Label ID="lblIdPrestamo" runat="server" Text="PRESTAMO"></asp:Label>
+                                                        <asp:Label ID="lblIdPrestamo" runat="server" Text="PRESTAMO"  Font-Bold="true"></asp:Label>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -99,36 +99,36 @@
                                                     <td></td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="4"></td>
+                                                    <td colspan="4" style="height:20px;"></td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="4"></td>
+                                                    <td colspan="4" style="height:20px;"></td>
                                                 </tr>
                                                 <tr>
-                                                    <td>
-                                                        <asp:Label ID="lblSerie" runat="server">SERIE</asp:Label>
+                                                    <td style="padding-right:5px;">
+                                                        <asp:Label ID="lblSerie" runat="server" Font-Bold="true">SERIE</asp:Label>
                                                     </td>                       
                                                     <td>
                                                         <asp:DropDownList ID="ddlSerie" runat="server" CssClass="form-control" OnSelectedIndexChanged="ddlSerie_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
                                                     </td>  
                                                     <td></td>                           
-                                                    <td>
-                                                        <asp:Label ID="lblNumeroFactura" runat="server" >NUMERO FACTURA</asp:Label>
+                                                    <td style="padding-right:5px;">
+                                                        <asp:Label ID="lblNumeroFactura" runat="server" Font-Bold="true">NUMERO FACTURA</asp:Label>
                                                     </td>
                                                     <td>
                                                         <big><asp:Label ID="lblNumeroPrestamoNumeroFactura" runat="server" Text="0"></asp:Label></big>
                                                     </td>
                                                 </tr>
                                                 <tr>                                                    
-                                                    <td>
-                                                        <asp:Label ID="lblTipoTransaccion" runat="server" Text="TIPO TRANSACCION"></asp:Label>
+                                                    <td style="padding-right:5px;">
+                                                        <asp:Label ID="lblTipoTransaccion" runat="server" Text="TIPO TRANSACCION" Font-Bold="true"></asp:Label>
                                                     </td>                                                    
                                                     <td>
                                                         <big><asp:Label ID="lblTransaccion" runat="server" Text="0"></asp:Label></big>
                                                     </td>       
                                                     <td></td>  
-                                                    <td>
-                                                        <asp:Label ID="lblSubTotal" runat="server" Text="SUB TOTAL"></asp:Label>
+                                                    <td style="padding-right:5px;">
+                                                        <asp:Label ID="lblSubTotal" runat="server" Text="SUB TOTAL" Font-Bold="true"></asp:Label>
                                                     </td>     
                                                     <td>
                                                         <big><asp:Label ID="lblSubTotalFactura" runat="server" Text="0"></asp:Label></big>
@@ -136,30 +136,30 @@
                                                 </tr>
                                                 
                                                 <tr>                                                                                                      
-                                                    <td>
-                                                        <asp:Label ID="lblIVA" runat="server" Text="IVA"></asp:Label>
+                                                    <td style="padding-right:5px;">
+                                                        <asp:Label ID="lblIVA" runat="server" Text="IVA" Font-Bold="true"></asp:Label>
                                                     </td>      
                                                     <td>
                                                         <big><asp:Label ID="lblIVAFactura" runat="server" Text="0"></asp:Label></big>
                                                     </td>
                                                     <td></td>                                              
-                                                    <td>
-                                                        <asp:Label ID="lblTotalFactura" runat="server" Text="TOTAL FACTURA"></asp:Label>
+                                                    <td style="padding-right:5px;">
+                                                        <asp:Label ID="lblTotalFactura" runat="server" Text="TOTAL FACTURA" Font-Bold="true"></asp:Label>
                                                     </td>
                                                     <td>
                                                         <big><asp:Label ID="lblTotalFacturaV" runat="server" Text="0"></asp:Label></big>
                                                     </td> 
                                                 </tr>
                                                 <tr>     
-                                                    <td>
-                                                        <big><asp:Label ID="lblInteres" runat="server" Text="INTERES"></asp:Label></big>
+                                                    <td style="padding-right:5px;">
+                                                        <big><asp:Label ID="lblInteres" runat="server" Text="INTERES" Font-Bold="true"></asp:Label></big>
                                                     </td>
                                                     <td>
                                                         <big><asp:Label ID="lblValorInteres" runat="server" Text="0"></asp:Label></big>
                                                     </td>
                                                     <td></td>
-                                                    <td>
-                                                        <big><asp:Label ID="lblSemanas" runat="server" Text="SEMANAS"></asp:Label></big>
+                                                    <td style="padding-right:5px;">
+                                                        <big><asp:Label ID="lblSemanas" runat="server" Text="SEMANAS" Font-Bold="true"></asp:Label></big>
                                                     </td>
                                                     <td>
                                                         <asp:DropDownList ID="ddlSemanas" runat="server" CssClass="form-control" AutoPostBack="true" Visible="false" OnSelectedIndexChanged="ddlSemanas_SelectedIndexChanged"></asp:DropDownList>
