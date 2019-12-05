@@ -75,6 +75,51 @@ namespace PrestaVende.CLASS
             return dtReturnFacturas;
         }
 
+        public DataTable ObtenerFacturaRecibo(ref string error, string id_factura, string id_sucursal)
+        {
+            DataTable dtReturnFacturas = new DataTable("dtFacturas");
+            DataSet ds = new DataSet();
+
+            try
+            {
+                connection.connection.Open();
+                command.Connection = connection.connection;
+                command.Parameters.Clear();
+
+                SqlDataAdapter adapter;
+                SqlParameter param;
+                SqlParameter paramS;
+
+                command.CommandType = CommandType.StoredProcedure;
+                command.CommandText = "sp_ConsultaImpresionRecibo";
+
+                param = new SqlParameter("@IdFactura", id_factura);                
+                param.Direction = ParameterDirection.Input;
+                param.DbType = DbType.Int16;
+                command.Parameters.Add(param);
+
+                paramS = new SqlParameter("@IdSucursal", id_sucursal);
+                paramS.Direction = ParameterDirection.Input;
+                paramS.DbType =  DbType.Int16;                
+                command.Parameters.Add(paramS);
+
+                adapter = new SqlDataAdapter(command);
+                adapter.Fill(ds);
+
+                dtReturnFacturas = ds.Tables[0];
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                return null;
+            }
+            finally
+            {
+                connection.connection.Close();
+            }
+            return dtReturnFacturas;
+        }
+
         public DataSet ObtenerDetalleFacturas(ref string error, string id_prestamo)
         {
             //DataTable dtReturnFacturas = new DataTable("dtDetalleFacturas");

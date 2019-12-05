@@ -151,6 +151,38 @@ namespace PrestaVende.Public
 
                 }
             }
+            else if (Convert.ToInt32(tipo_reporte) == 5)//4 etiqueta prestamo
+            {
+                DataTable factura = new DataTable("DtDatos");
+                string id_factura = Request.QueryString.Get("id_factura");
+                string id_sucursal = Request.QueryString.Get("id_sucursal");
+                factura = cs_factura.ObtenerFacturaRecibo(ref error, id_factura, id_sucursal);
+
+                if (factura.Rows.Count <= 0)
+                {
+                    error = "Error obteniendo datos de contrato." + error;
+                    throw new Exception("");
+                }
+                else
+                {
+                    try
+                    {
+                        Reports.CRFacturaRecibo ReporteFactura = new Reports.CRFacturaRecibo();
+
+                        ReporteFactura.Load(Server.MapPath("~/Reports/CRFacturaRecibo.rpt"));
+                        ReporteFactura.SetDataSource(factura);
+                        CrystalReportViewer1.ReportSource = ReporteFactura;//document;
+                        CrystalReportViewer1.DataBind();
+                        CrystalReportViewer1.RefreshReport();
+                        ReporteFactura.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "");
+                    }
+                    catch (Exception ex)
+                    {
+                        error = ex.ToString();
+                    }
+
+                }
+            }
         }
     }
 }
