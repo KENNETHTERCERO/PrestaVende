@@ -250,6 +250,7 @@
     <Compile Include="CLASS\cs_manejo_pais.cs" />
     <Compile Include="CLASS\cs_prestamo.cs" />
     <Compile Include="CLASS\cs_profesion.cs" />
+    <Compile Include="CLASS\cs_recepcion_liquidacion.cs" />
     <Compile Include="CLASS\cs_serie.cs" />
     <Compile Include="CLASS\cs_tipo_caja.cs" />
     <Compile Include="CLASS\cs_areaempresa.cs" />
