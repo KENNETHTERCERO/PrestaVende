@@ -232,6 +232,14 @@
                                                             <big><asp:Label ID="lblnombre_cliente" runat="server"></asp:Label></big>
                                                         </td>
                                                     </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <asp:Label ID="lblNumeroPrestamo" runat="server" >NUMERO PRESTAMO</asp:Label>
+                                                        </td>
+                                                        <td>
+                                                            <big><asp:Label ID="lblNumeroPrestamoNumero" runat="server" Text="0"></asp:Label></big>
+                                                        </td>
+                                                    </tr>
                                                 </table>
                                             </div>
                             </div>
@@ -244,7 +252,7 @@
                                             <table>
                                                 <tr>
                                                     <td>
-                                                        <asp:Label ID="lblNumeroPrestamo" runat="server" >NUMERO PRESTAMO</asp:Label>
+                                                        <asp:Label ID="lblSeleccionC" runat="server">TIPO</asp:Label>
                                                     </td>
                                                     <td>
                                                         <asp:Label ID="lblTipoPrestamo" runat="server">TIPO PRESTAMO</asp:Label>
@@ -258,10 +266,10 @@
                                                 </tr>
                                                 <tr>
                                                     <td>
-                                                        <big><asp:Label ID="lblNumeroPrestamoNumero" runat="server" Text="0"></asp:Label></big>
+                                                        <asp:DropDownList ID="ddlTipo" runat="server" AutoPostBack="true" CssClass="form-control" OnSelectedIndexChanged="ddlTipo_SelectedIndexChanged"></asp:DropDownList>
                                                     </td>
                                                     <td>
-                                                        <asp:DropDownList ID="ddlTipoPrestamo" runat="server" CssClass="form-control"></asp:DropDownList>
+                                                        <asp:DropDownList ID="ddlTipoPrestamo" runat="server" CssClass="form-control" Enabled="false"></asp:DropDownList>
                                                     </td>
                                                     <td>
                                                         <asp:Label ID="Label1" runat="server" Text="Q"></asp:Label>
