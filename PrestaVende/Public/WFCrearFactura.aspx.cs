@@ -310,15 +310,19 @@ namespace PrestaVende.Public
         protected void ddlSemanas_SelectedIndexChanged(object sender, EventArgs e)
         {
             try
-            {
-                showWarning("Ejecucion.");
+            {                
                 int semanas = int.Parse(ddlSemanas.SelectedValue.ToString());
                 int dias = semanas * 7;
                 int dias_plazo = int.Parse(ds_global.Tables[0].Rows[0]["dias_plan"].ToString());
+                int diafecha, mes, anio;
 
                 for (int i = 0; i < ds_global.Tables[0].Rows.Count; i++)
                 {
-                    DateTime FechaUltimoPago = Convert.ToDateTime(ds_global.Tables[0].Rows[i]["fecha_ultimo_pago"].ToString());
+                    diafecha = Convert.ToDateTime(ds_global.Tables[0].Rows[i]["fecha_ultimo_pago"].ToString()).Day;
+                    mes = Convert.ToDateTime(ds_global.Tables[0].Rows[i]["fecha_ultimo_pago"].ToString()).Month;
+                    anio = Convert.ToDateTime(ds_global.Tables[0].Rows[i]["fecha_ultimo_pago"].ToString()).Year;
+
+                    DateTime FechaUltimoPago = new DateTime(anio,mes,diafecha);
                     ds_global.Tables[0].Rows[i]["calculo_fecha_ultimo_pago"] = FechaUltimoPago.AddDays(dias).ToString("dd/MM/yyyy");
                     ds_global.Tables[0].Rows[i]["calculo_fecha_proximo_pago"] = FechaUltimoPago.AddDays(dias + dias_plazo).ToString("dd/MM/yyyy");
 
