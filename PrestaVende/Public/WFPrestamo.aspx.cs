@@ -24,7 +24,7 @@ namespace PrestaVende.Public
         private static DataTable dtTablaJoyas;
         private static DataTable dtTablaArticulos;
 
-        DataRow row;
+        DataRow row = null;
 
         string error = "";
 
@@ -50,6 +50,8 @@ namespace PrestaVende.Public
                     {
                         dtTablaJoyas = new DataTable("tablaJoyas");
                         dtTablaArticulos = new DataTable("tablaArticulos");
+                        ViewState["CurrentTableJoyas"] = dtTablaJoyas;
+                        ViewState["CurrentTableArticulos"] = dtTablaArticulos;
                         getClient();
                         getCategorias();
                         getPlanPrestamo();
@@ -372,28 +374,34 @@ namespace PrestaVende.Public
         {
             try
             {
-                row = dtTablaJoyas.NewRow();
-                row["id_producto"] = ddlProducto.SelectedValue;
-                row["numero_linea"] = 1;
-                row["joya"] = ddlProducto.SelectedItem.Text.ToString();
-                row["kilataje"] = ddlKilataje.SelectedItem.Text.ToString();
-                row["peso"] = txtPeso.Text;
-                row["descuento"] = txtPesoDescuento.Text;
-                row["pesoReal"] = txtPesoConDescuento.Text.ToString();
-                row["valor"] = txtValor.Text.ToString();
-                if (txtCaracteristicas.Text.ToString().Length > 0)
+                if (ViewState["CurrentTableJoyas"] != null)
                 {
-                    row["caracteristicas"] = txtCaracteristicas.Text.ToString();
+
                 }
                 else
-                    row["caracteristicas"] = "N/A";
+                {
+                    row = dtTablaJoyas.NewRow();
+                    row["id_producto"] = ddlProducto.SelectedValue;
+                    row["numero_linea"] = 1;
+                    row["joya"] = ddlProducto.SelectedItem.Text.ToString();
+                    row["kilataje"] = ddlKilataje.SelectedItem.Text.ToString();
+                    row["peso"] = txtPeso.Text;
+                    row["descuento"] = txtPesoDescuento.Text;
+                    row["pesoReal"] = txtPesoConDescuento.Text.ToString();
+                    row["valor"] = txtValor.Text.ToString();
+                    if (txtCaracteristicas.Text.ToString().Length > 0)
+                    {
+                        row["caracteristicas"] = txtCaracteristicas.Text.ToString();
+                    }
+                    else
+                        row["caracteristicas"] = "N/A";
 
-                row["id_kilataje"] = ddlKilataje.SelectedValue.ToString();
-                dtTablaJoyas.Rows.Add(row);
+                    row["id_kilataje"] = ddlKilataje.SelectedValue.ToString();
+                    dtTablaJoyas.Rows.Add(row);
 
-                //gvProductoJoya.DataSource = dtTablaJoyas;
-                //gvProductoJoya.DataBind();
-
+                    gvProductoJoya.DataSource = dtTablaJoyas;
+                    gvProductoJoya.DataBind();
+                }
                 calculaTotalPrestamo();
             }
             catch (Exception ex)
