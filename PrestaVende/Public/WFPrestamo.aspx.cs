@@ -376,6 +376,32 @@ namespace PrestaVende.Public
             {
                 if (ViewState["CurrentTableJoyas"] != null)
                 {
+                    row = dtTablaJoyas.NewRow();
+                    row["id_producto"] = ddlProducto.SelectedValue;
+                    row["numero_linea"] = 1;
+                    row["joya"] = ddlProducto.SelectedItem.Text.ToString();
+                    row["kilataje"] = ddlKilataje.SelectedItem.Text.ToString();
+                    row["peso"] = txtPeso.Text;
+                    row["descuento"] = txtPesoDescuento.Text;
+                    row["pesoReal"] = txtPesoConDescuento.Text.ToString();
+                    row["valor"] = txtValor.Text.ToString();
+                    if (txtCaracteristicas.Text.ToString().Length > 0)
+                    {
+                        row["caracteristicas"] = txtCaracteristicas.Text.ToString();
+                    }
+                    else
+                        row["caracteristicas"] = "N/A";
+
+                    row["id_kilataje"] = ddlKilataje.SelectedValue.ToString();
+                    dtTablaJoyas.Rows.Add(row);
+
+                    ViewState["CurrentTableJoyas"] = dtTablaJoyas;
+
+                    gvProductoJoya.DataSource = dtTablaJoyas;
+                    gvProductoJoya.DataBind();
+                }
+                else
+                {
                     DataTable test = (DataTable)ViewState["CurrentTableJoyas"];
                     DataRow drCurrectRow = null;
                     drCurrectRow = dtTablaJoyas.NewRow();
@@ -400,32 +426,8 @@ namespace PrestaVende.Public
 
                     gvProductoJoya.DataSource = test;
                     gvProductoJoya.DataBind();
-                }
-                else
-                {
-                    row = dtTablaJoyas.NewRow();
-                    row["id_producto"] = ddlProducto.SelectedValue;
-                    row["numero_linea"] = 1;
-                    row["joya"] = ddlProducto.SelectedItem.Text.ToString();
-                    row["kilataje"] = ddlKilataje.SelectedItem.Text.ToString();
-                    row["peso"] = txtPeso.Text;
-                    row["descuento"] = txtPesoDescuento.Text;
-                    row["pesoReal"] = txtPesoConDescuento.Text.ToString();
-                    row["valor"] = txtValor.Text.ToString();
-                    if (txtCaracteristicas.Text.ToString().Length > 0)
-                    {
-                        row["caracteristicas"] = txtCaracteristicas.Text.ToString();
-                    }
-                    else
-                        row["caracteristicas"] = "N/A";
 
-                    row["id_kilataje"] = ddlKilataje.SelectedValue.ToString();
-                    dtTablaJoyas.Rows.Add(row);
-
-                    ViewState["CurrentTableJoyas"] = dtTablaJoyas;
-
-                    gvProductoJoya.DataSource = dtTablaJoyas;
-                    gvProductoJoya.DataBind();
+                    
                 }
                 calculaTotalPrestamo();
             }
