@@ -115,6 +115,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Public\AutorizacionEncargado.aspx" />
+    <Content Include="Public\BusquedaCliente.aspx" />
     <Content Include="Public\CambioPrecioProducto.aspx" />
     <Content Include="Public\FacturacionProductos.aspx" />
     <Content Include="Public\image\candado.png" />
@@ -320,6 +321,13 @@
     </Compile>
     <Compile Include="Public\AutorizacionEncargado.aspx.designer.cs">
       <DependentUpon>AutorizacionEncargado.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\BusquedaCliente.aspx.cs">
+      <DependentUpon>BusquedaCliente.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\BusquedaCliente.aspx.designer.cs">
+      <DependentUpon>BusquedaCliente.aspx</DependentUpon>
     </Compile>
     <Compile Include="Public\CambioPrecioProducto.aspx.cs">
       <DependentUpon>CambioPrecioProducto.aspx</DependentUpon>

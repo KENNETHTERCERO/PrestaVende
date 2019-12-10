@@ -9,8 +9,38 @@ namespace PrestaVende.CLASS
 {
     public class cs_cliente
     {
+        private static string id_cliente;
+        private static string nombre_cliente;
+
+
         cs_connection connection = new cs_connection();
         SqlCommand command = new SqlCommand();
+
+        public static string Id_cliente
+        {
+            get
+            {
+                return id_cliente;
+            }
+
+            set
+            {
+                id_cliente = value;
+            }
+        }
+
+        public static string Nombre_cliente
+        {
+            get
+            {
+                return nombre_cliente;
+            }
+
+            set
+            {
+                nombre_cliente = value;
+            }
+        }
 
         public cs_cliente()
         {

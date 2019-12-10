@@ -10,7 +10,25 @@
 namespace PrestaVende.Public {
     
     
-    public partial class FacturacionProductos {
+    public partial class BusquedaCliente {
+        
+        /// <summary>
+        /// form1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+        
+        /// <summary>
+        /// ScriptManager1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.ScriptManager ScriptManager1;
         
         /// <summary>
         /// uPanel control.
@@ -20,60 +38,6 @@ namespace PrestaVende.Public {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.UpdatePanel uPanel;
-        
-        /// <summary>
-        /// panelModalSubCliente control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel panelModalSubCliente;
-        
-        /// <summary>
-        /// Iframe1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlIframe Iframe1;
-        
-        /// <summary>
-        /// btnCancelMSubCliente control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnCancelMSubCliente;
-        
-        /// <summary>
-        /// btnAceptMSubCliente control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAceptMSubCliente;
-        
-        /// <summary>
-        /// ModalPopupExtender2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::AjaxControlToolkit.ModalPopupExtender ModalPopupExtender2;
-        
-        /// <summary>
-        /// tbnFacturar control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button tbnFacturar;
         
         /// <summary>
         /// divWarning control.
@@ -130,6 +94,24 @@ namespace PrestaVende.Public {
         protected global::System.Web.UI.WebControls.Label lblSuccess;
         
         /// <summary>
+        /// panSearch control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel panSearch;
+        
+        /// <summary>
+        /// txtBusquedaCliente control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtBusquedaCliente;
+        
+        /// <summary>
         /// btnBuscarCliente control.
         /// </summary>
         /// <remarks>
@@ -139,13 +121,13 @@ namespace PrestaVende.Public {
         protected global::System.Web.UI.WebControls.Button btnBuscarCliente;
         
         /// <summary>
-        /// lblCliente control.
+        /// lblClienteSeleccionado control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblCliente;
+        protected global::System.Web.UI.WebControls.Label lblClienteSeleccionado;
         
         /// <summary>
         /// lblIdCliente control.
@@ -166,51 +148,6 @@ namespace PrestaVende.Public {
         protected global::System.Web.UI.WebControls.Label lblNombreCliente;
         
         /// <summary>
-        /// lblBusquedaPrestamo control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblBusquedaPrestamo;
-        
-        /// <summary>
-        /// txtBusqueda control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtBusqueda;
-        
-        /// <summary>
-        /// btnBuscar control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnBuscar;
-        
-        /// <summary>
-        /// ddlArticulos control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlArticulos;
-        
-        /// <summary>
-        /// btnAgregar control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAgregar;
-        
-        /// <summary>
         /// div_gridView control.
         /// </summary>
         /// <remarks>
@@ -220,12 +157,12 @@ namespace PrestaVende.Public {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_gridView;
         
         /// <summary>
-        /// gvProductoFacturar control.
+        /// gvCliente control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvProductoFacturar;
+        protected global::System.Web.UI.WebControls.GridView gvCliente;
     }
 }
