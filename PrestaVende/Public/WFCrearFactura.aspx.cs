@@ -219,7 +219,7 @@ namespace PrestaVende.Public
                     ddlSemanas.DataValueField = "id";
                     ddlSemanas.DataTextField = "nombre";
                     ddlSemanas.DataBind();
-                    ddlSemanas.Visible = true;
+                    ddlSemanas.Enabled = true;
                 }
             }
             catch (Exception ex)
@@ -266,12 +266,12 @@ namespace PrestaVende.Public
                                     {
                                         showSuccess("Se creo prestamo correctamente.");
                                         string script = "window.open('WebReport.aspx?tipo_reporte=2" + "&id_factura=" + Resultado + "');";
-                                        ScriptManager.RegisterClientScriptBlock(this, GetType(), "", script, true);
+                                        ScriptManager.RegisterClientScriptBlock(this, GetType(), "ImpresionFactura", script, true);
 
                                         if (id_tipo_transaccion == "9" || id_tipo_transaccion == "10")
                                         {
                                             string script2 = "window.open('WebReport.aspx?tipo_reporte=5" + "&id_factura=" + Resultado + "&id_sucursal=" + CLASS.cs_usuario.id_sucursal + "');";
-                                            ScriptManager.RegisterClientScriptBlock(this, GetType(), "", script2, true);
+                                            ScriptManager.RegisterClientScriptBlock(this, GetType(), "ImpresionRecibo", script2, true);
                                         }                                        
 
                                         string scriptText = "alert('my message'); window.location='WFFacturacion.aspx?id_prestamo=" + id_prestamo.ToString() + "'";
