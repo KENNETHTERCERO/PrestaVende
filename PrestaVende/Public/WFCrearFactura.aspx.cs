@@ -136,6 +136,21 @@ namespace PrestaVende.Public
                 lblSubTotalFactura.Text = dt.Rows[0]["SubTotal"].ToString();
                 lblIVAFactura.Text = dt.Rows[0]["IVA"].ToString();
                 lblTotalFacturaV.Text = dt.Rows[0]["Total"].ToString();
+
+                int semanas = int.Parse(ds_global.Tables[0].Rows[0]["Cantidad"].ToString());
+                DataTable TablaSemanas = new DataTable();
+                TablaSemanas.Columns.Add("id", typeof(int));
+                TablaSemanas.Columns.Add("nombre", typeof(string));
+
+                for (int i = semanas; i > 0; i--)
+                {
+                    TablaSemanas.Rows.Add(i, i.ToString());
+                }
+
+                ddlSemanas.DataSource = TablaSemanas;
+                ddlSemanas.DataValueField = "id";
+                ddlSemanas.DataTextField = "nombre";
+                ddlSemanas.DataBind();
             }           
 
         }
@@ -203,22 +218,7 @@ namespace PrestaVende.Public
             {
                 if (CLASS.cs_usuario.autorizado)
                 {                    
-                    CLASS.cs_usuario.autorizado = false;
-
-                    int semanas = int.Parse(ds_global.Tables[0].Rows[0]["Cantidad"].ToString());
-                    DataTable TablaSemanas = new DataTable();
-                    TablaSemanas.Columns.Add("id", typeof(int));
-                    TablaSemanas.Columns.Add("nombre", typeof(string));
-
-                    for (int i = semanas; i > 0; i--)
-                    {
-                        TablaSemanas.Rows.Add(i, i.ToString());
-                    }
-
-                    ddlSemanas.DataSource = TablaSemanas;
-                    ddlSemanas.DataValueField = "id";
-                    ddlSemanas.DataTextField = "nombre";
-                    ddlSemanas.DataBind();
+                    CLASS.cs_usuario.autorizado = false;                    
                     ddlSemanas.Enabled = true;
                 }
             }
