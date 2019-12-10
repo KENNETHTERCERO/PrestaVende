@@ -390,9 +390,11 @@ namespace PrestaVende.Public
 
                 row["id_kilataje"] = ddlKilataje.SelectedValue.ToString();
                 dtTablaJoyas.Rows.Add(row);
+
+                //gvProductoJoya.DataSource = dtTablaJoyas;
+                //gvProductoJoya.DataBind();
+
                 calculaTotalPrestamo();
-                gvProductoJoya.DataSource = dtTablaJoyas;
-                gvProductoJoya.DataBind();
             }
             catch (Exception ex)
             {
