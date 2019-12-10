@@ -207,6 +207,17 @@
     <Content Include="DATASET\DtsTransaccionesCaja.xsc">
       <DependentUpon>DtsTransaccionesCaja.xsd</DependentUpon>
     </Content>
+    <Content Include="DATASET\DSReciboFactura.xsc">
+      <DependentUpon>DSReciboFactura.xsd</DependentUpon>
+    </Content>
+    <None Include="DATASET\DSReciboFactura.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DSReciboFactura.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="DATASET\DSReciboFactura.xss">
+      <DependentUpon>DSReciboFactura.xsd</DependentUpon>
+    </Content>
     <None Include="DATASET\DtsTransaccionesCaja.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
@@ -289,6 +300,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DSProyeccionPrestamo.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DATASET\DSReciboFactura.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DSReciboFactura.xsd</DependentUpon>
     </Compile>
     <Compile Include="DATASET\DtsTransaccionesCaja.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -505,6 +521,12 @@
       <DependentUpon>CREtiquetaPrestamo.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Reports\CRFacturaRecibo.cs">
+      <DependentUpon>CRFacturaRecibo.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Reports\CRFacturaIntereses.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -548,6 +570,10 @@
     <EmbeddedResource Include="Reports\CREtiquetaPrestamo.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>CREtiquetaPrestamo.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\CRFacturaRecibo.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>CRFacturaRecibo.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\CRFacturaIntereses.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
