@@ -62,6 +62,7 @@ namespace PrestaVende.Public
                         txtPesoDescuento.Text = "0";
                         getCasillas();
                         getNumeroPrestamo();
+                        getTipo();
                     }
                 }
             }
@@ -167,6 +168,21 @@ namespace PrestaVende.Public
                 ddlCasilla.DataValueField = "id_casilla";
                 ddlCasilla.DataTextField = "casilla";
                 ddlCasilla.DataBind();
+            }
+            catch (Exception ex)
+            {
+                showWarning(ex.ToString());
+            }
+        }
+
+        private void getTipo()
+        {
+            try
+            {
+                ddlTipo.DataSource = cs_prestamo.getTipo(ref error);
+                ddlTipo.DataValueField = "id_tipo";
+                ddlTipo.DataTextField = "opcion";
+                ddlTipo.DataBind();
             }
             catch (Exception ex)
             {
@@ -850,12 +866,17 @@ namespace PrestaVende.Public
             try
             {
                 decimal totalPrestamo = 0;
+                string id_TipoPlan = "";
                 if (lblTotalPrestamoQuetzales.Text.ToString().Equals("") || lblTotalPrestamoQuetzales.Text.ToString().Equals("0"))
                     totalPrestamo = 0;
                 else
                     totalPrestamo = Convert.ToDecimal(lblTotalPrestamoQuetzales.Text.ToString());
 
-                ddlTipoPrestamo.SelectedValue = cs_interes.getIdInteres(ref error, totalPrestamo.ToString());
+                if (ddlTipo.SelectedValue.ToString().Equals("1"))
+                {
+                    id_TipoPlan = cs_interes.getIdInteres(ref error, totalPrestamo.ToString());
+                    ddlTipoPrestamo.SelectedValue = id_TipoPlan;
+                }
                 //ddlTipoPrestamo.Enabled = false;
             }
             catch (Exception ex)
@@ -1124,6 +1145,25 @@ namespace PrestaVende.Public
         protected void btnProyeccion_Click(object sender, EventArgs e)
         {
 
+        }
+
+        protected void ddlTipo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if (ddlTipo.SelectedValue.ToString().Equals("1"))
+                {
+                    ddlTipoPrestamo.SelectedValue = "1";
+                }
+                else if (ddlTipo.SelectedValue.ToString().Equals("2"))
+                {
+                    ddlTipoPrestamo.SelectedValue = "3";
+                }
+            }
+            catch (Exception ex)
+            {
+                showError(ex.ToString());
+            }
         }
     }
 }

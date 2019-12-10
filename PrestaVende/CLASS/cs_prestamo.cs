@@ -330,6 +330,33 @@ namespace PrestaVende.CLASS
             }
         }
 
+        public DataTable getTipo(ref string error)
+        {
+            try
+            {
+                DataTable dtTipo = new DataTable("dtTipo");
+
+                connection.connection.Open();
+                command.Connection = connection.connection;
+                command.Parameters.Clear();
+                command.Transaction = connection.connection.BeginTransaction();
+                command.CommandText = "select 0 AS id_tipo, 'SELECCIONAR' AS opcion UNION " +
+                                        "select 1 AS id_tipo, 'PRESTAMO' AS opcion UNION " +
+                                        "select 2 AS id_tipo, 'COMPRA' AS opcion";
+                dtTipo.Load(command.ExecuteReader());
+                return dtTipo;
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                return null;
+            }
+            finally
+            {
+                connection.connection.Close();
+            }
+        }
+
         public DataTable getCountPrestamosCancelados(ref string error, string id_cliente)
         {
             try
