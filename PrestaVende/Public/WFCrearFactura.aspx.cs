@@ -310,19 +310,26 @@ namespace PrestaVende.Public
         protected void ddlSemanas_SelectedIndexChanged(object sender, EventArgs e)
         {
             try
-            {                
+            {
                 int semanas = int.Parse(ddlSemanas.SelectedValue.ToString());
                 int dias = semanas * 7;
                 int dias_plazo = int.Parse(ds_global.Tables[0].Rows[0]["dias_plan"].ToString());
-                int diafecha, mes, anio;
 
                 for (int i = 0; i < ds_global.Tables[0].Rows.Count; i++)
                 {
-                    diafecha = Convert.ToDateTime(ds_global.Tables[0].Rows[i]["fecha_ultimo_pago"].ToString()).Day;
-                    mes = Convert.ToDateTime(ds_global.Tables[0].Rows[i]["fecha_ultimo_pago"].ToString()).Month;
-                    anio = Convert.ToDateTime(ds_global.Tables[0].Rows[i]["fecha_ultimo_pago"].ToString()).Year;
+                    //DateTime FechaUltimoPago = Convert.ToDateTime(ds_global.Tables[0].Rows[i]["fecha_ultimo_pago"].ToString());
 
-                    DateTime FechaUltimoPago = new DateTime(anio,mes,diafecha);
+                    String[] separador = { "/" };
+                    String cadena = ds_global.Tables[0].Rows[i]["fecha_ultimo_pago"].ToString();
+
+                    String[] strlist = cadena.Split(separador, 3, StringSplitOptions.RemoveEmptyEntries);
+
+                    int dia = int.Parse(strlist[0]);
+                    int mes = int.Parse(strlist[1]);
+                    int anio = int.Parse(strlist[2]);
+
+                    DateTime FechaUltimoPago = new DateTime(anio, mes, dia);
+
                     ds_global.Tables[0].Rows[i]["calculo_fecha_ultimo_pago"] = FechaUltimoPago.AddDays(dias).ToString("dd/MM/yyyy");
                     ds_global.Tables[0].Rows[i]["calculo_fecha_proximo_pago"] = FechaUltimoPago.AddDays(dias + dias_plazo).ToString("dd/MM/yyyy");
 
