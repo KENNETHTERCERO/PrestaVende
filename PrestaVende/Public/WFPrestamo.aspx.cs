@@ -1190,7 +1190,14 @@ namespace PrestaVende.Public
             {
                 if (ddlTipo.SelectedValue.ToString().Equals("1"))
                 {
-                    ddlTipoPrestamo.SelectedValue = "1";
+                    if (Convert.ToDecimal(lblTotalPrestamoQuetzales.Text) <= 500)
+                    {
+                        ddlTipoPrestamo.SelectedValue = "1";
+                    }
+                    else
+                    {
+                        ddlTipoPrestamo.SelectedValue = "2";
+                    }
                 }
                 else if (ddlTipo.SelectedValue.ToString().Equals("2"))
                 {
