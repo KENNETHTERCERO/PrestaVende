@@ -28,8 +28,9 @@ namespace PrestaVende.Public
                 string id_prestamo = Request.QueryString["id_prestamo"];
                 foreach (DataRow item in cs_prestamo.ObtenerPrestamoEspecifico(ref error, id_prestamo).Rows)
                 {
-                    lblnombre_prestamo.Text = item[1].ToString() + " - Cliente: " + item[2].ToString() + " " + item[3].ToString() + " " + item[4].ToString() + " " + item[5].ToString();
+                    //lblnombre_prestamo.Text = item[1].ToString() + " - Cliente: " + item[2].ToString() + " " + item[3].ToString() + " " + item[4].ToString() + " " + item[5].ToString();
                     lblNombrePrestamo.Text = item[1].ToString();
+                    lblCodigoCliente.Text = item[1].ToString();
                     lblNombreCliente.Text = item[2].ToString() + " " + item[3].ToString() + " " + item[4].ToString() + " " + item[5].ToString();
                     lblValorInteres.Text = item[8].ToString() + "%";
                     id_cliente = item[6].ToString();
@@ -135,6 +136,21 @@ namespace PrestaVende.Public
                 lblSubTotalFactura.Text = dt.Rows[0]["SubTotal"].ToString();
                 lblIVAFactura.Text = dt.Rows[0]["IVA"].ToString();
                 lblTotalFacturaV.Text = dt.Rows[0]["Total"].ToString();
+
+                int semanas = int.Parse(ds_global.Tables[0].Rows[0]["Cantidad"].ToString());
+                DataTable TablaSemanas = new DataTable();
+                TablaSemanas.Columns.Add("id", typeof(int));
+                TablaSemanas.Columns.Add("nombre", typeof(string));
+
+                for (int i = semanas; i > 0; i--)
+                {
+                    TablaSemanas.Rows.Add(i, i.ToString());
+                }
+
+                ddlSemanas.DataSource = TablaSemanas;
+                ddlSemanas.DataValueField = "id";
+                ddlSemanas.DataTextField = "nombre";
+                ddlSemanas.DataBind();
             }           
 
         }
@@ -202,23 +218,8 @@ namespace PrestaVende.Public
             {
                 if (CLASS.cs_usuario.autorizado)
                 {                    
-                    CLASS.cs_usuario.autorizado = false;
-
-                    int semanas = int.Parse(ds_global.Tables[0].Rows[0]["Cantidad"].ToString());
-                    DataTable TablaSemanas = new DataTable();
-                    TablaSemanas.Columns.Add("id", typeof(int));
-                    TablaSemanas.Columns.Add("nombre", typeof(string));
-
-                    for (int i = semanas; i > 0; i--)
-                    {
-                        TablaSemanas.Rows.Add(i, i.ToString());
-                    }
-
-                    ddlSemanas.DataSource = TablaSemanas;
-                    ddlSemanas.DataValueField = "id";
-                    ddlSemanas.DataTextField = "nombre";
-                    ddlSemanas.DataBind();
-                    ddlSemanas.Visible = true;
+                    CLASS.cs_usuario.autorizado = false;                    
+                    ddlSemanas.Enabled = true;
                 }
             }
             catch (Exception ex)
@@ -265,7 +266,13 @@ namespace PrestaVende.Public
                                     {
                                         showSuccess("Se creo prestamo correctamente.");
                                         string script = "window.open('WebReport.aspx?tipo_reporte=2" + "&id_factura=" + Resultado + "');";
-                                        ScriptManager.RegisterClientScriptBlock(this, GetType(), "", script, true);
+                                        ScriptManager.RegisterClientScriptBlock(this, GetType(), "ImpresionFactura", script, true);
+
+                                        if (id_tipo_transaccion == "9" || id_tipo_transaccion == "10")
+                                        {
+                                            string script2 = "window.open('WebReport.aspx?tipo_reporte=5" + "&id_factura=" + Resultado + "&id_sucursal=" + CLASS.cs_usuario.id_sucursal + "');";
+                                            ScriptManager.RegisterClientScriptBlock(this, GetType(), "ImpresionRecibo", script2, true);
+                                        }                                        
 
                                         string scriptText = "alert('my message'); window.location='WFFacturacion.aspx?id_prestamo=" + id_prestamo.ToString() + "'";
                                         ScriptManager.RegisterStartupScript(this, this.GetType(), "alertMessage", scriptText, true);
@@ -302,35 +309,55 @@ namespace PrestaVende.Public
 
         protected void ddlSemanas_SelectedIndexChanged(object sender, EventArgs e)
         {
-            int semanas = int.Parse(ddlSemanas.SelectedValue.ToString());
-            int dias = semanas * 7;
-            int dias_plazo = int.Parse(ds_global.Tables[0].Rows[0]["dias_plan"].ToString());
-
-            for (int i = 0; i < ds_global.Tables[0].Rows.Count; i++)
+            try
             {
-                DateTime FechaUltimoPago = Convert.ToDateTime(ds_global.Tables[0].Rows[i]["fecha_ultimo_pago"].ToString());
-                ds_global.Tables[0].Rows[i]["calculo_fecha_ultimo_pago"] = FechaUltimoPago.AddDays(dias).ToString("dd/MM/yyyy");
-                ds_global.Tables[0].Rows[i]["calculo_fecha_proximo_pago"] = FechaUltimoPago.AddDays(dias + dias_plazo).ToString("dd/MM/yyyy");
+                int semanas = int.Parse(ddlSemanas.SelectedValue.ToString());
+                int dias = semanas * 7;
+                int dias_plazo = int.Parse(ds_global.Tables[0].Rows[0]["dias_plan"].ToString());
 
-                if (ds_global.Tables[0].Rows[i]["cargo"].ToString().ToLower() != "mora")
+                for (int i = 0; i < ds_global.Tables[0].Rows.Count; i++)
                 {
-                    ds_global.Tables[0].Rows[i]["Subtotal"] = (decimal.Parse(ds_global.Tables[0].Rows[i]["Precio"].ToString()) * semanas).ToString();
-                    ds_global.Tables[0].Rows[i]["IVA"] = (decimal.Parse(ds_global.Tables[0].Rows[i]["Subtotal"].ToString()) * 
-                                                            decimal.Parse(ds_global.Tables[0].Rows[i]["factor_impuesto"].ToString()) / 100).ToString();
-                    ds_global.Tables[0].Rows[i]["Cantidad"] = semanas.ToString();
+                    //DateTime FechaUltimoPago = Convert.ToDateTime(ds_global.Tables[0].Rows[i]["fecha_ultimo_pago"].ToString());
+
+                    String[] separador = { "/" };
+                    String cadena = ds_global.Tables[0].Rows[i]["fecha_ultimo_pago"].ToString();
+
+                    String[] strlist = cadena.Split(separador, 3, StringSplitOptions.RemoveEmptyEntries);
+
+                    int dia = int.Parse(strlist[0]);
+                    int mes = int.Parse(strlist[1]);
+                    int anio = int.Parse(strlist[2]);
+
+                    DateTime FechaUltimoPago = new DateTime(anio, mes, dia);
+
+                    ds_global.Tables[0].Rows[i]["calculo_fecha_ultimo_pago"] = FechaUltimoPago.AddDays(dias).ToString("dd/MM/yyyy");
+                    ds_global.Tables[0].Rows[i]["calculo_fecha_proximo_pago"] = FechaUltimoPago.AddDays(dias + dias_plazo).ToString("dd/MM/yyyy");
+
+                    if (ds_global.Tables[0].Rows[i]["cargo"].ToString().ToLower() != "mora")
+                    {
+                        ds_global.Tables[0].Rows[i]["Subtotal"] = (decimal.Parse(ds_global.Tables[0].Rows[i]["Precio"].ToString()) * semanas).ToString();
+                        ds_global.Tables[0].Rows[i]["IVA"] = (decimal.Parse(ds_global.Tables[0].Rows[i]["Subtotal"].ToString()) *
+                                                                decimal.Parse(ds_global.Tables[0].Rows[i]["factor_impuesto"].ToString()) / 100).ToString();
+                        ds_global.Tables[0].Rows[i]["Cantidad"] = semanas.ToString();
+                    }
                 }
+
+                ds_global.Tables[1].Rows[0]["Total"] = Decimal.Round(ds_global.Tables[0].AsEnumerable().Sum(r => r.Field<decimal>("SubTotal")), 2).ToString();
+                ds_global.Tables[1].Rows[0]["IVA"] = Decimal.Round(ds_global.Tables[0].AsEnumerable().Sum(r => r.Field<decimal>("IVA")), 2).ToString();
+                ds_global.Tables[1].Rows[0]["SubTotal"] = Decimal.Round(decimal.Parse(ds_global.Tables[1].Rows[0]["Total"].ToString()) - decimal.Parse(ds_global.Tables[1].Rows[0]["IVA"].ToString()), 2).ToString();
+
+                lblSubTotalFactura.Text = ds_global.Tables[1].Rows[0]["SubTotal"].ToString();
+                lblIVAFactura.Text = ds_global.Tables[1].Rows[0]["IVA"].ToString();
+                lblTotalFacturaV.Text = ds_global.Tables[1].Rows[0]["Total"].ToString();
+
+                gvDetalleFactura.DataSource = ds_global.Tables[0];
+                gvDetalleFactura.DataBind();
             }
-
-            ds_global.Tables[1].Rows[0]["Total"] = Decimal.Round(ds_global.Tables[0].AsEnumerable().Sum(r => r.Field<decimal>("SubTotal")),2).ToString();
-            ds_global.Tables[1].Rows[0]["IVA"] = Decimal.Round(ds_global.Tables[0].AsEnumerable().Sum(r => r.Field<decimal>("IVA")),2).ToString();
-            ds_global.Tables[1].Rows[0]["SubTotal"] = Decimal.Round(decimal.Parse(ds_global.Tables[1].Rows[0]["Total"].ToString()) - decimal.Parse(ds_global.Tables[1].Rows[0]["IVA"].ToString()), 2).ToString();
-
-            lblSubTotalFactura.Text = ds_global.Tables[1].Rows[0]["SubTotal"].ToString();
-            lblIVAFactura.Text = ds_global.Tables[1].Rows[0]["IVA"].ToString();
-            lblTotalFacturaV.Text = ds_global.Tables[1].Rows[0]["Total"].ToString();
-
-            gvDetalleFactura.DataSource = ds_global.Tables[0];
-            gvDetalleFactura.DataBind();
+            catch (Exception ex)
+            {
+                showWarning(ex.ToString());
+            }
+            
         }
     }
 }

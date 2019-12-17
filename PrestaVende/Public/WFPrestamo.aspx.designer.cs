@@ -184,6 +184,24 @@ namespace PrestaVende.Public {
         protected global::System.Web.UI.WebControls.Label lblnombre_cliente;
         
         /// <summary>
+        /// lblNumeroPrestamo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblNumeroPrestamo;
+        
+        /// <summary>
+        /// lblNumeroPrestamoNumero control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblNumeroPrestamoNumero;
+        
+        /// <summary>
         /// div_ingresa_datos control.
         /// </summary>
         /// <remarks>
@@ -193,13 +211,13 @@ namespace PrestaVende.Public {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_ingresa_datos;
         
         /// <summary>
-        /// lblNumeroPrestamo control.
+        /// lblSeleccionC control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblNumeroPrestamo;
+        protected global::System.Web.UI.WebControls.Label lblSeleccionC;
         
         /// <summary>
         /// lblTipoPrestamo control.
@@ -229,13 +247,13 @@ namespace PrestaVende.Public {
         protected global::System.Web.UI.WebControls.Label lblCasilla;
         
         /// <summary>
-        /// lblNumeroPrestamoNumero control.
+        /// ddlTipo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblNumeroPrestamoNumero;
+        protected global::System.Web.UI.WebControls.DropDownList ddlTipo;
         
         /// <summary>
         /// ddlTipoPrestamo control.
@@ -463,6 +481,15 @@ namespace PrestaVende.Public {
         protected global::System.Web.UI.WebControls.Label lblRedondeo;
         
         /// <summary>
+        /// btnRedondear control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnRedondear;
+        
+        /// <summary>
         /// ddlKilataje control.
         /// </summary>
         /// <remarks>
@@ -488,15 +515,6 @@ namespace PrestaVende.Public {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtRedondeo;
-        
-        /// <summary>
-        /// btnRedondear control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnRedondear;
         
         /// <summary>
         /// lblMarca control.

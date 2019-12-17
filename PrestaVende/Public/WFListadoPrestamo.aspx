@@ -151,7 +151,7 @@
                                                             <asp:BoundField DataField="fecha_proximo_pago" HeaderText="<center>Fecha Proximo Pago</center>" SortExpression="fecha_proximo_pago"  HtmlEncode="false"/>
                                                             <asp:BoundField DataField="saldo_prestamo" HeaderText="<center>Saldo</center>" SortExpression="saldo_prestamo" HtmlEncode="false" Visible="true"/>
                                                             <asp:BoundField DataField="plan_prestamo" HeaderText="<center>Plan Prestamo</center>" SortExpression="plan_prestamo" HtmlEncode="false" Visible="true"/>
-                                                            <asp:BoundField DataField="Cliente" HeaderText="<center>Cliente</center>" SortExpression="Cliente" HtmlEncode="false" Visible="true"/>
+                                                            <asp:BoundField DataField="garantia" HeaderText="<center>Garantia</center>" SortExpression="garantia" HtmlEncode="false" Visible="true"/>
                                                         </Columns>
                                                         <EditRowStyle BackColor="#7C6F57" />
                                                         <FooterStyle BackColor="#1C5E55" Font-Bold="False" ForeColor="White" />

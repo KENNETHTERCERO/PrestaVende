@@ -115,6 +115,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Public\AutorizacionEncargado.aspx" />
+    <Content Include="Public\BusquedaCliente.aspx" />
     <Content Include="Public\CambioPrecioProducto.aspx" />
     <Content Include="Public\FacturacionProductos.aspx" />
     <Content Include="Public\image\candado.png" />
@@ -154,9 +155,6 @@
     <Content Include="DATASET\DSFacturaIntereses.xsc">
       <DependentUpon>DSFacturaIntereses.xsd</DependentUpon>
     </Content>
-    <Content Include="DATASET\DSEstadoCuentaPrestamo.xsc">
-      <DependentUpon>DSEstadoCuentaPrestamo.xsd</DependentUpon>
-    </Content>
     <None Include="DATASET\DSEstadoCuentaPrestamo.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>DSEstadoCuentaPrestamo.Designer.cs</LastGenOutput>
@@ -175,6 +173,28 @@
     </None>
     <Content Include="DATASET\DSEstadoCuentaPrestamoDetalleArticulos.xss">
       <DependentUpon>DSEstadoCuentaPrestamoDetalleArticulos.xsd</DependentUpon>
+    </Content>
+    <Content Include="DATASET\DSEtiquetaPrestamo.xsc">
+      <DependentUpon>DSEtiquetaPrestamo.xsd</DependentUpon>
+    </Content>
+    <Content Include="DATASET\DSEstadoCuentaPrestamoF.xsc">
+      <DependentUpon>DSEstadoCuentaPrestamoF.xsd</DependentUpon>
+    </Content>
+    <None Include="DATASET\DSEstadoCuentaPrestamoF.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DSEstadoCuentaPrestamoF.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="DATASET\DSEstadoCuentaPrestamoF.xss">
+      <DependentUpon>DSEstadoCuentaPrestamoF.xsd</DependentUpon>
+    </Content>
+    <None Include="DATASET\DSEtiquetaPrestamo.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DSEtiquetaPrestamo.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="DATASET\DSEtiquetaPrestamo.xss">
+      <DependentUpon>DSEtiquetaPrestamo.xsd</DependentUpon>
     </Content>
     <None Include="DATASET\DSFacturaIntereses.xsd">
       <SubType>Designer</SubType>
@@ -197,6 +217,17 @@
     </Content>
     <Content Include="DATASET\DtsTransaccionesCaja.xsc">
       <DependentUpon>DtsTransaccionesCaja.xsd</DependentUpon>
+    </Content>
+    <Content Include="DATASET\DSReciboFactura.xsc">
+      <DependentUpon>DSReciboFactura.xsd</DependentUpon>
+    </Content>
+    <None Include="DATASET\DSReciboFactura.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DSReciboFactura.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="DATASET\DSReciboFactura.xss">
+      <DependentUpon>DSReciboFactura.xsd</DependentUpon>
     </Content>
     <None Include="DATASET\DtsTransaccionesCaja.xsd">
       <SubType>Designer</SubType>
@@ -231,6 +262,7 @@
     <Compile Include="CLASS\cs_manejo_pais.cs" />
     <Compile Include="CLASS\cs_prestamo.cs" />
     <Compile Include="CLASS\cs_profesion.cs" />
+    <Compile Include="CLASS\cs_recepcion_liquidacion.cs" />
     <Compile Include="CLASS\cs_serie.cs" />
     <Compile Include="CLASS\cs_tipo_caja.cs" />
     <Compile Include="CLASS\cs_areaempresa.cs" />
@@ -252,6 +284,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DSContratoPrestamo.xsd</DependentUpon>
     </Compile>
+    <Compile Include="DATASET\DSEstadoCuentaPrestamo.cs">
+      <DependentUpon>DSEstadoCuentaPrestamo.xsd</DependentUpon>
+    </Compile>
     <Compile Include="DATASET\DSEstadoCuentaPrestamo.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -262,6 +297,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DSEstadoCuentaPrestamoDetalleArticulos.xsd</DependentUpon>
     </Compile>
+    <Compile Include="DATASET\DSEstadoCuentaPrestamoF.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DSEstadoCuentaPrestamoF.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DATASET\DSEtiquetaPrestamo.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DSEtiquetaPrestamo.xsd</DependentUpon>
+    </Compile>
     <Compile Include="DATASET\DSFacturaIntereses.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -271,6 +316,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DSProyeccionPrestamo.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DATASET\DSReciboFactura.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DSReciboFactura.xsd</DependentUpon>
     </Compile>
     <Compile Include="DATASET\DtsTransaccionesCaja.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -287,6 +337,13 @@
     </Compile>
     <Compile Include="Public\AutorizacionEncargado.aspx.designer.cs">
       <DependentUpon>AutorizacionEncargado.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\BusquedaCliente.aspx.cs">
+      <DependentUpon>BusquedaCliente.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\BusquedaCliente.aspx.designer.cs">
+      <DependentUpon>BusquedaCliente.aspx</DependentUpon>
     </Compile>
     <Compile Include="Public\CambioPrecioProducto.aspx.cs">
       <DependentUpon>CambioPrecioProducto.aspx</DependentUpon>
@@ -468,11 +525,17 @@
       <DependentUpon>CREstadoCuentaPrestamo.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Reports\CREstadoCuentaPrestamoDetalleArticulos.cs">
+    <Compile Include="Reports\CREtiquetaPrestamo.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>CREstadoCuentaPrestamoDetalleArticulos.rpt</DependentUpon>
+      <DependentUpon>CREtiquetaPrestamo.rpt</DependentUpon>
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\CRFacturaRecibo.cs">
+      <DependentUpon>CRFacturaRecibo.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Reports\CRFacturaIntereses.cs">
       <AutoGen>True</AutoGen>
@@ -510,9 +573,13 @@
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>CREstadoCuentaPrestamo.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reports\CREstadoCuentaPrestamoDetalleArticulos.rpt">
+    <EmbeddedResource Include="Reports\CREtiquetaPrestamo.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>CREstadoCuentaPrestamoDetalleArticulos.cs</LastGenOutput>
+      <LastGenOutput>CREtiquetaPrestamo.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\CRFacturaRecibo.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>CRFacturaRecibo.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\CRFacturaIntereses.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

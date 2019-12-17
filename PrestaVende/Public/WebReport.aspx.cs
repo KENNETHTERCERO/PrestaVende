@@ -52,8 +52,8 @@ namespace PrestaVende.Public
                     }
                     
                 }
-            }//finaliza if de packing list en pdf
-            else if (Convert.ToInt32(tipo_reporte) == 2) //2 reporte de etiquetas en pdf
+            }
+            else if (Convert.ToInt32(tipo_reporte) == 2) //2 factura
             {
                 DataTable factura = new DataTable("factura");
                 string id_factura = Request.QueryString.Get("id_factura");
@@ -85,11 +85,47 @@ namespace PrestaVende.Public
                 }
 
             }
-            else if (Convert.ToInt32(tipo_reporte) == 3)//3 reporte de packing list en excel
+            else if (Convert.ToInt32(tipo_reporte) == 3)//3 estado de cuenta prestamo
+            {
+                DataTable estadoCuenta = new DataTable("estadoCuentaPrestamo");
+                string numero_prestamo = Request.QueryString.Get("numero_prestamo");
+                estadoCuenta = cs_prestamo.GetEstadoCuentaPrestamoEncabezado(ref error, numero_prestamo);
+                if (estadoCuenta.Rows.Count <= 0)
+                {
+                    error = "Error obteniendo datos de contrato." + error;
+                    throw new Exception("");
+                }
+                else
+                {
+                    try
+                    {
+                        DataTable estadoCuentaDetalle = new DataTable("estadoCuentaPrestamoDetalle");
+                        estadoCuenta = cs_prestamo.GetEstadoCuentaPrestamoEncabezado(ref error, numero_prestamo);
+                        DataTable proyeccion = new DataTable("dtProyeccion");
+                        proyeccion = cs_prestamo.getDTProyeccion(ref error);
+
+                        Reports.CREstadoCuentaPrestamo EstadoCuentaPrestamo = new Reports.CREstadoCuentaPrestamo();
+
+                        EstadoCuentaPrestamo.Load(Server.MapPath("~/Reports/CREstadoCuentaPrestamo.rpt"));
+                        EstadoCuentaPrestamo.Subreports[0].SetDataSource(proyeccion);
+                        EstadoCuentaPrestamo.SetDataSource(estadoCuenta);
+                        CrystalReportViewer1.ReportSource = EstadoCuentaPrestamo;//document;
+                        CrystalReportViewer1.DataBind();
+                        CrystalReportViewer1.RefreshReport();
+                        EstadoCuentaPrestamo.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "Estado de cuenta No." + numero_prestamo);
+                    }
+                    catch (Exception ex)
+                    {
+                        error = ex.ToString();
+                    }
+
+                }
+            }
+            else if (Convert.ToInt32(tipo_reporte) == 4)//4 etiqueta prestamo
             {
                 DataTable contrato = new DataTable("estadoCuentaPrestamo");
                 string numero_prestamo = Request.QueryString.Get("numero_prestamo");
-                contrato = cs_prestamo.GetContrato(ref error, numero_prestamo);
+                contrato = cs_prestamo.GetDataEtiquetaPrestamo(ref error, numero_prestamo);
                 if (contrato.Rows.Count <= 0)
                 {
                     error = "Error obteniendo datos de contrato." + error;
@@ -99,13 +135,13 @@ namespace PrestaVende.Public
                 {
                     try
                     {
-                        Reports.CRContratoGeneral prestamoGeneral = new Reports.CRContratoGeneral();
-                        prestamoGeneral.Load(Server.MapPath("~/Reports/CRContratoGeneral.rpt"));
-                        prestamoGeneral.SetDataSource(contrato);
-                        CrystalReportViewer1.ReportSource = prestamoGeneral;//document;
+                        Reports.CREtiquetaPrestamo Etiquetaprestamo = new Reports.CREtiquetaPrestamo();
+                        Etiquetaprestamo.Load(Server.MapPath("~/Reports/CREtiquetaPrestamo.rpt"));
+                        Etiquetaprestamo.SetDataSource(contrato);
+                        CrystalReportViewer1.ReportSource = Etiquetaprestamo;//document;
                         CrystalReportViewer1.DataBind();
                         CrystalReportViewer1.RefreshReport();
-                        prestamoGeneral.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "Estado de cuenta No." + numero_prestamo);
+                        Etiquetaprestamo.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "Etiqueta No." + numero_prestamo);
                     }
                     catch (Exception ex)
                     {
@@ -114,47 +150,38 @@ namespace PrestaVende.Public
 
                 }
             }
-             //    else if (Convert.ToInt32(tipo_reporte) == 4)//Reporte pedidos en pdf
-             //    {
-             //        pedido = new CLASS.cs_reportes_pedido();
-             //        string numero_pedido = Request.QueryString.Get("numero_pedido");
-             //        ReportDocument rpt_pedido = new ReportDocument();
-             //        DataTable dt_pedido = new DataTable("pedido");
-             //        rpt_pedido.Load(Server.MapPath("~/Public/Vista/Reports/rpt_pedido.rpt"));
-             //        dt_pedido = pedido.getAllDataPedido(ref error, numero_pedido);
-             //        rpt_pedido.SetDataSource(dt_pedido);
-             //        CrystalReportViewer1.ReportSource = rpt_pedido;
-             //        rpt_pedido.ExportToHttpResponse(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat, Response, false, "Pedido No." + numero_pedido);
-             //    }
-             //    else if (Convert.ToInt32(tipo_reporte) == 5)//Reporte pedidos en excel
-             //    {
-             //        pedido = new CLASS.cs_reportes_pedido();
-             //        string numero_pedido = Request.QueryString.Get("numero_pedido");
-             //        ReportDocument rpt_pedido = new ReportDocument();
-             //        DataTable dt_pedido = new DataTable("pedido");
-             //        rpt_pedido.Load(Server.MapPath("~/Public/Vista/Reports/rpt_pedido.rpt"));
-             //        dt_pedido = pedido.getAllDataPedido(ref error, numero_pedido);
-             //        rpt_pedido.SetDataSource(dt_pedido);
-             //        CrystalReportViewer1.ReportSource = rpt_pedido;
-             //        rpt_pedido.ExportToHttpResponse(CrystalDecisions.Shared.ExportFormatType.ExcelWorkbook, Response, false, "Pedido No." + numero_pedido);
-             //    }
-             //    else if (Convert.ToInt32(tipo_reporte) == 6)//Reporte etiquetas gramas
-             //    {
-             //        etiquetas = new CLASS.cs_etiquetas();
-             //        string numero_recoleccion = Request.QueryString.Get("numero_recoleccion");
-             //        //ReportDocument rpt_izquierda = new ReportDocument();
-             //        //ReportDocument rpt_derecha = new ReportDocument();
-             //        ReportDocument rpt_all_etiquetas_gramas = new ReportDocument();
-             //        DataTable dt_rpt_izquierda_gramas = new DataTable("dt_izquierda_gramas");
-             //        DataTable dt_rpt_derecha_gramas = new DataTable("dt_derecha_gramas");
-             //        rpt_all_etiquetas_gramas.Load(Server.MapPath("~/Public/Vista/Reports/rpt_all_etiquetas_gramas.rpt"));
-             //        dt_rpt_izquierda_gramas = etiquetas.getDataEtiquetasGramas(ref error, numero_recoleccion, "1");
-             //        dt_rpt_derecha_gramas = etiquetas.getDataEtiquetasGramas(ref error, numero_recoleccion, "2");
-             //        rpt_all_etiquetas_gramas.Subreports[0].SetDataSource(dt_rpt_derecha_gramas);
-             //        rpt_all_etiquetas_gramas.Subreports[1].SetDataSource(dt_rpt_izquierda_gramas);
-             //        CrystalReportViewer1.ReportSource = rpt_all_etiquetas_gramas;
-             //        rpt_all_etiquetas_gramas.ExportToHttpResponse(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat, Response, false, "Etiquetas de recoleccion No." + numero_recoleccion);
-             //    }
+            else if (Convert.ToInt32(tipo_reporte) == 5)//4 etiqueta prestamo
+            {
+                DataTable factura = new DataTable("DtDatos");
+                string id_factura = Request.QueryString.Get("id_factura");
+                string id_sucursal = Request.QueryString.Get("id_sucursal");
+                factura = cs_factura.ObtenerFacturaRecibo(ref error, id_factura, id_sucursal);
+
+                if (factura.Rows.Count <= 0)
+                {
+                    error = "Error obteniendo datos de contrato." + error;
+                    throw new Exception("");
+                }
+                else
+                {
+                    try
+                    {
+                        Reports.CRFacturaRecibo ReporteFactura = new Reports.CRFacturaRecibo();
+
+                        ReporteFactura.Load(Server.MapPath("~/Reports/CRFacturaRecibo.rpt"));
+                        ReporteFactura.SetDataSource(factura);
+                        CrystalReportViewer1.ReportSource = ReporteFactura;//document;
+                        CrystalReportViewer1.DataBind();
+                        CrystalReportViewer1.RefreshReport();
+                        ReporteFactura.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "");
+                    }
+                    catch (Exception ex)
+                    {
+                        error = ex.ToString();
+                    }
+
+                }
+            }
         }
     }
 }
