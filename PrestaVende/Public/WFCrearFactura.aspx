@@ -162,7 +162,7 @@
                                                         <big><asp:Label ID="lblSemanas" runat="server" Text="SEMANAS" Font-Bold="true"></asp:Label></big>
                                                     </td>
                                                     <td>
-                                                        <asp:DropDownList ID="ddlSemanas" runat="server" CssClass="form-control" OnSelectedIndexChanged="ddlSemanas_SelectedIndexChanged" AutoPostBack="True"></asp:DropDownList>
+                                                        <asp:DropDownList ID="ddlSemanas" runat="server" CssClass="form-control" Enabled="False" OnSelectedIndexChanged="ddlSemanas_SelectedIndexChanged" AutoPostBack="True"></asp:DropDownList>
                                                     </td > 
                                                     <td>
                                                         <div>
