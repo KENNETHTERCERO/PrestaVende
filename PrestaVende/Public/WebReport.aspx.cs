@@ -100,15 +100,14 @@ namespace PrestaVende.Public
                     try
                     {
                         DataTable estadoCuentaDetalle = new DataTable("estadoCuentaPrestamoDetalle");
-                        estadoCuenta = cs_prestamo.GetEstadoCuentaPrestamoDetalle(ref error, numero_prestamo);
+                        estadoCuenta = cs_prestamo.GetEstadoCuentaPrestamoEncabezado(ref error, numero_prestamo);
                         DataTable proyeccion = new DataTable("dtProyeccion");
                         proyeccion = cs_prestamo.getDTProyeccion(ref error);
 
                         Reports.CREstadoCuentaPrestamo EstadoCuentaPrestamo = new Reports.CREstadoCuentaPrestamo();
 
                         EstadoCuentaPrestamo.Load(Server.MapPath("~/Reports/CREstadoCuentaPrestamo.rpt"));
-                        EstadoCuentaPrestamo.Subreports[0].SetDataSource(estadoCuentaDetalle);
-                        EstadoCuentaPrestamo.Subreports[1].SetDataSource(proyeccion);
+                        EstadoCuentaPrestamo.Subreports[0].SetDataSource(proyeccion);
                         EstadoCuentaPrestamo.SetDataSource(estadoCuenta);
                         CrystalReportViewer1.ReportSource = EstadoCuentaPrestamo;//document;
                         CrystalReportViewer1.DataBind();
