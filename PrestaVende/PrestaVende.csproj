@@ -258,6 +258,7 @@
     <Compile Include="CLASS\cs_inventario.cs" />
     <Compile Include="CLASS\cs_liquidacion.cs" />
     <Compile Include="CLASS\cs_empresa.cs" />
+    <Compile Include="CLASS\cs_manejo_inventario.cs" />
     <Compile Include="CLASS\cs_manejo_medios.cs" />
     <Compile Include="CLASS\cs_manejo_pais.cs" />
     <Compile Include="CLASS\cs_prestamo.cs" />

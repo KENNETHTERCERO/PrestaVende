@@ -193,9 +193,8 @@
                                                 <asp:DropDownList ID="ddlArticulos" runat="server" CssClass="form-control"></asp:DropDownList>
                                             </td>
                                             <td>
-                                                <asp:Button ID="btnAgregar" runat="server" Width="200px" Text="Agregar articulo" CssClass="btn btn-info" Visible="true"/>
+                                                <asp:Button ID="btnAgregar" runat="server" Width="200px" Text="Agregar articulo" CssClass="btn btn-info" Visible="true" OnClick="btnAgregar_Click"/>
                                             </td>
-                                            
                                         </tr>
                                     </table>
                                 </div>
