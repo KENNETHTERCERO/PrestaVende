@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -9,22 +10,37 @@ namespace PrestaVende.Public
 {
     public partial class FacturacionProductos : System.Web.UI.Page
     {
+        #region variables
+        CLASS.cs_manejo_inventario cs_manejo_inventario = new CLASS.cs_manejo_inventario();
+        static string error="";
+
+        private static DataTable dtTablaArticulos;
+        #endregion
+
         protected void Page_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        protected void btnBuscar_Click(object sender, EventArgs e)
-        {
-            
-        }
-
-        protected void btnAceptCliente_Click(object sender, EventArgs e)
         {
             try
             {
-                lblIdCliente.Text = CLASS.cs_cliente.Id_cliente;
-                lblNombreCliente.Text = CLASS.cs_cliente.Nombre_cliente;
+                HttpCookie cookie = Request.Cookies["userLogin"];
+
+                if (cookie == null && CLASS.cs_usuario.id_usuario == 0)
+                {
+                    Response.Redirect("~/WFWebLogin.aspx");
+                }
+                else
+                {
+                    if (IsPostBack)
+                    {
+                        if (lblWarning.Text == "") { divWarning.Visible = false; }
+                        if (lblError.Text == "") { divError.Visible = false; }
+                        if (lblSuccess.Text == "") { divSucceful.Visible = false; }
+                    }
+                    else
+                    {
+                        dtTablaArticulos = new DataTable("tablaJoyas");
+                        ViewState["CurrentTableJoyas"] = dtTablaArticulos;
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -32,6 +48,52 @@ namespace PrestaVende.Public
             }
         }
 
+        #region funciones
+        private void getProductos()
+        {
+            try
+            {
+                DataTable dtComprobar = new DataTable();
+                dtComprobar = cs_manejo_inventario.getArticulos(ref error, txtBusqueda.Text.ToString());
+                if (dtComprobar.Rows.Count <= 0)
+                {
+                    showWarning("No se encontro ningun articulo con este numero de prestamo.");
+                }
+                else
+                {
+                    ddlArticulos.DataSource = dtComprobar;
+                    ddlArticulos.DataValueField = "id_inventario";
+                    ddlArticulos.DataTextField = "descripcion_producto";
+                    ddlArticulos.DataBind();
+                }
+            }
+            catch (Exception ex)
+            {
+                showError(ex.ToString());
+            }
+        }
+
+        private bool validaNumeroPrestamo()
+        {
+            try
+            {
+                if (txtBusqueda.Text.ToString().Length <= 0)
+                {
+                    showWarning("Debe ingresar un numero de prestamo para buscar.");
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                showError(ex.ToString());
+                return false;
+            }
+        }
+        #endregion
 
         #region messages
         private bool showWarning(string warning)
@@ -55,5 +117,38 @@ namespace PrestaVende.Public
             return true;
         }
         #endregion
+
+        protected void btnBuscar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (validaNumeroPrestamo())
+                {
+                    getProductos();
+                }
+            }
+            catch (Exception ex)
+            {
+                showError(ex.ToString());
+            }   
+        }
+
+        protected void btnAceptCliente_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                lblIdCliente.Text = CLASS.cs_cliente.Id_cliente;
+                lblNombreCliente.Text = CLASS.cs_cliente.Nombre_cliente;
+            }
+            catch (Exception ex)
+            {
+                showError(ex.ToString());
+            }
+        }
+        
+        protected void btnAgregar_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
