@@ -39,7 +39,10 @@ namespace PrestaVende.Public
         #region variables 
 
         private static string error = "";
-        private static bool isUpdate = false;    
+        private static bool isUpdate = false;
+
+        DataRow row = null;
+        private static DataTable dtTablaPrestamos;
 
         private CLASS.cs_liquidacion mLiquidacion = new CLASS.cs_liquidacion();
 
@@ -65,10 +68,30 @@ namespace PrestaVende.Public
                     }
                     else
                     {
+                        dtTablaPrestamos = new DataTable("tablaPrestamos");
+                        ViewState["CurrentTablePrestamos"] = dtTablaPrestamos;
                         hideOrShowDiv(true);
-                        getDataGrid();
+                        setColumnsPrestamo();
+                        //getDataGrid();
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                showError(ex.ToString());
+            }
+        }
+
+        private void setColumnsPrestamo()
+        {
+            try
+            {
+                dtTablaPrestamos.Columns.Add("id_prestamo_encabezado");
+                dtTablaPrestamos.Columns.Add("numero_prestamo");
+                dtTablaPrestamos.Columns.Add("total_prestamo");
+                dtTablaPrestamos.Columns.Add("saldo_prestamo");
+                dtTablaPrestamos.Columns.Add("estado_prestamo");
+                
             }
             catch (Exception ex)
             {
@@ -107,7 +130,8 @@ namespace PrestaVende.Public
                   if (insertLiquidacion())
                   {
                       hideOrShowDiv(true);
-                      getDataGrid();
+                    //addArticuloJoya();
+                    //getDataGrid();
                   }
 
             }
@@ -134,7 +158,7 @@ namespace PrestaVende.Public
             {
                 int contadorError = 0;
                 DataTable DtLiquidacionPrestamo = new DataTable();
-                DtLiquidacionPrestamo = mLiquidacion.getPrestamos(ref error);
+                DtLiquidacionPrestamo = mLiquidacion.getPrestamos(ref error, txtBusquedaPrestamo.Text.ToString());
 
                 foreach (DataRow item in DtLiquidacionPrestamo.Rows)
                 {
@@ -149,8 +173,9 @@ namespace PrestaVende.Public
                 }
 
                 if (contadorError == 0)
-                { showSuccess("Prestamos liquidados exitosamente.");
-                    getDataGrid();
+                { showSuccess("Prestamo liquidado exitosamente.");
+                    addArticuloJoya();
+                    //getDataGrid();
                 }
               
                 return true;
@@ -162,18 +187,98 @@ namespace PrestaVende.Public
             }
         }
         
-        private void getDataGrid()
+        //private void getDataGrid()
+        //{
+        //    try
+        //    {
+        //      GrdVLiquidacion.DataSource = mLiquidacion.getPrestamos(ref error, txtBusquedaPrestamo.Text.ToString());
+        //      GrdVLiquidacion.DataBind();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        showError(ex.ToString());
+        //    }
+        //}
+
+
+        private void addArticuloJoya()
         {
             try
             {
-              GrdVLiquidacion.DataSource = mLiquidacion.getPrestamos(ref error);
-              GrdVLiquidacion.DataBind();
+                 DataTable dtTabla = new DataTable();
+
+                if (ViewState["CurrentTablePrestamos"] != null)
+                {
+                    dtTabla = mLiquidacion.getPrestamos(ref error, txtBusquedaPrestamo.Text.ToString());
+
+                    row = dtTablaPrestamos.NewRow();
+
+                    if (dtTabla.Rows.Count > 0)
+                    {
+                        foreach (DataRow item in dtTabla.Rows)
+                        {
+                            row["id_prestamo_encabezado"] = item[0].ToString();
+                            row["numero_prestamo"] = item[1].ToString();
+                            row["total_prestamo"] = item[2].ToString();
+                            row["saldo_prestamo"] = item[3].ToString();
+                            row["estado_prestamo"] = item[4].ToString();
+                        }
+
+                        dtTablaPrestamos.Rows.Add(row);
+                        ViewState["CurrentTableJoyas"] = dtTablaPrestamos;
+
+                        GrdVLiquidacion.DataSource = dtTablaPrestamos;
+                        GrdVLiquidacion.DataBind();
+                    }
+                    else
+                    {
+                        showWarning("Prestamo No Existe o No esta Activo.");
+                    }                    
+                }
+                else
+                {
+                    DataTable test = (DataTable)ViewState["CurrentTablePrestamos"];
+                    DataRow drCurrectRow = null;
+
+                    dtTabla = mLiquidacion.getPrestamos(ref error, txtBusquedaPrestamo.Text.ToString());
+
+                    drCurrectRow = dtTablaPrestamos.NewRow();
+
+                    if (dtTabla.Rows.Count > 0)
+                    {
+
+                        foreach (DataRow item in dtTabla.Rows)
+                        {
+                            drCurrectRow["id_prestamo_encabezado"] = item[0].ToString();
+                            drCurrectRow["numero_prestamo"] = item[0].ToString();
+                            drCurrectRow["total_prestamo"] = item[0].ToString();
+                            drCurrectRow["saldo_prestamo"] = item[0].ToString();
+                            drCurrectRow["estado_prestamo"] = item[0].ToString();
+                        }
+
+
+                        test.Rows.Add(drCurrectRow);
+                        ViewState["CurrentTablePrestamos"] = test;
+
+                        GrdVLiquidacion.DataSource = test;
+                        GrdVLiquidacion.DataBind();
+                    }
+                    else
+                    {
+                        showWarning("Prestamo No Existe o No esta Activo.");
+                    }
+                }
             }
             catch (Exception ex)
             {
                 showError(ex.ToString());
             }
-        }     
+        }
+
+        protected void btnBuscarPrestamo_Click(object sender, EventArgs e)
+        {
+            addArticuloJoya();
+        }
     }
 
 }

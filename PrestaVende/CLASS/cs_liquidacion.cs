@@ -11,7 +11,7 @@ namespace PrestaVende.CLASS
         private cs_connection connection = new cs_connection();
         private SqlCommand command = new SqlCommand();
 
-        public DataTable getPrestamos(ref string error)
+        public DataTable getPrestamos(ref string error, string NumeroPrestamo)
         {
             try
             {
@@ -24,9 +24,10 @@ namespace PrestaVende.CLASS
                                        + " inner join tbl_estado_prestamo c "
                                        + "     on a.estado_prestamo = c.id_estado_prestamo "
                                        + " where a.id_sucursal = @id_sucursal "
-                                       + " and a.estado_prestamo in (1,4)";
+                                       + " and a.estado_prestamo in (1,4) and a.numero_prestamo = @numero_prestamo";
                 command.Parameters.AddWithValue("@id_sucursal", CLASS.cs_usuario.id_sucursal);
-                Liquidacion.Load(command.ExecuteReader());
+                command.Parameters.AddWithValue("@numero_prestamo", NumeroPrestamo);
+                Liquidacion.Load(command.ExecuteReader()); 
                 return Liquidacion;
             }
             catch (Exception ex)
