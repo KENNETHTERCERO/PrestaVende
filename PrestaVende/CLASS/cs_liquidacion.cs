@@ -24,6 +24,7 @@ namespace PrestaVende.CLASS
                                        + " inner join tbl_estado_prestamo c "
                                        + "     on a.estado_prestamo = c.id_estado_prestamo "
                                        + " where a.id_sucursal = @id_sucursal "
+                                       + " and (CAST(a.fecha_proximo_pago AS datetime) + b.dias_para_liquidar) < getdate() "
                                        + " and a.estado_prestamo in (1,4) and a.numero_prestamo = @numero_prestamo";
                 command.Parameters.AddWithValue("@id_sucursal", CLASS.cs_usuario.id_sucursal);
                 command.Parameters.AddWithValue("@numero_prestamo", NumeroPrestamo);

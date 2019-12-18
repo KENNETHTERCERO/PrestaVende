@@ -157,12 +157,12 @@ namespace PrestaVende.Public
             try
             {
                 int contadorError = 0;
-                DataTable DtLiquidacionPrestamo = new DataTable();
-                DtLiquidacionPrestamo = mLiquidacion.getPrestamos(ref error, txtBusquedaPrestamo.Text.ToString());
+                //DataTable DtLiquidacionPrestamo = new DataTable();
+                //DtLiquidacionPrestamo = mLiquidacion.getPrestamos(ref error, txtBusquedaPrestamo.Text.ToString());
 
-                foreach (DataRow item in DtLiquidacionPrestamo.Rows)
+                foreach (GridViewRow item in GrdVLiquidacion.Rows)
                 {
-                    if (mLiquidacion.insertLiquidacion(ref error, item[0].ToString()))
+                    if (mLiquidacion.insertLiquidacion(ref error, item.Cells[0].Text.ToString()))
                     {
                     }
                     else
@@ -173,8 +173,9 @@ namespace PrestaVende.Public
                 }
 
                 if (contadorError == 0)
-                { showSuccess("Prestamo liquidado exitosamente.");
-                    addArticuloJoya();
+                { showSuccess("Prestamos liquidados exitosamente.");
+                    GrdVLiquidacion.DataSource = null;
+                    GrdVLiquidacion.DataBind();
                     //getDataGrid();
                 }
               
@@ -201,7 +202,7 @@ namespace PrestaVende.Public
         //}
 
 
-        private void addArticuloJoya()
+        private void addPrestamo()
         {
             try
             {
@@ -232,7 +233,7 @@ namespace PrestaVende.Public
                     }
                     else
                     {
-                        showWarning("Prestamo No Existe o No esta Activo.");
+                        showWarning("Prestamo No Disponible para Liquidar.");
                     }                    
                 }
                 else
@@ -277,7 +278,7 @@ namespace PrestaVende.Public
 
         protected void btnBuscarPrestamo_Click(object sender, EventArgs e)
         {
-            addArticuloJoya();
+            addPrestamo();
         }
     }
 
