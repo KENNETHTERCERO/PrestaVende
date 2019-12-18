@@ -60,15 +60,21 @@
                                                             <h1>Mantenimiento Liquidaciones &nbsp;&nbsp;</h1>
                                                         </td>
                                                         <td></td>
+
+                                                        <td>
+                                                    <asp:TextBox ID="txtBusquedaPrestamo" runat="server" class="form-control" Width="300px"></asp:TextBox>
+                                                </td>
+                                                <td>
+                                                    <asp:Button ID="btnBuscarPrestamo" runat="server" class="btn btn-success" OnClick="btnBuscarPrestamo_Click" Text="Agregar Prestamo" />
+                                                </td>
                                                     </tr>
                                                 </table>
                                             </div>
                             </div>
+                                                               
                             <div class="panel-body" >
                                 <center>
-                                    <br />
-                                    <br />
-                                    
+                                                                                                         
                                     <div id="div_gridView" runat="server" visible ="false">
                                         <br />
                                         <table>

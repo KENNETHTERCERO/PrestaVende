@@ -112,6 +112,24 @@ namespace PrestaVende.Public {
         protected global::System.Web.UI.WebControls.Label lblSuccess;
         
         /// <summary>
+        /// txtBusquedaPrestamo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtBusquedaPrestamo;
+        
+        /// <summary>
+        /// btnBuscarPrestamo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnBuscarPrestamo;
+        
+        /// <summary>
         /// div_gridView control.
         /// </summary>
         /// <remarks>
