@@ -215,7 +215,7 @@
                                                             <asp:ButtonField ButtonType="Button" ControlStyle-CssClass="btn btn-danger" FooterStyle-BackColor="#ff9a32" CommandName="borrar" HeaderText="<center>Borrar</center>" Text="X" >
                                                             <FooterStyle BackColor="#FF9A32" />
                                                             </asp:ButtonField>
-                                                            <asp:BoundField DataField="id_producto"         HeaderText="<center>ID</center>"                SortExpression="id_producto"        HtmlEncode="false"/>
+                                                            <asp:BoundField DataField="id_inventario"         HeaderText="<center>ID</center>"                SortExpression="id_inventario"        HtmlEncode="false"/>
                                                             <asp:BoundField DataField="numero_linea"        HeaderText="<center>Linea</center>"             SortExpression="numero_linea"          HtmlEncode="false"/>
                                                             <asp:BoundField DataField="producto"            HeaderText="<center>Producto</center>"          SortExpression="producto"           HtmlEncode="false" />
                                                             <asp:BoundField DataField="marca"               HeaderText="<center>Marca</center>"             SortExpression="marca"              HtmlEncode="false" />

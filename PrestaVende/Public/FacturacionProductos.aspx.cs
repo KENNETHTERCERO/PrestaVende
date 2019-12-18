@@ -15,6 +15,7 @@ namespace PrestaVende.Public
         static string error="";
 
         private static DataTable dtTablaArticulos;
+        DataRow row = null;
         #endregion
 
         protected void Page_Load(object sender, EventArgs e)
@@ -39,6 +40,7 @@ namespace PrestaVende.Public
                     {
                         dtTablaArticulos = new DataTable("tablaJoyas");
                         ViewState["CurrentTableJoyas"] = dtTablaArticulos;
+                        setColumnsArticulo();
                     }
                 }
             }
@@ -91,6 +93,56 @@ namespace PrestaVende.Public
             {
                 showError(ex.ToString());
                 return false;
+            }
+        }
+
+        private void AgregaArticuloAGrid()
+        {
+            try
+            {
+                if (ViewState["CurrentTableJoyas"] != null)
+                {
+                    DataTable ArticuloCompleto = new DataTable("TablaArticuloCompleto");
+
+                    ArticuloCompleto = cs_manejo_inventario.getArticuloEspecifico(ref error, txtBusqueda.Text.ToString(), ddlArticulos.SelectedValue.ToString());
+
+                    foreach (DataRow item in ArticuloCompleto.Rows)
+                    {
+                        row = dtTablaArticulos.NewRow();
+                        row["id_inventario"] = item[0].ToString();
+                        row["numero_linea"] = item[1].ToString();
+                        row["producto"] = item[2].ToString();
+                        row["marca"] = item[3].ToString();
+                        row["valor"] = item[4].ToString();
+                        row["caracteristicas"] = item[5].ToString();
+                    }
+
+                    dtTablaArticulos.Rows.Add(row);
+                    ViewState["CurrentTableJoyas"] = dtTablaArticulos;
+                    gvProductoFacturar.DataSource = dtTablaArticulos;
+                    gvProductoFacturar.DataBind();
+                }
+            }
+            catch (Exception ex)
+            {
+                showError(ex.ToString());
+            }
+        }
+
+        private void setColumnsArticulo()
+        {
+            try
+            {
+                dtTablaArticulos.Columns.Add("id_inventario");
+                dtTablaArticulos.Columns.Add("numero_linea");
+                dtTablaArticulos.Columns.Add("producto");
+                dtTablaArticulos.Columns.Add("marca");
+                dtTablaArticulos.Columns.Add("valor");
+                dtTablaArticulos.Columns.Add("caracteristicas");
+            }
+            catch (Exception ex)
+            {
+                showError(ex.ToString());
             }
         }
         #endregion
@@ -148,7 +200,7 @@ namespace PrestaVende.Public
         
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
-
+            AgregaArticuloAGrid();
         }
     }
 }

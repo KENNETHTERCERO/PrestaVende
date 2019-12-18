@@ -1181,7 +1181,7 @@ namespace PrestaVende.Public
 
         protected void btnProyeccion_Click(object sender, EventArgs e)
         {
-
+            getDataProyeccion("");
         }
 
         protected void ddlTipo_SelectedIndexChanged(object sender, EventArgs e)
