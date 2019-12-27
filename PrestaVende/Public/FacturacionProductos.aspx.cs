@@ -145,6 +145,45 @@ namespace PrestaVende.Public
                 showError(ex.ToString());
             }
         }
+
+        private void crearFactura()
+        {
+            try
+            {
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        private bool validaDatos()
+        {
+            try
+            {
+                if (lblIdCliente.Text.ToString().Length <= 0)
+                {
+                    showWarning("Usted no ha seleccionado un cliente.");
+                    return false;
+                }
+                else if (gvProductoFacturar.Rows.Count <= 0)
+                {
+                    showWarning("Se deben agregar los productos antes de facturar.");
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                showError(ex.ToString());
+                return false;
+            }
+        }
         #endregion
 
         #region messages
