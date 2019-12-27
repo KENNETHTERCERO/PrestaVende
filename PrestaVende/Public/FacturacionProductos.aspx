@@ -125,7 +125,7 @@
                                 <br />
                                 <br />
                                 <br />
-                                <asp:Button ID="tbnFacturar" runat="server" Width="200px" Text="Facturar" CssClass="btn btn-primary" Visible="true"/>
+                                <asp:Button ID="tbnFacturar" runat="server" Width="200px" Text="Facturar" CssClass="btn btn-primary" Visible="true" OnClick="tbnFacturar_Click"/>
                                 <br />
                                 <br />
                                 <br />

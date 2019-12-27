@@ -202,5 +202,10 @@ namespace PrestaVende.Public
         {
             AgregaArticuloAGrid();
         }
+
+        protected void tbnFacturar_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
