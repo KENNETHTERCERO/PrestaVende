@@ -65,17 +65,11 @@ namespace PrestaVende.CLASS
             }
         }
 
-        public string GuardarFactura(ref string error, DataSet DatosFactura, string id_serie, string id_cliente, string id_tipo_transaccion, int id_caja, string numero_prestamo, string abono)
+        public bool GuardarFactura(ref string error, DataTable detalleFactura, string[] encabezado, ref int id_factura_encabezado)
         {
-            bool Resultado = false;
-            int id_factura_encabezado = 0;
-
             try
             {
                 string numero_factura = "";
-                string fecha_proximo_pago = "";
-                string fecha_ultimo_pago = "";
-                string[] encabezado = new string[12];
 
                 connection.connection.Open();
                 command.Connection = connection.connection;
@@ -84,71 +78,54 @@ namespace PrestaVende.CLASS
 
                 command.CommandText = "SELECT correlativo + 1 FROM tbl_serie WHERE id_sucursal = @id_sucursal and id_serie = @id_serie";
                 command.Parameters.AddWithValue("@id_sucursal", CLASS.cs_usuario.id_sucursal);
-                command.Parameters.AddWithValue("@id_serie", id_serie);
+                command.Parameters.AddWithValue("@id_serie", encabezado[0]);
                 numero_factura = command.ExecuteScalar().ToString();
-
-                encabezado[0] = id_serie;
-                encabezado[1] = numero_factura;
-                encabezado[2] = id_cliente;
-                encabezado[3] = DatosFactura.Tables[1].Rows[0]["Total"].ToString().Replace(",", ".");
-                encabezado[4] = DatosFactura.Tables[1].Rows[0]["SubTotal"].ToString().Replace(",", ".");
-                encabezado[5] = DatosFactura.Tables[1].Rows[0]["IVA"].ToString().Replace(",", ".");
-                encabezado[6] = id_tipo_transaccion;
-                encabezado[7] = id_caja.ToString();
-                encabezado[8] = numero_prestamo;
-                encabezado[9] = (id_tipo_transaccion == "9") ? abono : "0";
-                encabezado[10] = (id_tipo_transaccion == "10") ? abono : "0";
-                fecha_proximo_pago = DatosFactura.Tables[0].Rows[0]["calculo_fecha_proximo_pago"].ToString();
-                fecha_ultimo_pago = DatosFactura.Tables[0].Rows[0]["calculo_fecha_ultimo_pago"].ToString();
 
                 id_factura_encabezado = insert_factura_encabezado(ref error, encabezado);
 
                 if (id_factura_encabezado > 0)
                 {
-                    if (insert_factura_detalle(ref error, DatosFactura.Tables[0], id_factura_encabezado.ToString(), numero_prestamo))
+                    if (insert_factura_detalle(ref error, detalleFactura, id_factura_encabezado.ToString()))
                     {
-                        if (insert_transaccion(ref error, encabezado[3].ToString(), numero_prestamo, id_caja.ToString(), id_tipo_transaccion, numero_factura, id_serie, abono))
+                        if (insert_transaccion(ref error, encabezado[3].ToString(), numero_factura, encabezado[0]))
                         {
-                            if (update_saldo_caja(ref error, encabezado[3].ToString(), abono))
+                            if (update_saldo_caja(ref error, encabezado[3].ToString()))
                             {
-                                if (update_prestamo(ref error, numero_prestamo, abono, id_tipo_transaccion, fecha_proximo_pago, fecha_ultimo_pago))
+                                if (update_Inventario(ref error, detalleFactura, encabezado[0], numero_factura))
                                 {
-                                    if (update_correlativo_serie(ref error, id_serie, numero_factura))
+                                    if (update_correlativo_serie(ref error, encabezado[0], numero_factura))
                                     {
                                         command.Transaction.Commit();
-                                        Resultado = true;
+                                        return true;
                                     }
                                     else
-                                        throw new Exception("No se pudo actualizar el correlativo de factura.");
+                                        throw new Exception("No se pudo actualizar el correlativo de factura. " + error);
                                 }
                                 else
-                                    throw new Exception("No se pudo actualizar el prestamo.");
+                                    throw new Exception("No se pudo actualizar el inventario. " + error);
                             }
                             else
-                                throw new Exception("No se pudo actualizar el saldo de la caja.");
+                                throw new Exception("No se pudo actualizar el saldo de la caja. " + error);
                         }
                         else
-                            throw new Exception("No se pudo insertar transaccion de la factura.");
+                            throw new Exception("No se pudo insertar transaccion de la factura. " + error);
                     }
                     else
-                        throw new Exception("No se pudo insertar detalle de factura.");
+                        throw new Exception("No se pudo insertar detalle de factura. " + error);
                 }
                 else
-                    throw new Exception("No se pudo insertar encabezado de factura.");
+                    throw new Exception("No se pudo insertar encabezado de factura. " + error);
             }
             catch (Exception ex)
             {
                 error = ex.ToString();
-                Resultado = false;
                 command.Transaction.Rollback();
-                return string.Empty;
+                return false;
             }
             finally
             {
                 connection.connection.Close();
             }
-
-            return Convert.ToString(id_factura_encabezado);
         }
 
         private int insert_factura_encabezado(ref string error, string[] datosEnc)
@@ -200,7 +177,7 @@ namespace PrestaVende.CLASS
             }
         }
 
-        private bool insert_factura_detalle(ref string error, DataTable detalle, string id_factura_encabezado, string numero_prestamo)
+        private bool insert_factura_detalle(ref string error, DataTable detalle, string id_factura_encabezado)
         {
             try
             {
@@ -209,9 +186,8 @@ namespace PrestaVende.CLASS
                 foreach (DataRow item in detalle.Rows)
                 {
                     comando = "INSERT INTO tbl_factura_detalle (id_factura_encabezado, numero_prestamo, numero_linea, cantidad, precio, total_fila, sub_total_fila, iva_fila, bien_servicio, descripcion_detalle) " +
-                        $"VALUES({id_factura_encabezado}, {numero_prestamo}, {(inserts + 1).ToString()}, {item["Cantidad"].ToString()}, {item["Precio"].ToString()}, {item["SubTotal"].ToString()}" +
-                        $",{(decimal.Parse(item["SubTotal"].ToString()) - decimal.Parse(item["IVA"].ToString())).ToString()}, {item["IVA"].ToString()}, 'S', '{item["cargo"].ToString()}')";
-
+                        $"VALUES({id_factura_encabezado}, {item["numero_prestamo"].ToString()}, {item["numero_linea"].ToString()}, 1, {item["valor"].ToString()}, {item["valor"].ToString()}" +
+                        $",{item["subTotal"].ToString()}, {item["IVA"].ToString()}, 'B', '{item["caracteristicas"].ToString()}')";
 
                     command.CommandText = comando;
                     inserts += command.ExecuteNonQuery();
@@ -229,52 +205,26 @@ namespace PrestaVende.CLASS
             }
         }
 
-        private bool insert_transaccion(ref string error, string monto, string numero_prestamo, string id_caja, string id_tipo_transaccion, string numero_factura, string id_serie, string abono)
+        private bool insert_transaccion(ref string error, string monto, string numero_factura, string id_serie)
         {
             try
             {
                 command.Parameters.Clear();
                 int insert = 0;
-                command.CommandText = "INSERT INTO tbl_transaccion (id_tipo_transaccion, id_caja, monto, numero_prestamo, estado_transaccion, fecha_transaccion, usuario, movimiento_saldo, numero_factura, id_serie, id_sucursal) " +
-                                                                "VALUES(@id_tipo_transaccion, @id_caja, @monto, @numero_prestamo_transaccion, 1, GETDATE(), @usuario_transaccion, " +
-                                                                "(SELECT saldo + @monto FROM tbl_caja WHERE id_caja = @id_caja), @numero_factura, @id_serie, @id_sucursal)";
-                command.Parameters.AddWithValue("@id_tipo_transaccion", "8");
-                command.Parameters.AddWithValue("@id_caja", id_caja);
+                command.CommandText = "INSERT INTO tbl_transaccion (id_tipo_transaccion,    id_caja,    monto,  estado_transaccion, fecha_transaccion,      usuario,            movimiento_saldo,                                             numero_factura,   id_serie,   id_sucursal) " +
+                                                           "VALUES(@id_tipo_transaccion,    @id_caja,   @monto,         1,              GETDATE(),      @usuario_transaccion, (SELECT saldo + @monto FROM tbl_caja WHERE id_caja = @id_caja), @numero_factura,  @id_serie, @id_sucursal)";
+                command.Parameters.AddWithValue("@id_tipo_transaccion", "13");
+                command.Parameters.AddWithValue("@id_caja", cs_usuario.id_caja);
                 command.Parameters.AddWithValue("@id_serie", id_serie);
                 command.Parameters.AddWithValue("@numero_factura", numero_factura);
                 command.Parameters.AddWithValue("@monto", monto);
-                command.Parameters.AddWithValue("@numero_prestamo_transaccion", numero_prestamo);
                 command.Parameters.AddWithValue("@usuario_transaccion", cs_usuario.usuario);
                 command.Parameters.AddWithValue("@id_sucursal", cs_usuario.id_sucursal);
                 insert = command.ExecuteNonQuery();
 
                 if (insert > 0)
                 {
-                    if (id_tipo_transaccion == "9" || id_tipo_transaccion == "10")
-                    {
-                        command.Parameters.Clear();
-                        int insert2 = 0;
-                        command.CommandText = "INSERT INTO tbl_transaccion (id_tipo_transaccion, id_caja, monto, numero_prestamo, estado_transaccion, fecha_transaccion, usuario, movimiento_saldo, numero_factura, id_serie, id_sucursal) " +
-                                                                        "VALUES(@id_tipo_transaccion, @id_caja, @abono, @numero_prestamo_transaccion, 1, GETDATE(), @usuario_transaccion, " +
-                                                                        "(SELECT saldo + @monto + @abono FROM tbl_caja WHERE id_caja = @id_caja), @numero_factura, @id_serie, @id_sucursal)";
-                        command.Parameters.AddWithValue("@id_tipo_transaccion", id_tipo_transaccion);
-                        command.Parameters.AddWithValue("@id_caja", id_caja);
-                        command.Parameters.AddWithValue("@id_serie", id_serie);
-                        command.Parameters.AddWithValue("@numero_factura", numero_factura);
-                        command.Parameters.AddWithValue("@abono", abono);
-                        command.Parameters.AddWithValue("@monto", monto);
-                        command.Parameters.AddWithValue("@numero_prestamo_transaccion", numero_prestamo);
-                        command.Parameters.AddWithValue("@usuario_transaccion", cs_usuario.usuario);
-                        command.Parameters.AddWithValue("@id_sucursal", cs_usuario.id_sucursal);
-                        insert2 = command.ExecuteNonQuery();
-
-                        if (insert2 > 0)
-                            return true;
-                        else
-                            return false;
-                    }
-                    else
-                        return true;
+                    return true;
                 }
                 else
                     return false;
@@ -286,15 +236,14 @@ namespace PrestaVende.CLASS
             }
         }
 
-        private bool update_saldo_caja(ref string error, string monto, string abono)
+        private bool update_saldo_caja(ref string error, string monto)
         {
             try
             {
                 int update = 0;
                 command.Parameters.Clear();
-                command.CommandText = "UPDATE tbl_caja SET saldo = saldo + @monto_update + @abono WHERE id_caja = @id_caja_update";
+                command.CommandText = "UPDATE tbl_caja SET saldo = saldo + @monto_update WHERE id_caja = @id_caja_update";
                 command.Parameters.AddWithValue("@monto_update", monto);
-                command.Parameters.AddWithValue("@abono", abono);
                 command.Parameters.AddWithValue("@id_caja_update", cs_usuario.id_caja);
 
                 update = command.ExecuteNonQuery();
@@ -310,30 +259,25 @@ namespace PrestaVende.CLASS
             }
         }
 
-        private bool update_prestamo(ref string error, string numero_prestamo, string abono, string id_tipo_transaccion, string fecha_proximo_pago, string fecha_ultimo_pago)
+        private bool update_Inventario(ref string error, DataTable detalle, string id_serie, string numero_factura)
         {
             try
             {
-                string estado_prestamo = (id_tipo_transaccion == "10") ? "2" : "1";
+                string comando = "";
+                int inserts = 0;
+                foreach (DataRow item in detalle.Rows)
+                {
+                    comando = $"UPDATE tbl_inventario SET estado_inventario = 1, fecha_vendido = GETDATE(), id_serie = {id_serie}, numero_factura = {numero_factura} " + 
+                                $"WHERE id_inventario = {item["id_inventario"].ToString()}";
 
-                int update = 0;
-                command.Parameters.Clear();
-                command.CommandText = "UPDATE tbl_prestamo_encabezado SET fecha_proximo_pago = CONVERT(DATE,@fecha_proximo_pago,103), " +
-                                      "fecha_modificacion_prestamo = GETDATE(),fecha_ultimo_pago = CONVERT(DATE,@fecha_ultimo_pago,103), saldo_prestamo = saldo_prestamo - @abono, " +
-                                      "estado_prestamo = @estado_prestamo " +
-                                      "WHERE id_sucursal = @id_sucursal AND numero_prestamo = @numero_prestamo";
-                command.Parameters.AddWithValue("@numero_prestamo", numero_prestamo);
-                command.Parameters.AddWithValue("@id_sucursal", cs_usuario.id_sucursal);
-                command.Parameters.AddWithValue("@abono", abono);
-                command.Parameters.AddWithValue("@estado_prestamo", estado_prestamo);
-                command.Parameters.AddWithValue("@fecha_proximo_pago", fecha_proximo_pago);
-                command.Parameters.AddWithValue("@fecha_ultimo_pago", fecha_ultimo_pago);
+                    command.CommandText = comando;
+                    inserts += command.ExecuteNonQuery();
+                }
 
-                update = command.ExecuteNonQuery();
-                if (update > 0)
-                    return true;
-                else
+                if (inserts != detalle.Rows.Count)
                     return false;
+                else
+                    return true;
             }
             catch (Exception ex)
             {

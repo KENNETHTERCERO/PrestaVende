@@ -172,7 +172,7 @@
                                                 <big><asp:Label ID="lblIdCliente" runat="server">&nbsp;&nbsp;</asp:Label></big>
                                             </td>
                                             <td>
-                                                <big><asp:Label ID="lblNombreCliente" runat="server">&nbsp;&nbsp;</asp:Label></big>
+                                                <big><asp:Label ID="lblNombreCliente" runat="server"></asp:Label></big>
                                             </td>
                                         </tr>
                                         <tr>
@@ -184,16 +184,39 @@
                                                 </td>
                                             <td>
                                                 <asp:Button ID="btnBuscar" runat="server" Width="200px" Text="Buscar articulos" CssClass="btn btn-success" Visible="true" OnClick="btnBuscar_Click"/>
-                                                </td>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td>
+                                                <big><asp:Label ID="articulos" runat="server" Text="ARTICULOS:"></asp:Label></big>
                                             </td>
                                             <td>
                                                 <asp:DropDownList ID="ddlArticulos" runat="server" CssClass="form-control"></asp:DropDownList>
                                             </td>
                                             <td>
                                                 <asp:Button ID="btnAgregar" runat="server" Width="200px" Text="Agregar articulo" CssClass="btn btn-info" Visible="true" OnClick="btnAgregar_Click"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <big><asp:Label ID="lblSerie" runat="server" Text="SERIE:"></asp:Label></big>
+                                            </td>
+                                            <td>
+                                                <asp:DropDownList ID="ddlSerie" runat="server" CssClass="form-control" OnSelectedIndexChanged="ddlSerie_SelectedIndexChanged"></asp:DropDownList>
+                                            </td>
+                                            <td>
+                                                <center><big><asp:Label ID="lblNumeroFactura" runat="server" Text="0"></asp:Label></big></center>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <big><asp:Label ID="lblTotalFactura" runat="server" Text="TOTAL FACTURA:"></asp:Label></big>
+                                            </td>
+                                            <td>
+                                                <center><big><asp:Label ID="lblTotalFacturaNumero" runat="server" Text="0"></asp:Label></big></center>
+                                            </td>
+                                            <td>
+                                                
                                             </td>
                                         </tr>
                                     </table>
@@ -217,6 +240,7 @@
                                                             </asp:ButtonField>
                                                             <asp:BoundField DataField="id_inventario"         HeaderText="<center>ID</center>"                SortExpression="id_inventario"        HtmlEncode="false"/>
                                                             <asp:BoundField DataField="numero_linea"        HeaderText="<center>Linea</center>"             SortExpression="numero_linea"          HtmlEncode="false"/>
+                                                            <asp:BoundField DataField="numero_prestamo"        HeaderText="<center>Numero Prestamo</center>"             SortExpression="numero_prestamo"          HtmlEncode="false"/>
                                                             <asp:BoundField DataField="producto"            HeaderText="<center>Producto</center>"          SortExpression="producto"           HtmlEncode="false" />
                                                             <asp:BoundField DataField="marca"               HeaderText="<center>Marca</center>"             SortExpression="marca"              HtmlEncode="false" />
                                                             <asp:BoundField DataField="valor"               HeaderText="<center>Valor</center>"             SortExpression="valor"              HtmlEncode="false" />
