@@ -140,6 +140,7 @@
     <Content Include="Public\WFMantAreaEmpresa.aspx" />
     <Content Include="Public\WFMantenimientoAsignacionCaja.aspx" />
     <Content Include="Public\WFPrestamo.aspx" />
+    <Content Include="Public\WFRetiroArticulo.aspx" />
     <Content Include="WebLogin.aspx" />
     <Content Include="DATASET\DSContratoPrestamo.xsc">
       <DependentUpon>DSContratoPrestamo.xsd</DependentUpon>
@@ -513,6 +514,13 @@
     </Compile>
     <Compile Include="Public\WFPrincipal.aspx.designer.cs">
       <DependentUpon>WFPrincipal.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\WFRetiroArticulo.aspx.cs">
+      <DependentUpon>WFRetiroArticulo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\WFRetiroArticulo.aspx.designer.cs">
+      <DependentUpon>WFRetiroArticulo.aspx</DependentUpon>
     </Compile>
     <Compile Include="Reports\CRContratoGeneral.cs">
       <AutoGen>True</AutoGen>
