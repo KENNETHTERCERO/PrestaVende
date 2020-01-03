@@ -112,16 +112,16 @@ namespace PrestaVende.Public
                     foreach (DataRow item in ArticuloCompleto.Rows)
                     {
                         row = dtTablaArticulos.NewRow();
-                        row["id_inventario"] = item[0].ToString();
-                        row["numero_linea"] = item[1].ToString();
-                        row["numero_prestamo"] = item[2].ToString();
-                        row["producto"] = item[3].ToString();
-                        row["marca"] = item[4].ToString();
-                        row["monto_prestado"] = item[5].ToString();
-                        row["valor"] = item[6].ToString();
-                        row["caracteristicas"] = item[7].ToString();
-                        row["subTotal"] = item[8].ToString();
-                        row["IVA"] = item[9].ToString();
+                        row["id_inventario"] = item["id_inventario"].ToString();
+                        row["numero_linea"] = item["numero_linea"].ToString();
+                        row["numero_prestamo"] = item["numero_prestamo"].ToString();
+                        row["producto"] = item["producto"].ToString();
+                        row["marca"] = item["marca"].ToString();
+                        row["monto_prestado"] = item["monto_prestado"].ToString();
+                        row["valor"] = item["valor"].ToString();
+                        row["caracteristicas"] = item["caracteristicas"].ToString();
+                        row["subTotal"] = item["subTotal"].ToString();
+                        row["IVA"] = item["IVA"].ToString();
                     }
 
                     dtTablaArticulos.Rows.Add(row);
@@ -253,7 +253,7 @@ namespace PrestaVende.Public
                 {
                     foreach (DataRow item in dtTablaArticulos.Rows)
                     {
-                        totalFactura += Convert.ToDecimal(item[5].ToString());
+                        totalFactura += Convert.ToDecimal(item["valor"].ToString());
                     }
                     lblTotalFacturaNumero.Text = totalFactura.ToString();
                 }
@@ -288,6 +288,87 @@ namespace PrestaVende.Public
             catch (Exception ex)
             {
                 showWarning(ex.ToString() + " " + error);
+            }
+        }
+
+        private void aplicarDescuento()
+        {
+            try
+            {
+                decimal montoFila = 0, porcentaje = 0, montoDescuento = 0;
+                if (gvProductoFacturar.Rows.Count > 0)
+                {
+                    foreach (GridViewRow item in gvProductoFacturar.Rows)
+                    {
+                        porcentaje = 0;
+                        porcentaje = Math.Round(Convert.ToDecimal(item.Cells[7].Text.ToString()) / Convert.ToDecimal(lblTotalFacturaNumero.Text.ToString()), 4);
+                        montoDescuento = porcentaje * Convert.ToDecimal(txtMontoARecalcular.Text.ToString());
+                        montoFila = Convert.ToDecimal(item.Cells[7].Text.ToString()) - montoDescuento;
+                        montoFila = Math.Round(montoFila, 2);
+                        item.Cells[7].Text = montoFila.ToString();
+                    }
+                    montoFila = 0;
+                    porcentaje = 0;
+                    montoDescuento = 0;
+
+                    foreach (DataRow item in dtTablaArticulos.Rows)
+                    {
+                        porcentaje = 0;
+                        porcentaje = Math.Round(Convert.ToDecimal(item["valor"].ToString()) / Convert.ToDecimal(lblTotalFacturaNumero.Text.ToString()), 4);
+                        montoDescuento = porcentaje * Convert.ToDecimal(txtMontoARecalcular.Text.ToString());
+                        montoFila = Convert.ToDecimal(item["valor"].ToString()) - montoDescuento;
+                        montoFila = Math.Round(montoFila, 2);
+                        item["valor"] = montoFila.ToString();
+                    }
+                    calculaTotalFactura();
+                }
+            }
+            catch (Exception ex)
+            {
+                showError(ex.ToString());
+            }
+        }
+
+        private bool validaArticuloAgregado()
+        {
+            try
+            {
+                int contadorDuplicados = 0;
+                string id = ddlArticulos.SelectedValue.ToString();
+                foreach (GridViewRow item in gvProductoFacturar.Rows)
+                {
+                    if (item.Cells[1].Text.ToString().Equals(id))
+                    {
+                        contadorDuplicados++;
+                    }
+                }
+                if (contadorDuplicados == 0)
+                {
+                    
+                    return true;
+                }
+                else
+                {
+                    showWarning("No se puede agregar 2 veces el mismo articulo para la venta.");
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                showError(ex.ToString());
+                return false;
+            }
+        }
+
+        private void borrarItem()
+        {
+            try
+            {
+                ddlArticulos.Items.Remove(ddlArticulos.SelectedValue);
+            }
+            catch (Exception ex)
+            {
+                showError(ex.ToString());
             }
         }
         #endregion
@@ -345,8 +426,19 @@ namespace PrestaVende.Public
         
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
-            AgregaArticuloAGrid();
-            calculaTotalFactura();
+            try
+            {
+                if (validaArticuloAgregado())
+                {
+                    AgregaArticuloAGrid();
+                    calculaTotalFactura();
+                    borrarItem();
+                }
+            }
+            catch (Exception ex)
+            {
+                showError(ex.ToString());
+            }
         }
 
         protected void tbnFacturar_Click(object sender, EventArgs e)
@@ -369,6 +461,31 @@ namespace PrestaVende.Public
             {
                 showWarning(ex.ToString() + " " + error);
             }
+        }
+
+        protected void gvProductoFacturar_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            try
+            {
+                if (e.CommandName == "borrar")
+                {
+                    int index = Convert.ToInt32(e.CommandArgument);
+                    dtTablaArticulos.Rows[index].Delete();
+                    gvProductoFacturar.DataSource = dtTablaArticulos;
+                    gvProductoFacturar.DataBind();
+                    calculaTotalFactura();
+                }
+            }
+            catch (Exception ex)
+            {
+                showError(ex.ToString());
+            }
+        }
+
+        protected void btnAplicaDescuento_Click(object sender, EventArgs e)
+        {
+            aplicarDescuento();
+            calculaTotalFactura();
         }
     }
 }

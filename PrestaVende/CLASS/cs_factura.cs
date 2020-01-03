@@ -54,12 +54,7 @@ namespace PrestaVende.CLASS
                 connection.connection.Open();
                 command.Connection = connection.connection;
                 command.Parameters.Clear();
-                command.CommandText = "select (c.primer_nombre + ' ' + c.segundo_nombre + ' ' + c.primer_apellido + ' ' + c.segundo_apellido) as CLiente, c.direccion, c.nit, "
-                                        + "1 as Cantidad, fd.descripcion_detalle, fd.total_fila, fe.total_factura, fe.monto_abono_capital, fe.monto_cancelacion "
-                                        + "from tbl_factura_encabezado fe "
-                                        + "inner join tbl_factura_detalle fd on fe.id_factura_encabezado = fd.id_factura_encabezado "
-                                        + "inner join tbl_cliente c on c.id_cliente = fe.id_cliente "
-                                        + "where fe.id_factura_encabezado = @id_factura";
+                command.CommandText = "EXEC sp_obtiene_factura_impresion @id_factura";
                 command.Parameters.AddWithValue("@id_factura", id_factura);
                 dtReturnFacturas.Load(command.ExecuteReader());
             }
@@ -279,7 +274,7 @@ namespace PrestaVende.CLASS
             {
                 int insert = 0;
                 command.Parameters.Clear();
-                command.CommandText = "INSERT INTO tbl_factura_encabezado ([id_serie],[numero_factura],[id_cliente],[total_factura],[sub_total_factura],[iva_total_factura],[id_tipo_transaccion],[id_caja],[numero_prestamo],[monto_abono_capital],[monto_cancelacion],[estado_factura]) " +
+                command.CommandText = "INSERT INTO tbl_factura_encabezado ([id_serie],[numero_factura],[id_cliente],[total_factura],[sub_total_factura],[iva_total_factura],[id_tipo_transaccion],[id_caja],[numero_prestamo],[monto_abono_capital],[monto_cancelacion],[estado_factura], fecha_creacion) " +
                                             "VALUES( " +
                                             "@id_serie,             " +
                                             "@numero_factura,       " +
@@ -291,8 +286,9 @@ namespace PrestaVende.CLASS
                                             "@id_caja,              " +
                                             "@numero_prestamo,      " +
                                             "@monto_abono_capital,  " +
-                                            "@monto_cancelacion,    " +                                            
-                                            "@estado )";
+                                            "@monto_cancelacion,    " +
+                                            "@estado, " +
+                                            "GETDATE())";
                 command.Parameters.AddWithValue("@id_serie", datosEnc[0]);
                 command.Parameters.AddWithValue("@numero_factura", datosEnc[1]);
                 command.Parameters.AddWithValue("@id_cliente", datosEnc[2]);
