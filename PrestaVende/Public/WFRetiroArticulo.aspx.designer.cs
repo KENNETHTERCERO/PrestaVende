@@ -10,7 +10,7 @@
 namespace PrestaVende.Public {
     
     
-    public partial class WFFacturacion {
+    public partial class WFRetiroArticulo {
         
         /// <summary>
         /// Control uPanel.
@@ -22,40 +22,13 @@ namespace PrestaVende.Public {
         protected global::System.Web.UI.UpdatePanel uPanel;
         
         /// <summary>
-        /// Control btnCobroIntereses.
+        /// Control btnRetirar.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnCobroIntereses;
-        
-        /// <summary>
-        /// Control btnAbonoCapital.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAbonoCapital;
-        
-        /// <summary>
-        /// Control btnCancelacion.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnCancelacion;
-        
-        /// <summary>
-        /// Control btnRetiroArticulo.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnRetiroArticulo;
+        protected global::System.Web.UI.WebControls.Button btnRetirar;
         
         /// <summary>
         /// Control divWarning.
@@ -139,12 +112,12 @@ namespace PrestaVende.Public {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_gridView;
         
         /// <summary>
-        /// Control gvFactura.
+        /// Control gvArticulos.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvFactura;
+        protected global::System.Web.UI.WebControls.GridView gvArticulos;
     }
 }

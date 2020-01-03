@@ -625,5 +625,61 @@ namespace PrestaVende.CLASS
                 connection.connection.Close();
             }
         }
+
+        public DataTable GetDetallePrestamo(ref string error, string numero_prestamo)
+        {
+            DataTable dtDetallePrestamo = new DataTable("DetallePrestamo");
+            try
+            {
+                connection.connection.Open();
+                command.Connection = connection.connection;
+                command.Parameters.Clear();
+                command.CommandText = "SELECT PD.numero_prestamo, P.id_producto idproducto,P.producto, PD.cantidad, PD.valor, CONVERT(BIT,ISNULL(PD.retirada, 0)) retirada FROM tbl_prestamo_detalle PD " +
+                                      "INNER JOIN tbl_producto P ON P.id_producto = PD.id_producto " +
+                                      "WHERE PD.id_prestamo_encabezado = @id_prestamo AND PD.id_sucursal = @id_sucursal";
+                command.Parameters.AddWithValue("@id_prestamo", numero_prestamo);
+                command.Parameters.AddWithValue("@id_sucursal", cs_usuario.id_sucursal);
+                dtDetallePrestamo.Load(command.ExecuteReader());                
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                return null;
+            }
+            finally
+            {
+                connection.connection.Close();
+            }
+
+            return dtDetallePrestamo;
+        }
+
+        public DataTable GetDatosRetiro(ref string error, string numero_prestamo)
+        {
+            DataTable dtDetallePrestamo = new DataTable("DetallePrestamo");
+            try
+            {
+                connection.connection.Open();
+                command.Connection = connection.connection;
+                command.Parameters.Clear();
+                command.CommandText = "select (p.total_prestamo - p.saldo_prestamo) ValorCancelado,  " +
+                                      "isnull((select sum(valor) from tbl_prestamo_detalle dp where dp.retirada = 1 and dp.id_prestamo_encabezado = p.id_prestamo_encabezado),0) ValorRetirado " +
+                                      "from tbl_prestamo_encabezado p where p.id_prestamo_encabezado = @id_prestamo and p.id_sucursal = @id_sucursal";
+                command.Parameters.AddWithValue("@id_prestamo", numero_prestamo);
+                command.Parameters.AddWithValue("@id_sucursal", cs_usuario.id_sucursal);
+                dtDetallePrestamo.Load(command.ExecuteReader());
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                return null;
+            }
+            finally
+            {
+                connection.connection.Close();
+            }
+
+            return dtDetallePrestamo;
+        }
     }
 }
