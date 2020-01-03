@@ -484,7 +484,7 @@ namespace PrestaVende.CLASS
                                        "inner join tbl_cliente cli on cli.id_cliente = pre.id_cliente " +
                                        "inner join tbl_sucursal su on su.id_sucursal = pre.id_sucursal " +
                                        "inner join tbl_cargo c on c.id_interes = pre.id_interes and c.id_empresa = su.id_empresa " +
-                                       "where pre.estado_prestamo = 1 and pre.id_prestamo_encabezado = @id_prestamo";
+                                       "where /*pre.estado_prestamo = 1 and*/ pre.id_prestamo_encabezado = @id_prestamo";
                 command.Parameters.AddWithValue("@id_prestamo", id_prestamo);
                 dtReturnClient.Load(command.ExecuteReader());
             }

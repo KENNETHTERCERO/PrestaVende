@@ -12,6 +12,8 @@ namespace PrestaVende.Public
     {
         private CLASS.cs_prestamo cs_prestamo = new CLASS.cs_prestamo();
         private string error = "";
+        private decimal saldo_prestamo = 0;
+        private decimal monto_prestamo = 0;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -50,7 +52,10 @@ namespace PrestaVende.Public
                 string id_prestamo = Request.QueryString["id_prestamo"];
                 foreach (DataRow item in cs_prestamo.ObtenerPrestamoEspecifico(ref error, id_prestamo).Rows)
                 {
-                    lblnombre_prestamo.Text = item[1].ToString();
+                    lblnombre_prestamo.Text = item[1].ToString() + "      ";
+                    lblValorSaldoPrestamo.Text = item[7].ToString();
+                    saldo_prestamo = decimal.Parse(item[7].ToString());
+                    monto_prestamo = decimal.Parse(item[9].ToString());
                 }
 
                 gvArticulos.DataSource = cs_prestamo.GetDetallePrestamo(ref error, id_prestamo);
@@ -73,8 +78,11 @@ namespace PrestaVende.Public
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                CheckBox checkBox = e.Row.Cells[4].Controls[0] as CheckBox;
-                checkBox.Enabled = true;
+                CheckBox checkBox = e.Row.Cells[5].Controls[0] as CheckBox;
+                //CheckBox checkBox = (CheckBox)e.Row.Cells[5].FindControl("retirada");
+
+                if (checkBox.Checked == false)
+                    checkBox.Enabled = true;
             }
         }
 
@@ -83,18 +91,24 @@ namespace PrestaVende.Public
             try
             {
                 DataTable dt = new DataTable();
+                decimal total_disponible_retiro = monto_prestamo - saldo_prestamo;
+                decimal total_retiro_actual = 0;
+                decimal total_retiro_anterior = 0;
 
                 foreach (GridViewRow row in gvArticulos.Rows)
                 {
                     if (row.RowType == DataControlRowType.DataRow)
                     {
-                        CheckBox chkRow = (row.Cells[4].Controls[0] as CheckBox);
-                        if (chkRow.Checked)
-                        {
-
-                        }
+                        CheckBox chkRow = (row.Cells[5].Controls[0] as CheckBox);
+                        decimal valorRow = decimal.Parse(row.Cells[4].Text);
+                        if (chkRow.Checked == true && chkRow.Enabled == false)
+                            total_retiro_actual = total_retiro_actual + valorRow;
+                        else if (chkRow.Checked == true && chkRow.Enabled == true)
+                            total_retiro_anterior = total_retiro_anterior + valorRow;
                     }
                 }
+
+                total_disponible_retiro = total_disponible_retiro - total_retiro_anterior;
 
             }
             catch (Exception ex)
