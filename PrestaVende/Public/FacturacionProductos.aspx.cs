@@ -117,10 +117,11 @@ namespace PrestaVende.Public
                         row["numero_prestamo"] = item[2].ToString();
                         row["producto"] = item[3].ToString();
                         row["marca"] = item[4].ToString();
-                        row["valor"] = item[5].ToString();
-                        row["caracteristicas"] = item[6].ToString();
-                        row["subTotal"] = item[7].ToString();
-                        row["IVA"] = item[8].ToString();
+                        row["monto_prestado"] = item[5].ToString();
+                        row["valor"] = item[6].ToString();
+                        row["caracteristicas"] = item[7].ToString();
+                        row["subTotal"] = item[8].ToString();
+                        row["IVA"] = item[9].ToString();
                     }
 
                     dtTablaArticulos.Rows.Add(row);
@@ -144,6 +145,7 @@ namespace PrestaVende.Public
                 dtTablaArticulos.Columns.Add("numero_prestamo");
                 dtTablaArticulos.Columns.Add("producto");
                 dtTablaArticulos.Columns.Add("marca");
+                dtTablaArticulos.Columns.Add("monto_prestado");
                 dtTablaArticulos.Columns.Add("valor");
                 dtTablaArticulos.Columns.Add("caracteristicas");
                 dtTablaArticulos.Columns.Add("subTotal");

@@ -441,20 +441,46 @@ namespace PrestaVende.Public
         {
             try
             {
-                row = dtTablaArticulos.NewRow();
-                row["id_producto"] = ddlProducto.SelectedValue.ToString();
-                row["numero_linea"] = 1;
-                row["producto"] = ddlProducto.SelectedItem.Text.ToString();
-                row["marca"] = ddlMarca.SelectedItem.Text.ToString();
-                row["valor"] = txtValor.Text;
-                row["caracteristicas"] = txtCaracteristicas.Text;
-                row["id_marca"] = ddlMarca.SelectedValue.ToString();
+                if (ViewState["CurrentTableArticulos"] != null)
+                {
+                    row = dtTablaArticulos.NewRow();
+                    row["id_producto"] = ddlProducto.SelectedValue.ToString();
+                    row["numero_linea"] = 1;
+                    row["producto"] = ddlProducto.SelectedItem.Text.ToString();
+                    row["marca"] = ddlMarca.SelectedItem.Text.ToString();
+                    row["valor"] = txtValor.Text;
+                    row["caracteristicas"] = txtCaracteristicas.Text;
+                    row["id_marca"] = ddlMarca.SelectedValue.ToString();
 
-                dtTablaArticulos.Rows.Add(row);
+                    dtTablaArticulos.Rows.Add(row);
+                    calculaTotalPrestamo();
+
+                    ViewState["CurrentTableArticulos"] = dtTablaArticulos;
+
+                    gvProductoElectrodomesticos.DataSource = dtTablaArticulos;
+                    gvProductoElectrodomesticos.DataBind();
+                }
+                else
+                {
+                    DataTable testArticulos = (DataTable)ViewState["CurrentTableArticulos"];
+                    DataRow drCurrectRow = null;
+
+                    drCurrectRow = dtTablaJoyas.NewRow();
+                    drCurrectRow["id_producto"] = ddlProducto.SelectedValue.ToString();
+                    drCurrectRow["numero_linea"] = 1;
+                    drCurrectRow["producto"] = ddlProducto.SelectedItem.Text.ToString();
+                    drCurrectRow["marca"] = ddlMarca.SelectedItem.Text.ToString();
+                    drCurrectRow["valor"] = txtValor.Text;
+                    drCurrectRow["caracteristicas"] = txtCaracteristicas.Text;
+                    drCurrectRow["id_marca"] = ddlMarca.SelectedValue.ToString();
+                    
+                    testArticulos.Rows.Add(drCurrectRow);
+                    ViewState["CurrentTableArticulos"] = testArticulos;
+
+                    gvProductoElectrodomesticos.DataSource = dtTablaArticulos;
+                    gvProductoElectrodomesticos.DataBind();
+                }
                 calculaTotalPrestamo();
-
-                gvProductoElectrodomesticos.DataSource = dtTablaArticulos;
-                gvProductoElectrodomesticos.DataBind();
             }
             catch (Exception ex)
             {
@@ -467,7 +493,7 @@ namespace PrestaVende.Public
             try
             {
                 int linea = 1;
-
+                getDataProyeccion();
                 if (dtTablaJoyas.Rows.Count > 1)
                 {
                     decimal totalPrestamo = 0;
@@ -494,7 +520,7 @@ namespace PrestaVende.Public
                 {
                     lblTotalPrestamoQuetzales.Text = txtValor.Text;
                 }
-                getDataProyeccion("AgregarArticulo");
+                getDataProyeccion();
             }
             catch (Exception)
             {
@@ -676,13 +702,13 @@ namespace PrestaVende.Public
                 {
                     lblNumeroPrestamoNumero.Text = numero_prestamo_guardado;
                     showSuccess("Se creo prestamo correctamente.");
-                    string script = "window.open('WebReport.aspx?tipo_reporte=1" + "&numero_prestamo=" + lblNumeroPrestamoNumero.Text + "');";
+                    string script = "window.open('WebReport.aspx?tipo_reporte=1" + "&numero_prestamo=" + numero_prestamo_guardado + "');";
                     ScriptManager.RegisterClientScriptBlock(this, GetType(), "OpenWindow", script, true);
 
-                    string scriptEstadoCuenta = "window.open('WebReport.aspx?tipo_reporte=3" + "&numero_prestamo=" + lblNumeroPrestamoNumero.Text + "');";
+                    string scriptEstadoCuenta = "window.open('WebReport.aspx?tipo_reporte=3" + "&numero_prestamo=" + numero_prestamo_guardado + "');";
                     ScriptManager.RegisterClientScriptBlock(this, GetType(), "NewWindow", scriptEstadoCuenta, true);
 
-                    string scriptEtiqueta = "window.open('WebReport.aspx?tipo_reporte=4" + "&numero_prestamo=" + lblNumeroPrestamoNumero.Text + "');";
+                    string scriptEtiqueta = "window.open('WebReport.aspx?tipo_reporte=4" + "&numero_prestamo=" + numero_prestamo_guardado + "');";
                     ScriptManager.RegisterClientScriptBlock(this, GetType(), "OpenWindowEtiqueta", scriptEtiqueta, true);
 
                     string scriptText = "alert('my message'); window.location='WFListadoPrestamo.aspx?id_cliente=" + lblid_cliente.Text + "'";
@@ -808,6 +834,7 @@ namespace PrestaVende.Public
         {
             try
             {
+                getDataProyeccion();
                 decimal montoFila = 0, porcentaje = 0;
                 if (gvProductoElectrodomesticos.Rows.Count > 0)
                 {
@@ -831,7 +858,7 @@ namespace PrestaVende.Public
                         item.Cells[8].Text = montoFila.ToString();
                     }
                 }
-                getDataProyeccion("Recalculo");
+                getDataProyeccion();
             }
             catch (Exception ex)
             {
@@ -1063,27 +1090,15 @@ namespace PrestaVende.Public
             }
         }
 
-        private void getDataProyeccion(string boton)
+        private void getDataProyeccion()
         {
             try
             {
-                if (boton.Equals("AgregarArticulo"))
-                {
-                    CLASS.cs_prestamo.id_interes_proyeccion = ddlIntereses.SelectedValue;
-                    CLASS.cs_prestamo.monto_proyeccion = lblTotalPrestamoQuetzales.Text;
-                    CLASS.cs_prestamo.id_plan_prestamo_proyeccion = ddlTipoPrestamo.SelectedValue;
-                    gvProyeccion.DataSource = cs_prestamo.getDTProyeccion(ref error);
-                    gvProyeccion.DataBind();
-                }
-                else
-                {
-                    CLASS.cs_prestamo.id_interes_proyeccion = ddlIntereses.SelectedValue;
-                    CLASS.cs_prestamo.monto_proyeccion = txtMontoARecalcular.Text;
-                    CLASS.cs_prestamo.id_plan_prestamo_proyeccion = ddlTipoPrestamo.SelectedValue;
-                    gvProyeccion.DataSource = cs_prestamo.getDTProyeccion(ref error);
-                    gvProyeccion.DataBind();
-                }
-                
+                CLASS.cs_prestamo.id_interes_proyeccion = ddlIntereses.SelectedValue;
+                CLASS.cs_prestamo.monto_proyeccion = lblTotalPrestamoQuetzales.Text;
+                CLASS.cs_prestamo.id_plan_prestamo_proyeccion = ddlTipoPrestamo.SelectedValue;
+                gvProyeccion.DataSource = cs_prestamo.getDTProyeccion(ref error);
+                gvProyeccion.DataBind();
             }
             catch (Exception ex)
             {
@@ -1181,7 +1196,7 @@ namespace PrestaVende.Public
 
         protected void btnProyeccion_Click(object sender, EventArgs e)
         {
-            getDataProyeccion("");
+            getDataProyeccion();
         }
 
         protected void ddlTipo_SelectedIndexChanged(object sender, EventArgs e)

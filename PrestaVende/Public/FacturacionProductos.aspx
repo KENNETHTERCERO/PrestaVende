@@ -243,6 +243,7 @@
                                                             <asp:BoundField DataField="numero_prestamo"        HeaderText="<center>Numero Prestamo</center>"             SortExpression="numero_prestamo"          HtmlEncode="false"/>
                                                             <asp:BoundField DataField="producto"            HeaderText="<center>Producto</center>"          SortExpression="producto"           HtmlEncode="false" />
                                                             <asp:BoundField DataField="marca"               HeaderText="<center>Marca</center>"             SortExpression="marca"              HtmlEncode="false" />
+                                                            <asp:BoundField DataField="monto_prestado"               HeaderText="<center>Valor prestado</center>"             SortExpression="monto_prestado"              HtmlEncode="false" />
                                                             <asp:BoundField DataField="valor"               HeaderText="<center>Valor</center>"             SortExpression="valor"              HtmlEncode="false" />
                                                             <asp:BoundField DataField="caracteristicas"     HeaderText="<center>Caracteristicas</center>"   SortExpression="caracteristicas"    HtmlEncode="false"/>
                                                         </Columns>
