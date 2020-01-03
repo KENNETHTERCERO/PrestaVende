@@ -8,7 +8,7 @@
                 <div class="row content">
                     <div class="col-sm-2 sidenav">
                         <center>
-                        <h2>Opciones</h2>
+                        <h2>Opciones</h2> 
                             <div class=".btn-group-vertical">
                                 <asp:Button ID="btnSalir" runat="server" Width="200px" Text="Regresar" class="btn btn-default" Visible="false" OnClick="btnSalir_Click"/>
                                 <br />
@@ -60,15 +60,21 @@
                                                             <h1>Mantenimiento Liquidaciones &nbsp;&nbsp;</h1>
                                                         </td>
                                                         <td></td>
+
+                                                        <td>
+                                                    <asp:TextBox ID="txtBusquedaPrestamo" runat="server" class="form-control" Width="300px"></asp:TextBox>
+                                                </td>
+                                                <td>
+                                                    <asp:Button ID="btnBuscarPrestamo" runat="server" class="btn btn-success" OnClick="btnBuscarPrestamo_Click" Text="Agregar Prestamo" />
+                                                </td>
                                                     </tr>
                                                 </table>
                                             </div>
                             </div>
+                                                               
                             <div class="panel-body" >
                                 <center>
-                                    <br />
-                                    <br />
-                                    
+                                                                                                         
                                     <div id="div_gridView" runat="server" visible ="false">
                                         <br />
                                         <table>

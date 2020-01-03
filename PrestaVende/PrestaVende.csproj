@@ -178,6 +178,17 @@
     <Content Include="DATASET\DSEtiquetaPrestamo.xsc">
       <DependentUpon>DSEtiquetaPrestamo.xsd</DependentUpon>
     </Content>
+    <Content Include="DATASET\DSEstadoCuentaPrestamoF.xsc">
+      <DependentUpon>DSEstadoCuentaPrestamoF.xsd</DependentUpon>
+    </Content>
+    <None Include="DATASET\DSEstadoCuentaPrestamoF.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DSEstadoCuentaPrestamoF.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="DATASET\DSEstadoCuentaPrestamoF.xss">
+      <DependentUpon>DSEstadoCuentaPrestamoF.xsd</DependentUpon>
+    </Content>
     <None Include="DATASET\DSEtiquetaPrestamo.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
@@ -248,6 +259,7 @@
     <Compile Include="CLASS\cs_inventario.cs" />
     <Compile Include="CLASS\cs_liquidacion.cs" />
     <Compile Include="CLASS\cs_empresa.cs" />
+    <Compile Include="CLASS\cs_manejo_inventario.cs" />
     <Compile Include="CLASS\cs_manejo_medios.cs" />
     <Compile Include="CLASS\cs_manejo_pais.cs" />
     <Compile Include="CLASS\cs_prestamo.cs" />
@@ -286,6 +298,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DSEstadoCuentaPrestamoDetalleArticulos.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DATASET\DSEstadoCuentaPrestamoF.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DSEstadoCuentaPrestamoF.xsd</DependentUpon>
     </Compile>
     <Compile Include="DATASET\DSEtiquetaPrestamo.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -517,12 +534,6 @@
       <DependentUpon>CREstadoCuentaPrestamo.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Reports\CREstadoCuentaPrestamoDetalleArticulos.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>CREstadoCuentaPrestamoDetalleArticulos.rpt</DependentUpon>
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Reports\CREtiquetaPrestamo.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -570,10 +581,6 @@
     <EmbeddedResource Include="Reports\CREstadoCuentaPrestamo.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>CREstadoCuentaPrestamo.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Reports\CREstadoCuentaPrestamoDetalleArticulos.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>CREstadoCuentaPrestamoDetalleArticulos.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\CREtiquetaPrestamo.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
