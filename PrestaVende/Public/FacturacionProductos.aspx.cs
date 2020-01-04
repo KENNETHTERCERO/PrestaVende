@@ -230,6 +230,9 @@ namespace PrestaVende.Public
                     string script = "window.open('WebReport.aspx?tipo_reporte=2" + "&id_factura=" + id_factura_encabezado.ToString() + "');";
                     ScriptManager.RegisterClientScriptBlock(this, GetType(), "ImpresionFactura", script, true);
 
+                    string script2 = "window.open('WebReport.aspx?tipo_reporte=5" + "&id_factura=" + id_factura_encabezado.ToString() + "&id_sucursal=" + CLASS.cs_usuario.id_sucursal + "');";
+                    ScriptManager.RegisterClientScriptBlock(this, GetType(), "ImpresionRecibo", script2, true);
+
                     string scriptText = "alert('my message'); window.location='FacturacionProductos.aspx'";
                     ScriptManager.RegisterStartupScript(this, this.GetType(), "alertMessage", scriptText, true);
                 }
@@ -249,7 +252,7 @@ namespace PrestaVende.Public
             try
             {
                 decimal totalFactura = 0;
-                if (gvProductoFacturar.Rows.Count > 0)
+                if (gvProductoFacturar.Rows.Count > 0 && dtTablaArticulos.Rows.Count > 0)
                 {
                     foreach (DataRow item in dtTablaArticulos.Rows)
                     {
@@ -364,7 +367,22 @@ namespace PrestaVende.Public
         {
             try
             {
-                ddlArticulos.Items.Remove(ddlArticulos.SelectedValue);
+                string itemValue = ddlArticulos.Text.ToString();
+                if (ddlArticulos.Items.FindByValue(itemValue) != null)
+                {
+                    string itemText = ddlArticulos.Items.FindByValue(itemValue).Text;
+                    ListItem li = new ListItem();
+                    li.Text = itemText;
+                    li.Value = itemValue;
+                    //Label1.Text = "Item Found and remove: " + itemText;
+                    ddlArticulos.Items.Remove(li);
+                }
+                else
+                {
+                    //Label1.Text = "Item not Found, Value: " + itemValue;
+                }
+
+                //ddlArticulos.Items.Remove(ddlArticulos.SelectedValue);
             }
             catch (Exception ex)
             {
