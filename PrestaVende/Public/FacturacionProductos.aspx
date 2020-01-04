@@ -219,6 +219,17 @@
                                                 
                                             </td>
                                         </tr>
+                                        <tr>
+                                            <td>
+                                                <big><asp:Label ID="lblDescuento" runat="server" Text="DESCUENTO:"></asp:Label></big>
+                                            </td>
+                                            <td>
+                                                <asp:TextBox ID="txtMontoARecalcular" runat="server" type="number" step="1" CssClass="form-control"></asp:TextBox>
+                                            </td>
+                                            <td>
+                                                <asp:Button ID="btnAplicaDescuento" runat="server" Width="200px" Text="Aplicar descuento." CssClass="btn btn-warning" Visible="true" OnClick="btnAplicaDescuento_Click"/>
+                                            </td>
+                                        </tr>
                                     </table>
                                 </div>
                             </div>
@@ -232,7 +243,7 @@
                                             <tr>
                                                 <td>
                                                     <asp:GridView ID="gvProductoFacturar" runat="server" Width="100%" CssClass="footable" AutoGenerateColumns="False" 
-                                                        ForeColor="#333333" GridLines="None">
+                                                        ForeColor="#333333" GridLines="None" OnRowCommand="gvProductoFacturar_RowCommand">
                                                         <AlternatingRowStyle BackColor="White" />
                                                         <Columns>
                                                             <asp:ButtonField ButtonType="Button" ControlStyle-CssClass="btn btn-danger" FooterStyle-BackColor="#ff9a32" CommandName="borrar" HeaderText="<center>Borrar</center>" Text="X" >

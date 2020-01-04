@@ -134,7 +134,7 @@ namespace PrestaVende.CLASS
             {
                 int insert = 0;
                 command.Parameters.Clear();
-                command.CommandText = "INSERT INTO tbl_factura_encabezado ([id_serie],[numero_factura],[id_cliente],[total_factura],[sub_total_factura],[iva_total_factura],[id_tipo_transaccion],[id_caja],[numero_prestamo],[monto_abono_capital],[monto_cancelacion],[estado_factura]) " +
+                command.CommandText = "INSERT INTO tbl_factura_encabezado ([id_serie],[numero_factura],[id_cliente],[total_factura],[sub_total_factura],[iva_total_factura],[id_tipo_transaccion],[id_caja],[numero_prestamo],[monto_abono_capital],[monto_cancelacion],[estado_factura], fecha_creacion) " +
                                             "VALUES( " +
                                             "@id_serie,             " +
                                             "@numero_factura,       " +
@@ -147,7 +147,8 @@ namespace PrestaVende.CLASS
                                             "@numero_prestamo,      " +
                                             "@monto_abono_capital,  " +
                                             "@monto_cancelacion,    " +
-                                            "@estado )";
+                                            "@estado, " +
+                                            "GETDATE())";
                 command.Parameters.AddWithValue("@id_serie", datosEnc[0]);
                 command.Parameters.AddWithValue("@numero_factura", datosEnc[1]);
                 command.Parameters.AddWithValue("@id_cliente", datosEnc[2]);

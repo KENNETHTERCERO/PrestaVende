@@ -834,7 +834,6 @@ namespace PrestaVende.Public
         {
             try
             {
-                getDataProyeccion();
                 decimal montoFila = 0, porcentaje = 0;
                 if (gvProductoElectrodomesticos.Rows.Count > 0)
                 {
