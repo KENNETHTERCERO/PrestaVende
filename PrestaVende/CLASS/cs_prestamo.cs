@@ -634,7 +634,7 @@ namespace PrestaVende.CLASS
                 connection.connection.Open();
                 command.Connection = connection.connection;
                 command.Parameters.Clear();
-                command.CommandText = "SELECT PD.numero_prestamo, P.id_producto idproducto,P.producto, PD.cantidad, PD.valor, CONVERT(BIT,ISNULL(PD.retirada, 0)) retirada FROM tbl_prestamo_detalle PD " +
+                command.CommandText = "SELECT PD.numero_prestamo, P.id_producto idproducto,P.producto, PD.cantidad, PD.valor, CONVERT(BIT,ISNULL(PD.retirada, 0)) retirada,PD.id_prestamo_detalle FROM tbl_prestamo_detalle PD " +
                                       "INNER JOIN tbl_producto P ON P.id_producto = PD.id_producto " +
                                       "WHERE PD.id_prestamo_encabezado = @id_prestamo AND PD.id_sucursal = @id_sucursal";
                 command.Parameters.AddWithValue("@id_prestamo", numero_prestamo);
@@ -680,6 +680,58 @@ namespace PrestaVende.CLASS
             }
 
             return dtDetallePrestamo;
+        }
+
+        public bool guardar_retiros_articulo(ref string error, string[] id_prestamo_detalles)
+        {
+            try
+            {
+                connection.connection.Open();
+                command.Connection = connection.connection;
+                command.Parameters.Clear();
+                command.Transaction = connection.connection.BeginTransaction();
+
+                foreach (string id_prestamo_detalle in id_prestamo_detalles)
+                {
+                    if (update_retiro_articulo(ref error, id_prestamo_detalle) == false)
+                        throw new Exception("No se pudo almacenar todos los articulos.");                    
+                }
+
+                command.Transaction.Commit();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                command.Transaction.Rollback();
+                return false;
+            }
+            finally
+            {
+                connection.connection.Close();
+            }
+        }
+
+        private bool update_retiro_articulo(ref string error, string id_prestamo_detalle)
+        {
+            try
+            {
+                int update = 0;
+                command.Parameters.Clear();
+                command.CommandText = "UPDATE tbl_prestamo_detalle SET retirada = 1 WHERE id_prestamo_detalle = @id_prestamo_detalle";
+                command.Parameters.AddWithValue("@id_prestamo_detalle", id_prestamo_detalle);
+
+                update = command.ExecuteNonQuery();
+                if (update > 0)
+                    return true;
+                else
+                    return false;
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                return false;
+            }
         }
     }
 }
