@@ -56,9 +56,12 @@
                                         </td>
                                         <td>
                                             <big><asp:Label ID="lblnombre_prestamo" runat="server"></asp:Label></big>
-                                        </td>
+                                        </td>                                        
+                                    </tr>
+                                    <tr>
+                                        <td></td>
                                         <td>
-                                            <big><asp:Label ID="lblSaldoPrestamo" runat="server">Saldo:&nbsp;&nbsp;</asp:Label></big>
+                                            <big><asp:Label ID="lblSaldoPrestamo" runat="server">Abonos:&nbsp;&nbsp;</asp:Label></big>
                                         </td>
                                         <td>
                                             <big><asp:Label ID="lblValorSaldoPrestamo" runat="server"></asp:Label></big>
@@ -85,7 +88,8 @@
                                                             <asp:BoundField DataField="producto" HeaderText="<center>Producto</center>" SortExpression="producto" HtmlEncode="false" />
                                                             <asp:BoundField DataField="cantidad" HeaderText="<center>Cantidad</center>" SortExpression="cantidad" HtmlEncode="false" />
                                                             <asp:BoundField DataField="valor" HeaderText="<center>Valor</center>" SortExpression="valor"  HtmlEncode="false" />     
-                                                            <asp:CheckBoxField DataField="retirada" SortExpression="retirada" HeaderText="<center>Retirada</center>"/>               
+                                                            <asp:CheckBoxField DataField="retirada" SortExpression="retirada" HeaderText="<center>Retirada</center>"/>         
+                                                            <asp:BoundField DataField="id_prestamo_detalle" HeaderText="<center>id_prestamo_detalle</center>" SortExpression="id_prestamo_detalle"  HtmlEncode="false" />          
                                                         </Columns>
                                                         <EditRowStyle BackColor="#7C6F57" />
                                                         <FooterStyle BackColor="#1C5E55" Font-Bold="False" ForeColor="White" />

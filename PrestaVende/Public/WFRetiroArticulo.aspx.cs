@@ -11,9 +11,9 @@ namespace PrestaVende.Public
     public partial class WFRetiroArticulo : System.Web.UI.Page
     {
         private CLASS.cs_prestamo cs_prestamo = new CLASS.cs_prestamo();
-        private string error = "";
-        private decimal saldo_prestamo = 0;
-        private decimal monto_prestamo = 0;
+        private static string error = "";
+        private static decimal saldo_prestamo = 0;
+        private static decimal monto_prestamo = 0;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -52,10 +52,10 @@ namespace PrestaVende.Public
                 string id_prestamo = Request.QueryString["id_prestamo"];
                 foreach (DataRow item in cs_prestamo.ObtenerPrestamoEspecifico(ref error, id_prestamo).Rows)
                 {
-                    lblnombre_prestamo.Text = item[1].ToString() + "      ";
-                    lblValorSaldoPrestamo.Text = item[7].ToString();
+                    lblnombre_prestamo.Text = item[1].ToString() + "      ";                    
                     saldo_prestamo = decimal.Parse(item[7].ToString());
                     monto_prestamo = decimal.Parse(item[9].ToString());
+                    lblValorSaldoPrestamo.Text = Math.Round(Convert.ToDecimal(monto_prestamo - saldo_prestamo), 2).ToString();                    
                 }
 
                 gvArticulos.DataSource = cs_prestamo.GetDetallePrestamo(ref error, id_prestamo);
@@ -74,15 +74,29 @@ namespace PrestaVende.Public
             return true;
         }
 
+        private bool showWarning(string warning)
+        {
+            divWarning.Visible = true;
+            lblWarning.Controls.Add(new LiteralControl(string.Format("<span style='color:Orange'>{0}</span>", warning)));
+            return true;
+        }
+
         protected void OnRowDataBound(object sender, GridViewRowEventArgs e)
         {
-            if (e.Row.RowType == DataControlRowType.DataRow)
+            try
             {
-                CheckBox checkBox = e.Row.Cells[5].Controls[0] as CheckBox;
-                //CheckBox checkBox = (CheckBox)e.Row.Cells[5].FindControl("retirada");
+                if (e.Row.RowType == DataControlRowType.DataRow)
+                {
+                    CheckBox checkBox = e.Row.Cells[5].Controls[0] as CheckBox;
+                    //CheckBox checkBox = (CheckBox)e.Row.Cells[5].FindControl("retirada");
 
-                if (checkBox.Checked == false)
-                    checkBox.Enabled = true;
+                    if (checkBox.Checked == false)
+                        checkBox.Enabled = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                showError(ex.ToString());
             }
         }
 
@@ -94,6 +108,7 @@ namespace PrestaVende.Public
                 decimal total_disponible_retiro = monto_prestamo - saldo_prestamo;
                 decimal total_retiro_actual = 0;
                 decimal total_retiro_anterior = 0;
+                string id_prestamo_detalles = ""; 
 
                 foreach (GridViewRow row in gvArticulos.Rows)
                 {
@@ -102,13 +117,42 @@ namespace PrestaVende.Public
                         CheckBox chkRow = (row.Cells[5].Controls[0] as CheckBox);
                         decimal valorRow = decimal.Parse(row.Cells[4].Text);
                         if (chkRow.Checked == true && chkRow.Enabled == false)
-                            total_retiro_actual = total_retiro_actual + valorRow;
-                        else if (chkRow.Checked == true && chkRow.Enabled == true)
                             total_retiro_anterior = total_retiro_anterior + valorRow;
+                        else if (chkRow.Checked == true && chkRow.Enabled == true)
+                        {
+                            if (id_prestamo_detalles == "")
+                                id_prestamo_detalles = row.Cells[6].Text;
+                            else
+                                id_prestamo_detalles = id_prestamo_detalles + "|" + row.Cells[6].Text;
+
+                            total_retiro_actual = total_retiro_actual + valorRow;
+                        }
                     }
                 }
+                                
+                char[] spearator = {'|'};
+                string[] array_prestamos_detalles = id_prestamo_detalles.Split(spearator);
 
                 total_disponible_retiro = total_disponible_retiro - total_retiro_anterior;
+
+                if (total_disponible_retiro <= 0)
+                    showWarning("No cuenta con los abonos disponibles para realizar el retiro.");
+                else
+                {
+                    if (total_disponible_retiro >= total_retiro_actual)
+                    {
+                        if (cs_prestamo.guardar_retiros_articulo(ref error, array_prestamos_detalles))
+                        {
+                            string id_prestamo = Request.QueryString["id_prestamo"];
+                            string scriptText = "window.location='WFFacturacion.aspx?id_prestamo=" + id_prestamo + "'";
+                            ScriptManager.RegisterStartupScript(this, this.GetType(), "alertMessage", scriptText, true);
+                        }
+                        else
+                            showError("Error al almacenar los datos.");
+                    }
+                    else
+                        showWarning("No cuenta con los abonos disponibles para realizar el retiro.");
+                }
 
             }
             catch (Exception ex)
