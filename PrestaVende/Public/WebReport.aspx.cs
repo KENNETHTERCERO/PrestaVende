@@ -150,7 +150,7 @@ namespace PrestaVende.Public
 
                 }
             }
-            else if (Convert.ToInt32(tipo_reporte) == 5)//4 etiqueta prestamo
+            else if (Convert.ToInt32(tipo_reporte) == 5)//5 impresion de recibo.
             {
                 DataTable factura = new DataTable("DtDatos");
                 string id_factura = Request.QueryString.Get("id_factura");
