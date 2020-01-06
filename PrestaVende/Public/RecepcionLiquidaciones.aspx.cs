@@ -20,124 +20,143 @@ namespace PrestaVende.Public
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            buscarPrestamo(-1);
+             try
+            {
+                HttpCookie cookie = Request.Cookies["userLogin"];
+
+                if (cookie == null)
+                {
+                   // Response.Redirect("WFWebLogin.aspx");
+                }
+                
+                    if (!IsPostBack)
+                    {
+
+                        buscarPrestamo(-1);
+                        
+                    }
+                
+
+            }
+             catch (Exception ex)
+             {
+                 mostrarError(ex.ToString());
+             }
         }
 
-        protected void BtnBuscar_Click(object sender, ImageClickEventArgs e)
+
+
+        protected void btnBuscar_Click(object sender, EventArgs e)
         {
             if (TxtPrestamo.Text.Length > 0)
             {
-                buscarPrestamo(int.Parse(TxtPrestamo.Text));
+                buscarPrestamo(Decimal.Parse(TxtPrestamo.Text));
             }
             else
             {
-                lblError.Visible = true;
-                lblError.Text = "Debe ingresar prestamo a buscar.";
-            }
-        }        
-
-        protected void GrdVLiquidacion_RowCommand(object sender, GridViewCommandEventArgs e)
-        {
-            try
-            {
-                if (e.CommandName == "select")
-                {
-                    int index = Convert.ToInt32(e.CommandArgument);
-                    
-                    GridViewRow selectedRow = GrdVLiquidacion.Rows[index];
-
-                    if (selectedRow != null)
-                    {
-                        div_DatoSeleccionado.Visible = true;
-                        lblPrestamoT.Text = selectedRow.Cells[0].ToString();
-                        lblPrestamoDetalle.Text = selectedRow.Cells[1].ToString();
-                        lblProducto.Text = selectedRow.Cells[2].ToString();
-                        lblCantidad.Text = selectedRow.Cells[4].ToString();
-                        lblValorPrestado.Text = selectedRow.Cells[5].ToString();
-                        lblMontoLiquidado.Text = selectedRow.Cells[6].ToString();
-                        lblPrecioSugerido.Text = selectedRow.Cells[7].ToString();
-                        lblFechaLiquidacion.Text = selectedRow.Cells[8].ToString();
-
-                    }
-
-                }
-            }
-            catch (Exception ex)
-            {
-                lblError.Text = "Error al seleccionar detalle. "  + ex.ToString();
+                mostrarError("Debe ingresar prestamo a buscar.");
             }
         }
 
-        protected void btnAceptar_Click(object sender, ImageClickEventArgs e)
+        protected void btnAceptar_Click(object sender, EventArgs e)
         {
-            if (lblPrestamoT.Text.Length > 0)
-            {
-                if (txtPrecio.Text.Length > 0)
-                {
-                    string error = "";
-                    bool respuesta = clsRecepcion.grabarDatosInventario(int.Parse(lblPrestamoDetalle.Text), 1, int.Parse(lblCantidad.Text), int.Parse(txtPrecio.Text), ref error);
-                    if (respuesta == true)
-                    {
-                        lblSuccess.Text = "Producto almacenado con éxito.";
+            var rows = GrdVLiquidacion.Rows;
+            int count = GrdVLiquidacion.Rows.Count;
+            bool algunSeleccionado = false;
 
+            for (int i = 0; i < count; i++)
+            {
+                bool isChecked = ((CheckBox)rows[i].FindControl("SelectedCheckBox")).Checked;
+                if (isChecked)
+                {
+                    algunSeleccionado = true;
+                    //Do what you want
+                    TextBox txtPrecioSeleccionado = ((TextBox)rows[i].FindControl("txtPrecio"));
+                    Double precio = double.Parse(txtPrecioSeleccionado.Text);
+                    Double PrecioPrestado = double.Parse(rows[i].Cells[6].Text);
+
+                    string error = "";
+
+                    if (precio > 0)
+                    {
+
+
+                        if (precio >= PrecioPrestado)
+                        {
+                            bool respuesta = clsRecepcion.grabarDatosInventario(int.Parse(rows[i].Cells[2].Text), 1, int.Parse(rows[i].Cells[5].Text), int.Parse(txtPrecioSeleccionado.Text), ref error);
+                            if (respuesta == true)
+                            {
+
+                                divSucceful.Visible = true;
+                                lblSuccess.Text = "Producto almacenado con éxito.";
+                            }
+                            else
+                            {
+                                mostrarError("Error al guardar producto en inventario." + error);
+                            }
+
+                            limpiar();
+                        }
+                        else
+                        {
+                            mostrarError("El precio seleccionado no puede ser menor al precio ");
+                        }
                     }
                     else
                     {
-                        lblError.Text = "Error al guardar producto en inventario." + error;
+                        mostrarError("El precio seleccionado debe ser mayor a cero.");
                     }
-                    limpiar();
-                }
-                else
-                {
-                    lblError.Text = "Debe ingresar el precio para el producto a guardar.";
-                }
-            }
-            else
-            {
-                lblError.Text = "Debe seleccionar un producto a guardar.";
+
+                }                               
             }
 
-        }
+            if (!algunSeleccionado)
+            {
+                mostrarError("Debe seleccionar algún producto para guardar en inventario.");
+            }
+                
+        }       
 
         #endregion
 
         #region Metodos
 
-        private void buscarPrestamo(int intPrestamo)
+        private void buscarPrestamo(Decimal intPrestamo)
         {
             try
             {
-                div_gridView.Visible = true;
+                div_gridView.Visible = true;                
                 GrdVLiquidacion.DataSource = clsRecepcion.obtenerLiquidaciones(intPrestamo);
                 GrdVLiquidacion.DataBind();
 
             }
             catch (Exception ex)
             {
-                lblError.Visible = true;
-                lblError.Text = "Error al buscar prestamo: " + ex.ToString();
+                mostrarError("Error al buscar prestamo: " + ex.ToString());
             }
 
         }
 
         private void limpiar()
         {
-            div_DatoSeleccionado.Visible = true;
-            TxtPrestamo.Text = "";
-            txtPrecio.Text = "";
-            lblPrestamoT.Text = "";
-            lblPrestamoDetalle.Text = "";
-            lblProducto.Text = "";
-            lblCantidad.Text = "";
-            lblValorPrestado.Text = "";
-            lblMontoLiquidado.Text = "";
-            lblPrecioSugerido.Text = "";
-            lblFechaLiquidacion.Text = "";
-
+            
+            TxtPrestamo.Text = "";                        
             buscarPrestamo(-1);
         }
 
+        private void mostrarError(string mensaje)
+        {
+            divError.Visible = true;
+            lblError.Text = mensaje;
+        }
+
+        
+
         #endregion
+
+       
+
+      
 
     }
 }
