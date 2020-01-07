@@ -480,11 +480,44 @@ namespace PrestaVende.CLASS
                 command.Connection = connection.connection;
                 command.Parameters.Clear();
                 command.CommandText = "select pre.id_prestamo_encabezado,pre.numero_prestamo,cli.primer_nombre,cli.segundo_nombre,cli.primer_apellido,cli.segundo_apellido, pre.id_cliente, " +
-                                       "pre.saldo_prestamo,(c.factor * 100) AS factor,pre.total_prestamo from tbl_prestamo_encabezado pre " +
+                                       "pre.saldo_prestamo,(c.factor * 100) AS factor,pre.total_prestamo,pre.id_interes,pre.id_plan_prestamo from tbl_prestamo_encabezado pre " +
                                        "inner join tbl_cliente cli on cli.id_cliente = pre.id_cliente " +
                                        "inner join tbl_sucursal su on su.id_sucursal = pre.id_sucursal " +
                                        "inner join tbl_cargo c on c.id_interes = pre.id_interes and c.id_empresa = su.id_empresa " +
-                                       "where /*pre.estado_prestamo = 1 and*/ pre.id_prestamo_encabezado = @id_prestamo";
+                                       "where pre.estado_prestamo = 1 and pre.id_prestamo_encabezado = @id_prestamo";
+                command.Parameters.AddWithValue("@id_prestamo", id_prestamo);
+                dtReturnClient.Load(command.ExecuteReader());
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                return null;
+            }
+            finally
+            {
+                connection.connection.Close();
+            }
+            return dtReturnClient;
+        }
+
+        public DataTable ObtenerRetiroArticulo(ref string error, string id_prestamo)
+        {
+            DataTable dtReturnClient = new DataTable("dtReturnRetiro");
+            try
+            {
+                connection.connection.Open();
+                command.Connection = connection.connection;
+                command.Parameters.Clear();
+                command.CommandText = "select top 1 CASE WHEN cat.id_categoria = 1 THEN 1 " +
+                                       "ELSE CASE WHEN su.retiro_diferente_joya = 1 THEN 1 " +
+                                        "ELSE 0 END END AS retirar_articulo " +
+                                        "from tbl_prestamo_encabezado pre " +
+                                        "inner join tbl_prestamo_detalle dp on dp.id_prestamo_encabezado = pre.id_prestamo_encabezado " +
+                                        "inner join tbl_producto pro on pro.id_producto = dp.id_producto " +
+                                        "inner join tbl_subcategoria sub on sub.id_sub_categoria = pro.id_sub_categoria " +
+                                        "inner join tbl_categoria cat on cat.id_categoria = sub.id_categoria " +
+                                        "inner join tbl_sucursal su on su.id_sucursal = pre.id_sucursal " +
+                                        "where pre.id_prestamo_encabezado = @id_prestamo";
                 command.Parameters.AddWithValue("@id_prestamo", id_prestamo);
                 dtReturnClient.Load(command.ExecuteReader());
             }
