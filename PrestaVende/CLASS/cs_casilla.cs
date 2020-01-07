@@ -12,7 +12,7 @@ namespace PrestaVende.CLASS
         cs_connection connection = new cs_connection();
         SqlCommand command = new SqlCommand();
 
-        public DataTable getCasillas(ref string error)
+        public DataTable getCasillas(ref string error, string id_categoria)
         {
             try
             {
@@ -22,8 +22,9 @@ namespace PrestaVende.CLASS
                 command.Connection = connection.connection;
                 command.Parameters.Clear();
                 command.CommandText = "SELECT 0 AS id_casilla, 'SELECCIONAR' AS casilla UNION " +
-                                                "SELECT id_casilla, casilla FROM tbl_casilla WHERE estado = 0 AND id_sucursal = @id_sucursal";
+                                                "SELECT id_casilla, casilla FROM tbl_casilla WHERE estado = 0 AND id_sucursal = @id_sucursal AND id_categoria = @id_categoria";
                 command.Parameters.AddWithValue("@id_sucursal", CLASS.cs_usuario.id_sucursal);
+                command.Parameters.AddWithValue("@id_categoria", id_categoria);
                 dtCasilla.Load(command.ExecuteReader());
                 return dtCasilla;
             }

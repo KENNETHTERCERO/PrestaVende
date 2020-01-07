@@ -62,7 +62,6 @@ namespace PrestaVende.Public
                         setColumnsJewelry();
                         setColumnsDifferentJewelry();
                         txtPesoDescuento.Text = "0";
-                        getCasillas();
                         getNumeroPrestamo();
                         getTipo();
                     }
@@ -166,7 +165,7 @@ namespace PrestaVende.Public
         {
             try
             {
-                ddlCasilla.DataSource = cs_casilla.getCasillas(ref error);
+                ddlCasilla.DataSource = cs_casilla.getCasillas(ref error, ddlCategoria.SelectedValue.ToString());
                 ddlCasilla.DataValueField = "id_casilla";
                 ddlCasilla.DataTextField = "casilla";
                 ddlCasilla.DataBind();
@@ -987,6 +986,7 @@ namespace PrestaVende.Public
                 ddlIntereses.Enabled = false;
                 getProductos("0");
                 ddlSubCategoria.Focus();
+                getCasillas();
             }
             catch (Exception ex)
             {
