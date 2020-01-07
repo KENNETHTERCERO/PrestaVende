@@ -7,6 +7,21 @@
         <ContentTemplate>
             <div class="container-fluid text-center" >
                 <div class="row content">
+                    <div class="col-sm-2 sidenav">
+                        <center>
+                        <h2>Opciones</h2>
+                            <div class=".btn-group-vertical">
+                                <br />
+                                <br />
+                                <br />
+                                <button id="btnBack" onclick="goBack()" style="width: 200px;" class="btn btn-default">Regresar</button>
+                                <br />
+                                <br />
+                                <br />                                                                                                                
+                                <asp:Button ID="btnAceptar" runat="server" Width="200px" Text="Agregar a inventario" class="btn btn-success"  OnClick="btnAceptar_Click"/>
+                            </div>                                                           
+                        </center>
+                    </div>
                  <div class="col-sm-8 text-left">
                         <div>
                             <div align="center" runat="server" id="divWarning" visible="false" class="alert alert-warning alert-dismissable fade in">
@@ -52,7 +67,9 @@
                                                     <td>
                                                         <big><asp:Label ID="LblPrestamo" runat="server" Text="Préstamo"></asp:Label></big>
                                                     </td>
-                                                   
+                                                   <td>
+                                                       &nbsp;
+                                                   </td>
                                                     <td >
                                                        
                                                             <asp:TextBox ID="TxtPrestamo" class="form-control" Width="250px" runat="server"  ></asp:TextBox>
@@ -71,10 +88,10 @@
 
                                     <div id="div_gridView" runat="server" visible ="false">
                                         <br />
-                                        <table>
+                                        <table >
                                             <tr>
                                                 <td>
-                                                    <asp:GridView ID="GrdVLiquidacion" runat="server" Width="100%" CssClass="footable" AutoGenerateColumns="False" 
+                                                    <asp:GridView ID="GrdVLiquidacion" runat="server" CssClass="footable" AutoGenerateColumns="False" 
                                                         ForeColor="#333333" GridLines="None" >
                                                         <AlternatingRowStyle BackColor="White" />
                                                         <Columns>
@@ -88,8 +105,9 @@
                                                                 <%--<asp:BoundField DataField="id_liquidacion" HeaderText="<center>ID</center>" SortExpression="id_liquidacion" HtmlEncode="false"/>--%>                                                            
                                                                 <%--<asp:BoundField DataField="sucursal" HeaderText="<center>SUCURSAL</center>" SortExpression="sucursal" HtmlEncode="false" />--%>
                                                                 <asp:BoundField DataField="numero_prestamo" HeaderText="<center>NUMERO DE PRESTAMO</center>" SortExpression="numero_prestamo" HtmlEncode="false" />
-                                                                <asp:BoundField DataField="id_prestamo_detalle" HeaderText="<center>ID DETALLE</center>" SortExpression="numero_prestamo" HtmlEncode="false" />
-                                                                <asp:BoundField DataField="id_producto" HeaderText="<center>ID PRODUCTO</center>" SortExpression="numero_prestamo" HtmlEncode="false" />
+                                                                <asp:BoundField DataField="id_prestamo_detalle" HeaderText="<center> ID </center>" SortExpression="numero_prestamo"  HtmlEncode="false" />
+                                                                <asp:BoundField DataField="id_producto" HeaderText="<center>ID PRODUCTO</center>" SortExpression="numero_prestamo" HtmlEncode="false" Visible="false" />
+                                                                <asp:BoundField DataField="numero_linea" HeaderText="<center>LINEA</center>" SortExpression="numero_prestamo" HtmlEncode="false" />
                                                                 <asp:BoundField DataField="producto" HeaderText="<center>PRODUCTO</center>" SortExpression="producto"  HtmlEncode="false"/>                                                                
                                                                 <asp:BoundField DataField="cantidad" HeaderText="<center>CANTIDAD</center>" SortExpression="cantidad"  HtmlEncode="false"/>
                                                                 <asp:BoundField DataField="valor" HeaderText="<center>VALOR PRESTADO</center>" SortExpression="valor"  HtmlEncode="false"/>
@@ -97,7 +115,7 @@
                                                                 <asp:BoundField DataField="precio_sugerido" HeaderText="<center>PRECIO SUGERIDO</center>" SortExpression="precio_sugerido"  HtmlEncode="false"/>
                                                                 <asp:TemplateField HeaderText=" <center> PRECIO </center>" HeaderStyle-HorizontalAlign="Center" >
                                                                     <ItemTemplate>
-                                                                        <asp:TextBox ID="txtPrecio" runat="server" text="0.00"></asp:TextBox>
+                                                                        <asp:TextBox ID="txtPrecio" runat="server" text="0.00" Width="80px"></asp:TextBox>
                                                                     </ItemTemplate>                                                                    
                                                                 </asp:TemplateField>
                                                                 <asp:BoundField DataField="fecha_liquidacion" HeaderText="<center>FECHA LIQUIDACION</center>" SortExpression="fecha_liquidacion"  HtmlEncode="false"/>
@@ -117,10 +135,7 @@
                                             </tr>
                                             <tr>
                                                 <td>               
-                                                    <br />
-                                                          <br />
-                                                                                   
-                                                    <asp:Button ID="btnAceptar" runat="server" Width="200px" Text="Guardar en inventario" class="btn btn-success"  OnClick="btnAceptar_Click"/>
+                                                   
                                                 </td>
                                             </tr>
                                         </table>                                      
