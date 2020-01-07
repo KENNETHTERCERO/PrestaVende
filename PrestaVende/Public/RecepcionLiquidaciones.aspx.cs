@@ -64,55 +64,63 @@ namespace PrestaVende.Public
             int count = GrdVLiquidacion.Rows.Count;
             bool algunSeleccionado = false;
 
-            for (int i = 0; i < count; i++)
+            try
             {
-                bool isChecked = ((CheckBox)rows[i].FindControl("SelectedCheckBox")).Checked;
-                if (isChecked)
+
+                for (int i = 0; i < count; i++)
                 {
-                    algunSeleccionado = true;
-                    //Do what you want
-                    TextBox txtPrecioSeleccionado = ((TextBox)rows[i].FindControl("txtPrecio"));
-                    Double precio = double.Parse(txtPrecioSeleccionado.Text);
-                    Double PrecioSugerido = double.Parse(rows[i].Cells[9].Text);
-
-                    string error = "";
-
-                    if (precio > 0)
+                    bool isChecked = ((CheckBox)rows[i].FindControl("SelectedCheckBox")).Checked;
+                    if (isChecked)
                     {
+                        algunSeleccionado = true;
+                        //Do what you want
+                        TextBox txtPrecioSeleccionado = ((TextBox)rows[i].FindControl("txtPrecio"));
+                        Double precio = double.Parse(txtPrecioSeleccionado.Text);
+                        Double PrecioSugerido = double.Parse(rows[i].Cells[9].Text);
 
+                        string error = "";
 
-                        if (precio >= PrecioSugerido)
+                        if (precio > 0)
                         {
-                            bool respuesta = clsRecepcion.grabarDatosInventario(int.Parse(rows[i].Cells[2].Text), 1, int.Parse(rows[i].Cells[5].Text), int.Parse(txtPrecioSeleccionado.Text), ref error);
-                            if (respuesta == true)
-                            {
 
-                                divSucceful.Visible = true;
-                                lblSuccess.Text = "Producto almacenado con éxito.";
+
+                            if (precio >= PrecioSugerido)
+                            {
+                                bool respuesta = clsRecepcion.grabarDatosInventario(int.Parse(rows[i].Cells[2].Text), 1, int.Parse(rows[i].Cells[6].Text), int.Parse(txtPrecioSeleccionado.Text), ref error);
+                                if (respuesta == true)
+                                {
+
+                                    divSucceful.Visible = true;
+                                    lblSuccess.Text = "Producto almacenado con éxito.";
+                                }
+                                else
+                                {
+                                    mostrarError("Error al guardar producto en inventario." + error);
+                                }
+
+                                limpiar();
                             }
                             else
                             {
-                                mostrarError("Error al guardar producto en inventario." + error);
+                                mostrarError("El precio seleccionado no puede ser menor al precio sugerido.");
                             }
-
-                            limpiar();
                         }
                         else
                         {
-                            mostrarError("El precio seleccionado no puede ser menor al precio sugerido.");
+                            mostrarError("El precio seleccionado debe ser mayor a cero.");
                         }
-                    }
-                    else
-                    {
-                        mostrarError("El precio seleccionado debe ser mayor a cero.");
-                    }
 
-                }                               
+                    }
+                }
+
+                if (!algunSeleccionado)
+                {
+                    mostrarError("Debe seleccionar algún producto para guardar en inventario.");
+                }
             }
-
-            if (!algunSeleccionado)
+            catch (Exception ex)
             {
-                mostrarError("Debe seleccionar algún producto para guardar en inventario.");
+                mostrarError("Error en el proceso de guardado: " + ex.ToString());
             }
                 
         }       
