@@ -10,7 +10,7 @@ namespace PrestaVende.Public
 {
     public partial class WFRetiroArticulo : System.Web.UI.Page
     {
-        private CLASS.cs_prestamo cs_prestamo = new CLASS.cs_prestamo();
+        private CLASS.cs_prestamo cs_prestamo_local = new CLASS.cs_prestamo();
         private static string error = "";
         private static decimal saldo_prestamo = 0;
         private static decimal monto_prestamo = 0;
@@ -50,15 +50,29 @@ namespace PrestaVende.Public
             try
             {
                 string id_prestamo = Request.QueryString["id_prestamo"];
-                foreach (DataRow item in cs_prestamo.ObtenerPrestamoEspecifico(ref error, id_prestamo).Rows)
+                DataTable dt = cs_prestamo_local.ObtenerRetiroArticulo(ref error, id_prestamo);
+
+                if (dt.Rows.Count > 0)
                 {
-                    lblnombre_prestamo.Text = item[1].ToString() + "      ";                    
+                    if (dt.Rows[0][0].ToString() == "0")
+                        btnRetirar.Visible = false;
+                }
+                else
+                    btnRetirar.Visible = false;
+
+                foreach (DataRow item in cs_prestamo_local.ObtenerPrestamoEspecifico(ref error, id_prestamo).Rows)
+                {
+                    lblnombre_prestamo.Text = item[1].ToString() + "      ";
                     saldo_prestamo = decimal.Parse(item[7].ToString());
                     monto_prestamo = decimal.Parse(item[9].ToString());
+                    CLASS.cs_prestamo.id_interes_proyeccion = item[10].ToString();
+                    CLASS.cs_prestamo.monto_proyeccion = item[7].ToString(); 
+                    CLASS.cs_prestamo.id_plan_prestamo_proyeccion = item[11].ToString();
+
                     lblValorSaldoPrestamo.Text = Math.Round(Convert.ToDecimal(monto_prestamo - saldo_prestamo), 2).ToString();                    
                 }
 
-                gvArticulos.DataSource = cs_prestamo.GetDetallePrestamo(ref error, id_prestamo);
+                gvArticulos.DataSource = cs_prestamo_local.GetDetallePrestamo(ref error, id_prestamo);
                 gvArticulos.DataBind();
             }
             catch (Exception ex)
@@ -141,10 +155,14 @@ namespace PrestaVende.Public
                 {
                     if (total_disponible_retiro >= total_retiro_actual)
                     {
-                        if (cs_prestamo.guardar_retiros_articulo(ref error, array_prestamos_detalles))
+                        if (cs_prestamo_local.guardar_retiros_articulo(ref error, array_prestamos_detalles))
                         {
                             string id_prestamo = Request.QueryString["id_prestamo"];
-                            string scriptText = "window.location='WFFacturacion.aspx?id_prestamo=" + id_prestamo + "'";
+
+                            string scriptEstadoCuenta = "window.open('WebReport.aspx?tipo_reporte=3" + "&numero_prestamo=" + lblnombre_prestamo.Text + "');";
+                            ScriptManager.RegisterClientScriptBlock(this, GetType(), "NewWindow", scriptEstadoCuenta, true);                            
+
+                            string scriptText = "alert('my message'); window.location='WFFacturacion.aspx?id_prestamo=" + id_prestamo + "'";
                             ScriptManager.RegisterStartupScript(this, this.GetType(), "alertMessage", scriptText, true);
                         }
                         else

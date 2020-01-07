@@ -101,7 +101,7 @@ namespace PrestaVende.Public
                     {
                         DataTable estadoCuentaDetalle = new DataTable("estadoCuentaPrestamoDetalle");
                         estadoCuenta = cs_prestamo.GetEstadoCuentaPrestamoEncabezado(ref error, numero_prestamo);
-                        DataTable proyeccion = new DataTable("dtProyeccion");
+                        DataTable proyeccion = new DataTable("dtProyeccionInteres");
                         proyeccion = cs_prestamo.getDTProyeccion(ref error);
 
                         Reports.CREstadoCuentaPrestamo EstadoCuentaPrestamo = new Reports.CREstadoCuentaPrestamo();
