@@ -73,7 +73,7 @@ namespace PrestaVende.Public
                     //Do what you want
                     TextBox txtPrecioSeleccionado = ((TextBox)rows[i].FindControl("txtPrecio"));
                     Double precio = double.Parse(txtPrecioSeleccionado.Text);
-                    Double PrecioPrestado = double.Parse(rows[i].Cells[6].Text);
+                    Double PrecioSugerido = double.Parse(rows[i].Cells[9].Text);
 
                     string error = "";
 
@@ -81,7 +81,7 @@ namespace PrestaVende.Public
                     {
 
 
-                        if (precio >= PrecioPrestado)
+                        if (precio >= PrecioSugerido)
                         {
                             bool respuesta = clsRecepcion.grabarDatosInventario(int.Parse(rows[i].Cells[2].Text), 1, int.Parse(rows[i].Cells[5].Text), int.Parse(txtPrecioSeleccionado.Text), ref error);
                             if (respuesta == true)
@@ -99,7 +99,7 @@ namespace PrestaVende.Public
                         }
                         else
                         {
-                            mostrarError("El precio seleccionado no puede ser menor al precio ");
+                            mostrarError("El precio seleccionado no puede ser menor al precio sugerido.");
                         }
                     }
                     else
