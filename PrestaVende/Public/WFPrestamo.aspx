@@ -149,7 +149,7 @@
                                                 <asp:BoundField DataField="semana" HeaderText="<center>Semana</center>" SortExpression="semana" HtmlEncode="false"/>
                                                 <asp:BoundField DataField="fechas" HeaderText="<center>Fechas</center>" SortExpression="fechas" HtmlEncode="false"/>
                                                 <asp:BoundField DataField="intereses" HeaderText="<center>Intereses</center>" SortExpression="intereses" HtmlEncode="false"/>
-                                                <asp:BoundField DataField="totalACancelar" HeaderText="<center>A Cancelar</center>" SortExpression="totalACancelar" HtmlEncode="false"/>
+                                                <asp:BoundField DataField="total_a_cancelar" HeaderText="<center>A Cancelar</center>" SortExpression="total_a_cancelar" HtmlEncode="false"/>
                                             </Columns>
                                             <EditRowStyle BackColor="#7C6F57" />
                                             <FooterStyle BackColor="#1C5E55" Font-Bold="False" ForeColor="White" />
