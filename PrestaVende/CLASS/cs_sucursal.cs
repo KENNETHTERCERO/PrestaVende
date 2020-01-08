@@ -7,7 +7,7 @@ using System.Data.SqlClient;
 
 namespace PrestaVende.CLASS
 {
-    public class cs_AreaEmpresa
+    public class cs_sucursal
     {
         private cs_connection connection = new cs_connection();
         private SqlCommand command = new SqlCommand();

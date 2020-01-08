@@ -402,9 +402,9 @@ namespace PrestaVende.CLASS
                     }
                     else //CUANDO LA CAJA ES TRANSACCIONAL
                     {
-                    EstadoCajaOperacion = CajaRecibida;
-                    command.Parameters.AddWithValue("@id_estado_caja", CajaRecibida);
-                    command.Parameters.AddWithValue("@id_usuario_asignado", CLASS.cs_usuario.id_usuario);
+                        EstadoCajaOperacion = CajaRecibida;
+                        command.Parameters.AddWithValue("@id_estado_caja", CajaRecibida);
+                        command.Parameters.AddWithValue("@id_usuario_asignado", CLASS.cs_usuario.id_usuario);
                     }
                     command.Parameters.AddWithValue("@estado_asignacion", "0");
                 }
@@ -447,9 +447,8 @@ namespace PrestaVende.CLASS
                         //MODIFICANDO SALDO ACTUAL DE CAJA TRANSACCIONAL
                         command.Parameters.Clear();
                         EstadoCajaOperacion = CierreCaja;
-                        command.CommandText = " UPDATE tbl_caja SET fecha_modificacion = @fecha_modificacion, saldo = saldo - @saldo, id_estado_caja = @id_estado_caja WHERE id_caja = @id_caja";
+                        command.CommandText = " UPDATE tbl_caja SET fecha_modificacion = GETDATE(), saldo = saldo - @saldo, id_estado_caja = @id_estado_caja WHERE id_caja = @id_caja";
                         command.Parameters.AddWithValue("@id_caja", id_caja);
-                        command.Parameters.AddWithValue("@fecha_modificacion", DateTime.Now);
                         command.Parameters.AddWithValue("@saldo", monto);
                         command.Parameters.AddWithValue("@id_estado_caja", CierreCaja);
                         rowsUpdated = command.ExecuteNonQuery();
@@ -462,9 +461,8 @@ namespace PrestaVende.CLASS
 
                         //MODIFICANDO SALDO ACTUAL DE CAJA GENERAL
                         command.Parameters.Clear();
-                        command.CommandText = " UPDATE tbl_caja SET fecha_modificacion = @fecha_modificacion, saldo = saldo + @saldo WHERE id_caja = @id_caja";
+                        command.CommandText = " UPDATE tbl_caja SET fecha_modificacion = GETDATE(), saldo = saldo + @saldo WHERE id_caja = @id_caja";
                         command.Parameters.AddWithValue("@id_caja", id_caja_general);
-                        command.Parameters.AddWithValue("@fecha_modificacion", DateTime.Now);
                         command.Parameters.AddWithValue("@saldo", monto);
                         rowsUpdated = command.ExecuteNonQuery();
 
