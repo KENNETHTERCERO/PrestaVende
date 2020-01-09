@@ -41,7 +41,7 @@ namespace PrestaVende.Public
         private static string error = "";
         private static bool isUpdate = false;    
 
-        private CLASS.cs_AreaEmpresa mAreaEmpresa = new CLASS.cs_AreaEmpresa();
+        private CLASS.cs_areaempresa mAreaEmpresa = new CLASS.cs_areaempresa();
 
         #endregion
 

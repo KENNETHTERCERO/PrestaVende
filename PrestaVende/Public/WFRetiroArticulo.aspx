@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Public/PrestaVende.Master" AutoEventWireup="true" CodeBehind="WFFacturacion.aspx.cs" Inherits="PrestaVende.Public.WFFacturacion" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Public/PrestaVende.Master" AutoEventWireup="true" CodeBehind="WFRetiroArticulo.aspx.cs" Inherits="PrestaVende.Public.WFRetiroArticulo" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -10,19 +10,7 @@
                         <center>
                         <h2>Opciones</h2>
                             <div class=".btn-group-vertical">
-                                <asp:Button ID="btnCobroIntereses" runat="server" Width="200px" Text="Renovacion" class="btn btn-success" Visible="true" OnClick="btnCobroIntereses_Click"/>
-                                <br />
-                                <br />
-                                <br />
-                                <asp:Button ID="btnAbonoCapital" runat="server" Width="200px" Text="Abono a Capital" class="btn btn-primary" Visible="true" OnClick="btnAbonoCapital_Click"/>
-                                <br />
-                                <br />
-                                <br />
-                                <asp:Button ID="btnCancelacion" runat="server" Width="200px" Text="Cancelacion" class="btn btn-danger" Visible="true" OnClick="btnCancelacion_Click"/>
-                                <br />
-                                <br />
-                                <br />
-                                <asp:Button ID="btnRetiroArticulo" runat="server" Width="200px" Text="Retiro Articulo" class="btn btn-warning" Visible="true" OnClick="btnRetiroArticulo_Click"/>
+                                <asp:Button ID="btnRetirar" runat="server" Width="200px" Text="Retirar" class="btn btn-primary" Visible="true" OnClick="btnRetirar_Click"/>
                                 <br />
                                 <br />
                                 <br />
@@ -61,13 +49,22 @@
                                 <table>
                                     <tr>
                                         <td>
-                                            <h1>Facturas&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h1>
+                                            <h1>Retiro de articulos&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h1>
                                         </td>
                                         <td>
                                             <big><asp:Label ID="lblPrestamo" runat="server">Prestamo:&nbsp;&nbsp;</asp:Label></big>
                                         </td>
                                         <td>
                                             <big><asp:Label ID="lblnombre_prestamo" runat="server"></asp:Label></big>
+                                        </td>                                        
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>
+                                            <big><asp:Label ID="lblSaldoPrestamo" runat="server">Abonos:&nbsp;&nbsp;</asp:Label></big>
+                                        </td>
+                                        <td>
+                                            <big><asp:Label ID="lblValorSaldoPrestamo" runat="server"></asp:Label></big>
                                         </td>
                                     </tr>
                                  </table>
@@ -82,14 +79,17 @@
                                         <table>
                                             <tr>
                                                 <td>
-                                                    <asp:GridView ID="gvFactura" runat="server" Width="100%" CssClass="footable" AutoGenerateColumns="False" 
-                                                        ForeColor="#333333" GridLines="None" OnRowCommand="gvPrestamo_RowCommand" >
+                                                    <asp:GridView ID="gvArticulos" runat="server" Width="100%" CssClass="footable" AutoGenerateColumns="False" 
+                                                        ForeColor="#333333" GridLines="None" OnRowCommand="gvArticulos_RowCommand" OnRowDataBound = "OnRowDataBound">
                                                         <AlternatingRowStyle BackColor="White" />
                                                         <Columns>                                                            
-                                                            <asp:BoundField DataField="serie" HeaderText="<center>Serie</center>" SortExpression="serie" HtmlEncode="false" />
-                                                            <asp:BoundField DataField="numero_factura" HeaderText="<center>No. Factura</center>" SortExpression="numero_factura" HtmlEncode="false" />
-                                                            <asp:BoundField DataField="numero_prestamo" HeaderText="<center>Prestamo</center>" SortExpression="numero_prestamo" HtmlEncode="false" />
-                                                            <asp:BoundField DataField="fecha_transaccion" HeaderText="<center>Fecha</center>" SortExpression="fecha_transaccion"  HtmlEncode="false"/>                                                            
+                                                            <asp:BoundField DataField="numero_prestamo" HeaderText="<center>No. Prestamo</center>" SortExpression="numero_prestamo" HtmlEncode="false" />
+                                                            <asp:BoundField DataField="idproducto" HeaderText="<center>ID Producto</center>" SortExpression="idproducto" HtmlEncode="false" Visible="False"/>
+                                                            <asp:BoundField DataField="producto" HeaderText="<center>Producto</center>" SortExpression="producto" HtmlEncode="false" />
+                                                            <asp:BoundField DataField="cantidad" HeaderText="<center>Cantidad</center>" SortExpression="cantidad" HtmlEncode="false" />
+                                                            <asp:BoundField DataField="valor" HeaderText="<center>Valor</center>" SortExpression="valor"  HtmlEncode="false" />     
+                                                            <asp:CheckBoxField DataField="retirada" SortExpression="retirada" HeaderText="<center>Retirada</center>"/>         
+                                                            <asp:BoundField DataField="id_prestamo_detalle" HeaderText="<center>ID</center>" SortExpression="id_prestamo_detalle"  HtmlEncode="false" />          
                                                         </Columns>
                                                         <EditRowStyle BackColor="#7C6F57" />
                                                         <FooterStyle BackColor="#1C5E55" Font-Bold="False" ForeColor="White" />

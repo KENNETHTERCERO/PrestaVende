@@ -50,7 +50,7 @@ namespace PrestaVende.Public
                     {
                         error = ex.ToString();
                     }
-                    
+
                 }
             }
             else if (Convert.ToInt32(tipo_reporte) == 2) //2 factura
@@ -69,8 +69,8 @@ namespace PrestaVende.Public
                     try
                     {
                         Reports.CRFacturaIntereses ReporteFactura = new Reports.CRFacturaIntereses();
-                                                
-                        ReporteFactura.Load(Server.MapPath("~/Reports/CRFacturaIntereses.rpt"));                        
+
+                        ReporteFactura.Load(Server.MapPath("~/Reports/CRFacturaIntereses.rpt"));
                         ReporteFactura.SetDataSource(factura);
                         CrystalReportViewer1.ReportSource = ReporteFactura;//document;
                         CrystalReportViewer1.DataBind();
@@ -101,7 +101,7 @@ namespace PrestaVende.Public
                     {
                         DataTable estadoCuentaDetalle = new DataTable("estadoCuentaPrestamoDetalle");
                         estadoCuenta = cs_prestamo.GetEstadoCuentaPrestamoEncabezado(ref error, numero_prestamo);
-                        DataTable proyeccion = new DataTable("dtProyeccion");
+                        DataTable proyeccion = new DataTable("dtProyeccionInteres");
                         proyeccion = cs_prestamo.getDTProyeccion(ref error);
 
                         Reports.CREstadoCuentaPrestamo EstadoCuentaPrestamo = new Reports.CREstadoCuentaPrestamo();
@@ -150,7 +150,7 @@ namespace PrestaVende.Public
 
                 }
             }
-            else if (Convert.ToInt32(tipo_reporte) == 5)//4 etiqueta prestamo
+            else if (Convert.ToInt32(tipo_reporte) == 5)//5 impresion de recibo.
             {
                 DataTable factura = new DataTable("DtDatos");
                 string id_factura = Request.QueryString.Get("id_factura");
@@ -181,6 +181,12 @@ namespace PrestaVende.Public
                     }
 
                 }
+            }
+            else if (Convert.ToInt32(tipo_reporte) == 6)//Reporte abono capital.
+            {
+                string id_sucursal = Request.QueryString.Get("id_sucursal");
+                string fecha_inicio = Request.QueryString.Get("fecha_inicio");
+                string fecha_fin = Request.QueryString.Get("fecha_fin");
             }
         }
     }

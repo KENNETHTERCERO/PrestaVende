@@ -43,7 +43,6 @@ namespace PrestaVende
                     
                     respuesta = login.Login(txtUser.Text, txtPassword.Text);
 
-
                     if (!respuesta[0].Equals("true"))
                     {
                         showError(respuesta[0]);

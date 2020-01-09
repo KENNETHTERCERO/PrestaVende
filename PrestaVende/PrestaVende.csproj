@@ -123,6 +123,9 @@
     <Content Include="Public\ProyeccionInteres.aspx" />
     <Content Include="Public\RecepcionCaja.aspx" />
     <Content Include="Public\RecepcionLiquidaciones.aspx" />
+    <Content Include="Public\ReporteAbonos.aspx" />
+    <Content Include="Public\ReporteCancelaciones.aspx" />
+    <Content Include="Public\ReporteFacturas.aspx" />
     <Content Include="Public\WebReport.aspx" />
     <Content Include="Public\WFBusquedaCliente.aspx" />
     <Content Include="Public\WFBusquedaClienteFacturacion.aspx" />
@@ -136,10 +139,12 @@
     <Content Include="Public\WFMantenimientoSubCategoria.aspx" />
     <Content Include="Public\WFMantenimientoCategoria.aspx" />
     <Content Include="Public\WFMantenimientoEmpresa.aspx" />
+    <Content Include="Public\WFMantenimientoSucursal.aspx" />
     <Content Include="Public\WFMantenimientoTipoCaja.aspx" />
     <Content Include="Public\WFMantAreaEmpresa.aspx" />
     <Content Include="Public\WFMantenimientoAsignacionCaja.aspx" />
     <Content Include="Public\WFPrestamo.aspx" />
+    <Content Include="Public\WFRetiroArticulo.aspx" />
     <Content Include="WebLogin.aspx" />
     <Content Include="DATASET\DSContratoPrestamo.xsc">
       <DependentUpon>DSContratoPrestamo.xsd</DependentUpon>
@@ -265,6 +270,7 @@
     <Compile Include="CLASS\cs_profesion.cs" />
     <Compile Include="CLASS\cs_recepcion_liquidacion.cs" />
     <Compile Include="CLASS\cs_serie.cs" />
+    <Compile Include="CLASS\cs_sucursal.cs" />
     <Compile Include="CLASS\cs_tipo_caja.cs" />
     <Compile Include="CLASS\cs_areaempresa.cs" />
     <Compile Include="CLASS\cs_categoria.cs" />
@@ -388,6 +394,27 @@
     <Compile Include="Public\RecepcionLiquidaciones.aspx.designer.cs">
       <DependentUpon>RecepcionLiquidaciones.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Public\ReporteAbonos.aspx.cs">
+      <DependentUpon>ReporteAbonos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\ReporteAbonos.aspx.designer.cs">
+      <DependentUpon>ReporteAbonos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\ReporteCancelaciones.aspx.cs">
+      <DependentUpon>ReporteCancelaciones.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\ReporteCancelaciones.aspx.designer.cs">
+      <DependentUpon>ReporteCancelaciones.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\ReporteFacturas.aspx.cs">
+      <DependentUpon>ReporteFacturas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\ReporteFacturas.aspx.designer.cs">
+      <DependentUpon>ReporteFacturas.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Public\WebReport.aspx.cs">
       <DependentUpon>WebReport.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -479,6 +506,13 @@
     <Compile Include="Public\WFMantenimientoEmpresa.aspx.designer.cs">
       <DependentUpon>WFMantenimientoEmpresa.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Public\WFMantenimientoSucursal.aspx.cs">
+      <DependentUpon>WFMantenimientoSucursal.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\WFMantenimientoSucursal.aspx.designer.cs">
+      <DependentUpon>WFMantenimientoSucursal.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Public\WFMantenimientoTipoCaja.aspx.cs">
       <DependentUpon>WFMantenimientoTipoCaja.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -513,6 +547,13 @@
     </Compile>
     <Compile Include="Public\WFPrincipal.aspx.designer.cs">
       <DependentUpon>WFPrincipal.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\WFRetiroArticulo.aspx.cs">
+      <DependentUpon>WFRetiroArticulo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\WFRetiroArticulo.aspx.designer.cs">
+      <DependentUpon>WFRetiroArticulo.aspx</DependentUpon>
     </Compile>
     <Compile Include="Reports\CRContratoGeneral.cs">
       <AutoGen>True</AutoGen>

@@ -480,11 +480,44 @@ namespace PrestaVende.CLASS
                 command.Connection = connection.connection;
                 command.Parameters.Clear();
                 command.CommandText = "select pre.id_prestamo_encabezado,pre.numero_prestamo,cli.primer_nombre,cli.segundo_nombre,cli.primer_apellido,cli.segundo_apellido, pre.id_cliente, " +
-                                       "pre.saldo_prestamo,(c.factor * 100) AS factor,pre.total_prestamo from tbl_prestamo_encabezado pre " +
+                                       "pre.saldo_prestamo,(c.factor * 100) AS factor,pre.total_prestamo,pre.id_interes,pre.id_plan_prestamo from tbl_prestamo_encabezado pre " +
                                        "inner join tbl_cliente cli on cli.id_cliente = pre.id_cliente " +
                                        "inner join tbl_sucursal su on su.id_sucursal = pre.id_sucursal " +
                                        "inner join tbl_cargo c on c.id_interes = pre.id_interes and c.id_empresa = su.id_empresa " +
                                        "where pre.estado_prestamo = 1 and pre.id_prestamo_encabezado = @id_prestamo";
+                command.Parameters.AddWithValue("@id_prestamo", id_prestamo);
+                dtReturnClient.Load(command.ExecuteReader());
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                return null;
+            }
+            finally
+            {
+                connection.connection.Close();
+            }
+            return dtReturnClient;
+        }
+
+        public DataTable ObtenerRetiroArticulo(ref string error, string id_prestamo)
+        {
+            DataTable dtReturnClient = new DataTable("dtReturnRetiro");
+            try
+            {
+                connection.connection.Open();
+                command.Connection = connection.connection;
+                command.Parameters.Clear();
+                command.CommandText = "select top 1 CASE WHEN cat.id_categoria = 1 THEN 1 " +
+                                       "ELSE CASE WHEN su.retiro_diferente_joya = 1 THEN 1 " +
+                                        "ELSE 0 END END AS retirar_articulo " +
+                                        "from tbl_prestamo_encabezado pre " +
+                                        "inner join tbl_prestamo_detalle dp on dp.id_prestamo_encabezado = pre.id_prestamo_encabezado " +
+                                        "inner join tbl_producto pro on pro.id_producto = dp.id_producto " +
+                                        "inner join tbl_subcategoria sub on sub.id_sub_categoria = pro.id_sub_categoria " +
+                                        "inner join tbl_categoria cat on cat.id_categoria = sub.id_categoria " +
+                                        "inner join tbl_sucursal su on su.id_sucursal = pre.id_sucursal " +
+                                        "where pre.id_prestamo_encabezado = @id_prestamo";
                 command.Parameters.AddWithValue("@id_prestamo", id_prestamo);
                 dtReturnClient.Load(command.ExecuteReader());
             }
@@ -623,6 +656,114 @@ namespace PrestaVende.CLASS
             finally
             {
                 connection.connection.Close();
+            }
+        }
+
+        public DataTable GetDetallePrestamo(ref string error, string numero_prestamo)
+        {
+            DataTable dtDetallePrestamo = new DataTable("DetallePrestamo");
+            try
+            {
+                connection.connection.Open();
+                command.Connection = connection.connection;
+                command.Parameters.Clear();
+                command.CommandText = "SELECT PD.numero_prestamo, P.id_producto idproducto,P.producto, PD.cantidad, PD.valor, CONVERT(BIT,ISNULL(PD.retirada, 0)) retirada,PD.id_prestamo_detalle FROM tbl_prestamo_detalle PD " +
+                                      "INNER JOIN tbl_producto P ON P.id_producto = PD.id_producto " +
+                                      "WHERE PD.id_prestamo_encabezado = @id_prestamo AND PD.id_sucursal = @id_sucursal";
+                command.Parameters.AddWithValue("@id_prestamo", numero_prestamo);
+                command.Parameters.AddWithValue("@id_sucursal", cs_usuario.id_sucursal);
+                dtDetallePrestamo.Load(command.ExecuteReader());                
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                return null;
+            }
+            finally
+            {
+                connection.connection.Close();
+            }
+
+            return dtDetallePrestamo;
+        }
+
+        public DataTable GetDatosRetiro(ref string error, string numero_prestamo)
+        {
+            DataTable dtDetallePrestamo = new DataTable("DetallePrestamo");
+            try
+            {
+                connection.connection.Open();
+                command.Connection = connection.connection;
+                command.Parameters.Clear();
+                command.CommandText = "select (p.total_prestamo - p.saldo_prestamo) ValorCancelado,  " +
+                                      "isnull((select sum(valor) from tbl_prestamo_detalle dp where dp.retirada = 1 and dp.id_prestamo_encabezado = p.id_prestamo_encabezado),0) ValorRetirado " +
+                                      "from tbl_prestamo_encabezado p where p.id_prestamo_encabezado = @id_prestamo and p.id_sucursal = @id_sucursal";
+                command.Parameters.AddWithValue("@id_prestamo", numero_prestamo);
+                command.Parameters.AddWithValue("@id_sucursal", cs_usuario.id_sucursal);
+                dtDetallePrestamo.Load(command.ExecuteReader());
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                return null;
+            }
+            finally
+            {
+                connection.connection.Close();
+            }
+
+            return dtDetallePrestamo;
+        }
+
+        public bool guardar_retiros_articulo(ref string error, string[] id_prestamo_detalles)
+        {
+            try
+            {
+                connection.connection.Open();
+                command.Connection = connection.connection;
+                command.Parameters.Clear();
+                command.Transaction = connection.connection.BeginTransaction();
+
+                foreach (string id_prestamo_detalle in id_prestamo_detalles)
+                {
+                    if (update_retiro_articulo(ref error, id_prestamo_detalle) == false)
+                        throw new Exception("No se pudo almacenar todos los articulos.");                    
+                }
+
+                command.Transaction.Commit();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                command.Transaction.Rollback();
+                return false;
+            }
+            finally
+            {
+                connection.connection.Close();
+            }
+        }
+
+        private bool update_retiro_articulo(ref string error, string id_prestamo_detalle)
+        {
+            try
+            {
+                int update = 0;
+                command.Parameters.Clear();
+                command.CommandText = "UPDATE tbl_prestamo_detalle SET retirada = 1 WHERE id_prestamo_detalle = @id_prestamo_detalle";
+                command.Parameters.AddWithValue("@id_prestamo_detalle", id_prestamo_detalle);
+
+                update = command.ExecuteNonQuery();
+                if (update > 0)
+                    return true;
+                else
+                    return false;
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                return false;
             }
         }
     }

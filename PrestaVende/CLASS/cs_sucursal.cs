@@ -7,7 +7,7 @@ using System.Data.SqlClient;
 
 namespace PrestaVende.CLASS
 {
-    public class cs_AreaEmpresa
+    public class cs_sucursal
     {
         private cs_connection connection = new cs_connection();
         private SqlCommand command = new SqlCommand();
@@ -209,6 +209,28 @@ namespace PrestaVende.CLASS
             }
         }
 
+        public DataTable ObtenerSucursalesPorEmpresa(ref string error, string id_empresa)
+        {
+            try
+            {
+                DataTable DatosAreaEmpresa = new DataTable();
+                connection.connection.Open();
+                command.Connection = connection.connection;
+                command.CommandText = "select id_sucursal, sucursal from tbl_sucursal where id_empresa = @id_empresa";
+                command.Parameters.AddWithValue("@id_empresa", id_empresa);
+                DatosAreaEmpresa.Load(command.ExecuteReader());
+                return DatosAreaEmpresa;
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                return null;
+            }
+            finally
+            {
+                connection.connection.Close();
+            }
+        }
    
     }
 

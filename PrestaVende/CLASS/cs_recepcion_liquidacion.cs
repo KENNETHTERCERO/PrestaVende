@@ -13,7 +13,7 @@ namespace PrestaVende.CLASS
         private SqlCommand command = new SqlCommand();
 
 
-        public DataSet obtenerLiquidaciones(int numero_prestamo)
+        public DataSet obtenerLiquidaciones(Decimal numero_prestamo)
         {
             DataSet ds = new DataSet();
 

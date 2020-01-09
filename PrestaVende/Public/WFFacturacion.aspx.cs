@@ -107,5 +107,11 @@ namespace PrestaVende.Public
             string id_prestamo = Request.QueryString["id_prestamo"];
             Response.Redirect("WFCrearFactura.aspx?id_prestamo=" + id_prestamo + "&id_tipo=3");
         }
+
+        protected void btnRetiroArticulo_Click(object sender, EventArgs e)
+        {
+            string id_prestamo = Request.QueryString["id_prestamo"];
+            Response.Redirect("WFRetiroArticulo.aspx?id_prestamo=" + id_prestamo);
+        }
     }
 }

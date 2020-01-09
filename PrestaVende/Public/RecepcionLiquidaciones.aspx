@@ -1,40 +1,28 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Public/PrestaVende.Master" AutoEventWireup="true" CodeBehind="RecepcionLiquidaciones.aspx.cs" Inherits="PrestaVende.Public.RecepcionLiquidaciones" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <style type="text/css">
-        .auto-style1 {
-            height: 22px;
-        }
-    </style>
+   
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server" >
      <asp:UpdatePanel runat="server" ID="uPanel" >
         <ContentTemplate>
-            <div class="container-fluid text-center">
+            <div class="container-fluid text-center" >
                 <div class="row content">
-                   <%-- <div class="col-sm-2 sidenav">
+                    <div class="col-sm-2 sidenav">
                         <center>
                         <h2>Opciones</h2>
                             <div class=".btn-group-vertical">
-                                <asp:Button ID="btnSalir" runat="server" Width="200px" Text="Regresar" class="btn btn-default" Visible="false" OnClick="btnSalir_Click"/>
                                 <br />
                                 <br />
                                 <br />
-                                <asp:Button ID="btnCreate" runat="server" Width="200px" Text="Crear" class="btn btn-success" Visible="false" OnClick="btnCreate_Click"/>
+                                <button id="btnBack" onclick="goBack()" style="width: 200px;" class="btn btn-default">Regresar</button>
                                 <br />
                                 <br />
-                                <br />
-                                <asp:Button ID="btnGuardar" runat="server" Width="200px" Text="Guardar" class="btn btn-info" Visible="false" OnClick="btnGuardar_Click"/>
-                                <br />
-                                <br />
-                                <br />
-                                <asp:Button ID="btnCancel" runat="server" Width="200px" Text="Cancelar" class="btn btn-warning" Visible="false" OnClick="btnCancel_Click"/>
-                                <br />
-                                <br />
-                                <br />
-                            </div>
+                                <br />                                                                                                                
+                                <asp:Button ID="btnAceptar" runat="server" Width="200px" Text="Agregar a inventario" class="btn btn-success"  OnClick="btnAceptar_Click"/>
+                            </div>                                                           
                         </center>
                     </div>
-                    --%><div class="col-sm-8 text-left">
+                 <div class="col-sm-8 text-left">
                         <div>
                             <div align="center" runat="server" id="divWarning" visible="false" class="alert alert-warning alert-dismissable fade in">
                                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -56,15 +44,15 @@
                         <br />
                         <br />
                         <br />
-                        <div class="panel panel-primary">
-                            <div class="panel-heading">
+                        <div class="panel panel-primary" >
+                            <div class="panel-heading" >
                                 <div style="position: relative;">
-                                                <table>
-                                                    <tr>
-                                                        <td>
+                                                <table style="width: 100%; text-align:center">
+                                                    <tr >
+                                                        <td >
                                                             <h1> Recepción liquidaciones  &nbsp;&nbsp;</h1>
                                                         </td>
-                                                        <td></td>
+                                                       
                                                     </tr>
                                                 </table>
                                             </div>
@@ -74,154 +62,62 @@
                                     <br />
                                     <br />
                                      <div  id="idv_datos_busqueda" runat="server" visible="true">
-                                            <table >
+                                            <table style="width:60% ; text-align:center">
                                                 <tr>
                                                     <td>
                                                         <big><asp:Label ID="LblPrestamo" runat="server" Text="Préstamo"></asp:Label></big>
                                                     </td>
-                                                    <td>
-
+                                                   <td>
+                                                       &nbsp;
+                                                   </td>
+                                                    <td >
+                                                       
+                                                            <asp:TextBox ID="TxtPrestamo" class="form-control" Width="250px" runat="server"  ></asp:TextBox>
+                                                        
                                                     </td>
                                                     <td>
-                                                        <center>
-                                                            <asp:TextBox ID="TxtPrestamo" runat="server" ></asp:TextBox>
-                                                        </center>
-                                                    </td>
-                                                    <td>
-                                                        <asp:ImageButton ID="BtnBuscar" runat="server" OnClick="BtnBuscar_Click" ImageUrl="~/Imagenes/search.png" Width="30"/>
+                                                        <%--<asp:ImageButton ID="BtnBuscar" runat="server" OnClick="BtnBuscar_Click" ImageUrl="~/Imagenes/search.png" Width="30"/>--%>
+                                                        <asp:Button ID="btnBuscar" runat="server" Width="200px" Text="Buscar" class="btn btn-info" OnClick="btnBuscar_Click"/>                                
                                                     </td>
                                                 </tr>
                                                 </table>
                                          </div>
                                     <br />
 
-                                    <div id="div_DatoSeleccionado" runat="server" visible ="false">
-                                        <table>
-                                            <tr>
-                                                <td width="20%" style="text-align:left">
-                                                    Préstamo
-                                                </td>
-                                                <td width="20%" style="text-align:left">
-                                                    <asp:Label ID="lblPrestamoT" runat="server"></asp:Label>
-                                                </td>
-                                                <td width="20%">
-                                                    <asp:Label ID="lblPrestamoDetalle" runat="server" Visible="false"></asp:Label>
-                                                </td>
-                                                <td width="20%" style="text-align:left">
-                                                    Producto
-                                                </td>
-                                                <td width="20%" style="text-align:left">
-                                                    <asp:Label ID="lblProducto" runat="server"></asp:Label>
-                                                </td>
-                                            </tr>
-                                            <br />
-                                            <br />
-
-                                            <tr>
-                                                <td width="20%" style="text-align:left">
-                                                    Cantidad
-                                                </td>
-                                                <td width="20%" style="text-align:left">
-                                                    <asp:Label ID="lblCantidad" runat="server"></asp:Label>
-                                                </td>
-                                                <td width="20%">
-                                                    
-                                                </td>
-                                                <td width="20%" style="text-align:left">
-                                                    Valor prestado
-                                                </td>
-                                                <td width="20%" style="text-align:left">
-                                                    <asp:Label ID="lblValorPrestado" runat="server"></asp:Label>
-                                                </td>
-                                            </tr>
-                                            <br />
-
-                                            <tr>
-                                                <td width="20%" style="text-align:left">
-                                                    Monto liquidado
-                                                </td>
-                                                <td width="20%" style="text-align:left">
-                                                    <asp:Label ID="lblMontoLiquidado" runat="server"></asp:Label>
-                                                </td>
-                                                <td width="20%">
-                                                    
-                                                </td>
-                                                <td width="20%" style="text-align:left">
-                                                    Precio Sugerido
-                                                </td>
-                                                <td width="20%" style="text-align:left">
-                                                    <asp:Label ID="lblPrecioSugerido" runat="server"></asp:Label>
-                                                </td>
-                                            </tr>
-                                            <br />
-
-                                             <tr>
-                                                <td width="20%" style="text-align:left">
-                                                    Fecha Liquidación
-                                                </td>
-                                                <td width="20%" style="text-align:left">
-                                                    <asp:Label ID="lblFechaLiquidacion" runat="server"></asp:Label>
-                                                </td>
-                                                <td width="20%">
-                                                    
-                                                </td>
-                                                <td width="20%" style="text-align:left">
-                                                    Precio
-                                                </td>
-                                                <td width="20%" style="text-align:left">
-                                                    <asp:TextBox ID="txtPrecio" runat="server"></asp:TextBox>
-                                                </td>
-                                            </tr>
-                                            <br />
-
-                                             <tr>
-                                                <td width="20%" style="text-align:left">
-                                                   
-                                                </td>
-                                                <td width="20%" style="text-align:left">
-                                                    
-                                                </td>
-                                                <td width="20%">
-                                                    <asp:Button ID="btnGuardar" runat="server" Text="Guardar en Inventario" />
-                                                </td>
-                                                <td width="20%" style="text-align:left">
-                                                    
-                                                </td>
-                                                <td width="20%" style="text-align:left">
-                                                    
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                                                                                    
+                                                                                                   
 
                                     <div id="div_gridView" runat="server" visible ="false">
                                         <br />
-                                        <table>
+                                        <table >
                                             <tr>
                                                 <td>
-                                                    <asp:GridView ID="GrdVLiquidacion" runat="server" Width="100%" CssClass="footable" AutoGenerateColumns="False" 
-                                                        ForeColor="#333333" GridLines="None" OnRowCommand ="GrdVLiquidacion_RowCommand">
+                                                    <asp:GridView ID="GrdVLiquidacion" runat="server" CssClass="footable" AutoGenerateColumns="False" 
+                                                        ForeColor="#333333" GridLines="None" >
                                                         <AlternatingRowStyle BackColor="White" />
                                                         <Columns>
-                                                            <asp:ButtonField ButtonType="Button" FooterStyle-BackColor="#ff9a32" CommandName="select" HeaderText="" Text="->" >
-                                                            <FooterStyle BackColor="#FF9A32" />
-                                                            </asp:ButtonField>
+
+                                                            <asp:TemplateField>
+                                                                <ItemTemplate>
+                                                                    <asp:CheckBox ID="SelectedCheckBox" runat="server" AutoPostBack="True"  />
+                                                                  </ItemTemplate>
+                                                           </asp:TemplateField>
+                                                                
                                                                 <%--<asp:BoundField DataField="id_liquidacion" HeaderText="<center>ID</center>" SortExpression="id_liquidacion" HtmlEncode="false"/>--%>                                                            
                                                                 <%--<asp:BoundField DataField="sucursal" HeaderText="<center>SUCURSAL</center>" SortExpression="sucursal" HtmlEncode="false" />--%>
                                                                 <asp:BoundField DataField="numero_prestamo" HeaderText="<center>NUMERO DE PRESTAMO</center>" SortExpression="numero_prestamo" HtmlEncode="false" />
-                                                                <asp:BoundField DataField="id_prestamo_detalle" HeaderText="<center>ID DETALLE</center>" SortExpression="numero_prestamo" HtmlEncode="false" />
-                                                                <asp:BoundField DataField="id_producto" HeaderText="<center>ID PRODUCTO</center>" SortExpression="numero_prestamo" HtmlEncode="false" />
+                                                                <asp:BoundField DataField="id_prestamo_detalle" HeaderText="<center> ID </center>" SortExpression="numero_prestamo"  HtmlEncode="false" />
+                                                                <asp:BoundField DataField="id_producto" HeaderText="<center>ID PRODUCTO</center>" SortExpression="numero_prestamo" HtmlEncode="false" Visible="false" />
+                                                                <asp:BoundField DataField="numero_linea" HeaderText="<center>LINEA</center>" SortExpression="numero_prestamo" HtmlEncode="false" />
                                                                 <asp:BoundField DataField="producto" HeaderText="<center>PRODUCTO</center>" SortExpression="producto"  HtmlEncode="false"/>                                                                
                                                                 <asp:BoundField DataField="cantidad" HeaderText="<center>CANTIDAD</center>" SortExpression="cantidad"  HtmlEncode="false"/>
                                                                 <asp:BoundField DataField="valor" HeaderText="<center>VALOR PRESTADO</center>" SortExpression="valor"  HtmlEncode="false"/>
                                                                 <asp:BoundField DataField="monto_liquidacion" HeaderText="<center>MONTO LIQUIDADO</center>" SortExpression="monto_liquidacion"  HtmlEncode="false"/>
                                                                 <asp:BoundField DataField="precio_sugerido" HeaderText="<center>PRECIO SUGERIDO</center>" SortExpression="precio_sugerido"  HtmlEncode="false"/>
-                                                               <%-- <asp:TemplateField HeaderText="PRECIO" >
+                                                                <asp:TemplateField HeaderText=" <center> PRECIO </center>" HeaderStyle-HorizontalAlign="Center" >
                                                                     <ItemTemplate>
-                                                                        <asp:TextBox ID="txtPrecio" runat="server" ></asp:TextBox>
+                                                                        <asp:TextBox ID="txtPrecio" runat="server" text="0.00" Width="80px"></asp:TextBox>
                                                                     </ItemTemplate>                                                                    
-                                                                </asp:TemplateField>--%>
+                                                                </asp:TemplateField>
                                                                 <asp:BoundField DataField="fecha_liquidacion" HeaderText="<center>FECHA LIQUIDACION</center>" SortExpression="fecha_liquidacion"  HtmlEncode="false"/>
                                                                 
                                                         </Columns>
@@ -238,8 +134,8 @@
                                                 <td></td>
                                             </tr>
                                             <tr>
-                                                <td>
-                                                    <asp:ImageButton ID="btnAceptar" runat="server" OnClick="btnAceptar_Click"  />
+                                                <td>               
+                                                   
                                                 </td>
                                             </tr>
                                         </table>                                      
