@@ -74,7 +74,7 @@ namespace PrestaVende.CLASS
             try
             {
                 DataTable EstadosCaja = new DataTable();
-                DataTable DtEstadosValidacion = new DataTable();
+                //string DtEstadosValidacion = new DataTable();
                 string id_tipo_caja_seleccionada = "";
                 connection.connection.Open();
                 command.Parameters.Clear();
@@ -84,16 +84,9 @@ namespace PrestaVende.CLASS
                //OBTENIENDO TIPO DE CAJA
                 command.CommandText = "select id_tipo_caja from tbl_caja where id_caja = @id_caja";
                 command.Parameters.AddWithValue("@id_caja", id_caja);
-                DtEstadosValidacion.Load(command.ExecuteReader());
+                id_tipo_caja_seleccionada = command.ExecuteScalar().ToString();
 
                 //SI LA CAJA YA ESTA RECIBIDA DEBE MOSTRAR INCREMENTO Y DECREMENTO
-                if (DtEstadosValidacion.Rows.Count > 0)
-                {
-                    foreach (DataRow item in DtEstadosValidacion.Rows)
-                    {
-                        id_tipo_caja_seleccionada = item[0].ToString();
-                    }
-                }
 
                         //SI LA CAJA ESTA CERRADA NO DEBE APARECER EL ESTADO DE CIERRE
                         command.CommandText = "SELECT 0 AS id_estado_caja, 'SELECCIONAR' AS estado_caja UNION "
