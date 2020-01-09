@@ -13,6 +13,7 @@ namespace PrestaVende.Public
     {
         private CLASS.cs_prestamo cs_prestamo = new CLASS.cs_prestamo();
         private CLASS.cs_factura cs_factura = new CLASS.cs_factura();
+        private CLASS.cs_caja cs_caja = new CLASS.cs_caja();
         private string error = "";
 
         protected void Page_Load(object sender, EventArgs e)
@@ -187,6 +188,39 @@ namespace PrestaVende.Public
                 string id_sucursal = Request.QueryString.Get("id_sucursal");
                 string fecha_inicio = Request.QueryString.Get("fecha_inicio");
                 string fecha_fin = Request.QueryString.Get("fecha_fin");
+            }
+            else if (Convert.ToInt32(tipo_reporte) == 7)//Reporte Estado de Cuenta Caja
+            {
+                DataTable EstadoCuenta = new DataTable("DtDatos");
+                string id_sucursal = Request.QueryString.Get("id_sucursal");
+                string fecha_inicio = Request.QueryString.Get("fecha_inicio");
+                string fecha_fin = Request.QueryString.Get("fecha_fin");
+                string id_caja = Request.QueryString.Get("id_caja");
+
+                EstadoCuenta = cs_caja.ObtenerEstadoCuenta(ref error, id_sucursal, fecha_inicio, fecha_fin, id_caja);
+                if (EstadoCuenta.Rows.Count <= 0)
+                {
+                    error = "Error obteniendo datos del estado de cuenta." + error;
+                    throw new Exception("");
+                }
+                else
+                {
+                    try
+                    {
+                        Reports.CREtiquetaPrestamo Etiquetaprestamo = new Reports.CREtiquetaPrestamo();
+                        Etiquetaprestamo.Load(Server.MapPath("~/Reports/CREtiquetaPrestamo.rpt"));
+                        Etiquetaprestamo.SetDataSource(contrato);
+                        CrystalReportViewer1.ReportSource = Etiquetaprestamo;//document;
+                        CrystalReportViewer1.DataBind();
+                        CrystalReportViewer1.RefreshReport();
+                        Etiquetaprestamo.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "Etiqueta No." + numero_prestamo);
+                    }
+                    catch (Exception ex)
+                    {
+                        error = ex.ToString();
+                    }
+
+                }
             }
         }
     }

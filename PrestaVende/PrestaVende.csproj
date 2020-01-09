@@ -163,6 +163,17 @@
     <Content Include="DATASET\DSFacturaIntereses.xsc">
       <DependentUpon>DSFacturaIntereses.xsd</DependentUpon>
     </Content>
+    <Content Include="DATASET\DSEstadoCuentaCaja.xsc">
+      <DependentUpon>DSEstadoCuentaCaja.xsd</DependentUpon>
+    </Content>
+    <None Include="DATASET\DSEstadoCuentaCaja.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DSEstadoCuentaCaja.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="DATASET\DSEstadoCuentaCaja.xss">
+      <DependentUpon>DSEstadoCuentaCaja.xsd</DependentUpon>
+    </Content>
     <None Include="DATASET\DSEstadoCuentaPrestamo.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>DSEstadoCuentaPrestamo.Designer.cs</LastGenOutput>
@@ -293,6 +304,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DSContratoPrestamo.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DATASET\DSEstadoCuentaCaja.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DSEstadoCuentaCaja.xsd</DependentUpon>
     </Compile>
     <Compile Include="DATASET\DSEstadoCuentaPrestamo.cs">
       <DependentUpon>DSEstadoCuentaPrestamo.xsd</DependentUpon>
@@ -615,6 +631,12 @@
       <DependentUpon>CRProyeccionIntereses.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Reports\CRReporteEstadoDeCuentaCaja.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CRReporteEstadoDeCuentaCaja.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="WebLogin.aspx.cs">
       <DependentUpon>WebLogin.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -654,6 +676,10 @@
     <EmbeddedResource Include="Reports\CRProyeccionIntereses.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>CRProyeccionIntereses.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\CRReporteEstadoDeCuentaCaja.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>CRReporteEstadoDeCuentaCaja.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
