@@ -72,7 +72,7 @@ namespace PrestaVende.CLASS
                                         "FROM " +
                                         "tbl_usuario AS usu " +
                                         "LEFT JOIN tbl_asignacion_caja AS asi ON asi.id_usuario_asignado = usu.id_usuario AND asi.id_estado_caja in (2,3,7,8) AND asi.estado_asignacion IN (0,1) " +
-                                        "LEFT JOIN tbl_caja AS caj ON caj.id_caja = asi.id_caja " +
+                                        "LEFT JOIN tbl_caja AS caj ON caj.id_caja = asi.id_caja AND caj.id_sucursal = usu.id_sucursal " +
                                         "WHERE usu.usuario = @usuario and usu.password_user = @password " +
                                               "AND usu.estado = 1 ORDER BY asi.fecha_creacion DESC";
                 command.Parameters.AddWithValue("@usuario", user);

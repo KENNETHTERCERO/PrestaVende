@@ -161,10 +161,5 @@ namespace PrestaVende.Public
         
 
         #endregion
-
-       
-
-      
-
     }
 }

@@ -207,13 +207,13 @@ namespace PrestaVende.Public
                 {
                     try
                     {
-                        Reports.CREtiquetaPrestamo Etiquetaprestamo = new Reports.CREtiquetaPrestamo();
-                        Etiquetaprestamo.Load(Server.MapPath("~/Reports/CREtiquetaPrestamo.rpt"));
-                        Etiquetaprestamo.SetDataSource(contrato);
-                        CrystalReportViewer1.ReportSource = Etiquetaprestamo;//document;
-                        CrystalReportViewer1.DataBind();
-                        CrystalReportViewer1.RefreshReport();
-                        Etiquetaprestamo.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "Etiqueta No." + numero_prestamo);
+                        //Reports.CREtiquetaPrestamo Etiquetaprestamo = new Reports.CREtiquetaPrestamo();
+                        //Etiquetaprestamo.Load(Server.MapPath("~/Reports/CREtiquetaPrestamo.rpt"));
+                        //Etiquetaprestamo.SetDataSource(contrato);
+                        //CrystalReportViewer1.ReportSource = Etiquetaprestamo;//document;
+                        //CrystalReportViewer1.DataBind();
+                        //CrystalReportViewer1.RefreshReport();
+                        //Etiquetaprestamo.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "Etiqueta No." + numero_prestamo);
                     }
                     catch (Exception ex)
                     {

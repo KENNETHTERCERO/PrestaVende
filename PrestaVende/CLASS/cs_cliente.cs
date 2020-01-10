@@ -272,7 +272,7 @@ namespace PrestaVende.CLASS
                 command.Connection = connection.connection;
                 command.CommandText = "SELECT ISNULL(MAX(id_cliente), 0) " +
                                         "FROM tbl_cliente " +
-                                        "WHERE DPI = @validaDPI OR nit = @validaNit";
+                                        "WHERE DPI = @validaDPI ";
                 command.Parameters.AddWithValue("@validaDPI", DPI);
                 command.Parameters.AddWithValue("@validaNit", nit);
                 returnIDClientMax = command.ExecuteScalar().ToString();
