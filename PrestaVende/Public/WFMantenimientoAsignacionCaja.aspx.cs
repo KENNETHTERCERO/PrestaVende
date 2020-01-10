@@ -168,23 +168,11 @@ namespace PrestaVende.Public
                 {
                     if (isUpdate)
                     {
-                        ////ACTUALIZA REGISTRO
-                        //if (insertAsignacionCaja())
-                        //{
-                        //     if ((ddIdEstadoCaja.SelectedValue.ToString() == "4") && (IntCajaActualUsuario == Convert.ToInt32(ddIdCaja.SelectedValue.ToString()))) //CUANDO ESTA EN ESTADO DE CIERRE DE LA MISMA CAJA SALE
-                        //     {
-                        
-                        //     }
-                        //     else
-                        //     {
-                        
-                        //     }                           
-                        //}
                         if (ChbxRecibir.Checked)
                         {
-                            if (mAsignacionCaja.recibirCierreCaja(ref error, ddidAsignacion.Text.ToString(), txtMonto.Text.ToString(), ddIdCaja.SelectedValue.ToString()))
+                            if (mAsignacionCaja.recibirCierreCaja(ref error, ddidAsignacion.Text.ToString(), txtMonto.Text.ToString(), ddIdCaja.SelectedValue.ToString(), ddIdUsuarioAsignado.SelectedValue.ToString()))
                             {
-                                if (CLASS.cs_usuario.id_caja.ToString() == ddIdCaja.SelectedValue.ToString())
+                                if (CLASS.cs_usuario.id_caja.ToString() == ddIdCaja.SelectedValue.ToString() || (ddIdEstadoCaja.SelectedValue.ToString() == "4" && CLASS.cs_usuario.id_rol == 5))
                                 {
                                     OpcionSalir();
                                     Response.Redirect("~/WebLogin.aspx", false);
@@ -387,18 +375,22 @@ namespace PrestaVende.Public
                     txtMonto.Enabled = true;
                     ddIdUsuarioAsignado.Enabled = true;
                     ChbxRecibir.Visible = false;
+                    ChbxRecibir.Checked = false;
                     lblRecibir.Visible = false;
+                    txtMonto.Text = "";
                 }
                 else if (opcion.Equals("cierre"))
                 {
                     if (CLASS.cs_usuario.id_rol == 5)
                     {
                         ddIdCaja.Enabled = false;
-                        ddIdEstadoCaja.Enabled = false;
+                        ddIdEstadoCaja.Enabled = true;
                         txtMonto.Enabled = true;
                         ddIdUsuarioAsignado.Enabled = false;
                         ChbxRecibir.Visible = false;
+                        ChbxRecibir.Checked = false;
                         lblRecibir.Visible = false;
+                        txtMonto.Text = "";
                     }
                     else
                     {
@@ -407,7 +399,9 @@ namespace PrestaVende.Public
                         txtMonto.Enabled = true;
                         ddIdUsuarioAsignado.Enabled = false;
                         ChbxRecibir.Visible = false;
+                        ChbxRecibir.Checked = false;
                         lblRecibir.Visible = false;
+                        txtMonto.Text = "";
                     }
                 }
                 else if (opcion.Equals("recepcionCierre"))
@@ -417,6 +411,7 @@ namespace PrestaVende.Public
                     txtMonto.Enabled = false;
                     ddIdUsuarioAsignado.Enabled = false;
                     ChbxRecibir.Visible = true;
+                    ChbxRecibir.Checked = false;
                     lblRecibir.Visible = true;
                 }
             }
@@ -459,7 +454,22 @@ namespace PrestaVende.Public
 
                 if (mAsignacionCaja.insertAsignacionCaja(ref error, ddidAsignacion.Text, ddIdCaja.SelectedValue.ToString(), ddIdEstadoCaja.SelectedValue.ToString(), txtMonto.Text, "1", thisDay.ToString("MM/dd/yyyy HH:mm:ss"), thisDay.ToString("MM/dd/yyyy HH:mm:ss"), CLASS.cs_usuario.usuario, ddIdUsuarioAsignado.SelectedValue.ToString(), blnRecibir, id_asignacion_recibida, ref IntCajaActualUsuario))                  
                 {
-                    showSuccess("Se realizó la asignación de caja correctamente.");
+                    if (ddIdEstadoCaja.SelectedValue.ToString() == "2")
+                    {
+                        showSuccess("Se realizó la asignación de caja correctamente.");
+                    }
+                    else if (ddIdEstadoCaja.SelectedValue.ToString() == "4")
+                    {
+                        if (ddIdEstadoCaja.SelectedValue.ToString() == "4" && CLASS.cs_usuario.id_rol == 5)
+                        {
+                            OpcionSalir();
+                            Response.Redirect("~/WebLogin.aspx", false);
+                        }
+                        else
+                        {
+                            showSuccess("Se realizó cierre de caja correctamente.");
+                        }
+                    }
                     return true;
                 }
                 else
