@@ -11,7 +11,7 @@ namespace PrestaVende.Public
     {
         private string error = "";
         private CLASS.cs_sucursal cs_sucursal = new CLASS.cs_sucursal();
-
+        private CLASS.cs_caja cs_caja = new CLASS.cs_caja();
         protected void Page_Load(object sender, EventArgs e)
         {
             try
@@ -33,6 +33,7 @@ namespace PrestaVende.Public
                     else
                     {
                         ObtenerSucursales();
+                        ObtenerCajas();
                     }
                 }
             }
@@ -46,7 +47,7 @@ namespace PrestaVende.Public
         {
             try
             {
-                int id_empresa = CLASS.cs_usuario.id_empresa;
+                int id_empresa = CLASS.cs_usuario.id_usuario;
                 ddlSucursal.DataSource = cs_sucursal.ObtenerSucursalesPorUsuario(ref error, id_empresa.ToString());
                 ddlSucursal.DataValueField = "id_sucursal";
                 ddlSucursal.DataTextField = "sucursal";
@@ -63,7 +64,21 @@ namespace PrestaVende.Public
             }
         }
 
-
+        private void ObtenerCajas()
+        {
+            try
+            {
+                int id_empresa = CLASS.cs_usuario.id_usuario;
+                ddlCaja.DataSource = cs_caja.getCajasCombo(ref error,  ddlSucursal.SelectedValue.ToString());
+                ddlCaja.DataValueField = "id_caja";
+                ddlCaja.DataTextField = "nombre_caja";
+                ddlCaja.DataBind();
+            }
+            catch (Exception ex)
+            {
+                showError(ex.ToString());
+            }
+        }
 
         private bool showWarning(string warning)
         {
@@ -90,8 +105,11 @@ namespace PrestaVende.Public
                     showWarning("Usted debe ingresar una fecha de fin para poder generar el reporte.");
                 else
                 {
-                    string scriptEstadoCuenta = "window.open('WebReport.aspx?tipo_reporte=7" + "&id_sucursal=" + id_sucuarsal + "&fecha_inicio=" + txtFechaInicial.Text + "&fecha_fin=" + txtFechaFin.Text + "');";
-                    ScriptManager.RegisterClientScriptBlock(this, GetType(), "NewWindow", scriptEstadoCuenta, true);
+                    string FechaInicial = txtFechaInicial.Text.ToString();
+                    string FechaFinal = txtFechaFin.Text.ToString();
+                    string id_caja = ddlCaja.SelectedValue.ToString();
+                    string scriptEstadoCuenta = "window.open('WebReport.aspx?tipo_reporte=7" + "&id_sucursal=" + id_sucuarsal + "&fecha_inicio=" + FechaInicial + "&fecha_fin=" + FechaFinal + "&id_caja=" + id_caja +"');";
+                    ScriptManager.RegisterClientScriptBlock(this, GetType(), "EstadoDeCuenta", scriptEstadoCuenta, true);
                 }
             else
                 showWarning("Seleccione una sucursal para poder generar el reporte.");

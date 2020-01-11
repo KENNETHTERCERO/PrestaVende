@@ -75,12 +75,21 @@
                                                     </td>        
                                                     <td></td>               
                                                     <td>
-                                                        <asp:DropDownList ID="ddlSucursal" runat="server" CssClass="form-control" OnSelectedIndexChanged="ddlSucursal_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
-                                                    </td> 
+                                                        <asp:DropDownList ID="ddlSucursal" runat="server" CssClass="form-control" AutoPostBack="true"></asp:DropDownList>
+                                                    </td>
                                                 </tr>                                                
                                                 <tr>
-                                                    <td colspan="4" style="height:20px;"></td>
+                                                    <td colspan="4" style="height:20px;">
+
+                                                    </td>
                                                 </tr>
+                                                    <td colspan="2">
+                                                        <asp:Label ID="lblCajas" runat="server" Font-Bold="true">CAJA</asp:Label>
+                                                    </td>        
+                                                    <td></td>               
+                                                    <td>
+                                                        <asp:DropDownList ID="ddlCaja" runat="server" CssClass="form-control" AutoPostBack="true"></asp:DropDownList>
+                                                    </td>
                                                 <tr>
                                                     <td colspan="2">
                                                         <asp:Label ID="lblFechaInicio" runat="server" Text="FECHA INICIO" Font-Bold="true"></asp:Label>

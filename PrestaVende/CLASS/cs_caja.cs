@@ -228,51 +228,21 @@ namespace PrestaVende.CLASS
             }
         }
 
-        public DataTable ObtenerEstadoCuenta(ref string error, string id_caja, string id_sucursal,
-                                             string fechaInicio, string fechaFinal)
+        public DataTable ObtenerEstadoCuenta(ref string error, string id_sucursal, string id_caja, string fechaInicio, string fechaFinal)
         {
             DataTable dtReturnFacturas = new DataTable("dtEstadoCuenta");
-            DataSet ds = new DataSet();
-
             try
             {
                 connection.connection.Open();
                 command.Connection = connection.connection;
                 command.Parameters.Clear();
 
-                SqlDataAdapter adapter;
-                SqlParameter param;
-                SqlParameter param1;
-                SqlParameter param2;
-                SqlParameter param3;
-
-                command.CommandType = CommandType.StoredProcedure;
-                command.CommandText = "SP_ConsultaEstadoCuentaCaja";
-
-                param = new SqlParameter("@id_sucursal", id_sucursal);
-                param.Direction = ParameterDirection.Input;
-                param.DbType = DbType.Int16;
-                command.Parameters.Add(param);
-
-                param1 = new SqlParameter("@id_caja", @id_caja);
-                param1.Direction = ParameterDirection.Input;
-                param1.DbType = DbType.Int16;
-                command.Parameters.Add(param1);
-
-                param2 = new SqlParameter("@fechaInicio", @fechaInicio);
-                param2.Direction = ParameterDirection.Input;
-                param2.DbType = DbType.Int16;
-                command.Parameters.Add(param2);
-
-                param3 = new SqlParameter("@fecha_final", @fechaFinal);
-                param3.Direction = ParameterDirection.Input;
-                param3.DbType = DbType.Date;
-                command.Parameters.Add(param3);
-
-                adapter = new SqlDataAdapter(command);
-                adapter.Fill(ds);
-
-                dtReturnFacturas = ds.Tables[0];
+                command.CommandText = "exec SP_ConsultaEstadoCuentaCaja @id_sucursal, @id_caja, @fechaInicio, @fecha_final";
+                command.Parameters.AddWithValue("@id_sucursal", id_sucursal);
+                command.Parameters.AddWithValue("@id_caja", @id_caja);
+                command.Parameters.AddWithValue("@fechaInicio", @fechaInicio);
+                command.Parameters.AddWithValue("@fecha_final", @fechaFinal);
+                dtReturnFacturas.Load(command.ExecuteReader());
             }
             catch (Exception ex)
             {
@@ -284,6 +254,31 @@ namespace PrestaVende.CLASS
                 connection.connection.Close();
             }
             return dtReturnFacturas;
+        }
+
+        public DataTable getCajasCombo(ref string error, string id_sucursal)
+        {
+            try
+            {
+                DataTable Caja = new DataTable();
+                connection.connection.Open();
+                command.Connection = connection.connection;
+                command.CommandText = "SELECT 0 AS id_caja, 'TODAS' AS nombre_caja UNION " +
+                                      "SELECT id_caja, nombre_caja FROM tbl_caja WHERE id_sucursal = @id_sucursal";
+                command.Parameters.AddWithValue("@id_sucursal", id_sucursal);
+                Caja.Load(command.ExecuteReader());
+
+                return Caja;
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                return null;
+            }
+            finally
+            {
+                connection.connection.Close();
+            }
         }
     }
 

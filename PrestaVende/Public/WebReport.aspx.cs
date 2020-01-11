@@ -197,7 +197,7 @@ namespace PrestaVende.Public
                 string fecha_fin = Request.QueryString.Get("fecha_fin");
                 string id_caja = Request.QueryString.Get("id_caja");
 
-                EstadoCuenta = cs_caja.ObtenerEstadoCuenta(ref error, id_sucursal, fecha_inicio, fecha_fin, id_caja);
+                EstadoCuenta = cs_caja.ObtenerEstadoCuenta(ref error, id_sucursal, id_caja, fecha_inicio, fecha_fin);
                 if (EstadoCuenta.Rows.Count <= 0)
                 {
                     error = "Error obteniendo datos del estado de cuenta." + error;
@@ -207,13 +207,13 @@ namespace PrestaVende.Public
                 {
                     try
                     {
-                        //Reports.CREtiquetaPrestamo Etiquetaprestamo = new Reports.CREtiquetaPrestamo();
-                        //Etiquetaprestamo.Load(Server.MapPath("~/Reports/CREtiquetaPrestamo.rpt"));
-                        //Etiquetaprestamo.SetDataSource(contrato);
-                        //CrystalReportViewer1.ReportSource = Etiquetaprestamo;//document;
-                        //CrystalReportViewer1.DataBind();
-                        //CrystalReportViewer1.RefreshReport();
-                        //Etiquetaprestamo.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "Etiqueta No." + numero_prestamo);
+                        Reports.CRReporteEstadoDeCuentaCaja CRReporteEstadoDeCuentaCaja = new Reports.CRReporteEstadoDeCuentaCaja();
+                        CRReporteEstadoDeCuentaCaja.Load(Server.MapPath("~/Reports/CRReporteEstadoDeCuentaCaja.rpt"));
+                        CRReporteEstadoDeCuentaCaja.SetDataSource(EstadoCuenta);
+                        CrystalReportViewer1.ReportSource = CRReporteEstadoDeCuentaCaja;//document;
+                        CrystalReportViewer1.DataBind();
+                        CrystalReportViewer1.RefreshReport();
+                        CRReporteEstadoDeCuentaCaja.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "Estado de cuenta caja de " + fecha_inicio + " a " + fecha_fin);
                     }
                     catch (Exception ex)
                     {
