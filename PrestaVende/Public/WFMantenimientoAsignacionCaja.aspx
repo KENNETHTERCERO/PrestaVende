@@ -118,7 +118,7 @@
                                                        <big><asp:Label ID="lblRecibir" runat="server" Text="RECIBIR"></asp:Label></big>
                                                    </td>
                                                     <td>    
-                                                         <asp:CheckBox ID="ChbxRecibir" runat="server" AutoPostBack="true"></asp:CheckBox>
+                                                         <asp:CheckBox ID="ChbxRecibir" runat="server"></asp:CheckBox>
                                                     </td>
                                                 </tr>
                                                                                                                                                                                                                                                                                  
@@ -133,7 +133,7 @@
                                                 <td>
                                                     <div style="overflow:auto; width:100%; height:300px; align:left;">
                                                     <asp:GridView ID="GrdVAsignacionCaja" runat="server" Width="100%" CssClass="footable" AutoGenerateColumns="False" 
-                                                        ForeColor="#333333" GridLines="None" OnRowCommand="gvSize_RowCommand" OnSelectedIndexChanged="GrdVAsignacionCaja_SelectedIndexChanged">
+                                                        ForeColor="#333333" GridLines="None" OnRowCommand="gvSize_RowCommand">
                                                         <AlternatingRowStyle BackColor="White" />
                                                         <Columns>
                                                             <asp:ButtonField ButtonType="Button" FooterStyle-BackColor="#ff9a32" CommandName="select" HeaderText="" Text="->" >

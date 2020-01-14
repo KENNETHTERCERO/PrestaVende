@@ -228,7 +228,6 @@ namespace PrestaVende.CLASS
             }
         }
 
-
         public string getIDCajaAsignada(ref string error)
         {
             try
@@ -257,6 +256,29 @@ namespace PrestaVende.CLASS
             }
         }
 
+        public decimal getSaldoCajaValidacion(ref string error, int id_caja)
+        {
+            try
+            {
+                error = "";
+                decimal monto_return = 0;
+                connection.connection.Open();
+                command.Connection = connection.connection;
+                command.CommandText = "select saldo From tbl_caja where id_caja = @id_caja";
+                command.Parameters.AddWithValue("@id_caja", id_caja);
+                monto_return = Convert.ToDecimal(command.ExecuteScalar().ToString());
+                return monto_return;
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                return 0;
+            }
+            finally
+            {
+                connection.connection.Close();
+            }
+        }
 
         public DataTable getUsuarioAsignado(ref string error)
         {

@@ -47,7 +47,6 @@ namespace PrestaVende.Public
 
         #endregion
 
-
         #region eventos
 
         private void OpcionSalir()
@@ -67,7 +66,7 @@ namespace PrestaVende.Public
             }
             catch (Exception ex)
             {
-                //showError(ex.ToString());
+                showError(ex.ToString());
             }
         }
 
@@ -254,15 +253,11 @@ namespace PrestaVende.Public
             }
         }
 
-        protected void GrdVAsignacionCaja_SelectedIndexChanged(object sender, EventArgs e)
+        protected void ddIdCaja_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            getEstadoCaja(ddIdCaja.SelectedValue);
         }
 
-        protected void ChbxRecibir_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
         #endregion
 
 
@@ -421,15 +416,50 @@ namespace PrestaVende.Public
             }
         }
 
+        private bool validaMontoCierre()
+        {
+            try
+            {
+                if (ddIdEstadoCaja.SelectedValue.ToString() == "4")
+                {
+                    decimal saldo_caja_validacion = 0;
+                    saldo_caja_validacion = mAsignacionCaja.getSaldoCajaValidacion(ref error, Convert.ToInt32(ddIdCaja.SelectedValue.ToString()));
+
+                    if (saldo_caja_validacion == 0 && error.Length > 0)
+                    {
+                        showError(error);
+                        return false;
+                    }
+                    else if (saldo_caja_validacion != Convert.ToDecimal(txtMonto.Text.ToString()))
+                    {
+                        showError("El monto ingresado no es igual al saldo de caja.");
+                        return false;
+                    }
+                    else
+                        return true;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                showError(ex.ToString());
+                return false;
+            }
+        }
+
         private bool validateInformation()
         {
             try
             {
-                if (txtMonto.Text.ToString().Equals("0")) { showWarning("Usted debe ingresar un monto válido."); return false; }
-                else if (ddIdCaja.SelectedValue.Equals("0")) { showWarning("Usted debe seleccionar una caja válida."); return false; }
-                //else if (ddIdEstadoCaja.SelectedValue.Equals("0")) { showWarning("Usted debe seleccionar un estado de caja válido."); return false; }
+                if (txtMonto.Text.ToString().Length <= 0){ showWarning("Debe ingresar monto para poder realizar accion."); return false; }
+                else if (Convert.ToDecimal(txtMonto.Text.ToString()) <= 0) { showWarning("Usted debe ingresar un monto válido."); return false; }
+                else if (ddIdCaja.SelectedValue.ToString().Equals("0")) { showWarning("Usted debe seleccionar una caja válida."); return false; }
+                else if (ddIdEstadoCaja.SelectedValue.ToString().Equals("0")) { showWarning("Usted debe seleccionar un estado de caja válido."); return false; }
                 else if (ddIdUsuarioAsignado.SelectedValue.Equals("0")) { showWarning("Usted debe seleccionar un usuario válido."); return false; }
-
+                else if (!validaMontoCierre()){ showWarning("No se puede realizar el cierre de caja."); return false; }
                 else
                     return true;
             }
@@ -445,7 +475,7 @@ namespace PrestaVende.Public
             try
             {
                 DateTime thisDay = DateTime.Now;
-                Boolean blnRecibir = false;
+                bool blnRecibir = false;
 
                 if (ChbxRecibir.Checked == true)
                 {
@@ -484,12 +514,8 @@ namespace PrestaVende.Public
             }
 
         }
-        #endregion
 
-        protected void ddIdCaja_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            getEstadoCaja(ddIdCaja.SelectedValue);
-        }
+        #endregion
     }
 }
 

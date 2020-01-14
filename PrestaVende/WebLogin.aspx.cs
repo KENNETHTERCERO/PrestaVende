@@ -93,11 +93,11 @@ namespace PrestaVende
                 }
                 else
                 {
-                    if (!id_asignacion.Equals("0") && estado_asignacion.Equals("0"))
+                    if (!id_asignacion.Equals("0") && estado_asignacion.Equals("0") && CLASS.cs_usuario.id_caja != 0)
                     {
                         Response.Redirect("~/Public/RecepcionCaja.aspx?id_asignacion=" + id_asignacion, false);
                     }
-                    else if (caja_asignada.Equals("1"))
+                    else if (caja_asignada.Equals("1") && CLASS.cs_usuario.id_caja != 0)
                     {
                         fecha_hoy = DateTime.Now;
 
