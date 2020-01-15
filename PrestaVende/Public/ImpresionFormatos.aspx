@@ -69,7 +69,7 @@
                                                     </td>        
                                                     <td></td>               
                                                     <td>
-                                                        <asp:DropDownList ID="ddlSucursal" runat="server" CssClass="form-control" OnSelectedIndexChanged="ddlSucursal_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
+                                                        <asp:DropDownList ID="ddlSucursal" runat="server" CssClass="form-control" ></asp:DropDownList>
                                                     </td> 
                                                 </tr>                                                
                                                 <tr>
