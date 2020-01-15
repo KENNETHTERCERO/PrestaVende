@@ -10,6 +10,7 @@ namespace PrestaVende.Public
     public partial class ImpresionFormatos : System.Web.UI.Page
     {
         private string error = "";
+        private static string reporte = "";
         private CLASS.cs_sucursal cs_sucursal = new CLASS.cs_sucursal();
 
         protected void Page_Load(object sender, EventArgs e)
@@ -33,12 +34,42 @@ namespace PrestaVende.Public
                     else
                     {
                         ObtenerSucursales();
+                        setNombreReimpresion();
                     }
                 }
             }
             catch (Exception ex)
             {
                 showError(ex.ToString());
+            }
+        }
+
+        private void setNombreReimpresion()
+        {
+            try
+            {
+                reporte = Request.QueryString.Get("reporte");
+                if (reporte=="10")
+                {
+                    lblTipoReimpresion.Text = "REIMPRESION ESTADO DE CUENTA PRESTAMO";
+                }
+                else if (reporte == "11")
+                {
+                    lblTipoReimpresion.Text = "REIMPRESION ETIQUETA";
+                }
+                else if (reporte == "12")
+                {
+                    lblTipoReimpresion.Text = "REIMPRESION CONTRATO";
+                }
+                else if (reporte == "13")
+                {
+                    lblTipoReimpresion.Text = "REIMPRESION RECIBO";
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
         }
 
