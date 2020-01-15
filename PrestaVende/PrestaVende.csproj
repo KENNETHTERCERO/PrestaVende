@@ -274,7 +274,6 @@
   <ItemGroup>
     <Compile Include="CLASS\cs_caja.cs" />
     <Compile Include="CLASS\cs_cambio_precio.cs" />
-    <Compile Include="CLASS\cs_cambio_precio_inventario.cs" />
     <Compile Include="CLASS\cs_casilla.cs" />
     <Compile Include="CLASS\cs_factura.cs" />
     <Compile Include="CLASS\cs_inventario.cs" />

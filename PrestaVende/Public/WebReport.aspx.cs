@@ -252,7 +252,7 @@ namespace PrestaVende.Public
                         DataTable estadoCuentaDetalle = new DataTable("estadoCuentaPrestamoDetalle");
                         estadoCuenta = cs_prestamo.GetEstadoCuentaPrestamoEncabezado(ref error, numero_prestamo, id_sucursal);
                         DataTable proyeccion = new DataTable("dtProyeccionInteres");
-                        proyeccion = cs_prestamo.getDTProyeccion(ref error);
+                        proyeccion = cs_prestamo.getDTProyeccion(ref error, numero_prestamo, id_sucursal);
 
                         Reports.CREstadoCuentaPrestamo EstadoCuentaPrestamo = new Reports.CREstadoCuentaPrestamo();
 

@@ -14,7 +14,7 @@
                                 <br />
                                 <br />
                                 <br />
-                                <asp:Button ID="btnGenerar" runat="server" Width="200px" Text="Generar Reporte" class="btn btn-primary" Visible="true"/>
+                                <asp:Button ID="btnGenerar" runat="server" Width="200px" Text="Generar Reporte" class="btn btn-primary" Visible="true" OnClick="btnGenerar_Click"/>
                                 <br />
                                 <br />
                                 <br />

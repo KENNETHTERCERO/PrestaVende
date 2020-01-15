@@ -94,6 +94,27 @@ namespace PrestaVende.Public
             }
         }
 
+        private void imprimirReporte()
+        {
+            try
+            {
+                if (txtNumeroPrestamo.Text.ToString() == "" || txtNumeroPrestamo.Text.ToString().Length <= 5)
+                {
+                    showWarning("Debe ingresar un numero de prestamo para poder imprimir.");
+                }
+                else
+                {
+                    string scriptReporte = "window.open('WebReport.aspx?tipo_reporte=" + reporte + "&id_sucursal=" + ddlSucursal.SelectedValue.ToString() + "&numero_prestamo=" + txtNumeroPrestamo.Text.ToString() + "');";
+                    ScriptManager.RegisterClientScriptBlock(this, GetType(), "scriptReporte", scriptReporte, true);
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         private bool showWarning(string warning)
         {
             divWarning.Visible = true;
@@ -106,6 +127,11 @@ namespace PrestaVende.Public
             divError.Visible = true;
             lblError.Controls.Add(new LiteralControl(string.Format("<span style='color:Red'>{0}</span>", error)));
             return true;
+        }
+
+        protected void btnGenerar_Click(object sender, EventArgs e)
+        {
+            imprimirReporte();
         }
     }
 }

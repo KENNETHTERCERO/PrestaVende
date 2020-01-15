@@ -609,6 +609,49 @@ namespace PrestaVende.CLASS
             }
         }
 
+        public DataTable getDTProyeccion(ref string error, string numero_contrato, string id_sucursal)
+        {
+            DataTable dtContrato = new DataTable("dtProyeccion");
+            DataTable dtPrestamo = new DataTable("DtInformacion");
+            try
+            {
+                string id_interes_proyeccion = "", monto_contrato = "", id_plan_prestamo = "";
+                connection.connection.Open();
+                command.Connection = connection.connection;
+
+                command.Parameters.Clear();
+                command.CommandText = "SELECT id_interes, total_prestamo, id_plan_prestamo FROM tbl_prestamo_encabezado " +
+                                        "WHERE id_sucursal = @id_sucursal AND numero_prestamo = @numero_contrato";
+                command.Parameters.AddWithValue("@numero_contrato", numero_contrato);
+                command.Parameters.AddWithValue("@id_sucursal", id_sucursal);
+                dtPrestamo.Load(command.ExecuteReader());
+
+                foreach (DataRow item in dtPrestamo.Rows)
+                {
+                    id_interes_proyeccion = item["id_interes"].ToString();
+                    monto_contrato = item["total_prestamo"].ToString();
+                    id_plan_prestamo = item["id_plan_prestamo"].ToString();
+                }
+                
+                command.Parameters.Clear();
+                command.CommandText = "exec SP_proyeccion_intereses @id_interes, @monto, @id_plan_prestamo";
+                command.Parameters.AddWithValue("@id_interes", id_interes_proyeccion);
+                command.Parameters.AddWithValue("@monto", monto_contrato);
+                command.Parameters.AddWithValue("@id_plan_prestamo", id_plan_prestamo);
+                dtContrato.Load(command.ExecuteReader());
+                return dtContrato;
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                return null;
+            }
+            finally
+            {
+                connection.connection.Close();
+            }
+        }
+
         public DataTable GetEstadoCuentaPrestamoEncabezado(ref string error, string numero_prestamo, string id_sucursal)
         {
             DataTable dtEstadoCuentaEncabezado = new DataTable("EstadoCuentaEncabezado");
