@@ -10,7 +10,7 @@
                         <center> 
                         <h2>Opciones</h2>
                             <div class=".btn-group-vertical">
-                                <asp:Button ID="btnSalir" runat="server" Width="200px" Text="Regresar" class="btn btn-default" Visible="false" OnClick="btnSalir_Click"/>
+                                <asp:Button ID="btnSalir" runat="server" Width="200px" Text="Regresar" class="btn btn-default" Visible="false" />
                                 <br />
                                 <br />
                                 <br />
@@ -97,16 +97,6 @@
                                                         <asp:DropDownList ID="ddIdEstadoCaja" runat="server" class="form-control"   />
                                                     </td>
                                                 </tr>
-
-                                                <tr>
-                                                    <td>
-                                                        <big><asp:Label ID="lblMontoActual" runat="server" Text="MONTO ACTUAL"></asp:Label></big>
-                                                    </td>
-                                                    <td>
-                                                         <asp:TextBox ID="txtMontoActual" type="decimal" text="0" runat="server" class="form-control"></asp:TextBox>
-                                                    </td>
-                                                </tr>
-
                                                 <tr>
                                                     <td>
                                                         <big><asp:Label ID="lblMonto" runat="server" Text="MONTO"></asp:Label></big>
@@ -115,7 +105,6 @@
                                                          <asp:TextBox ID="txtMonto" type="decimal" text="0" runat="server" class="form-control"></asp:TextBox>
                                                     </td>
                                                 </tr>                                                                                                       
-                                                   
                                                 <tr>
                                                     <td>
                                                         <big><asp:Label ID="lblUsuarioAsignado" runat="server" Text="USUARIO ASIGNADO"></asp:Label></big>
@@ -129,9 +118,7 @@
                                                        <big><asp:Label ID="lblRecibir" runat="server" Text="RECIBIR"></asp:Label></big>
                                                    </td>
                                                     <td>    
-                                                         <asp:CheckBox ID="ChbxRecibir" runat="server" oncheckedchanged="ChbxRecibir_CheckedChanged" AutoPostBack="true" class="form-control">
-
-                                                         </asp:CheckBox>
+                                                         <asp:CheckBox ID="ChbxRecibir" runat="server"></asp:CheckBox>
                                                     </td>
                                                 </tr>
                                                                                                                                                                                                                                                                                  
@@ -146,7 +133,7 @@
                                                 <td>
                                                     <div style="overflow:auto; width:100%; height:300px; align:left;">
                                                     <asp:GridView ID="GrdVAsignacionCaja" runat="server" Width="100%" CssClass="footable" AutoGenerateColumns="False" 
-                                                        ForeColor="#333333" GridLines="None" OnRowCommand="gvSize_RowCommand" OnSelectedIndexChanged="GrdVAsignacionCaja_SelectedIndexChanged">
+                                                        ForeColor="#333333" GridLines="None" OnRowCommand="gvSize_RowCommand">
                                                         <AlternatingRowStyle BackColor="White" />
                                                         <Columns>
                                                             <asp:ButtonField ButtonType="Button" FooterStyle-BackColor="#ff9a32" CommandName="select" HeaderText="" Text="->" >

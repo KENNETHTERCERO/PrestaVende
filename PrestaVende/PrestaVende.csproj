@@ -123,6 +123,12 @@
     <Content Include="Public\ProyeccionInteres.aspx" />
     <Content Include="Public\RecepcionCaja.aspx" />
     <Content Include="Public\RecepcionLiquidaciones.aspx" />
+    <Content Include="Public\ReporteAbonos.aspx" />
+    <Content Include="Public\ReporteCancelaciones.aspx" />
+    <Content Include="Public\ReporteEstadoCuentaCaja.aspx" />
+    <Content Include="Public\ReporteFacturas.aspx" />
+    <Content Include="Public\ReporteInventario.aspx" />
+    <Content Include="Public\ReporteLiquidaciones.aspx" />
     <Content Include="Public\WebReport.aspx" />
     <Content Include="Public\WFBusquedaCliente.aspx" />
     <Content Include="Public\WFBusquedaClienteFacturacion.aspx" />
@@ -136,6 +142,7 @@
     <Content Include="Public\WFMantenimientoSubCategoria.aspx" />
     <Content Include="Public\WFMantenimientoCategoria.aspx" />
     <Content Include="Public\WFMantenimientoEmpresa.aspx" />
+    <Content Include="Public\WFMantenimientoSucursal.aspx" />
     <Content Include="Public\WFMantenimientoTipoCaja.aspx" />
     <Content Include="Public\WFMantAreaEmpresa.aspx" />
     <Content Include="Public\WFMantenimientoAsignacionCaja.aspx" />
@@ -155,6 +162,17 @@
     </Content>
     <Content Include="DATASET\DSFacturaIntereses.xsc">
       <DependentUpon>DSFacturaIntereses.xsd</DependentUpon>
+    </Content>
+    <Content Include="DATASET\DSEstadoCuentaCaja.xsc">
+      <DependentUpon>DSEstadoCuentaCaja.xsd</DependentUpon>
+    </Content>
+    <None Include="DATASET\DSEstadoCuentaCaja.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DSEstadoCuentaCaja.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="DATASET\DSEstadoCuentaCaja.xss">
+      <DependentUpon>DSEstadoCuentaCaja.xsd</DependentUpon>
     </Content>
     <None Include="DATASET\DSEstadoCuentaPrestamo.xsd">
       <Generator>MSDataSetGenerator</Generator>
@@ -266,6 +284,7 @@
     <Compile Include="CLASS\cs_profesion.cs" />
     <Compile Include="CLASS\cs_recepcion_liquidacion.cs" />
     <Compile Include="CLASS\cs_serie.cs" />
+    <Compile Include="CLASS\cs_sucursal.cs" />
     <Compile Include="CLASS\cs_tipo_caja.cs" />
     <Compile Include="CLASS\cs_areaempresa.cs" />
     <Compile Include="CLASS\cs_categoria.cs" />
@@ -285,6 +304,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DSContratoPrestamo.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DATASET\DSEstadoCuentaCaja.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DSEstadoCuentaCaja.xsd</DependentUpon>
     </Compile>
     <Compile Include="DATASET\DSEstadoCuentaPrestamo.cs">
       <DependentUpon>DSEstadoCuentaPrestamo.xsd</DependentUpon>
@@ -389,6 +413,48 @@
     <Compile Include="Public\RecepcionLiquidaciones.aspx.designer.cs">
       <DependentUpon>RecepcionLiquidaciones.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Public\ReporteAbonos.aspx.cs">
+      <DependentUpon>ReporteAbonos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\ReporteAbonos.aspx.designer.cs">
+      <DependentUpon>ReporteAbonos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\ReporteCancelaciones.aspx.cs">
+      <DependentUpon>ReporteCancelaciones.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\ReporteCancelaciones.aspx.designer.cs">
+      <DependentUpon>ReporteCancelaciones.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\ReporteEstadoCuentaCaja.aspx.cs">
+      <DependentUpon>ReporteEstadoCuentaCaja.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\ReporteEstadoCuentaCaja.aspx.designer.cs">
+      <DependentUpon>ReporteEstadoCuentaCaja.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\ReporteFacturas.aspx.cs">
+      <DependentUpon>ReporteFacturas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\ReporteFacturas.aspx.designer.cs">
+      <DependentUpon>ReporteFacturas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\ReporteInventario.aspx.cs">
+      <DependentUpon>ReporteInventario.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\ReporteInventario.aspx.designer.cs">
+      <DependentUpon>ReporteInventario.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\ReporteLiquidaciones.aspx.cs">
+      <DependentUpon>ReporteLiquidaciones.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\ReporteLiquidaciones.aspx.designer.cs">
+      <DependentUpon>ReporteLiquidaciones.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Public\WebReport.aspx.cs">
       <DependentUpon>WebReport.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -480,6 +546,13 @@
     <Compile Include="Public\WFMantenimientoEmpresa.aspx.designer.cs">
       <DependentUpon>WFMantenimientoEmpresa.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Public\WFMantenimientoSucursal.aspx.cs">
+      <DependentUpon>WFMantenimientoSucursal.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\WFMantenimientoSucursal.aspx.designer.cs">
+      <DependentUpon>WFMantenimientoSucursal.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Public\WFMantenimientoTipoCaja.aspx.cs">
       <DependentUpon>WFMantenimientoTipoCaja.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -558,6 +631,12 @@
       <DependentUpon>CRProyeccionIntereses.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Reports\CRReporteEstadoDeCuentaCaja.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CRReporteEstadoDeCuentaCaja.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="WebLogin.aspx.cs">
       <DependentUpon>WebLogin.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -597,6 +676,10 @@
     <EmbeddedResource Include="Reports\CRProyeccionIntereses.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>CRProyeccionIntereses.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\CRReporteEstadoDeCuentaCaja.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>CRReporteEstadoDeCuentaCaja.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

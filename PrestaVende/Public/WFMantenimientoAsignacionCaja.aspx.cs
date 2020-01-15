@@ -42,11 +42,10 @@ namespace PrestaVende.Public
         private static bool isUpdate = false;
         private static string id_asignacion_recibida = "";
         private int IntCajaActualUsuario = 0;
-
+        private static string id_usuario_caja_asignada = "";
         private CLASS.cs_asignacion_caja mAsignacionCaja = new CLASS.cs_asignacion_caja();
 
         #endregion
-
 
         #region eventos
 
@@ -67,7 +66,7 @@ namespace PrestaVende.Public
             }
             catch (Exception ex)
             {
-                //showError(ex.ToString());
+                showError(ex.ToString());
             }
         }
 
@@ -93,11 +92,9 @@ namespace PrestaVende.Public
                     {
                         hideOrShowDiv(true);
                         getIdAsignacion();
-                        //getEstadoAsignacion();
                         getCaja();
                         getDataGrid();
                         getUsuarioAsignado();
-                        //getEstadoCaja();
                     }
                 }
             }
@@ -136,29 +133,25 @@ namespace PrestaVende.Public
             }
         }
 
-        protected void btnSalir_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("WFPrincipal.aspx");
-        }
-
         protected void btnCreate_Click(object sender, EventArgs e)
         {
             try
             {
                 getIdAsignacion();
                 hideOrShowDiv(false);
-                cleanControls();
-                ddIdCaja.Enabled = true;
-                ChbxRecibir.Visible = false;
-                lblRecibir.Visible = false;
-                lblMontoActual.Visible = false;
-                txtMontoActual.Visible = false;
-                ddIdEstadoCaja.DataSource = "";
-                ddIdEstadoCaja.Visible = true;
-                lblEstadoCaja.Visible = true;
-                ddIdUsuarioAsignado.Visible = true;
-                lblUsuarioAsignado.Visible = true;
 
+                if (CLASS.cs_usuario.id_rol == 5)
+                {
+                    string id_caja_asignada = mAsignacionCaja.getIDCajaAsignada(ref error);
+                    ddIdCaja.SelectedValue = id_caja_asignada;
+                    bloqueaCamposSegunTransaccion("cierre");
+                }
+                else
+                {
+                    bloqueaCamposSegunTransaccion("nuevo");
+                }
+
+                getEstadoCaja(ddIdCaja.SelectedValue);
             }
             catch (Exception)
             {
@@ -174,21 +167,27 @@ namespace PrestaVende.Public
                 {
                     if (isUpdate)
                     {
-                       //ACTUALIZA REGISTRO
-                       if (insertAsignacionCaja())
-                       {
-                            if ((ddIdEstadoCaja.SelectedValue.ToString() == "4") && (IntCajaActualUsuario == Convert.ToInt32(ddIdCaja.SelectedValue.ToString()))) //CUANDO ESTA EN ESTADO DE CIERRE DE LA MISMA CAJA SALE
+                        if (ChbxRecibir.Checked)
+                        {
+                            if (mAsignacionCaja.recibirCierreCaja(ref error, ddidAsignacion.Text.ToString(), txtMonto.Text.ToString(), ddIdCaja.SelectedValue.ToString(), ddIdUsuarioAsignado.SelectedValue.ToString()))
                             {
-                                OpcionSalir();
-                                Response.Redirect("~/WebLogin.aspx", false);
+                                if (CLASS.cs_usuario.id_caja.ToString() == ddIdCaja.SelectedValue.ToString() || (ddIdEstadoCaja.SelectedValue.ToString() == "4" && CLASS.cs_usuario.id_rol == 5))
+                                {
+                                    OpcionSalir();
+                                    Response.Redirect("~/WebLogin.aspx", false);
+                                }
+                                else
+                                {
+                                    hideOrShowDiv(true);
+                                    getDataGrid();
+                                    isUpdate = false;
+                                }
                             }
-                            else
-                            {
-                                hideOrShowDiv(true);
-                                getDataGrid();
-                                isUpdate = false;
-                            }                           
-                       }
+                        }
+                        else
+                        {
+                            showWarning("Usted no ha seleccionado que quiere recibir esta transaccion.");
+                        }
                     }
                     else
                     {
@@ -217,54 +216,30 @@ namespace PrestaVende.Public
         {
             try
             {
-
                 if (e.CommandName == "select")
                 {
-                    cleanControls();
                     int index = Convert.ToInt32(e.CommandArgument);
                     DataTable DtAsignacionCaja = new DataTable();
                     GridViewRow selectedRow = GrdVAsignacionCaja.Rows[index];
 
                     TableCell id_asignacion_caja = selectedRow.Cells[1];
 
-
-                    if (mAsignacionCaja.getValidandoEstadoAsignacion(ref error, id_asignacion_caja.Text.ToString()) == "1")
+                    if (mAsignacionCaja.getValidandoEstadoAsignacion(ref error, id_asignacion_caja.Text.ToString()) == "0")
                     {
-
                         DtAsignacionCaja = mAsignacionCaja.getDatosAsignacionCaja(ref error, id_asignacion_caja.Text.ToString());
 
                         foreach (DataRow item in DtAsignacionCaja.Rows)
                         {
-                            id_asignacion_recibida = id_asignacion_caja.Text.ToString();
-
-                            getEstadosCajaUpdate(item[1].ToString());
-
-                            ddidAsignacion.Text = mAsignacionCaja.getIDMaxAsignacionCaja(ref error);
-                            ddIdCaja.SelectedValue = item[1].ToString();
-                            ddIdEstadoCaja.SelectedValue = item[2].ToString();
-                            //ddIdEstado.SelectedValue = item[4].ToString();
-                            ddIdUsuarioAsignado.SelectedValue = item[8].ToString();
-                            txtMontoActual.Text = item[9].ToString();
-
-                            ddIdCaja.Enabled = false;
-                            ddIdEstadoCaja.Visible = false;
-                            ddIdUsuarioAsignado.Visible = false;
-                            //ddIdEstado.Visible = false;
-                            lblCaja.Visible = true;
-                            //lblEstado.Visible = false;
-                            lblEstadoCaja.Visible = false;
-                            lblUsuarioAsignado.Visible = false;
-                            ChbxRecibir.Visible = true;
-                            lblRecibir.Visible = true;
-                            txtMontoActual.Enabled = false;
-                            txtMontoActual.Visible = true;
-                            lblMontoActual.Visible = true;
+                            ddidAsignacion.Text = id_asignacion_caja.Text.ToString();
+                            ddIdCaja.SelectedValue = item["id_caja"].ToString();
+                            ddIdEstadoCaja.SelectedValue = item["id_estado_caja"].ToString();
+                            txtMonto.Text = item["monto"].ToString();
+                            ddIdUsuarioAsignado.SelectedValue = item["id_usuario_asignado"].ToString();
+                            getEstadoCaja(ddIdCaja.SelectedValue);
                         }
-
+                        bloqueaCamposSegunTransaccion("recepcionCierre");
                         isUpdate = true;
                         hideOrShowDiv(false);
-                        divSucceful.Visible = false;
-                        getDataGrid();
                     }
                     else
                     {
@@ -278,15 +253,11 @@ namespace PrestaVende.Public
             }
         }
 
-        protected void GrdVAsignacionCaja_SelectedIndexChanged(object sender, EventArgs e)
+        protected void ddIdCaja_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            getEstadoCaja(ddIdCaja.SelectedValue);
         }
 
-        protected void ChbxRecibir_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
         #endregion
 
 
@@ -313,7 +284,6 @@ namespace PrestaVende.Public
                 ddIdCaja.DataValueField = "id_caja";
                 ddIdCaja.DataTextField = "nombre_caja";
                 ddIdCaja.DataBind();
-                ddIdCaja.SelectedValue = "1";
             }
             catch (Exception ex)
             {
@@ -335,23 +305,6 @@ namespace PrestaVende.Public
             }
         }
 
-        //protected void getEstadoAsignacion()
-        //{
-        //    try
-        //    {
-        //        ddIdEstado.DataSource = mAsignacionCaja.getEstadoAsignacionCaja(ref error);
-        //        ddIdEstado.DataValueField = "id";
-        //        ddIdEstado.DataTextField = "estado";
-        //        ddIdEstado.DataBind();
-        //        ddIdEstado.SelectedValue = "1";
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        showError(ex.ToString());
-        //        throw;
-        //    }
-        //}
-
         protected void getUsuarioAsignado()
         {
             try
@@ -360,7 +313,6 @@ namespace PrestaVende.Public
                 ddIdUsuarioAsignado.DataValueField = "id_usuario";
                 ddIdUsuarioAsignado.DataTextField = "usuario";
                 ddIdUsuarioAsignado.DataBind();
-                ddIdUsuarioAsignado.SelectedValue = "1";
             }
             catch (Exception ex)
             {
@@ -377,7 +329,6 @@ namespace PrestaVende.Public
                 ddIdEstadoCaja.DataValueField = "id_estado_caja";
                 ddIdEstadoCaja.DataTextField = "estado_caja";
                 ddIdEstadoCaja.DataBind();
-                ddIdEstadoCaja.SelectedValue = "0";
             }
             catch (Exception ex)
             {
@@ -390,11 +341,16 @@ namespace PrestaVende.Public
         {
             try
             {
-                ddIdEstadoCaja.DataSource = mAsignacionCaja.getEstadoCajaPorRol(ref error, id_caja);
+                ddIdEstadoCaja.DataSource = mAsignacionCaja.getEstadoCajaPorRol(ref error, id_caja, ref id_usuario_caja_asignada);
                 ddIdEstadoCaja.DataValueField = "id_estado_caja";
                 ddIdEstadoCaja.DataTextField = "estado_caja";
                 ddIdEstadoCaja.DataBind();
-                ddIdEstadoCaja.SelectedValue = "0";
+
+                if (id_usuario_caja_asignada.Equals("")|| id_usuario_caja_asignada.Equals("0"))
+                {
+                    id_usuario_caja_asignada = "0";
+                }
+                ddIdUsuarioAsignado.SelectedValue = id_usuario_caja_asignada;
             }
             catch (Exception ex)
             {
@@ -403,17 +359,56 @@ namespace PrestaVende.Public
             }
         }
 
-        private void cleanControls()
+        private void bloqueaCamposSegunTransaccion(string opcion)
         {
             try
             {
-                //getIdAsignacion();
-                //ddIdEstado.SelectedValue = "1";
-                ddIdEstadoCaja.SelectedIndex = -1;
-                ddIdCaja.SelectedIndex = -1;
-                ddIdUsuarioAsignado.SelectedIndex = -1;
-                txtMonto.Text = "0";
-                ChbxRecibir.Checked = false;
+                if (opcion.Equals("nuevo"))
+                {
+                    ddIdCaja.Enabled = true;
+                    ddIdEstadoCaja.Enabled = true;
+                    txtMonto.Enabled = true;
+                    ddIdUsuarioAsignado.Enabled = true;
+                    ChbxRecibir.Visible = false;
+                    ChbxRecibir.Checked = false;
+                    lblRecibir.Visible = false;
+                    txtMonto.Text = "";
+                }
+                else if (opcion.Equals("cierre"))
+                {
+                    if (CLASS.cs_usuario.id_rol == 5)
+                    {
+                        ddIdCaja.Enabled = false;
+                        ddIdEstadoCaja.Enabled = true;
+                        txtMonto.Enabled = true;
+                        ddIdUsuarioAsignado.Enabled = false;
+                        ChbxRecibir.Visible = false;
+                        ChbxRecibir.Checked = false;
+                        lblRecibir.Visible = false;
+                        txtMonto.Text = "";
+                    }
+                    else
+                    {
+                        ddIdCaja.Enabled = true;
+                        ddIdEstadoCaja.Enabled = true;
+                        txtMonto.Enabled = true;
+                        ddIdUsuarioAsignado.Enabled = false;
+                        ChbxRecibir.Visible = false;
+                        ChbxRecibir.Checked = false;
+                        lblRecibir.Visible = false;
+                        txtMonto.Text = "";
+                    }
+                }
+                else if (opcion.Equals("recepcionCierre"))
+                {
+                    ddIdCaja.Enabled = false;
+                    ddIdEstadoCaja.Enabled = false;
+                    txtMonto.Enabled = false;
+                    ddIdUsuarioAsignado.Enabled = false;
+                    ChbxRecibir.Visible = true;
+                    ChbxRecibir.Checked = false;
+                    lblRecibir.Visible = true;
+                }
             }
             catch (Exception ex)
             {
@@ -421,15 +416,50 @@ namespace PrestaVende.Public
             }
         }
 
+        private bool validaMontoCierre()
+        {
+            try
+            {
+                if (ddIdEstadoCaja.SelectedValue.ToString() == "4")
+                {
+                    decimal saldo_caja_validacion = 0;
+                    saldo_caja_validacion = mAsignacionCaja.getSaldoCajaValidacion(ref error, Convert.ToInt32(ddIdCaja.SelectedValue.ToString()));
+
+                    if (saldo_caja_validacion == 0 && error.Length > 0)
+                    {
+                        showError(error);
+                        return false;
+                    }
+                    else if (saldo_caja_validacion != Convert.ToDecimal(txtMonto.Text.ToString()))
+                    {
+                        showError("El monto ingresado no es igual al saldo de caja.");
+                        return false;
+                    }
+                    else
+                        return true;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                showError(ex.ToString());
+                return false;
+            }
+        }
+
         private bool validateInformation()
         {
             try
             {
-                if (txtMonto.Text.ToString().Equals("0")) { showWarning("Usted debe ingresar un monto válido."); return false; }
-                else if (ddIdCaja.SelectedValue.Equals("0")) { showWarning("Usted debe seleccionar una caja válida."); return false; }
-                //else if (ddIdEstadoCaja.SelectedValue.Equals("0")) { showWarning("Usted debe seleccionar un estado de caja válido."); return false; }
+                if (txtMonto.Text.ToString().Length <= 0){ showWarning("Debe ingresar monto para poder realizar accion."); return false; }
+                else if (Convert.ToDecimal(txtMonto.Text.ToString()) <= 0) { showWarning("Usted debe ingresar un monto válido."); return false; }
+                else if (ddIdCaja.SelectedValue.ToString().Equals("0")) { showWarning("Usted debe seleccionar una caja válida."); return false; }
+                else if (ddIdEstadoCaja.SelectedValue.ToString().Equals("0")) { showWarning("Usted debe seleccionar un estado de caja válido."); return false; }
                 else if (ddIdUsuarioAsignado.SelectedValue.Equals("0")) { showWarning("Usted debe seleccionar un usuario válido."); return false; }
-
+                else if (!validaMontoCierre()){ showWarning("No se puede realizar el cierre de caja."); return false; }
                 else
                     return true;
             }
@@ -440,13 +470,12 @@ namespace PrestaVende.Public
             }
         }
 
-
         private bool insertAsignacionCaja()
         {
             try
             {
                 DateTime thisDay = DateTime.Now;
-                Boolean blnRecibir = false;
+                bool blnRecibir = false;
 
                 if (ChbxRecibir.Checked == true)
                 {
@@ -455,7 +484,22 @@ namespace PrestaVende.Public
 
                 if (mAsignacionCaja.insertAsignacionCaja(ref error, ddidAsignacion.Text, ddIdCaja.SelectedValue.ToString(), ddIdEstadoCaja.SelectedValue.ToString(), txtMonto.Text, "1", thisDay.ToString("MM/dd/yyyy HH:mm:ss"), thisDay.ToString("MM/dd/yyyy HH:mm:ss"), CLASS.cs_usuario.usuario, ddIdUsuarioAsignado.SelectedValue.ToString(), blnRecibir, id_asignacion_recibida, ref IntCajaActualUsuario))                  
                 {
-                    showSuccess("Se realizó la asignación de caja correctamente.");
+                    if (ddIdEstadoCaja.SelectedValue.ToString() == "2")
+                    {
+                        showSuccess("Se realizó la asignación de caja correctamente.");
+                    }
+                    else if (ddIdEstadoCaja.SelectedValue.ToString() == "4")
+                    {
+                        if (ddIdEstadoCaja.SelectedValue.ToString() == "4" && CLASS.cs_usuario.id_rol == 5)
+                        {
+                            OpcionSalir();
+                            Response.Redirect("~/WebLogin.aspx", false);
+                        }
+                        else
+                        {
+                            showSuccess("Se realizó cierre de caja correctamente.");
+                        }
+                    }
                     return true;
                 }
                 else
@@ -470,12 +514,8 @@ namespace PrestaVende.Public
             }
 
         }
-        #endregion
 
-        protected void ddIdCaja_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            getEstadoCaja(ddIdCaja.SelectedValue);
-        }
+        #endregion
     }
 }
 

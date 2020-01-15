@@ -228,7 +228,58 @@ namespace PrestaVende.CLASS
             }
         }
 
-   
+        public DataTable ObtenerEstadoCuenta(ref string error, string id_sucursal, string id_caja, string fechaInicio, string fechaFinal)
+        {
+            DataTable dtReturnFacturas = new DataTable("dtEstadoCuenta");
+            try
+            {
+                connection.connection.Open();
+                command.Connection = connection.connection;
+                command.Parameters.Clear();
+
+                command.CommandText = "exec SP_ConsultaEstadoCuentaCaja @id_sucursal, @id_caja, @fechaInicio, @fecha_final";
+                command.Parameters.AddWithValue("@id_sucursal", id_sucursal);
+                command.Parameters.AddWithValue("@id_caja", @id_caja);
+                command.Parameters.AddWithValue("@fechaInicio", @fechaInicio);
+                command.Parameters.AddWithValue("@fecha_final", @fechaFinal);
+                dtReturnFacturas.Load(command.ExecuteReader());
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                return null;
+            }
+            finally
+            {
+                connection.connection.Close();
+            }
+            return dtReturnFacturas;
+        }
+
+        public DataTable getCajasCombo(ref string error, string id_sucursal)
+        {
+            try
+            {
+                DataTable Caja = new DataTable();
+                connection.connection.Open();
+                command.Connection = connection.connection;
+                command.CommandText = "SELECT 0 AS id_caja, 'TODAS' AS nombre_caja UNION " +
+                                      "SELECT id_caja, nombre_caja FROM tbl_caja WHERE id_sucursal = @id_sucursal";
+                command.Parameters.AddWithValue("@id_sucursal", id_sucursal);
+                Caja.Load(command.ExecuteReader());
+
+                return Caja;
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                return null;
+            }
+            finally
+            {
+                connection.connection.Close();
+            }
+        }
     }
 
 

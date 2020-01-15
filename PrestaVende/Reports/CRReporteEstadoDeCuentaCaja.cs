@@ -16,14 +16,14 @@ namespace PrestaVende.Reports {
     using CrystalDecisions.CrystalReports.Engine;
     
     
-    public class CRFacturaRecibo : ReportClass {
+    public class CRReporteEstadoDeCuentaCaja : ReportClass {
         
-        public CRFacturaRecibo() {
+        public CRReporteEstadoDeCuentaCaja() {
         }
         
         public override string ResourceName {
             get {
-                return "CRFacturaRecibo.rpt";
+                return "CRReporteEstadoDeCuentaCaja.rpt";
             }
             set {
                 // Do nothing
@@ -41,7 +41,7 @@ namespace PrestaVende.Reports {
         
         public override string FullResourceName {
             get {
-                return "PrestaVende.Reports.CRFacturaRecibo.rpt";
+                return "PrestaVende.Reports.CRReporteEstadoDeCuentaCaja.rpt";
             }
             set {
                 // Do nothing
@@ -90,9 +90,9 @@ namespace PrestaVende.Reports {
     }
     
     [System.Drawing.ToolboxBitmapAttribute(typeof(CrystalDecisions.Shared.ExportOptions), "report.bmp")]
-    public class CachedCRFacturaRecibo : Component, ICachedReport {
+    public class CachedCRReporteEstadoDeCuentaCaja : Component, ICachedReport {
         
-        public CachedCRFacturaRecibo() {
+        public CachedCRReporteEstadoDeCuentaCaja() {
         }
         
         [Browsable(false)]
@@ -129,7 +129,7 @@ namespace PrestaVende.Reports {
         }
         
         public virtual CrystalDecisions.CrystalReports.Engine.ReportDocument CreateReport() {
-            CRFacturaRecibo rpt = new CRFacturaRecibo();
+            CRReporteEstadoDeCuentaCaja rpt = new CRReporteEstadoDeCuentaCaja();
             rpt.Site = this.Site;
             return rpt;
         }

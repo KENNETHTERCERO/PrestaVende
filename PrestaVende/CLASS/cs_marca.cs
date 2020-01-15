@@ -24,7 +24,7 @@ namespace PrestaVende.CLASS
                 connection.connection.Open();
                 command.Connection = connection.connection;
                 command.CommandText = "SELECT 0 AS id_marca, 'SELECCIONAR' AS marca UNION " + 
-                                      "SELECT id_marca, marca FROM tbl_marca WHERE estado = 1";
+                                      "SELECT id_marca, marca FROM tbl_marca WHERE estado = 1 ORDER BY marca ASC";
                 dtMarca.Load(command.ExecuteReader());
                 return dtMarca;
             }

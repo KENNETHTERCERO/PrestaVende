@@ -62,7 +62,6 @@ namespace PrestaVende.Public
                         setColumnsJewelry();
                         setColumnsDifferentJewelry();
                         txtPesoDescuento.Text = "0";
-                        getCasillas();
                         getNumeroPrestamo();
                         getTipo();
                     }
@@ -166,7 +165,7 @@ namespace PrestaVende.Public
         {
             try
             {
-                ddlCasilla.DataSource = cs_casilla.getCasillas(ref error);
+                ddlCasilla.DataSource = cs_casilla.getCasillas(ref error, ddlCategoria.SelectedValue.ToString());
                 ddlCasilla.DataValueField = "id_casilla";
                 ddlCasilla.DataTextField = "casilla";
                 ddlCasilla.DataBind();
@@ -703,13 +702,13 @@ namespace PrestaVende.Public
                     lblNumeroPrestamoNumero.Text = numero_prestamo_guardado;
                     showSuccess("Se creo prestamo correctamente.");
                     string script = "window.open('WebReport.aspx?tipo_reporte=1" + "&numero_prestamo=" + numero_prestamo_guardado + "');";
-                    ScriptManager.RegisterClientScriptBlock(this, GetType(), "OpenWindow", script, true);
+                    ScriptManager.RegisterClientScriptBlock(this, GetType(), "OpenContrato", script, true);
 
                     string scriptEstadoCuenta = "window.open('WebReport.aspx?tipo_reporte=3" + "&numero_prestamo=" + numero_prestamo_guardado + "');";
-                    ScriptManager.RegisterClientScriptBlock(this, GetType(), "NewWindow", scriptEstadoCuenta, true);
+                    ScriptManager.RegisterClientScriptBlock(this, GetType(), "OpenEstadoCuenta", scriptEstadoCuenta, true);
 
                     string scriptEtiqueta = "window.open('WebReport.aspx?tipo_reporte=4" + "&numero_prestamo=" + numero_prestamo_guardado + "');";
-                    ScriptManager.RegisterClientScriptBlock(this, GetType(), "OpenWindowEtiqueta", scriptEtiqueta, true);
+                    ScriptManager.RegisterClientScriptBlock(this, GetType(), "OpenEtiqueta", scriptEtiqueta, true);
 
                     string scriptText = "alert('my message'); window.location='WFListadoPrestamo.aspx?id_cliente=" + lblid_cliente.Text + "'";
                     ScriptManager.RegisterStartupScript(this, this.GetType(), "alertMessage", scriptText, true);
@@ -733,13 +732,13 @@ namespace PrestaVende.Public
                     lblNumeroPrestamoNumero.Text = numero_prestamo_guardado;
                     showSuccess("Se creo prestamo correctamente.");
                     string script = "window.open('WebReport.aspx?tipo_reporte=1" + "&numero_prestamo=" + lblNumeroPrestamoNumero.Text + "');";
-                    ScriptManager.RegisterClientScriptBlock(this, GetType(), "OpenWindow", script, true);
+                    ScriptManager.RegisterClientScriptBlock(this, GetType(), "OpenContrato", script, true);
 
                     string scriptEstadoCuenta = "window.open('WebReport.aspx?tipo_reporte=3" + "&numero_prestamo=" + lblNumeroPrestamoNumero.Text + "');";
-                    ScriptManager.RegisterClientScriptBlock(this, GetType(), "NewWindow", scriptEstadoCuenta, true);
+                    ScriptManager.RegisterClientScriptBlock(this, GetType(), "OpenEstadoCuenta", scriptEstadoCuenta, true);
 
                     string scriptEtiqueta = "window.open('WebReport.aspx?tipo_reporte=4" + "&numero_prestamo=" + lblNumeroPrestamoNumero.Text + "');";
-                    ScriptManager.RegisterClientScriptBlock(this, GetType(), "OpenWindowEtiqueta", scriptEtiqueta, true);
+                    ScriptManager.RegisterClientScriptBlock(this, GetType(), "OpenEtiqueta", scriptEtiqueta, true);
 
                     string scriptText = "alert('my message'); window.location='WFListadoPrestamo.aspx?id_cliente=" + lblid_cliente.Text + "'";
                     ScriptManager.RegisterStartupScript(this, this.GetType(), "alertMessage", scriptText, true);
@@ -766,8 +765,16 @@ namespace PrestaVende.Public
                 }
                 else
                 {
-                    montoOriginal = Convert.ToDecimal(lblTotalPrestamoQuetzales.Text);
-                    nuevoMonto = Convert.ToDecimal(lblTotalPrestamoQuetzales.Text);
+                    if (txtRedondeo.Text.ToString().Length <= 0)
+                    {
+                        montoOriginal = Convert.ToDecimal(lblTotalPrestamoQuetzales.Text);
+                        nuevoMonto = Convert.ToDecimal(lblTotalPrestamoQuetzales.Text);
+                    }
+                    else
+                    {
+                        montoOriginal = Convert.ToDecimal(lblTotalPrestamoQuetzales.Text) - Convert.ToDecimal(txtRedondeo.Text.ToString());
+                        nuevoMonto = Convert.ToDecimal(lblTotalPrestamoQuetzales.Text);
+                    }
                 }
                 encabezado[0] = lblid_cliente.Text.ToString();
                 encabezado[1] = nuevoMonto.ToString();
@@ -870,7 +877,7 @@ namespace PrestaVende.Public
             try
             {
                 decimal montoRedondeo = 0, porcentaje = 0, sumaTotalPrestamo = 0, montoPorFilaConRedondeo = 0;
-                if (gvProductoElectrodomesticos.Rows.Count > 0)
+                if (gvProductoElectrodomesticos.Rows.Count > 0 && ddlCategoria.SelectedValue.ToString() != "1")
                 {
                     foreach (GridViewRow item in gvProductoElectrodomesticos.Rows)
                     {
@@ -879,6 +886,15 @@ namespace PrestaVende.Public
                         montoRedondeo = porcentaje * Convert.ToDecimal(txtRedondeo.Text.ToString());
                         montoPorFilaConRedondeo = Convert.ToDecimal(item.Cells[5].Text.ToString()) + Math.Round(montoRedondeo, 2);
                         item.Cells[5].Text = montoPorFilaConRedondeo.ToString();
+                    }
+
+                    foreach (DataRow item in dtTablaArticulos.Rows)
+                    {
+                        porcentaje = 0;
+                        porcentaje = Math.Round(Convert.ToDecimal(item["valor"].ToString()) / Convert.ToDecimal(lblTotalPrestamoQuetzales.Text.ToString()), 4);
+                        montoRedondeo = porcentaje * Convert.ToDecimal(txtRedondeo.Text.ToString());
+                        montoPorFilaConRedondeo = Convert.ToDecimal(item["valor"].ToString()) + Math.Round(montoRedondeo, 2);
+                        item["valor"] = montoPorFilaConRedondeo.ToString();
                     }
                 }
                 else
@@ -890,6 +906,15 @@ namespace PrestaVende.Public
                         montoRedondeo = porcentaje * Convert.ToDecimal(txtRedondeo.Text.ToString());
                         montoPorFilaConRedondeo = Convert.ToDecimal(item.Cells[8].Text.ToString()) + Math.Round(montoRedondeo, 2);
                         item.Cells[8].Text = montoPorFilaConRedondeo.ToString();
+                    }
+
+                    foreach (DataRow item in dtTablaJoyas.Rows)
+                    {
+                        porcentaje = 0;
+                        porcentaje = Math.Round(Convert.ToDecimal(item["valor"].ToString()) / Convert.ToDecimal(lblTotalPrestamoQuetzales.Text.ToString()), 4);
+                        montoRedondeo = porcentaje * Convert.ToDecimal(txtRedondeo.Text.ToString());
+                        montoPorFilaConRedondeo = Convert.ToDecimal(item["valor"].ToString()) + Math.Round(montoRedondeo, 2);
+                        item["valor"] = montoPorFilaConRedondeo.ToString();
                     }
                 }
                 sumaTotalPrestamo = Convert.ToDecimal(lblTotalPrestamoQuetzales.Text.ToString()) + Convert.ToDecimal(txtRedondeo.Text.ToString());
@@ -919,7 +944,7 @@ namespace PrestaVende.Public
             }
             catch (Exception ex)
             {
-
+                showError(ex.ToString());
                 throw;
             }
         }
@@ -987,6 +1012,7 @@ namespace PrestaVende.Public
                 ddlIntereses.Enabled = false;
                 getProductos("0");
                 ddlSubCategoria.Focus();
+                getCasillas();
             }
             catch (Exception ex)
             {
