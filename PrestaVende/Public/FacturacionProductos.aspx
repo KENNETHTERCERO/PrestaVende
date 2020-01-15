@@ -75,6 +75,9 @@
             border-top: 1px solid skyblue;
             text-align: center;
         }
+        .auto-style1 {
+            height: 36px;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -163,15 +166,15 @@
                                     <h1>Venta de articulos&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h1>
                                     <table>
                                         <tr>
-                                            <td>
+                                            <td class="auto-style1">
                                                 <asp:Button ID="btnBuscarCliente" runat="server" Width="200px" Text="Buscar Clliente" CssClass="btn btn-success" Visible="true"/>
                                                 
                                             </td>
-                                            <td>
+                                            <td class="auto-style1">
                                                 <big><asp:Label ID="lblCliente" runat="server">CLIENTE &nbsp;&nbsp;</asp:Label></big>
                                                 <big><asp:Label ID="lblIdCliente" runat="server">&nbsp;&nbsp;</asp:Label></big>
                                             </td>
-                                            <td>
+                                            <td class="auto-style1">
                                                 <big><asp:Label ID="lblNombreCliente" runat="server"></asp:Label></big>
                                             </td>
                                         </tr>

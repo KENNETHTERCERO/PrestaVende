@@ -29,7 +29,7 @@ namespace PrestaVende.Public
             {
                 DataTable contrato = new DataTable("contrato");
                 string numero_prestamo = Request.QueryString.Get("numero_prestamo");
-                contrato = cs_prestamo.GetContrato(ref error, numero_prestamo);
+                contrato = cs_prestamo.GetContrato(ref error, numero_prestamo, CLASS.cs_usuario.id_sucursal.ToString());
                 if (contrato.Rows.Count <= 0)
                 {
                     error = "Error obteniendo datos de contrato." + error;
@@ -90,7 +90,7 @@ namespace PrestaVende.Public
             {
                 DataTable estadoCuenta = new DataTable("estadoCuentaPrestamo");
                 string numero_prestamo = Request.QueryString.Get("numero_prestamo");
-                estadoCuenta = cs_prestamo.GetEstadoCuentaPrestamoEncabezado(ref error, numero_prestamo);
+                estadoCuenta = cs_prestamo.GetEstadoCuentaPrestamoEncabezado(ref error, numero_prestamo, CLASS.cs_usuario.id_sucursal.ToString());
                 if (estadoCuenta.Rows.Count <= 0)
                 {
                     error = "Error obteniendo datos de contrato." + error;
@@ -101,7 +101,7 @@ namespace PrestaVende.Public
                     try
                     {
                         DataTable estadoCuentaDetalle = new DataTable("estadoCuentaPrestamoDetalle");
-                        estadoCuenta = cs_prestamo.GetEstadoCuentaPrestamoEncabezado(ref error, numero_prestamo);
+                        estadoCuenta = cs_prestamo.GetEstadoCuentaPrestamoEncabezado(ref error, numero_prestamo, CLASS.cs_usuario.id_sucursal.ToString());
                         DataTable proyeccion = new DataTable("dtProyeccionInteres");
                         proyeccion = cs_prestamo.getDTProyeccion(ref error);
 
@@ -126,7 +126,7 @@ namespace PrestaVende.Public
             {
                 DataTable contrato = new DataTable("estadoCuentaPrestamo");
                 string numero_prestamo = Request.QueryString.Get("numero_prestamo");
-                contrato = cs_prestamo.GetDataEtiquetaPrestamo(ref error, numero_prestamo);
+                contrato = cs_prestamo.GetDataEtiquetaPrestamo(ref error, numero_prestamo, CLASS.cs_usuario.id_sucursal.ToString());
                 if (contrato.Rows.Count <= 0)
                 {
                     error = "Error obteniendo datos de contrato." + error;
@@ -214,6 +214,115 @@ namespace PrestaVende.Public
                         CrystalReportViewer1.DataBind();
                         CrystalReportViewer1.RefreshReport();
                         CRReporteEstadoDeCuentaCaja.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "Estado de cuenta caja de " + fecha_inicio + " a " + fecha_fin);
+                    }
+                    catch (Exception ex)
+                    {
+                        error = ex.ToString();
+                    }
+
+                }
+            }
+            else if (Convert.ToInt32(tipo_reporte) == 8)//Reporte cancelaciones.
+            {
+                string id_sucursal = Request.QueryString.Get("id_sucursal");
+                string fecha_inicio = Request.QueryString.Get("fecha_inicio");
+                string fecha_fin = Request.QueryString.Get("fecha_fin");
+            }
+            else if (Convert.ToInt32(tipo_reporte) == 9)//Reporte inventario disponible.
+            {
+                string id_sucursal = Request.QueryString.Get("id_sucursal");
+                string fecha_inicio = Request.QueryString.Get("fecha_inicio");
+                string fecha_fin = Request.QueryString.Get("fecha_fin");
+            }
+            else if (Convert.ToInt32(tipo_reporte) == 10)//10 estado de cuenta prestamo reimpresion.
+            {
+                DataTable estadoCuenta = new DataTable("estadoCuentaPrestamo");
+                string numero_prestamo = Request.QueryString.Get("numero_prestamo");
+                string id_sucursal = Request.QueryString.Get("id_sucursal");
+                estadoCuenta = cs_prestamo.GetEstadoCuentaPrestamoEncabezado(ref error, numero_prestamo, id_sucursal);
+                if (estadoCuenta.Rows.Count <= 0)
+                {
+                    error = "Error obteniendo datos de contrato." + error;
+                    throw new Exception("");
+                }
+                else
+                {
+                    try
+                    {
+                        DataTable estadoCuentaDetalle = new DataTable("estadoCuentaPrestamoDetalle");
+                        estadoCuenta = cs_prestamo.GetEstadoCuentaPrestamoEncabezado(ref error, numero_prestamo, id_sucursal);
+                        DataTable proyeccion = new DataTable("dtProyeccionInteres");
+                        proyeccion = cs_prestamo.getDTProyeccion(ref error);
+
+                        Reports.CREstadoCuentaPrestamo EstadoCuentaPrestamo = new Reports.CREstadoCuentaPrestamo();
+
+                        EstadoCuentaPrestamo.Load(Server.MapPath("~/Reports/CREstadoCuentaPrestamo.rpt"));
+                        EstadoCuentaPrestamo.Subreports[0].SetDataSource(proyeccion);
+                        EstadoCuentaPrestamo.SetDataSource(estadoCuenta);
+                        CrystalReportViewer1.ReportSource = EstadoCuentaPrestamo;//document;
+                        CrystalReportViewer1.DataBind();
+                        CrystalReportViewer1.RefreshReport();
+                        EstadoCuentaPrestamo.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "Estado de cuenta No." + numero_prestamo);
+                    }
+                    catch (Exception ex)
+                    {
+                        error = ex.ToString();
+                    }
+
+                }
+            }
+            else if (Convert.ToInt32(tipo_reporte) == 11)//11 etiqueta prestamo reimpresion.
+            {
+                DataTable contrato = new DataTable("estadoCuentaPrestamo");
+                string numero_prestamo = Request.QueryString.Get("numero_prestamo");
+                string id_sucursal = Request.QueryString.Get("id_sucursal");
+                contrato = cs_prestamo.GetDataEtiquetaPrestamo(ref error, numero_prestamo, id_sucursal);
+                if (contrato.Rows.Count <= 0)
+                {
+                    error = "Error obteniendo datos de contrato." + error;
+                    throw new Exception("");
+                }
+                else
+                {
+                    try
+                    {
+                        Reports.CREtiquetaPrestamo Etiquetaprestamo = new Reports.CREtiquetaPrestamo();
+                        Etiquetaprestamo.Load(Server.MapPath("~/Reports/CREtiquetaPrestamo.rpt"));
+                        Etiquetaprestamo.SetDataSource(contrato);
+                        CrystalReportViewer1.ReportSource = Etiquetaprestamo;//document;
+                        CrystalReportViewer1.DataBind();
+                        CrystalReportViewer1.RefreshReport();
+                        Etiquetaprestamo.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "Etiqueta No." + numero_prestamo);
+                    }
+                    catch (Exception ex)
+                    {
+                        error = ex.ToString();
+                    }
+
+                }
+            }
+            if (Convert.ToInt32(tipo_reporte) == 12)//12 Contrato reimpresion.
+            {
+                DataTable contrato = new DataTable("contrato");
+                string numero_prestamo = Request.QueryString.Get("numero_prestamo");
+                string id_sucursal = Request.QueryString.Get("id_sucursal");
+                contrato = cs_prestamo.GetContrato(ref error, numero_prestamo, id_sucursal);
+                if (contrato.Rows.Count <= 0)
+                {
+                    error = "Error obteniendo datos de contrato." + error;
+                    throw new Exception("");
+                }
+                else
+                {
+                    try
+                    {
+                        Reports.CRContratoGeneral prestamoGeneral = new Reports.CRContratoGeneral();
+                        prestamoGeneral.Load(Server.MapPath("~/Reports/CRContratoGeneral.rpt"));
+                        prestamoGeneral.SetDataSource(contrato);
+                        CrystalReportViewer1.ReportSource = prestamoGeneral;//document;
+                        CrystalReportViewer1.DataBind();
+                        CrystalReportViewer1.RefreshReport();
+                        prestamoGeneral.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "Contrato No." + numero_prestamo);
                     }
                     catch (Exception ex)
                     {

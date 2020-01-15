@@ -439,7 +439,7 @@ namespace PrestaVende.CLASS
                     //REALIZANDO ACTUALIZACION DE SALDO PARA LA CAJA TRANSACCIONAL
                     command.Parameters.Clear();
                     EstadoCajaOperacion = id_estado_caja;
-                    command.CommandText = " UPDATE tbl_caja SET SALDO = @SaldoAsignado, id_estado_caja = @id_estado_caja where id_caja = @id_caja ";
+                    command.CommandText = " UPDATE tbl_caja SET saldo = @SaldoAsignado, id_estado_caja = @id_estado_caja where id_caja = @id_caja ";
                     command.Parameters.AddWithValue("@SaldoAsignado", monto);
                     command.Parameters.AddWithValue("@id_caja", id_caja);
                     command.Parameters.AddWithValue("@id_estado_caja", id_estado_caja);

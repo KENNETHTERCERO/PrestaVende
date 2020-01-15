@@ -682,9 +682,18 @@ namespace PrestaVende.Public
             try
             {
                 if (ddlCategoria.SelectedValue.ToString().Equals("1"))
+                {
                     guardarPrestamoJoya();
+                    string scriptText = "alert('my message'); window.location='WFListadoPrestamo.aspx?id_cliente=" + lblid_cliente.Text + "'";
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alertMessage", scriptText, true);
+                }
                 else
+                {
                     guardarPrestamoDifferentJoya();
+                    string scriptText = "alert('my message'); window.location='WFListadoPrestamo.aspx?id_cliente=" + lblid_cliente.Text + "'";
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alertMessage", scriptText, true);
+                }
+                    
             }
             catch (Exception ex)
             {
@@ -704,14 +713,13 @@ namespace PrestaVende.Public
                     string script = "window.open('WebReport.aspx?tipo_reporte=1" + "&numero_prestamo=" + numero_prestamo_guardado + "');";
                     ScriptManager.RegisterClientScriptBlock(this, GetType(), "OpenContrato", script, true);
 
-                    string scriptEstadoCuenta = "window.open('WebReport.aspx?tipo_reporte=3" + "&numero_prestamo=" + numero_prestamo_guardado + "');";
+                    string prueba = numero_prestamo_guardado;
+                    string scriptEstadoCuenta = "window.open('WebReport.aspx?tipo_reporte=3" + "&numero_prestamo=" + prueba + "');";
                     ScriptManager.RegisterClientScriptBlock(this, GetType(), "OpenEstadoCuenta", scriptEstadoCuenta, true);
 
-                    string scriptEtiqueta = "window.open('WebReport.aspx?tipo_reporte=4" + "&numero_prestamo=" + numero_prestamo_guardado + "');";
+                    string segunda = prueba;
+                    string scriptEtiqueta = "window.open('WebReport.aspx?tipo_reporte=4" + "&numero_prestamo=" + segunda + "');";
                     ScriptManager.RegisterClientScriptBlock(this, GetType(), "OpenEtiqueta", scriptEtiqueta, true);
-
-                    string scriptText = "alert('my message'); window.location='WFListadoPrestamo.aspx?id_cliente=" + lblid_cliente.Text + "'";
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alertMessage", scriptText, true);
                 }
                 else
                     showError(error);
@@ -739,9 +747,6 @@ namespace PrestaVende.Public
 
                     string scriptEtiqueta = "window.open('WebReport.aspx?tipo_reporte=4" + "&numero_prestamo=" + lblNumeroPrestamoNumero.Text + "');";
                     ScriptManager.RegisterClientScriptBlock(this, GetType(), "OpenEtiqueta", scriptEtiqueta, true);
-
-                    string scriptText = "alert('my message'); window.location='WFListadoPrestamo.aspx?id_cliente=" + lblid_cliente.Text + "'";
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alertMessage", scriptText, true);
                 }
                 else
                     showError(error);
@@ -852,6 +857,15 @@ namespace PrestaVende.Public
                         montoFila = Math.Round(montoFila, 2);
                         item.Cells[5].Text = montoFila.ToString();
                     }
+
+                    foreach (DataRow item in dtTablaArticulos.Rows)
+                    {
+                        porcentaje = 0;
+                        porcentaje = Math.Round(Convert.ToDecimal(item["valor"].ToString()) / Convert.ToDecimal(lblTotalPrestamoQuetzales.Text.ToString()), 4);
+                        montoFila = porcentaje * Convert.ToDecimal(txtMontoARecalcular.Text.ToString());
+                        montoFila = Math.Round(montoFila, 2);
+                        item["valor"] = montoFila.ToString();
+                    }
                 }
                 else
                 {
@@ -862,6 +876,15 @@ namespace PrestaVende.Public
                         montoFila = porcentaje * Convert.ToDecimal(txtMontoARecalcular.Text.ToString());
                         montoFila = Math.Round(montoFila, 2);
                         item.Cells[8].Text = montoFila.ToString();
+                    }
+
+                    foreach (DataRow item in dtTablaJoyas.Rows)
+                    {
+                        porcentaje = 0;
+                        porcentaje = Math.Round(Convert.ToDecimal(item["valor"].ToString()) / Convert.ToDecimal(lblTotalPrestamoQuetzales.Text.ToString()), 4);
+                        montoFila = porcentaje * Convert.ToDecimal(txtMontoARecalcular.Text.ToString());
+                        montoFila = Math.Round(montoFila, 2);
+                        item["valor"] = montoFila.ToString();
                     }
                 }
                 getDataProyeccion();

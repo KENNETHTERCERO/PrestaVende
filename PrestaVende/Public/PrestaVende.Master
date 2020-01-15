@@ -106,6 +106,12 @@
         <div id="relleno" >
             <ul class="right">
                 <li>
+                    <asp:Label ID="lblCajaAsignada" runat="server" Text =""></asp:Label>
+                </li>
+                <li>
+                    <asp:Label ID="lblUsuario" runat="server" Text =""></asp:Label>
+                </li>
+                <li>
                     <asp:LinkButton ID="btnCambio" runat="server" Text="Cambio de password" ></asp:LinkButton>
                 </li>
                 <li>

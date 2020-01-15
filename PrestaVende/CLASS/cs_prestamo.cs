@@ -533,7 +533,7 @@ namespace PrestaVende.CLASS
             return dtReturnClient;
         }
 
-        public DataTable GetContrato(ref string error, string id_prestamo)
+        public DataTable GetContrato(ref string error, string id_prestamo, string id_sucursal)
         {
             DataTable dtContrato = new DataTable("dtContrato");
             try
@@ -543,7 +543,7 @@ namespace PrestaVende.CLASS
                 command.Parameters.Clear();
                 command.CommandText = "exec sp_contrato_prestamo @id_sucursal, @id_prestamo";
                 command.Parameters.AddWithValue("@id_prestamo", id_prestamo);
-                command.Parameters.AddWithValue("@id_sucursal", cs_usuario.id_sucursal);
+                command.Parameters.AddWithValue("@id_sucursal", id_sucursal);
                 dtContrato.Load(command.ExecuteReader());
                 return dtContrato;
             }
@@ -558,7 +558,7 @@ namespace PrestaVende.CLASS
             }
         }
 
-        public DataTable GetDataEtiquetaPrestamo(ref string error, string numero_prestamo)
+        public DataTable GetDataEtiquetaPrestamo(ref string error, string numero_prestamo, string id_sucursal)
         {
             DataTable dtEtiqueta = new DataTable("dtEtiqueta");
             try
@@ -568,7 +568,7 @@ namespace PrestaVende.CLASS
                 command.Parameters.Clear();
                 command.CommandText = "exec sp_imprime_etiqueta @id_sucursal, @numero_prestamo";
                 command.Parameters.AddWithValue("@numero_prestamo", numero_prestamo);
-                command.Parameters.AddWithValue("@id_sucursal", cs_usuario.id_sucursal);
+                command.Parameters.AddWithValue("@id_sucursal", id_sucursal);
                 dtEtiqueta.Load(command.ExecuteReader());
                 return dtEtiqueta;
             }
@@ -609,7 +609,7 @@ namespace PrestaVende.CLASS
             }
         }
 
-        public DataTable GetEstadoCuentaPrestamoEncabezado(ref string error, string numero_prestamo)
+        public DataTable GetEstadoCuentaPrestamoEncabezado(ref string error, string numero_prestamo, string id_sucursal)
         {
             DataTable dtEstadoCuentaEncabezado = new DataTable("EstadoCuentaEncabezado");
             try
@@ -619,7 +619,7 @@ namespace PrestaVende.CLASS
                 command.Parameters.Clear();
                 command.CommandText = "exec sp_estado_cuenta_prestamo_encabezado @id_sucursal, @numero_prestamo";
                 command.Parameters.AddWithValue("@numero_prestamo", numero_prestamo);
-                command.Parameters.AddWithValue("@id_sucursal", cs_usuario.id_sucursal);
+                command.Parameters.AddWithValue("@id_sucursal", id_sucursal);
                 dtEstadoCuentaEncabezado.Load(command.ExecuteReader());
                 return dtEstadoCuentaEncabezado;
             }

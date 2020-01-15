@@ -15,7 +15,22 @@ namespace PrestaVende.Public
         private string error = "";
         protected void Page_Load(object sender, EventArgs e)
         {
-            getMenu();
+            try
+            {
+                getMenu();
+                string caja = "";
+
+                if (CLASS.cs_usuario.id_caja == 0)
+                    lblCajaAsignada.Text = "ID: CAJA NO ASIGNADA.";
+                else
+                    lblCajaAsignada.Text = "ID: " + CLASS.cs_usuario.id_caja;
+
+                lblUsuario.Text = "U: " + CLASS.cs_usuario.primer_nombre + " " + CLASS.cs_usuario.primer_apellido;
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+            }
         }
 
         public void getMenu()
