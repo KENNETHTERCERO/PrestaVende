@@ -34,7 +34,7 @@ namespace PrestaVende.Public
             {
                 HttpCookie cookie = Request.Cookies["userLogin"];
 
-                if (cookie == null && CLASS.cs_usuario.id_usuario == 0)
+                if (cookie == null && (int)Session["id_usuario"] == 0)
                 {
                     Response.Redirect("~/WFWebLogin.aspx");
                 }
@@ -786,7 +786,7 @@ namespace PrestaVende.Public
                 encabezado[2] = "1";
                 encabezado[3] = getFechaProximoPago().ToString();
                 encabezado[4] = lblTotalPrestamoQuetzales.Text;
-                encabezado[5] = CLASS.cs_usuario.usuario;
+                encabezado[5] = (string)Session["usuario"];
                 encabezado[6] = ddlTipoPrestamo.SelectedValue.ToString();
                 encabezado[7] = ddlIntereses.SelectedValue.ToString();
                 encabezado[8] = ddlCasilla.SelectedValue.ToString();
@@ -822,12 +822,12 @@ namespace PrestaVende.Public
         {
             try
             {
-                if (CLASS.cs_usuario.id_caja == 0)
+                if ((int)Session["id_caja"] == 0)
                 {
                     showWarning("Usted no tiene caja asignada.");
                     return false;
                 }
-                else if (CLASS.cs_usuario.Saldo_caja < Convert.ToDecimal(lblTotalPrestamoQuetzales.Text.ToString()))
+                else if ((decimal)Session["saldo_caja"] < Convert.ToDecimal(lblTotalPrestamoQuetzales.Text.ToString()))
                 {
                     showWarning("El saldo de su caja es menor al monto del prestamo que quiere emitir, solicite un incremento de capital.");
                     return false;

@@ -20,12 +20,12 @@ namespace PrestaVende.Public
                 getMenu();
                 string caja = "";
 
-                if (CLASS.cs_usuario.id_caja == 0)
+                if ((int)Session["id_caja"] == 0)
                     lblCajaAsignada.Text = "ID: CAJA NO ASIGNADA.";
                 else
-                    lblCajaAsignada.Text = "ID: " + CLASS.cs_usuario.id_caja;
+                    lblCajaAsignada.Text = "ID: " + (int)Session["id_caja"];
 
-                lblUsuario.Text = "U: " + CLASS.cs_usuario.primer_nombre + " " + CLASS.cs_usuario.primer_apellido;
+                lblUsuario.Text = "U: " + (string)Session["primer_nombre"] + " " + (string)Session["primer_apellido"];
             }
             catch (Exception ex)
             {
@@ -93,16 +93,16 @@ namespace PrestaVende.Public
         {
             try
             {
-                CLASS.cs_usuario.id_usuario = 0;
-                CLASS.cs_usuario.id_empresa = 0;
-                CLASS.cs_usuario.id_sucursal = 0;
-                CLASS.cs_usuario.id_rol = 0;
-                CLASS.cs_usuario.id_caja = 0;
-                CLASS.cs_usuario.usuario = "";
-                CLASS.cs_usuario.primer_nombre = "";
-                CLASS.cs_usuario.primer_apellido = "";
-                CLASS.cs_usuario.Saldo_caja = 0;
-                CLASS.cs_usuario.id_tipo_caja = 0;
+                Session["id_usuario"] = 0;
+                Session["id_empresa"] = 0;
+                Session["id_sucursal"] = 0;
+                Session["id_rol"] = 0;
+                Session["id_caja"] = 0;
+                Session["usuario"] = "";
+                Session["primer_nombre"] = "";
+                Session["primer_apellido"] = "";
+                Session["saldo_caja"] = 0;
+                Session["id_tipo_caja"] = 0;
             }
             catch (Exception ex)
             {

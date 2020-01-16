@@ -99,7 +99,7 @@ namespace PrestaVende.Public
         {
             try
             {
-                int id_sucursal = CLASS.cs_usuario.id_sucursal;
+                int id_sucursal = (int)HttpContext.Current.Session["id_sucursal"];
                 ddlSerie.DataSource = cs_serie.getSerieDDL(ref error,id_sucursal);
                 ddlSerie.DataValueField = "id_serie";
                 ddlSerie.DataTextField = "serie";
@@ -236,9 +236,9 @@ namespace PrestaVende.Public
 
                 if (int.Parse(id_serie) > 0)
                 {
-                    if(CLASS.cs_usuario.id_caja > 0)
+                    if((int)Session["id_caja"] > 0)
                     {
-                        if (CLASS.cs_usuario.id_tipo_caja == 2)
+                        if ((int)Session["id_tipo_caja"] == 2)
                         {
                             decimal abono = 0;
                             bool abonoB = false;
@@ -257,7 +257,7 @@ namespace PrestaVende.Public
                                     string Resultado = "";
                                     string id_prestamo = Request.QueryString["id_prestamo"];
 
-                                    Resultado = cs_factura.GuardarFactura(ref error, ds_global, id_serie, id_cliente, id_tipo_transaccion, CLASS.cs_usuario.id_caja, numero_prestamo, abono.ToString());
+                                    Resultado = cs_factura.GuardarFactura(ref error, ds_global, id_serie, id_cliente, id_tipo_transaccion, (int)Session["id_caja"], numero_prestamo, abono.ToString());
                                      
                                     if(Resultado == string.Empty)
                                     {
@@ -270,7 +270,7 @@ namespace PrestaVende.Public
 
                                         if (id_tipo_transaccion == "9" || id_tipo_transaccion == "10")
                                         {
-                                            string script2 = "window.open('WebReport.aspx?tipo_reporte=5" + "&id_factura=" + Resultado + "&id_sucursal=" + CLASS.cs_usuario.id_sucursal + "');";
+                                            string script2 = "window.open('WebReport.aspx?tipo_reporte=5" + "&id_factura=" + Resultado + "&id_sucursal=" + (string)Session["id_sucursal"] + "');";
                                             ScriptManager.RegisterClientScriptBlock(this, GetType(), "ImpresionRecibo", script2, true);
                                         }                                        
 

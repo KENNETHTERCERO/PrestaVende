@@ -18,7 +18,7 @@ namespace PrestaVende.Public
             {
                 HttpCookie cookie = Request.Cookies["userLogin"];
 
-                if (cookie == null && CLASS.cs_usuario.id_usuario == 0)
+                if (cookie == null && (int)HttpContext.Current.Session["id_usuario"] == 0)
                 {
                     Response.Redirect("~/WFWebLogin.aspx");
                 }
@@ -47,15 +47,15 @@ namespace PrestaVende.Public
         {
             try
             {
-                int id_empresa = CLASS.cs_usuario.id_usuario;
+                int id_empresa = (int)HttpContext.Current.Session["id_usuario"];
                 ddlSucursal.DataSource = cs_sucursal.ObtenerSucursalesPorUsuario(ref error, id_empresa.ToString());
                 ddlSucursal.DataValueField = "id_sucursal";
                 ddlSucursal.DataTextField = "sucursal";
                 ddlSucursal.DataBind();
 
-                ddlSucursal.SelectedValue = CLASS.cs_usuario.id_sucursal.ToString();
+                ddlSucursal.SelectedValue = Session["id_sucursal"].ToString();
 
-                if (CLASS.cs_usuario.id_rol == 3 || CLASS.cs_usuario.id_rol == 4 || CLASS.cs_usuario.id_rol == 5)
+                if ((int)Session["id_rol"] == 3 || (int)Session["id_rol"] == 4 || (int)Session["id_rol"] == 5)
                     ddlSucursal.Enabled = false;
             }
             catch (Exception ex)
@@ -68,7 +68,7 @@ namespace PrestaVende.Public
         {
             try
             {
-                int id_empresa = CLASS.cs_usuario.id_usuario;
+                int id_empresa = (int)HttpContext.Current.Session["id_usuario"];
                 ddlCaja.DataSource = cs_caja.getCajasCombo(ref error,  ddlSucursal.SelectedValue.ToString());
                 ddlCaja.DataValueField = "id_caja";
                 ddlCaja.DataTextField = "nombre_caja";

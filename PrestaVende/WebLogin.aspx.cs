@@ -52,34 +52,34 @@ namespace PrestaVende
                         //string id = Convert.ToString(getId.getIdUser(txtUser.Text, txtPassword.Text));
                         //string id_ubicacion = Convert.ToString(getId.getIdUbicacion(txtUser.Text, txtPassword.Text));
                         HttpCookie userLogin = new HttpCookie("userLogin");
-                        CLASS.cs_usuario.id_usuario = Convert.ToInt32(respuesta[1]);
-                        CLASS.cs_usuario.id_empresa = Convert.ToInt32(respuesta[2]);
-                        CLASS.cs_usuario.id_sucursal = Convert.ToInt32(respuesta[3]);
-                        CLASS.cs_usuario.usuario = respuesta[4];
-                        CLASS.cs_usuario.primer_nombre = respuesta[5];
-                        CLASS.cs_usuario.primer_apellido = respuesta[6];
-                        CLASS.cs_usuario.id_rol = Convert.ToInt32(respuesta[7]);
-                        CLASS.cs_usuario.id_caja = Convert.ToInt32(respuesta[9]);
-                        id_asignacion = respuesta[10];
-                        estado_asignacion = respuesta[11];
-                        caja_asignada = respuesta[12];
-                        CLASS.cs_usuario.id_tipo_caja = Convert.ToInt32(respuesta[13]);
+                        //CLASS.cs_usuario.id_usuario = Convert.ToInt32(respuesta[1]);
+                        //CLASS.cs_usuario.id_empresa = Convert.ToInt32(respuesta[2]);
+                        //CLASS.(int)HttpContext.Current.Session["id_sucursal"] = Convert.ToInt32(respuesta[3]);
+                        //CLASS.(string)HttpContext.Current.Session["usuario"] = respuesta[4];
+                        //CLASS.cs_usuario.primer_nombre = respuesta[5];
+                        //CLASS.cs_usuario.primer_apellido = respuesta[6];
+                        //CLASS.cs_usuario.id_rol = Convert.ToInt32(respuesta[7]);
+                        //CLASS.cs_usuario.id_caja = Convert.ToInt32(respuesta[9]);
+                        //id_asignacion = respuesta[10];
+                        //estado_asignacion = respuesta[11];
+                        //caja_asignada = respuesta[12];
+                        //CLASS.cs_usuario.id_tipo_caja = Convert.ToInt32(respuesta[13]);
 
 
-                        CLASS.cs_usuario.id_usuario         = Convert.ToInt32(respuesta[1]);
-                        CLASS.cs_usuario.id_empresa         = Convert.ToInt32(respuesta[2]);
-                        CLASS.cs_usuario.id_sucursal        = Convert.ToInt32(respuesta[3]);
-                        CLASS.cs_usuario.usuario            = respuesta[4];
-                        CLASS.cs_usuario.primer_nombre      = respuesta[5];
-                        CLASS.cs_usuario.primer_apellido    = respuesta[6];
-                        CLASS.cs_usuario.id_rol             = Convert.ToInt32( respuesta[7]);
-                        CLASS.cs_usuario.id_caja            = Convert.ToInt32(respuesta[9]);
-                        id_asignacion                       = respuesta[10];
-                        estado_asignacion                   = respuesta[11];
-                        caja_asignada                       = respuesta[12];
-                        CLASS.cs_usuario.id_tipo_caja       = Convert.ToInt32(respuesta[13]);
+                        Session["id_usuario"]           = Convert.ToInt32(respuesta[1]);
+                        Session["id_empresa"]           = Convert.ToInt32(respuesta[2]);
+                        Session["id_sucursal"]          = Convert.ToInt32(respuesta[3]);
+                        Session["usuario"]              = respuesta[4];
+                        Session["primer_nombre"]        = respuesta[5];
+                        Session[" primer_apellido"]     = respuesta[6];
+                        Session["id_rol"]               = Convert.ToInt32( respuesta[7]);
+                        Session["id_caja"]              = Convert.ToInt32(respuesta[9]);
+                        id_asignacion                   = respuesta[10];
+                        estado_asignacion               = respuesta[11];
+                        caja_asignada                   = respuesta[12];
+                        Session["id_tipo_caja"]         = Convert.ToInt32(respuesta[13]);
 
-                        Session["id_rol"] = CLASS.cs_usuario.id_rol;
+                        // = CLASS.cs_usuario.id_rol;
                         userLogin.Expires = DateTime.Now.AddHours(3);
                         Response.Cookies.Add(userLogin);
 
@@ -101,21 +101,21 @@ namespace PrestaVende
         {
             try
             {
-                if (CLASS.cs_usuario.id_caja == 0 && CLASS.cs_usuario.id_rol != 5)
+                if ((int)Session["id_caja"] == 0 && (int)Session["id_rol"] != 5)
                 {
                     Response.Redirect("~/Public/WFPrincipal.aspx", false);
                 }
                 else
                 {
-                    if (!id_asignacion.Equals("0") && estado_asignacion.Equals("0") && CLASS.cs_usuario.id_caja != 0)
+                    if (!id_asignacion.Equals("0") && estado_asignacion.Equals("0") && (int)Session["id_caja"] != 0)
                     {
                         Response.Redirect("~/Public/RecepcionCaja.aspx?id_asignacion=" + id_asignacion, false);
                     }
-                    else if (caja_asignada.Equals("1") && CLASS.cs_usuario.id_caja != 0)
+                    else if (caja_asignada.Equals("1") && (int)Session["id_caja"] != 0)
                     {
                         fecha_hoy = DateTime.Now;
 
-                        if (fecha_asignacion.Date < fecha_hoy.Date && CLASS.cs_usuario.id_rol == 5)
+                        if (fecha_asignacion.Date < fecha_hoy.Date && (int)Session["id_rol"] == 5)
                         {
                             showWarning("Usted aun tiene la caja asignada, por favor solicite al gerente que la cierre.");
                         }
@@ -167,7 +167,7 @@ namespace PrestaVende
                 foreach (DataRow item in asignacion_caja.getAsignacionCaja(ref error, id_asignacion).Rows)
                 {
                     fecha_asignacion = Convert.ToDateTime(item[5].ToString());
-                    CLASS.cs_usuario.Saldo_caja = Convert.ToDecimal(item[3].ToString());
+                    Session["saldo_caja"] = Convert.ToDecimal(item[3].ToString());
                 }
             }
             catch (Exception ex)

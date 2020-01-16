@@ -53,16 +53,16 @@ namespace PrestaVende.Public
         {
             try
             {
-                CLASS.cs_usuario.id_usuario = 0;
-                CLASS.cs_usuario.id_empresa = 0;
-                CLASS.cs_usuario.id_sucursal = 0;
-                CLASS.cs_usuario.id_rol = 0;
-                CLASS.cs_usuario.id_caja = 0;
-                CLASS.cs_usuario.usuario = "";
-                CLASS.cs_usuario.primer_nombre = "";
-                CLASS.cs_usuario.primer_apellido = "";
-                CLASS.cs_usuario.Saldo_caja = 0;
-                CLASS.cs_usuario.id_tipo_caja = 0;
+                Session["id_usuario"] = 0;
+                Session["id_empresa"] = 0;
+                Session["id_sucursal"] = 0;
+                Session["id_rol"] = 0;
+                Session["id_caja"] = 0;
+                Session["usuario"] = "";
+                Session["primer_nombre"] = "";
+                Session["primer_apellido"] = "";
+                Session["saldo_caja"] = 0;
+                Session["id_tipo_caja"] = 0;
             }
             catch (Exception ex)
             {
@@ -140,7 +140,7 @@ namespace PrestaVende.Public
                 getIdAsignacion();
                 hideOrShowDiv(false);
 
-                if (CLASS.cs_usuario.id_rol == 5)
+                if ((int)Session["id_rol"] == 5)
                 {
                     string id_caja_asignada = mAsignacionCaja.getIDCajaAsignada(ref error);
                     ddIdCaja.SelectedValue = id_caja_asignada;
@@ -171,7 +171,7 @@ namespace PrestaVende.Public
                         {
                             if (mAsignacionCaja.recibirCierreCaja(ref error, ddidAsignacion.Text.ToString(), txtMonto.Text.ToString(), ddIdCaja.SelectedValue.ToString(), ddIdUsuarioAsignado.SelectedValue.ToString()))
                             {
-                                if (CLASS.cs_usuario.id_caja.ToString() == ddIdCaja.SelectedValue.ToString() || (ddIdEstadoCaja.SelectedValue.ToString() == "4" && CLASS.cs_usuario.id_rol == 5))
+                                if ((string)Session["id_caja"] == ddIdCaja.SelectedValue.ToString() || (ddIdEstadoCaja.SelectedValue.ToString() == "4" && (int)Session["id_rol"] == 5))
                                 {
                                     OpcionSalir();
                                     Response.Redirect("~/WebLogin.aspx", false);
@@ -376,7 +376,7 @@ namespace PrestaVende.Public
                 }
                 else if (opcion.Equals("cierre"))
                 {
-                    if (CLASS.cs_usuario.id_rol == 5)
+                    if ((int)Session["id_rol"] == 5)
                     {
                         ddIdCaja.Enabled = false;
                         ddIdEstadoCaja.Enabled = true;
@@ -482,7 +482,7 @@ namespace PrestaVende.Public
                     blnRecibir = true;
                 }
 
-                if (mAsignacionCaja.insertAsignacionCaja(ref error, ddidAsignacion.Text, ddIdCaja.SelectedValue.ToString(), ddIdEstadoCaja.SelectedValue.ToString(), txtMonto.Text, "1", thisDay.ToString("MM/dd/yyyy HH:mm:ss"), thisDay.ToString("MM/dd/yyyy HH:mm:ss"), CLASS.cs_usuario.usuario, ddIdUsuarioAsignado.SelectedValue.ToString(), blnRecibir, id_asignacion_recibida, ref IntCajaActualUsuario))                  
+                if (mAsignacionCaja.insertAsignacionCaja(ref error, ddidAsignacion.Text, ddIdCaja.SelectedValue.ToString(), ddIdEstadoCaja.SelectedValue.ToString(), txtMonto.Text, "1", thisDay.ToString("MM/dd/yyyy HH:mm:ss"), thisDay.ToString("MM/dd/yyyy HH:mm:ss"), (string)Session["usuario"], ddIdUsuarioAsignado.SelectedValue.ToString(), blnRecibir, id_asignacion_recibida, ref IntCajaActualUsuario))                  
                 {
                     if (ddIdEstadoCaja.SelectedValue.ToString() == "2")
                     {
@@ -490,7 +490,7 @@ namespace PrestaVende.Public
                     }
                     else if (ddIdEstadoCaja.SelectedValue.ToString() == "4")
                     {
-                        if (ddIdEstadoCaja.SelectedValue.ToString() == "4" && CLASS.cs_usuario.id_rol == 5)
+                        if (ddIdEstadoCaja.SelectedValue.ToString() == "4" && (int)Session["id_rol"] == 5)
                         {
                             OpcionSalir();
                             Response.Redirect("~/WebLogin.aspx", false);

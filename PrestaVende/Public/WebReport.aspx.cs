@@ -29,7 +29,7 @@ namespace PrestaVende.Public
             {
                 DataTable contrato = new DataTable("contrato");
                 string numero_prestamo = Request.QueryString.Get("numero_prestamo");
-                contrato = cs_prestamo.GetContrato(ref error, numero_prestamo, CLASS.cs_usuario.id_sucursal.ToString());
+                contrato = cs_prestamo.GetContrato(ref error, numero_prestamo, Session["id_sucursal"].ToString());
                 if (contrato.Rows.Count <= 0)
                 {
                     error = "Error obteniendo datos de contrato." + error;
@@ -90,7 +90,7 @@ namespace PrestaVende.Public
             {
                 DataTable estadoCuenta = new DataTable("estadoCuentaPrestamo");
                 string numero_prestamo = Request.QueryString.Get("numero_prestamo");
-                estadoCuenta = cs_prestamo.GetEstadoCuentaPrestamoEncabezado(ref error, numero_prestamo, CLASS.cs_usuario.id_sucursal.ToString());
+                estadoCuenta = cs_prestamo.GetEstadoCuentaPrestamoEncabezado(ref error, numero_prestamo, Session["id_sucursal"].ToString());
                 if (estadoCuenta.Rows.Count <= 0)
                 {
                     error = "Error obteniendo datos de contrato." + error;
@@ -101,7 +101,7 @@ namespace PrestaVende.Public
                     try
                     {
                         DataTable estadoCuentaDetalle = new DataTable("estadoCuentaPrestamoDetalle");
-                        estadoCuenta = cs_prestamo.GetEstadoCuentaPrestamoEncabezado(ref error, numero_prestamo, CLASS.cs_usuario.id_sucursal.ToString());
+                        estadoCuenta = cs_prestamo.GetEstadoCuentaPrestamoEncabezado(ref error, numero_prestamo, Session["id_sucursal"].ToString());
                         DataTable proyeccion = new DataTable("dtProyeccionInteres");
                         proyeccion = cs_prestamo.getDTProyeccion(ref error);
 
@@ -126,7 +126,7 @@ namespace PrestaVende.Public
             {
                 DataTable contrato = new DataTable("estadoCuentaPrestamo");
                 string numero_prestamo = Request.QueryString.Get("numero_prestamo");
-                contrato = cs_prestamo.GetDataEtiquetaPrestamo(ref error, numero_prestamo, CLASS.cs_usuario.id_sucursal.ToString());
+                contrato = cs_prestamo.GetDataEtiquetaPrestamo(ref error, numero_prestamo, Session["id_sucursal"].ToString());
                 if (contrato.Rows.Count <= 0)
                 {
                     error = "Error obteniendo datos de contrato." + error;
