@@ -130,12 +130,12 @@ namespace PrestaVende.Public {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_gridView;
         
         /// <summary>
-        /// GrdVLiquidacion control.
+        /// GrdVInventario control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GrdVLiquidacion;
+        protected global::System.Web.UI.WebControls.GridView GrdVInventario;
     }
 }

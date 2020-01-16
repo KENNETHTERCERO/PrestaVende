@@ -18,7 +18,7 @@
                                 <br />
                                 <br />
                                 <br />                                                                                                                
-                                <asp:Button ID="btnAceptar" runat="server" Width="200px" Text="Agregar a inventario" class="btn btn-success"  OnClick="btnAceptar_Click"/>
+                                <asp:Button ID="btnAceptar" runat="server" Width="200px" Text="Guardar Precio" class="btn btn-success"  OnClick="btnAceptar_Click"/>
                                 <br />
                                 <br />
                                 <br />  
@@ -53,7 +53,7 @@
                                                 <table style="width: 100%; text-align:center">
                                                     <tr >
                                                         <td >
-                                                            <h1> Recepción liquidaciones  &nbsp;&nbsp;</h1>
+                                                            <h1> Actualización de Precio &nbsp;&nbsp;</h1>
                                                         </td>
                                                        
                                                     </tr>
@@ -94,8 +94,8 @@
                                         <table >
                                             <tr>
                                                 <td>
-                                                    <asp:GridView ID="GrdVLiquidacion" runat="server" CssClass="footable" AutoGenerateColumns="False" 
-                                                        ForeColor="#333333" GridLines="None" OnSelectedIndexChanged="GrdVLiquidacion_SelectedIndexChanged" >
+                                                    <asp:GridView ID="GrdVInventario" runat="server" CssClass="footable" AutoGenerateColumns="False" 
+                                                        ForeColor="#333333" GridLines="None"  >
                                                         <AlternatingRowStyle BackColor="White" />
                                                         <Columns>
 
@@ -114,13 +114,13 @@
                                                                 <asp:BoundField DataField="producto" HeaderText="<center>PRODUCTO</center>" SortExpression="producto"  HtmlEncode="false"/>                                                                
                                                                 <asp:BoundField DataField="cantidad" HeaderText="<center>CANTIDAD</center>" SortExpression="cantidad"  HtmlEncode="false"/>
                                                                 <asp:BoundField DataField="valor" HeaderText="<center>VALOR PRESTADO</center>" SortExpression="valor"  HtmlEncode="false"/>                                                                
-                                                                <asp:BoundField DataField="precio_actual" HeaderText="<center>PRECIO GUARDADO</center>" SortExpression="precio_actual"  HtmlEncode="false"/>
+                                                                <asp:BoundField DataField="precio_producto" HeaderText="<center>PRECIO GUARDADO</center>" SortExpression="precio_producto"  HtmlEncode="false"/>
                                                                 <asp:TemplateField HeaderText=" <center> PRECIO </center>" HeaderStyle-HorizontalAlign="Center" >
                                                                     <ItemTemplate>
                                                                         <asp:TextBox ID="txtPrecio" runat="server" text="0.00" Width="80px"></asp:TextBox>
                                                                     </ItemTemplate>                                                                    
                                                                 </asp:TemplateField>
-                                                                <asp:BoundField DataField="fecha_liquidacion" HeaderText="<center>FECHA LIQUIDACION</center>" SortExpression="fecha_liquidacion"  HtmlEncode="false"/>
+                                                                <asp:BoundField DataField="fecha_guardado" HeaderText="<center>FECHA INVENTARIO</center>" SortExpression="fecha_guardado"  HtmlEncode="false"/>
                                                                 
                                                         </Columns>
                                                         <EditRowStyle BackColor="#7C6F57" />
