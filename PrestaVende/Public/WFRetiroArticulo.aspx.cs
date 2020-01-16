@@ -65,9 +65,9 @@ namespace PrestaVende.Public
                     lblnombre_prestamo.Text = item[1].ToString() + "      ";
                     saldo_prestamo = decimal.Parse(item[7].ToString());
                     monto_prestamo = decimal.Parse(item[9].ToString());
-                    CLASS.cs_prestamo.id_interes_proyeccion = item[10].ToString();
-                    CLASS.cs_prestamo.monto_proyeccion = item[7].ToString(); 
-                    CLASS.cs_prestamo.id_plan_prestamo_proyeccion = item[11].ToString();
+                    Session["id_interes_proyeccion"] = item[10].ToString();
+                    Session["monto_proyeccion"] = item[7].ToString();
+                    Session["id_plan_prestamo_proyeccion"] = item[11].ToString();
 
                     lblValorSaldoPrestamo.Text = Math.Round(Convert.ToDecimal(monto_prestamo - saldo_prestamo), 2).ToString();                    
                 }

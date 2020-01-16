@@ -1142,10 +1142,19 @@ namespace PrestaVende.Public
         {
             try
             {
-                CLASS.cs_prestamo.id_interes_proyeccion = ddlIntereses.SelectedValue;
-                CLASS.cs_prestamo.monto_proyeccion = lblTotalPrestamoQuetzales.Text;
-                CLASS.cs_prestamo.id_plan_prestamo_proyeccion = ddlTipoPrestamo.SelectedValue;
+                Session["id_interes_proyeccion"] = ddlIntereses.SelectedValue;
+                if (txtMontoARecalcular.Visible)
+                {
+                    Session["monto_proyeccion"] = txtMontoARecalcular.Text;
+                }
+                else
+                {
+                    Session["monto_proyeccion"] = lblTotalPrestamoQuetzales.Text;
+                }
+
+                Session["id_plan_prestamo_proyeccion"] = ddlTipoPrestamo.SelectedValue;
                 gvProyeccion.DataSource = cs_prestamo.getDTProyeccion(ref error);
+                
                 gvProyeccion.DataBind();
             }
             catch (Exception ex)

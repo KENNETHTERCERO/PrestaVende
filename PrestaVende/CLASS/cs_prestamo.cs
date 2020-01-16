@@ -9,7 +9,8 @@ namespace PrestaVende.CLASS
 {
     public class cs_prestamo
     {
-        public static string id_interes_proyeccion = "", monto_proyeccion = "", id_plan_prestamo_proyeccion = "";
+        //public static string id_interes_proyeccion = "", monto_proyeccion = "", id_plan_prestamo_proyeccion = "";
+
         cs_connection connection = new cs_connection();
         SqlCommand command = new SqlCommand();
 
@@ -115,7 +116,7 @@ namespace PrestaVende.CLASS
                 command.Parameters.AddWithValue("@total_prestamo", datosEnc[1]);
                 command.Parameters.AddWithValue("@estado_prestamo", datosEnc[2]);
                 command.Parameters.AddWithValue("@fecha_proximo_pago", fecha_modificada);
-                command.Parameters.AddWithValue("@saldo_prestamo", datosEnc[4]);
+                command.Parameters.AddWithValue("@saldo_prestamo", datosEnc[1]);
                 command.Parameters.AddWithValue("@usuario", datosEnc[5]);
                 command.Parameters.AddWithValue("@id_plan_prestamo", datosEnc[6]);
                 command.Parameters.AddWithValue("@id_interes", datosEnc[7]);
@@ -592,9 +593,9 @@ namespace PrestaVende.CLASS
                 command.Connection = connection.connection;
                 command.Parameters.Clear();
                 command.CommandText = "exec SP_proyeccion_intereses @id_interes, @monto, @id_plan_prestamo";
-                command.Parameters.AddWithValue("@id_interes", cs_prestamo.id_interes_proyeccion);
-                command.Parameters.AddWithValue("@monto", cs_prestamo.monto_proyeccion);
-                command.Parameters.AddWithValue("@id_plan_prestamo", cs_prestamo.id_plan_prestamo_proyeccion);
+                command.Parameters.AddWithValue("@id_interes", HttpContext.Current.Session["id_interes_proyeccion"].ToString());
+                command.Parameters.AddWithValue("@monto", HttpContext.Current.Session["monto_proyeccion"].ToString());
+                command.Parameters.AddWithValue("@id_plan_prestamo", HttpContext.Current.Session["id_plan_prestamo_proyeccion"].ToString());
                 dtContrato.Load(command.ExecuteReader());
                 return dtContrato;
             }
