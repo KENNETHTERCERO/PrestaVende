@@ -29,7 +29,7 @@ namespace PrestaVende.Public
             {
                 DataTable contrato = new DataTable("contrato");
                 string numero_prestamo = Request.QueryString.Get("numero_prestamo");
-                contrato = cs_prestamo.GetContrato(ref error, numero_prestamo, CLASS.cs_usuario.id_sucursal.ToString());
+                contrato = cs_prestamo.GetContrato(ref error, numero_prestamo, Session["id_sucursal"].ToString());
                 if (contrato.Rows.Count <= 0)
                 {
                     error = "Error obteniendo datos de contrato." + error;
@@ -90,7 +90,7 @@ namespace PrestaVende.Public
             {
                 DataTable estadoCuenta = new DataTable("estadoCuentaPrestamo");
                 string numero_prestamo = Request.QueryString.Get("numero_prestamo");
-                estadoCuenta = cs_prestamo.GetEstadoCuentaPrestamoEncabezado(ref error, numero_prestamo, CLASS.cs_usuario.id_sucursal.ToString());
+                estadoCuenta = cs_prestamo.GetEstadoCuentaPrestamoEncabezado(ref error, numero_prestamo, Session["id_sucursal"].ToString());
                 if (estadoCuenta.Rows.Count <= 0)
                 {
                     error = "Error obteniendo datos de contrato." + error;
@@ -101,7 +101,7 @@ namespace PrestaVende.Public
                     try
                     {
                         DataTable estadoCuentaDetalle = new DataTable("estadoCuentaPrestamoDetalle");
-                        estadoCuenta = cs_prestamo.GetEstadoCuentaPrestamoEncabezado(ref error, numero_prestamo, CLASS.cs_usuario.id_sucursal.ToString());
+                        estadoCuenta = cs_prestamo.GetEstadoCuentaPrestamoEncabezado(ref error, numero_prestamo, Session["id_sucursal"].ToString());
                         DataTable proyeccion = new DataTable("dtProyeccionInteres");
                         proyeccion = cs_prestamo.getDTProyeccion(ref error);
 
@@ -126,7 +126,7 @@ namespace PrestaVende.Public
             {
                 DataTable contrato = new DataTable("estadoCuentaPrestamo");
                 string numero_prestamo = Request.QueryString.Get("numero_prestamo");
-                contrato = cs_prestamo.GetDataEtiquetaPrestamo(ref error, numero_prestamo, CLASS.cs_usuario.id_sucursal.ToString());
+                contrato = cs_prestamo.GetDataEtiquetaPrestamo(ref error, numero_prestamo, Session["id_sucursal"].ToString());
                 if (contrato.Rows.Count <= 0)
                 {
                     error = "Error obteniendo datos de contrato." + error;
@@ -188,6 +188,19 @@ namespace PrestaVende.Public
                 string id_sucursal = Request.QueryString.Get("id_sucursal");
                 string fecha_inicio = Request.QueryString.Get("fecha_inicio");
                 string fecha_fin = Request.QueryString.Get("fecha_fin");
+
+                DataTable AbonosCapital = new DataTable("AbonosCapital");
+                AbonosCapital = cs_prestamo.GetDataReporteAbono(ref error, fecha_inicio, fecha_fin, id_sucursal);
+
+                Reports.CRAbonosCapital ReporteAbonos = new Reports.CRAbonosCapital();
+
+                ReporteAbonos.Load(Server.MapPath("~/Reports/CRAbonosCapital.rpt"));
+                ReporteAbonos.SetDataSource(AbonosCapital);
+                CrystalReportViewer1.ReportSource = ReporteAbonos;//document;
+                CrystalReportViewer1.DataBind();
+                CrystalReportViewer1.RefreshReport();
+                ReporteAbonos.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "");
+
             }
             else if (Convert.ToInt32(tipo_reporte) == 7)//Reporte Estado de Cuenta Caja
             {

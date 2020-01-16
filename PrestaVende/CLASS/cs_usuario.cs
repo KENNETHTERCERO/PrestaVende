@@ -9,34 +9,37 @@ namespace PrestaVende.CLASS
 {
     public class cs_usuario
     {
-        public static int       id_usuario      = 0;
-        public static int       id_empresa      = 0;
-        public static int       id_sucursal     = 0;
-        public static int       id_rol          = 0;
-        public static int       id_caja         = 0;
-        public static int       id_tipo_caja    = 0;
-        public static int       puede_vender    = 0;
-        private static decimal  saldo_caja      = 0;
-        public static string    usuario         = "";
-        public static string    primer_nombre   = "";
-        public static string    primer_apellido = "";
+        public static int id_usuario = 0;
+        public static int id_empresa = 0;
+        public static int id_sucursal = 0;
+        public static int id_rol = 0;
+        public static int id_caja = 0;
+        public static int id_tipo_caja = 0;
+        public static int puede_vender = 0;
+        private static decimal saldo_caja = new decimal();
+        public static string usuario = "";
+        public static string primer_nombre = "";
+        public static string primer_apellido = "";
+
+        //aqui para arriba
+
         public static bool      autorizado      = false;
 
         private cs_connection connect = new cs_connection();
         private SqlCommand command = new SqlCommand();
 
-        public static decimal Saldo_caja
-        {
-            get
-            {
-                return saldo_caja;
-            }
+        //public static decimal Saldo_caja
+        //{
+        //    get
+        //    {
+        //        return saldo_caja;
+        //    }
 
-            set
-            {
-                saldo_caja = value;
-            }
-        }
+        //    set
+        //    {
+        //        saldo_caja = value;
+        //    }
+        //}
 
         public cs_usuario()
         {

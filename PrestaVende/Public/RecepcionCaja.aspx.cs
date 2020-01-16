@@ -57,11 +57,11 @@ namespace PrestaVende.Public
                 
                 foreach (DataRow item in asignacion_caja.getAsignacionCaja(ref error, id_asignacion).Rows)
                 {
-                    CLASS.cs_usuario.puede_vender   = Convert.ToInt32(item[7].ToString());
+                    Session["puede_vender"]         = Convert.ToInt32(item[7].ToString());
                     txtMontoRecepcion.Text          = item[3].ToString();
                     lblNumeroCajaAsignada.Text      = item[6].ToString();
                     fecha_asignacion                = Convert.ToDateTime(item[5].ToString());
-                    CLASS.cs_usuario.Saldo_caja     = Convert.ToDecimal(item[3].ToString());
+                    Session["saldo_caja"]           = Convert.ToDecimal(item[3].ToString());
                 }
             }
             catch (Exception ex)
@@ -74,14 +74,14 @@ namespace PrestaVende.Public
         {
             try
             {
-                CLASS.cs_usuario.id_usuario = 0;
-                CLASS.cs_usuario.id_empresa = 0;
-                CLASS.cs_usuario.id_sucursal = 0;
-                CLASS.cs_usuario.id_rol = 0;
-                CLASS.cs_usuario.id_caja = 0;
-                CLASS.cs_usuario.usuario = "";
-                CLASS.cs_usuario.primer_nombre = "";
-                CLASS.cs_usuario.primer_apellido = "";
+                Session["id_usuario"] = 0;
+                Session["id_empresa"] = 0;
+                Session["id_sucursal"] = 0;
+                Session["id_rol"] = 0;
+                Session["id_caja"] = 0;
+                Session["usuario"] = "";
+                Session["primer_nombre"] = "";
+                Session["primer_apellido"] = "";
             }
             catch (Exception ex)
             {

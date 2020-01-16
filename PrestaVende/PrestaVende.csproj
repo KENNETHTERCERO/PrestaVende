@@ -249,6 +249,28 @@
     <Content Include="DATASET\DSReciboFactura.xss">
       <DependentUpon>DSReciboFactura.xsd</DependentUpon>
     </Content>
+    <Content Include="DATASET\DSReporteCancelaciones.xsc">
+      <DependentUpon>DSReporteCancelaciones.xsd</DependentUpon>
+    </Content>
+    <Content Include="DATASET\DSReporteAbonosACapital.xsc">
+      <DependentUpon>DSReporteAbonosACapital.xsd</DependentUpon>
+    </Content>
+    <None Include="DATASET\DSReporteAbonosACapital.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DSReporteAbonosACapital.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="DATASET\DSReporteAbonosACapital.xss">
+      <DependentUpon>DSReporteAbonosACapital.xsd</DependentUpon>
+    </Content>
+    <None Include="DATASET\DSReporteCancelaciones.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DSReporteCancelaciones.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="DATASET\DSReporteCancelaciones.xss">
+      <DependentUpon>DSReporteCancelaciones.xsd</DependentUpon>
+    </Content>
     <None Include="DATASET\DtsTransaccionesCaja.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
@@ -349,6 +371,16 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DSReciboFactura.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DATASET\DSReporteAbonosACapital.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DSReporteAbonosACapital.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DATASET\DSReporteCancelaciones.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DSReporteCancelaciones.xsd</DependentUpon>
     </Compile>
     <Compile Include="DATASET\DtsTransaccionesCaja.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -604,6 +636,12 @@
     <Compile Include="Public\WFRetiroArticulo.aspx.designer.cs">
       <DependentUpon>WFRetiroArticulo.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Reports\CRAbonosCapital.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CRAbonosCapital.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Reports\CRContratoGeneral.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -662,6 +700,10 @@
     <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Reports\CRAbonosCapital.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>CRAbonosCapital.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reports\CRContratoGeneral.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>CRContratoGeneral.cs</LastGenOutput>

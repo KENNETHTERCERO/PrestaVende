@@ -16,31 +16,31 @@ namespace PrestaVende.CLASS
         #region constantes
 
         private string[] TipoCajaGeneral = { "1", "4" };
-        private int IntCajaActual = 0;
+        //private int IntCajaActual = 0;
 
         //ESTADOS CAJA
-        private string Disponible = "1";
+        //private string Disponible = "1";
         private string AsignacionCaja = "2";
         private string CajaRecibida = "3";
-        private string CierreCaja = "4";
-        private string CajaRecibidaGeneral = "6";
+        //private string CierreCaja = "4";
+        //private string CajaRecibidaGeneral = "6";
         private string Incremento = "7";
         private string Decremento = "8";
-        private string AsignacionCajaGeneral = "";
-        private string RecepcionCajaGeneral = "";
+        //private string AsignacionCajaGeneral = "";
+        //private string RecepcionCajaGeneral = "";
 
         //TIPOS TRANSACCIONES
-        private int TransaccionAperturaCajaGeneral = 1;
-        private int TransaccionCierreCajaGeneral = 2;
-        private int TransaccionIncrementoCapitalCajaGeneral = 3;
-        private int TransaccionDecrementoCapitalCajaGeneral = 4;
-        private int TransaccionAperturaCapitalCajaTransaccionalPrestamo = 5;
-        private int TransaccionCierreCapitalCajaTransaccionalPrestamo = 6;
-        private int TransaccionRecepcionCajaGeneral = 14;
-        private int TransaccionIncrementoCapitalCajaTransaccional = 15;
-        private int TransaccionDecrementoCapitalCajaTransaccional = 16;    
-        private int TransaccionAperturaCajaTransaccional = 17;
-        private int TransaccionCierreCajaTransaccional = 18;
+        //private int TransaccionAperturaCajaGeneral = 1;
+        //private int TransaccionCierreCajaGeneral = 2;
+        //private int TransaccionIncrementoCapitalCajaGeneral = 3;
+        //private int TransaccionDecrementoCapitalCajaGeneral = 4;
+        //private int TransaccionAperturaCapitalCajaTransaccionalPrestamo = 5;
+        //private int TransaccionCierreCapitalCajaTransaccionalPrestamo = 6;
+        //private int TransaccionRecepcionCajaGeneral = 14;
+        //private int TransaccionIncrementoCapitalCajaTransaccional = 15;
+        //private int TransaccionDecrementoCapitalCajaTransaccional = 16;    
+        //private int TransaccionAperturaCajaTransaccional = 17;
+        //private int TransaccionCierreCajaTransaccional = 18;
 
         #endregion
 
@@ -55,7 +55,7 @@ namespace PrestaVende.CLASS
                 command.Connection = connection.connection;
                 command.CommandText = "SELECT 0 AS id_caja, 'SELECCIONAR' AS nombre_caja UNION " +
                                       "SELECT id_caja, nombre_caja FROM tbl_caja WHERE id_sucursal = @id_sucursal";
-                command.Parameters.AddWithValue("@id_sucursal", cs_usuario.id_sucursal);
+                command.Parameters.AddWithValue("@id_sucursal", HttpContext.Current.Session["id_sucursal"].ToString());
                 Caja.Load(command.ExecuteReader());
 
                 return Caja;
@@ -167,11 +167,11 @@ namespace PrestaVende.CLASS
 
                 if (id_estado_caja.Equals("3"))
                 {
-                    if (cs_usuario.id_rol == 3 || cs_usuario.id_rol == 3)
+                    if ((int)HttpContext.Current.Session["id_rol"] == 3 || (int)HttpContext.Current.Session["id_rol"] == 3)
                     {
                         querySelect = querySelect + " where tc.id_tipo_caja = @id_tipo_caja and ec.id_estado_caja in (4, 7, 8)";
                     }
-                    else if (cs_usuario.id_rol == 5)
+                    else if ((int)HttpContext.Current.Session["id_rol"] == 5)
                     {
                         querySelect = querySelect + " where tc.id_tipo_caja = @id_tipo_caja and ec.id_estado_caja in (4)";
                     }
@@ -240,7 +240,7 @@ namespace PrestaVende.CLASS
                                         "INNER JOIN tbl_asignacion_caja AS asi ON asi.id_caja = caj.id_caja AND asi.id_estado_caja = 2 AND asi.id_usuario_asignado <> 0 " +
                                         "WHERE asi.id_usuario_asignado = @id_usuario " +
                                         "ORDER BY asi.fecha_creacion DESC";
-                command.Parameters.AddWithValue("@id_usuario", CLASS.cs_usuario.id_usuario);
+                command.Parameters.AddWithValue("@id_usuario", (int)HttpContext.Current.Session["id_usuario"]);
                 id_caja = command.ExecuteScalar().ToString();
 
                 return id_caja;
@@ -290,7 +290,7 @@ namespace PrestaVende.CLASS
                 command.Parameters.Clear();
                 command.CommandText = "SELECT 0 AS id_usuario, 'SELECCIONAR' AS usuario UNION " + 
                                       "SELECT id_usuario, usuario from tbl_usuario WHERE id_rol in (3, 4, 5) AND id_sucursal = @id_sucursal";
-                command.Parameters.AddWithValue("@id_sucursal", cs_usuario.id_sucursal);
+                command.Parameters.AddWithValue("@id_sucursal", (int)HttpContext.Current.Session["id_sucursal"]);
                 EstadoAreaEmpresa.Load(command.ExecuteReader());
                 return EstadoAreaEmpresa;
             }
@@ -328,7 +328,7 @@ namespace PrestaVende.CLASS
                                         "INNER JOIN tbl_caja AS caj ON caj.id_caja = asi.id_caja " +
                                         "INNER JOIN tbl_estado_caja AS est ON est.id_estado_caja = asi.id_estado_caja " +
                                         "INNER JOIN tbl_usuario AS us ON us.id_usuario = id_usuario_asignado ";
-                if (cs_usuario.id_rol == 5)
+                if ((int)HttpContext.Current.Session["id_rol"] == 5)
                 {
                     queryString = queryString + "WHERE caj.id_sucursal = @id_sucursal AND asi.id_usuario_asignado = @id_usuario " +
                                         "ORDER BY asi.fecha_creacion DESC";
@@ -341,8 +341,8 @@ namespace PrestaVende.CLASS
                                         
 
                 command.CommandText = queryString;
-                command.Parameters.AddWithValue("@id_sucursal", CLASS.cs_usuario.id_sucursal);
-                command.Parameters.AddWithValue("@id_usuario", CLASS.cs_usuario.id_usuario);
+                command.Parameters.AddWithValue("@id_sucursal", (int)HttpContext.Current.Session["id_sucursal"]);
+                command.Parameters.AddWithValue("@id_usuario", (int)HttpContext.Current.Session["id_usuario"]);
                 AsignacionAreaEmpresa.Load(command.ExecuteReader());
                 return AsignacionAreaEmpresa;
             }
@@ -357,7 +357,7 @@ namespace PrestaVende.CLASS
             }
         }
 
-        public String getIDMaxAsignacionCaja(ref string error)
+        public string getIDMaxAsignacionCaja(ref string error)
         {
             try
             {
@@ -425,13 +425,13 @@ namespace PrestaVende.CLASS
                 command.Parameters.AddWithValue("@monto", monto);
                 command.Parameters.AddWithValue("@fecha_creacion", DateTime.Now);
                 command.Parameters.AddWithValue("@fecha_modificacion", DateTime.Now);
-                command.Parameters.AddWithValue("@usuario_asigna", CLASS.cs_usuario.usuario);
+                command.Parameters.AddWithValue("@usuario_asigna", (string)HttpContext.Current.Session["usuario"]);
                 command.ExecuteNonQuery();
 
                 //SE OBTINE ID DE CAJA GENERAL PARA REALIZAR LA SUMATORIA/RESTA
                 command.Parameters.Clear();
                 command.CommandText = "SELECT id_caja FROM tbl_caja WHERE id_sucursal = @id_sucursal and id_tipo_caja = 1 and estado = 1 ";
-                command.Parameters.AddWithValue("@id_sucursal", CLASS.cs_usuario.id_sucursal);
+                command.Parameters.AddWithValue("@id_sucursal", (int)HttpContext.Current.Session["id_sucursal"]);
                 id_caja_general = command.ExecuteScalar().ToString();
                 
                 if (id_estado_caja == AsignacionCaja) //ESTADO ASIGNACION, SI SE ASIGNA LA CAJA EL MONTO DE ASIGNACION ES EL SALDO DE LA CAJA ACTUAL
@@ -569,7 +569,7 @@ namespace PrestaVende.CLASS
                 }
                 command.Parameters.Clear();
                 command.CommandText = "UPDATE tbl_caja SET id_estado_caja = 3, saldo = @monto_caja WHERE id_caja = @id_caja";
-                command.Parameters.AddWithValue("@id_caja", CLASS.cs_usuario.id_caja);
+                command.Parameters.AddWithValue("@id_caja", (int)HttpContext.Current.Session["id_caja"]);
                 command.Parameters.AddWithValue("@monto_caja", monto);
                 rowsUpdated = command.ExecuteNonQuery();
 
@@ -580,7 +580,7 @@ namespace PrestaVende.CLASS
 
                 //command.Parameters.Clear();
                 //command.CommandText = "UPDATE tbl_caja SET saldo = saldo - @monto_caja_general WHERE id_sucursal = @id_sucursal AND id_tipo_caja = 1 AND id_estado_caja = 2";
-                //command.Parameters.AddWithValue("@id_sucursal", CLASS.cs_usuario.id_sucursal);
+                //command.Parameters.AddWithValue("@id_sucursal", (int)HttpContext.Current.Session["id_sucursal"]);
                 //command.Parameters.AddWithValue("@monto_caja_general", monto);
                 //rowsUpdated = command.ExecuteNonQuery();
 
@@ -591,7 +591,7 @@ namespace PrestaVende.CLASS
 
                 command.Parameters.Clear();
                 command.CommandText = "UPDATE tbl_usuario SET caja_asignada = 1 WHERE id_usuario = @id_usuario";
-                command.Parameters.AddWithValue("@id_usuario", CLASS.cs_usuario.id_usuario);
+                command.Parameters.AddWithValue("@id_usuario", (int)HttpContext.Current.Session["id_usuario"]);
                 rowsUpdated = command.ExecuteNonQuery();
 
                 if (rowsUpdated <= 0)
@@ -602,11 +602,11 @@ namespace PrestaVende.CLASS
                 command.Parameters.Clear();
                 command.CommandText = "INSERT INTO tbl_transaccion (id_tipo_transaccion, id_caja, monto, estado_transaccion, fecha_transaccion, usuario, movimiento_saldo, id_sucursal) " +
                                         "VALUES(5, @id_caja_transaccion, @monto, 1, GETDATE(), @usuario, @movimiento_saldo, @id_sucursal)";
-                command.Parameters.AddWithValue("@id_caja_transaccion", CLASS.cs_usuario.id_caja);
+                command.Parameters.AddWithValue("@id_caja_transaccion", (int)HttpContext.Current.Session["id_caja"]);
                 command.Parameters.AddWithValue("@monto", monto);
-                command.Parameters.AddWithValue("@usuario", CLASS.cs_usuario.usuario);
+                command.Parameters.AddWithValue("@usuario", (int)HttpContext.Current.Session["id_usuario"]);
                 command.Parameters.AddWithValue("@movimiento_saldo", monto);
-                command.Parameters.AddWithValue("@id_sucursal", CLASS.cs_usuario.id_sucursal);
+                command.Parameters.AddWithValue("@id_sucursal", (int)HttpContext.Current.Session["id_sucursal"]);
                 rowsUpdated = command.ExecuteNonQuery();
 
                 if (rowsUpdated <= 0)
@@ -662,7 +662,7 @@ namespace PrestaVende.CLASS
 
                 command.Parameters.Clear();
                 command.CommandText = "UPDATE tbl_caja SET saldo = saldo + @monto_caja_general WHERE id_sucursal = @id_sucursal AND id_tipo_caja = 1 AND id_estado_caja = 2";
-                command.Parameters.AddWithValue("@id_sucursal", CLASS.cs_usuario.id_sucursal);
+                command.Parameters.AddWithValue("@id_sucursal", (int)HttpContext.Current.Session["id_sucursal"]);
                 command.Parameters.AddWithValue("@monto_caja_general", monto);
                 rowsUpdated = command.ExecuteNonQuery();
 
@@ -686,9 +686,9 @@ namespace PrestaVende.CLASS
                                         "VALUES(6, @id_caja_transaccion, @monto, 1, GETDATE(), @usuario, @movimiento_saldo, @id_sucursal)";
                 command.Parameters.AddWithValue("@id_caja_transaccion", id_caja);
                 command.Parameters.AddWithValue("@monto", monto);
-                command.Parameters.AddWithValue("@usuario", CLASS.cs_usuario.usuario);
+                command.Parameters.AddWithValue("@usuario", (string)HttpContext.Current.Session["usuario"]);
                 command.Parameters.AddWithValue("@movimiento_saldo", monto);
-                command.Parameters.AddWithValue("@id_sucursal", CLASS.cs_usuario.id_sucursal);
+                command.Parameters.AddWithValue("@id_sucursal", (int)HttpContext.Current.Session["id_sucursal"]);
                 rowsUpdated = command.ExecuteNonQuery();
 
                 if (rowsUpdated <= 0)

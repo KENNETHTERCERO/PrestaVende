@@ -57,7 +57,7 @@ namespace PrestaVende.CLASS
                                 + " INNER JOIN tbl_rol_Tipo_Caja rtc "
                                 + "         ON rtc.id_tipo_caja = tc.id_tipo_caja "
                                 + "     WHERE rtc.id_rol = @id_rol ";
-                command.Parameters.AddWithValue("@id_rol", CLASS.cs_usuario.id_rol);
+                command.Parameters.AddWithValue("@id_rol", (int)HttpContext.Current.Session["id_rol"]);
                 Caja.Load(command.ExecuteReader());
                 return Caja;
             }
@@ -88,7 +88,7 @@ namespace PrestaVende.CLASS
                                     + "     INNER JOIN tbl_rol r " 
                                     + "         ON r.id_rol = rtc.id_rol "
                                     + " WHERE tc.estado = 1 and rtc.id_rol = @id_rol";
-                command.Parameters.AddWithValue("@id_rol", CLASS.cs_usuario.id_rol);
+                command.Parameters.AddWithValue("@id_rol", (int)HttpContext.Current.Session["id_rol"]);
                 TipoCaja.Load(command.ExecuteReader());
                 return TipoCaja;
             }
