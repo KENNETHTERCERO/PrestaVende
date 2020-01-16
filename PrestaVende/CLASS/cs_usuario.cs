@@ -20,6 +20,7 @@ namespace PrestaVende.CLASS
         public static string usuario = "";
         public static string primer_nombre = "";
         public static string primer_apellido = "";
+
         //aqui para arriba
 
         public static bool      autorizado      = false;
