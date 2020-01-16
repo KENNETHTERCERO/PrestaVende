@@ -189,8 +189,17 @@ namespace PrestaVende.Public
                 string fecha_inicio = Request.QueryString.Get("fecha_inicio");
                 string fecha_fin = Request.QueryString.Get("fecha_fin");
 
-                DataTable contrato = new DataTable("AbonosCapital");
-                contrato = cs_prestamo.GetDataReporteAbono(ref error, fecha_inicio, fecha_fin, id_sucursal);
+                DataTable AbonosCapital = new DataTable("AbonosCapital");
+                AbonosCapital = cs_prestamo.GetDataReporteAbono(ref error, fecha_inicio, fecha_fin, id_sucursal);
+
+                Reports.CRAbonosCapital ReporteAbonos = new Reports.CRAbonosCapital();
+
+                ReporteAbonos.Load(Server.MapPath("~/Reports/CRAbonosCapital.rpt"));
+                ReporteAbonos.SetDataSource(AbonosCapital);
+                CrystalReportViewer1.ReportSource = ReporteAbonos;//document;
+                CrystalReportViewer1.DataBind();
+                CrystalReportViewer1.RefreshReport();
+                ReporteAbonos.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "");
 
             }
             else if (Convert.ToInt32(tipo_reporte) == 7)//Reporte Estado de Cuenta Caja

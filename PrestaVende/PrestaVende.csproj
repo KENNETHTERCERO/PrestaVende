@@ -636,6 +636,12 @@
     <Compile Include="Public\WFRetiroArticulo.aspx.designer.cs">
       <DependentUpon>WFRetiroArticulo.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Reports\CRAbonosCapital.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CRAbonosCapital.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Reports\CRContratoGeneral.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -694,6 +700,10 @@
     <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Reports\CRAbonosCapital.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>CRAbonosCapital.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reports\CRContratoGeneral.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>CRContratoGeneral.cs</LastGenOutput>
