@@ -52,6 +52,20 @@ namespace PrestaVende
                         //string id = Convert.ToString(getId.getIdUser(txtUser.Text, txtPassword.Text));
                         //string id_ubicacion = Convert.ToString(getId.getIdUbicacion(txtUser.Text, txtPassword.Text));
                         HttpCookie userLogin = new HttpCookie("userLogin");
+                        CLASS.cs_usuario.id_usuario = Convert.ToInt32(respuesta[1]);
+                        CLASS.cs_usuario.id_empresa = Convert.ToInt32(respuesta[2]);
+                        CLASS.cs_usuario.id_sucursal = Convert.ToInt32(respuesta[3]);
+                        CLASS.cs_usuario.usuario = respuesta[4];
+                        CLASS.cs_usuario.primer_nombre = respuesta[5];
+                        CLASS.cs_usuario.primer_apellido = respuesta[6];
+                        CLASS.cs_usuario.id_rol = Convert.ToInt32(respuesta[7]);
+                        CLASS.cs_usuario.id_caja = Convert.ToInt32(respuesta[9]);
+                        id_asignacion = respuesta[10];
+                        estado_asignacion = respuesta[11];
+                        caja_asignada = respuesta[12];
+                        CLASS.cs_usuario.id_tipo_caja = Convert.ToInt32(respuesta[13]);
+
+
                         CLASS.cs_usuario.id_usuario         = Convert.ToInt32(respuesta[1]);
                         CLASS.cs_usuario.id_empresa         = Convert.ToInt32(respuesta[2]);
                         CLASS.cs_usuario.id_sucursal        = Convert.ToInt32(respuesta[3]);

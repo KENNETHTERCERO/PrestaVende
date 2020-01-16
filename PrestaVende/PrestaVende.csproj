@@ -249,6 +249,28 @@
     <Content Include="DATASET\DSReciboFactura.xss">
       <DependentUpon>DSReciboFactura.xsd</DependentUpon>
     </Content>
+    <Content Include="DATASET\DSReporteCancelaciones.xsc">
+      <DependentUpon>DSReporteCancelaciones.xsd</DependentUpon>
+    </Content>
+    <Content Include="DATASET\DSReporteAbonosACapital.xsc">
+      <DependentUpon>DSReporteAbonosACapital.xsd</DependentUpon>
+    </Content>
+    <None Include="DATASET\DSReporteAbonosACapital.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DSReporteAbonosACapital.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="DATASET\DSReporteAbonosACapital.xss">
+      <DependentUpon>DSReporteAbonosACapital.xsd</DependentUpon>
+    </Content>
+    <None Include="DATASET\DSReporteCancelaciones.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DSReporteCancelaciones.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="DATASET\DSReporteCancelaciones.xss">
+      <DependentUpon>DSReporteCancelaciones.xsd</DependentUpon>
+    </Content>
     <None Include="DATASET\DtsTransaccionesCaja.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
@@ -349,6 +371,16 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DSReciboFactura.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DATASET\DSReporteAbonosACapital.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DSReporteAbonosACapital.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DATASET\DSReporteCancelaciones.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DSReporteCancelaciones.xsd</DependentUpon>
     </Compile>
     <Compile Include="DATASET\DtsTransaccionesCaja.Designer.cs">
       <AutoGen>True</AutoGen>
