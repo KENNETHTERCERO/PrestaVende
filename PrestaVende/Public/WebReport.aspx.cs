@@ -188,6 +188,10 @@ namespace PrestaVende.Public
                 string id_sucursal = Request.QueryString.Get("id_sucursal");
                 string fecha_inicio = Request.QueryString.Get("fecha_inicio");
                 string fecha_fin = Request.QueryString.Get("fecha_fin");
+
+                DataTable contrato = new DataTable("AbonosCapital");
+                contrato = cs_prestamo.GetDataReporteAbono(ref error, fecha_inicio, fecha_fin, id_sucursal);
+
             }
             else if (Convert.ToInt32(tipo_reporte) == 7)//Reporte Estado de Cuenta Caja
             {
