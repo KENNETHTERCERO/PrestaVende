@@ -34,8 +34,6 @@ namespace PrestaVende.Public
                         if (lblError.Text == "") { divError.Visible = false; }
                         if (lblSuccess.Text == "") { divSucceful.Visible = false; }
                     }
-                   
-              
             }
             catch (Exception ex)
             {
@@ -45,12 +43,12 @@ namespace PrestaVende.Public
 
         #region metodos
 
-        private void buscarPrestamo(Decimal intPrestamo)
+        private void buscarPrestamo(Decimal intPrestamo, int id_sucursal)
         {
             try
             {
                 div_gridView.Visible = true;
-                GrdVInventario.DataSource = clsCambioPrecio.buscarPrestamo(intPrestamo);
+                GrdVInventario.DataSource = clsCambioPrecio.buscarPrestamo(intPrestamo, id_sucursal);
                 GrdVInventario.DataBind();
 
             }
@@ -98,7 +96,7 @@ namespace PrestaVende.Public
         {
             if (TxtPrestamo.Text.Length > 0)
             {
-                buscarPrestamo(Decimal.Parse(TxtPrestamo.Text));
+                buscarPrestamo(Decimal.Parse(TxtPrestamo.Text), Convert.ToInt32(Session["id_sucursal"]));
             }
             else
             {
@@ -133,10 +131,9 @@ namespace PrestaVende.Public
 
 
 
-                            bool respuesta = clsCambioPrecio.grabarPrecioInventario(int.Parse(rows[i].Cells[2].Text),precio, CLASS.cs_usuario.id_usuario, ref error);
+                            bool respuesta = clsCambioPrecio.grabarPrecioInventario(int.Parse(rows[i].Cells[2].Text),precio, Convert.ToInt32(Session["id_usuario"]), ref error);
                                 if (respuesta == true)
                                 {
-
                                     divSucceful.Visible = true;
                                     lblSuccess.Text = "Precio actualizado con éxito.";
                                 }

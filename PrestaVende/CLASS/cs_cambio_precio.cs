@@ -13,7 +13,7 @@ namespace PrestaVende.CLASS
         private cs_connection connection = new cs_connection();
         private SqlCommand command = new SqlCommand();
 
-        public DataSet buscarPrestamo(Decimal numero_prestamo)
+        public DataSet buscarPrestamo(Decimal numero_prestamo, int id_sucursal)
         {
             DataSet ds = new DataSet();
 
@@ -22,15 +22,14 @@ namespace PrestaVende.CLASS
             command.Parameters.Clear();
 
             SqlDataAdapter adapter;
-            SqlParameter param;
 
             command.CommandType = CommandType.StoredProcedure;
             command.CommandText = "SP_ConsultarInventarioPorPrestamo";
-
-            param = new SqlParameter("@numero_prestamo", numero_prestamo);
-            param.Direction = ParameterDirection.Input;
-            param.DbType = DbType.String;
-            command.Parameters.Add(param);
+          
+            command.Parameters.AddWithValue("@numero_prestamo", numero_prestamo);
+            command.Parameters.AddWithValue("@id_sucursal", id_sucursal);          
+            
+         
 
             adapter = new SqlDataAdapter(command);
             adapter.Fill(ds);
