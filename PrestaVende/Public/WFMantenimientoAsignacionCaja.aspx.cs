@@ -171,17 +171,14 @@ namespace PrestaVende.Public
                         {
                             if (mAsignacionCaja.recibirCierreCaja(ref error, ddidAsignacion.Text.ToString(), txtMonto.Text.ToString(), ddIdCaja.SelectedValue.ToString(), ddIdUsuarioAsignado.SelectedValue.ToString()))
                             {
-                                if ((string)Session["id_caja"] == ddIdCaja.SelectedValue.ToString() || (ddIdEstadoCaja.SelectedValue.ToString() == "4" && (int)Session["id_rol"] == 5))
+                                if (Convert.ToString(Session["id_caja"]) == ddIdCaja.SelectedValue.ToString() || (ddIdEstadoCaja.SelectedValue.ToString() == "4" && Convert.ToUInt32(Session["id_rol"]) == 5))
                                 {
                                     OpcionSalir();
                                     Response.Redirect("~/WebLogin.aspx", false);
                                 }
-                                else
-                                {
-                                    hideOrShowDiv(true);
-                                    getDataGrid();
-                                    isUpdate = false;
-                                }
+                                hideOrShowDiv(true);
+                                getDataGrid();
+                                isUpdate = false;
                             }
                         }
                         else
@@ -346,11 +343,14 @@ namespace PrestaVende.Public
                 ddIdEstadoCaja.DataTextField = "estado_caja";
                 ddIdEstadoCaja.DataBind();
 
-                if (id_usuario_caja_asignada.Equals("")|| id_usuario_caja_asignada.Equals("0"))
+                if (id_usuario_caja_asignada.Equals("") || id_usuario_caja_asignada.Equals("0"))
                 {
                     id_usuario_caja_asignada = "0";
                 }
-                ddIdUsuarioAsignado.SelectedValue = id_usuario_caja_asignada;
+                else
+                {
+                    ddIdUsuarioAsignado.SelectedValue = id_usuario_caja_asignada;
+                }
             }
             catch (Exception ex)
             {
@@ -376,7 +376,7 @@ namespace PrestaVende.Public
                 }
                 else if (opcion.Equals("cierre"))
                 {
-                    if ((int)Session["id_rol"] == 5)
+                    if (Convert.ToInt32(Session["id_rol"]) == 5)
                     {
                         ddIdCaja.Enabled = false;
                         ddIdEstadoCaja.Enabled = true;
@@ -482,7 +482,7 @@ namespace PrestaVende.Public
                     blnRecibir = true;
                 }
 
-                if (mAsignacionCaja.insertAsignacionCaja(ref error, ddidAsignacion.Text, ddIdCaja.SelectedValue.ToString(), ddIdEstadoCaja.SelectedValue.ToString(), txtMonto.Text, "1", thisDay.ToString("MM/dd/yyyy HH:mm:ss"), thisDay.ToString("MM/dd/yyyy HH:mm:ss"), (string)Session["usuario"], ddIdUsuarioAsignado.SelectedValue.ToString(), blnRecibir, id_asignacion_recibida, ref IntCajaActualUsuario))                  
+                if (mAsignacionCaja.insertAsignacionCaja(ref error, ddidAsignacion.Text, ddIdCaja.SelectedValue.ToString(), ddIdEstadoCaja.SelectedValue.ToString(), txtMonto.Text, "1", thisDay.ToString("MM/dd/yyyy HH:mm:ss"), thisDay.ToString("MM/dd/yyyy HH:mm:ss"), Session["usuario"].ToString(), ddIdUsuarioAsignado.SelectedValue.ToString(), blnRecibir, id_asignacion_recibida, ref IntCajaActualUsuario))
                 {
                     if (ddIdEstadoCaja.SelectedValue.ToString() == "2")
                     {
@@ -490,7 +490,7 @@ namespace PrestaVende.Public
                     }
                     else if (ddIdEstadoCaja.SelectedValue.ToString() == "4")
                     {
-                        if (ddIdEstadoCaja.SelectedValue.ToString() == "4" && (int)Session["id_rol"] == 5)
+                        if (ddIdEstadoCaja.SelectedValue.ToString() == "4" && Convert.ToInt32(Session["id_rol"]) == 5)
                         {
                             OpcionSalir();
                             Response.Redirect("~/WebLogin.aspx", false);

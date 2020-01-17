@@ -136,35 +136,35 @@ namespace PrestaVende.CLASS
                 command.Parameters.Clear();
                 command.CommandText = "INSERT INTO tbl_factura_encabezado ([id_serie],[numero_factura],[id_cliente],[total_factura],[sub_total_factura],[iva_total_factura],[id_tipo_transaccion],[id_caja],[numero_prestamo],[monto_abono_capital],[monto_cancelacion],[estado_factura], fecha_creacion) " +
                                             "VALUES( " +
-                                            "@id_serie,             " +
-                                            "@numero_factura,       " +
-                                            "@id_cliente,           " +
-                                            "@total_factura,        " +
-                                            "@sub_total_factura,    " +
-                                            "@iva_total_factura,    " +
-                                            "@id_tipo_transaccion,  " +
-                                            "@id_caja,              " +
-                                            "@numero_prestamo,      " +
-                                            "@monto_abono_capital,  " +
-                                            "@monto_cancelacion,    " +
-                                            "@estado, " +
+                                            "@id_serie_enc,             " +
+                                            "@numero_factura_enc,       " +
+                                            "@id_cliente_enc,           " +
+                                            "@total_factura_enc,        " +
+                                            "@sub_total_factura_enc,    " +
+                                            "@iva_total_factura_enc,    " +
+                                            "@id_tipo_transaccion_enc,  " +
+                                            "@id_caja_enc,              " +
+                                            "@numero_prestamo_enc,      " +
+                                            "@monto_abono_capital_enc,  " +
+                                            "@monto_cancelacion_enc,    " +
+                                            "@estado_enc, " +
                                             "GETDATE())";
-                command.Parameters.AddWithValue("@id_serie", datosEnc[0]);
-                command.Parameters.AddWithValue("@numero_factura", datosEnc[1]);
-                command.Parameters.AddWithValue("@id_cliente", datosEnc[2]);
-                command.Parameters.AddWithValue("@total_factura", datosEnc[3]);
-                command.Parameters.AddWithValue("@sub_total_factura", datosEnc[4]);
-                command.Parameters.AddWithValue("@iva_total_factura", datosEnc[5]);
-                command.Parameters.AddWithValue("@id_tipo_transaccion", datosEnc[6]);
-                command.Parameters.AddWithValue("@id_caja", datosEnc[7]);
-                command.Parameters.AddWithValue("@numero_prestamo", datosEnc[8]);
-                command.Parameters.AddWithValue("@monto_abono_capital", datosEnc[9]);
-                command.Parameters.AddWithValue("@monto_cancelacion", datosEnc[10]);
-                command.Parameters.AddWithValue("@estado", "1");
+                command.Parameters.AddWithValue("@id_serie_enc", datosEnc[0]);
+                command.Parameters.AddWithValue("@numero_factura_enc", datosEnc[1]);
+                command.Parameters.AddWithValue("@id_cliente_enc", datosEnc[2]);
+                command.Parameters.AddWithValue("@total_factura_enc", datosEnc[3]);
+                command.Parameters.AddWithValue("@sub_total_factura_enc", datosEnc[4]);
+                command.Parameters.AddWithValue("@iva_total_factura_enc", datosEnc[5]);
+                command.Parameters.AddWithValue("@id_tipo_transaccion_enc", datosEnc[6]);
+                command.Parameters.AddWithValue("@id_caja_enc", datosEnc[7]);
+                command.Parameters.AddWithValue("@numero_prestamo_enc", datosEnc[8]);
+                command.Parameters.AddWithValue("@monto_abono_capital_enc", datosEnc[9]);
+                command.Parameters.AddWithValue("@monto_cancelacion_enc", datosEnc[10]);
+                command.Parameters.AddWithValue("@estado_enc", "1");
                 insert = Convert.ToInt32(command.ExecuteNonQuery());
                 if (insert > 0)
                 {
-                    command.CommandText = "SELECT MAX(id_factura_encabezado) fROM tbl_factura_encabezado WHERE id_serie = @id_serie AND numero_factura = @numero_factura";
+                    command.CommandText = "SELECT MAX(id_factura_encabezado) fROM tbl_factura_encabezado WHERE id_serie = @id_serie_enc AND numero_factura = @numero_factura_enc";
                     insert = Convert.ToInt32(command.ExecuteScalar().ToString());
                     return insert;
                 }
@@ -210,17 +210,17 @@ namespace PrestaVende.CLASS
         {
             try
             {
-                command.Parameters.Clear();
                 int insert = 0;
+                command.Parameters.Clear();
                 command.CommandText = "INSERT INTO tbl_transaccion (id_tipo_transaccion,    id_caja,    monto,  estado_transaccion, fecha_transaccion,      usuario,            movimiento_saldo,                                             numero_factura,   id_serie,   id_sucursal) " +
-                                                           "VALUES(@id_tipo_transaccion,    @id_caja,   @monto,         1,              GETDATE(),      @usuario_transaccion, (SELECT saldo + @monto FROM tbl_caja WHERE id_caja = @id_caja), @numero_factura,  @id_serie, @id_sucursal)";
+                                                           "VALUES(@id_tipo_transaccion,    @id_caja_transaccion,   @monto_transaccion, 1, GETDATE(), @usuario_transaccion, (SELECT saldo + @monto_transaccion FROM tbl_caja WHERE id_caja = @id_caja_transaccion), @numero_factura_transaccion,  @id_serie_transaccion, @id_sucursal_transaccion)";
                 command.Parameters.AddWithValue("@id_tipo_transaccion", "13");
-                command.Parameters.AddWithValue("@id_caja", (int)HttpContext.Current.Session["id_caja"]);
-                command.Parameters.AddWithValue("@id_serie", id_serie);
-                command.Parameters.AddWithValue("@numero_factura", numero_factura);
-                command.Parameters.AddWithValue("@monto", monto);
+                command.Parameters.AddWithValue("@id_caja_transaccion", (int)HttpContext.Current.Session["id_caja"]);
+                command.Parameters.AddWithValue("@id_serie_transaccion", id_serie);
+                command.Parameters.AddWithValue("@numero_factura_transaccion", numero_factura);
+                command.Parameters.AddWithValue("@monto_transaccion", monto);
                 command.Parameters.AddWithValue("@usuario_transaccion", (string)HttpContext.Current.Session["usuario"]);
-                command.Parameters.AddWithValue("@id_sucursal", (int)HttpContext.Current.Session["id_sucursal"]);
+                command.Parameters.AddWithValue("@id_sucursal_transaccion", (int)HttpContext.Current.Session["id_sucursal"]);
                 insert = command.ExecuteNonQuery();
 
                 if (insert > 0)
@@ -293,12 +293,12 @@ namespace PrestaVende.CLASS
             {
                 int update = 0;
                 command.Parameters.Clear();
-                command.CommandText = "UPDATE tbl_serie SET correlativo = @numero_factura, " +
-                                      "estado = CASE WHEN @numero_factura >= numero_de_facturas THEN  0 ELSE estado END " +
-                                      "WHERE id_sucursal = @id_sucursal AND id_serie = @id_serie";
-                command.Parameters.AddWithValue("@id_serie", id_serie);
-                command.Parameters.AddWithValue("@numero_factura", numero_factura);
-                command.Parameters.AddWithValue("@id_sucursal", (int)HttpContext.Current.Session["id_sucursal"]);
+                command.CommandText = "UPDATE tbl_serie SET correlativo = @numero_factura_update, " +
+                                      "estado = CASE WHEN @numero_factura_update >= numero_de_facturas THEN  0 ELSE estado END " +
+                                      "WHERE id_sucursal = @id_sucursal_update AND id_serie = @id_serie_update";
+                command.Parameters.AddWithValue("@id_serie_update", id_serie);
+                command.Parameters.AddWithValue("@numero_factura_update", numero_factura);
+                command.Parameters.AddWithValue("@id_sucursal_update", (int)HttpContext.Current.Session["id_sucursal"]);
 
                 update = command.ExecuteNonQuery();
                 if (update > 0)
