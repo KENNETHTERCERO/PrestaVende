@@ -50,13 +50,26 @@ namespace PrestaVende.Public
             try
             {
                 div_gridView.Visible = true;
-                GrdVInventario.DataSource = clsCambioPrecio.buscarPrestamo(intPrestamo);
-                GrdVInventario.DataBind();
+
+                DataSet dsRespuesta = clsCambioPrecio.buscarPrestamo(intPrestamo);
+
+                if (dsRespuesta.Tables[0].Rows.Count > 0)
+                {
+                    GrdVInventario.DataSource = dsRespuesta;
+                    GrdVInventario.DataBind();
+                }
+                else
+                {
+                    showError("No se encontró información para el préstamo buscado." );
+                    TxtPrestamo.Text = "";
+                    TxtPrestamo.Focus();
+                }
+               
 
             }
             catch (Exception ex)
             {
-                showError("Error al buscar prestamo: " + ex.ToString());
+                showError("Error al buscar préstamo: " + ex.ToString());
             }
 
         }
@@ -65,7 +78,8 @@ namespace PrestaVende.Public
         {
 
             TxtPrestamo.Text = "";
-            
+            GrdVInventario.DataSource = null;
+            GrdVInventario.DataBind();
         }
        
         #endregion
@@ -131,14 +145,10 @@ namespace PrestaVende.Public
                         if (precio > 0)
                         {
 
-
-
                             bool respuesta = clsCambioPrecio.grabarPrecioInventario(int.Parse(rows[i].Cells[2].Text),precio, CLASS.cs_usuario.id_usuario, ref error);
                                 if (respuesta == true)
                                 {
-
-                                    divSucceful.Visible = true;
-                                    lblSuccess.Text = "Precio actualizado con éxito.";
+                                    showSuccess("Precio actualizado con éxito.");                                    
                                 }
                                 else
                                 {
