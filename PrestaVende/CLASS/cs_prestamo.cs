@@ -96,32 +96,32 @@ namespace PrestaVende.CLASS
                 command.CommandText = "INSERT INTO tbl_prestamo_encabezado (id_sucursal, id_cliente, numero_prestamo, total_prestamo, fecha_creacion_prestamo, estado_prestamo, fecha_proximo_pago, saldo_prestamo, usuario, id_plan_prestamo, id_interes, id_casilla, fecha_ultimo_pago, fecha_modificacion_prestamo, avaluo_original) " +
                                             "VALUES( " +
                                             "@id_sucursal_enc,         " +
-                                            "@id_cliente,              " +
-                                            "@numero_prestamo,         " +
-                                            "@total_prestamo,          " +
+                                            "@id_cliente_enc,              " +
+                                            "@numero_prestamo_enc,         " +
+                                            "@total_prestamo_enc,          " +
                                             "GETDATE(),                " +
-                                            "@estado_prestamo,         " +
-                                            "CAST(@fecha_proximo_pago AS date),      " +
-                                            "@saldo_prestamo,          " +
-                                            "@usuario,                 " +
-                                            "@id_plan_prestamo,        " +
-                                            "@id_interes,              " +
-                                            "@id_casilla, " +
+                                            "@estado_prestamo_enc,         " +
+                                            "CAST(@fecha_proximo_pago_enc AS date),      " +
+                                            "@saldo_prestamo_enc,          " +
+                                            "@usuario_enc,                 " +
+                                            "@id_plan_prestamo_enc,        " +
+                                            "@id_interes_enc,              " +
+                                            "@id_casilla_enc, " +
                                             "GETDATE()," +
                                             "GETDATE(), " +
-                                            "@avaluo_original )";
+                                            "@avaluo_original_enc )";
                 command.Parameters.AddWithValue("@id_sucursal_enc", (int)HttpContext.Current.Session["id_sucursal"]);
-                command.Parameters.AddWithValue("@numero_prestamo", numero_prestamo);
-                command.Parameters.AddWithValue("@id_cliente", datosEnc[0]);
-                command.Parameters.AddWithValue("@total_prestamo", datosEnc[1]);
-                command.Parameters.AddWithValue("@estado_prestamo", datosEnc[2]);
-                command.Parameters.AddWithValue("@fecha_proximo_pago", fecha_modificada);
-                command.Parameters.AddWithValue("@saldo_prestamo", datosEnc[1]);
-                command.Parameters.AddWithValue("@usuario", datosEnc[5]);
-                command.Parameters.AddWithValue("@id_plan_prestamo", datosEnc[6]);
-                command.Parameters.AddWithValue("@id_interes", datosEnc[7]);
-                command.Parameters.AddWithValue("@id_casilla", datosEnc[8]);
-                command.Parameters.AddWithValue("@avaluo_original", datosEnc[9]);
+                command.Parameters.AddWithValue("@numero_prestamo_enc", numero_prestamo);
+                command.Parameters.AddWithValue("@id_cliente_enc", datosEnc[0]);
+                command.Parameters.AddWithValue("@total_prestamo_enc", datosEnc[1]);
+                command.Parameters.AddWithValue("@estado_prestamo_enc", datosEnc[2]);
+                command.Parameters.AddWithValue("@fecha_proximo_pago_enc", fecha_modificada);
+                command.Parameters.AddWithValue("@saldo_prestamo_enc", datosEnc[1]);
+                command.Parameters.AddWithValue("@usuario_enc", datosEnc[5]);
+                command.Parameters.AddWithValue("@id_plan_prestamo_enc", datosEnc[6]);
+                command.Parameters.AddWithValue("@id_interes_enc", datosEnc[7]);
+                command.Parameters.AddWithValue("@id_casilla_enc", datosEnc[8]);
+                command.Parameters.AddWithValue("@avaluo_original_enc", datosEnc[9]);
                 insert = Convert.ToInt32(command.ExecuteNonQuery());
                 if (insert > 0)
                 {
@@ -178,10 +178,11 @@ namespace PrestaVende.CLASS
             try
             {
                 int insert = 0;
+                command.Parameters.Clear();
                 command.CommandText = "INSERT INTO tbl_transaccion (id_tipo_transaccion, id_caja, monto, numero_prestamo, estado_transaccion, fecha_transaccion, usuario, movimiento_saldo, id_sucursal) " +
-                                                                "VALUES(7, @id_caja, @monto, @numero_prestamo_transaccion, 1, GETDATE(), @usuario_transaccion, (SELECT saldo - @monto FROM tbl_caja WHERE id_caja = @id_caja), @id_sucursal_transaccion)";
-                command.Parameters.AddWithValue("@id_caja", (int)HttpContext.Current.Session["id_caja"]);
-                command.Parameters.AddWithValue("@monto", monto);
+                                                                "VALUES(7, @id_caja, @monto, @numero_prestamo_transaccion, 1, GETDATE(), @usuario_transaccion, (SELECT saldo - @monto_transaccion FROM tbl_caja WHERE id_caja = @id_caja_transaccion), @id_sucursal_transaccion)";
+                command.Parameters.AddWithValue("@id_caja_transaccion", (int)HttpContext.Current.Session["id_caja"]);
+                command.Parameters.AddWithValue("@monto_transaccion", monto);
                 command.Parameters.AddWithValue("@numero_prestamo_transaccion", numero_prestamo);
                 command.Parameters.AddWithValue("@usuario_transaccion", (string)HttpContext.Current.Session["usuario"]);
                 command.Parameters.AddWithValue("@id_sucursal_transaccion", (int)HttpContext.Current.Session["id_sucursal"]);
@@ -203,10 +204,10 @@ namespace PrestaVende.CLASS
             try
             {
                 int update = 0;
+                command.Parameters.Clear();
                 command.CommandText = "UPDATE tbl_caja SET saldo = saldo - @monto_update WHERE id_caja = @id_caja_update";
                 command.Parameters.AddWithValue("@monto_update", monto);
                 command.Parameters.AddWithValue("@id_caja_update", (int)HttpContext.Current.Session["id_caja"]);
-
                 update = command.ExecuteNonQuery();
                 if (update > 0)
                     return true;
@@ -225,8 +226,9 @@ namespace PrestaVende.CLASS
             try
             {
                 int update = 0;
-                command.CommandText = "UPDATE tbl_casilla SET estado = 1 WHERE id_casilla = @id_casilla";
-                command.Parameters.AddWithValue("@@id_casilla", id_casilla);
+                command.Parameters.Clear();
+                command.CommandText = "UPDATE tbl_casilla SET estado = 1 WHERE id_casilla = @id_casilla_update";
+                command.Parameters.AddWithValue("@id_casilla_update", id_casilla);
 
                 update = command.ExecuteNonQuery();
                 if (update > 0)
@@ -246,8 +248,9 @@ namespace PrestaVende.CLASS
             try
             {
                 int update = 0;
-                command.CommandText = "UPDATE tbl_sucursal SET correlativo_prestamo = correlativo_prestamo + 1 WHERE id_sucursal = @id_sucursal";
-                command.Parameters.AddWithValue("@id_sucursal", (int)HttpContext.Current.Session["id_sucursal"]);
+                command.Parameters.Clear();
+                command.CommandText = "UPDATE tbl_sucursal SET correlativo_prestamo = correlativo_prestamo + 1 WHERE id_sucursal = @id_sucursal_update";
+                command.Parameters.AddWithValue("@id_sucursal_update", (int)HttpContext.Current.Session["id_sucursal"]);
                 update = command.ExecuteNonQuery();
                 if (update > 0)
                     return true;
