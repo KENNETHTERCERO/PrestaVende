@@ -338,11 +338,10 @@ namespace PrestaVende.CLASS
                     queryString = queryString + "WHERE caj.id_sucursal = @id_sucursal " +
                                         "ORDER BY asi.fecha_creacion DESC";
                 }
-                                        
 
                 command.CommandText = queryString;
-                command.Parameters.AddWithValue("@id_sucursal", (int)HttpContext.Current.Session["id_sucursal"]);
-                command.Parameters.AddWithValue("@id_usuario", (int)HttpContext.Current.Session["id_usuario"]);
+                command.Parameters.AddWithValue("@id_sucursal", Convert.ToInt32(HttpContext.Current.Session["id_sucursal"]));
+                command.Parameters.AddWithValue("@id_usuario", Convert.ToInt32((int)HttpContext.Current.Session["id_usuario"]));
                 AsignacionAreaEmpresa.Load(command.ExecuteReader());
                 return AsignacionAreaEmpresa;
             }
