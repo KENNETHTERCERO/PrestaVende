@@ -24,7 +24,7 @@ namespace PrestaVende.CLASS
                 command.Parameters.Clear();
                 command.CommandText = "SELECT 0 AS id_casilla, 'SELECCIONAR' AS casilla UNION " +
                                                 "SELECT id_casilla, casilla FROM tbl_casilla WHERE estado = 0 AND id_sucursal = @id_sucursal";
-                command.Parameters.AddWithValue("@id_sucursal", (int)HttpContext.Current.Session["id_sucursal"]);
+                command.Parameters.AddWithValue("@id_sucursal", Convert.ToInt32(HttpContext.Current.Session["id_sucursal"]));
                 dtCasilla.Load(command.ExecuteReader());
                 return dtCasilla;
             }

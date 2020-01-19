@@ -26,7 +26,7 @@ namespace PrestaVende.CLASS
                                        + " where a.id_sucursal = @id_sucursal "
                                        + " and (CAST(a.fecha_proximo_pago AS datetime) + b.dias_para_liquidar) < getdate() "
                                        + " and a.estado_prestamo in (1,4) and a.numero_prestamo = @numero_prestamo";
-                command.Parameters.AddWithValue("@id_sucursal", (int)HttpContext.Current.Session["id_sucursal"]);
+                command.Parameters.AddWithValue("@id_sucursal", Convert.ToInt32(HttpContext.Current.Session["id_sucursal"]));
                 command.Parameters.AddWithValue("@numero_prestamo", NumeroPrestamo);
                 Liquidacion.Load(command.ExecuteReader()); 
                 return Liquidacion;
@@ -54,7 +54,7 @@ namespace PrestaVende.CLASS
                 command.CommandText = "EXEC EjecutaLiquidacion @id_prestamo_encabezado, @id_caja, @id_usuario";
                 command.Parameters.AddWithValue("@id_prestamo_encabezado", id_prestamo_encabezado);
                 command.Parameters.AddWithValue("@id_caja", (int)HttpContext.Current.Session["id_caja"]);
-                command.Parameters.AddWithValue("@id_usuario", (int)HttpContext.Current.Session["id_usuario"]);
+                command.Parameters.AddWithValue("@id_usuario", Convert.ToInt32(HttpContext.Current.Session["id_usuario"]));
 
                 if (int.Parse(command.ExecuteNonQuery().ToString()) > 0)
                 {

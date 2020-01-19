@@ -175,7 +175,7 @@ namespace PrestaVende.CLASS
                 command.Transaction = connection.connection.BeginTransaction();
 
                 command.CommandText = "SELECT correlativo + 1 FROM tbl_serie WHERE id_sucursal = @id_sucursal and id_serie = @id_serie";
-                command.Parameters.AddWithValue("@id_sucursal", (int)HttpContext.Current.Session["id_sucursal"]);
+                command.Parameters.AddWithValue("@id_sucursal", Convert.ToInt32(HttpContext.Current.Session["id_sucursal"]));
                 command.Parameters.AddWithValue("@id_serie", id_serie);
                 numero_factura = command.ExecuteScalar().ToString();
 
@@ -355,7 +355,7 @@ namespace PrestaVende.CLASS
                 command.Parameters.Clear();
                 command.CommandText = "INSERT INTO tbl_abono_a_capital (id_sucursal,numero_prestamo,monto_abono,id_serie,numero_factura,estado_abono,fecha_abono) " +
                                                                 "VALUES(@id_sucursal_abono, @numero_prestamo_abono, @abono_abono, @id_serie_abono, @numero_factura_abono, 1, GETDATE())";
-                command.Parameters.AddWithValue("@id_sucursal_abono", (int)HttpContext.Current.Session["id_sucursal"]);
+                command.Parameters.AddWithValue("@id_sucursal_abono", Convert.ToInt32(HttpContext.Current.Session["id_sucursal"]));
                 command.Parameters.AddWithValue("@numero_prestamo_abono", numero_prestamo);
                 command.Parameters.AddWithValue("@abono_abono", abono);
                 command.Parameters.AddWithValue("@id_serie_abono", id_serie);
@@ -382,7 +382,7 @@ namespace PrestaVende.CLASS
                 int insert = 0;
                 command.CommandText = "INSERT INTO tbl_cancelacion (id_sucursal,numero_prestamo,monto_cancelacion,id_serie,numero_factura,estado_cancelacion,fecha_cancelacion) " +
                                                                 "VALUES(@id_sucursal_cancelacion, @numero_prestamo_cancelacion, @abono_cancelacion, @id_serie_cancelacion, @numero_factura_cancelacion, 1, GETDATE())";
-                command.Parameters.AddWithValue("@id_sucursal_cancelacion", (int)HttpContext.Current.Session["id_sucursal"]);
+                command.Parameters.AddWithValue("@id_sucursal_cancelacion", Convert.ToInt32(HttpContext.Current.Session["id_sucursal"]));
                 command.Parameters.AddWithValue("@numero_prestamo_cancelacion", numero_prestamo);
                 command.Parameters.AddWithValue("@abono_cancelacion", abono);
                 command.Parameters.AddWithValue("@id_serie_cancelacion", id_serie);
@@ -417,7 +417,7 @@ namespace PrestaVende.CLASS
                 command.Parameters.AddWithValue("@monto_transaccion", monto);
                 command.Parameters.AddWithValue("@numero_prestamo_transaccion", numero_prestamo);
                 command.Parameters.AddWithValue("@usuario_transaccion", (string)HttpContext.Current.Session["usuario"]);
-                command.Parameters.AddWithValue("@id_sucursal_transaccion", (int)HttpContext.Current.Session["id_sucursal"]);
+                command.Parameters.AddWithValue("@id_sucursal_transaccion", Convert.ToInt32(HttpContext.Current.Session["id_sucursal"]));
                 insert = command.ExecuteNonQuery();
 
                 if (insert > 0)
@@ -437,7 +437,7 @@ namespace PrestaVende.CLASS
                         command.Parameters.AddWithValue("@monto_transaccion", monto);
                         command.Parameters.AddWithValue("@numero_prestamo_transaccion", numero_prestamo);
                         command.Parameters.AddWithValue("@usuario_transaccion", (string)HttpContext.Current.Session["usuario"]);
-                        command.Parameters.AddWithValue("@id_sucursal_transaccion", (int)HttpContext.Current.Session["id_sucursal"]);
+                        command.Parameters.AddWithValue("@id_sucursal_transaccion", Convert.ToInt32(HttpContext.Current.Session["id_sucursal"]));
                         insert2 = command.ExecuteNonQuery();
 
                         if (insert2 > 0)
@@ -495,7 +495,7 @@ namespace PrestaVende.CLASS
                                       "estado_prestamo = @estado_prestamo_update " +
                                       "WHERE id_sucursal = @id_sucursal_update AND numero_prestamo = @numero_prestamo_update";
                 command.Parameters.AddWithValue("@numero_prestamo_update", numero_prestamo);
-                command.Parameters.AddWithValue("@id_sucursal_update", (int)HttpContext.Current.Session["id_sucursal"]);
+                command.Parameters.AddWithValue("@id_sucursal_update", Convert.ToInt32(HttpContext.Current.Session["id_sucursal"]));
                 command.Parameters.AddWithValue("@abono_update", abono);
                 command.Parameters.AddWithValue("@estado_prestamo_update", estado_prestamo);
                 command.Parameters.AddWithValue("@fecha_proximo_pago_update", fecha_proximo_pago);
@@ -525,7 +525,7 @@ namespace PrestaVende.CLASS
                                       "WHERE id_sucursal = @id_sucursal_updatecor AND id_serie = @id_serie_updatecor";
                 command.Parameters.AddWithValue("@id_serie_updatecor", id_serie);
                 command.Parameters.AddWithValue("@numero_factura_updatecor", numero_factura);
-                command.Parameters.AddWithValue("@id_sucursal_updatecor", (int)HttpContext.Current.Session["id_sucursal"]);
+                command.Parameters.AddWithValue("@id_sucursal_updatecor", Convert.ToInt32(HttpContext.Current.Session["id_sucursal"]));
 
                 update = command.ExecuteNonQuery();
                 if (update > 0)

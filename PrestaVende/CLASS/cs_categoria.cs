@@ -62,7 +62,8 @@ namespace PrestaVende.CLASS
                 DataTable AreaEmpresa = new DataTable();
                 connection.connection.Open();
                 command.Connection = connection.connection;
-                command.CommandText = " SELECT id_categoria, categoria, (CASE WHEN estado = 1 THEN 'ACTIVO' WHEN estado = 0 THEN 'INACTIVO' ELSE 'OTRO ESTADO' END) AS estado FROM tbl_categoria ";
+                command.CommandText = " SELECT id_categoria, categoria, (CASE WHEN estado = 1 THEN 'ACTIVO' WHEN estado = 0 THEN 'INACTIVO' ELSE 'OTRO ESTADO' END) AS estado " +
+                                        "FROM tbl_categoria ";
                 AreaEmpresa.Load(command.ExecuteReader());
                 return AreaEmpresa;
             }

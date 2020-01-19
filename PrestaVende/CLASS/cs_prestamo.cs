@@ -26,7 +26,7 @@ namespace PrestaVende.CLASS
                 command.Parameters.Clear();
                 command.Transaction = connection.connection.BeginTransaction();
                 command.CommandText = "SELECT correlativo_prestamo + 1 FROM tbl_sucursal WHERE id_sucursal = @id_sucursal";
-                command.Parameters.AddWithValue("@id_sucursal", (int)HttpContext.Current.Session["id_sucursal"]);
+                command.Parameters.AddWithValue("@id_sucursal", Convert.ToInt32(HttpContext.Current.Session["id_sucursal"]));
                 numero_prestamo = command.ExecuteScalar().ToString();
                 id_prestamo_encabezado = insert_prestamo_encabezado(ref error, encabezado, numero_prestamo);
 
@@ -110,7 +110,7 @@ namespace PrestaVende.CLASS
                                             "GETDATE()," +
                                             "GETDATE(), " +
                                             "@avaluo_original_enc )";
-                command.Parameters.AddWithValue("@id_sucursal_enc", (int)HttpContext.Current.Session["id_sucursal"]);
+                command.Parameters.AddWithValue("@id_sucursal_enc", Convert.ToInt32(HttpContext.Current.Session["id_sucursal"]));
                 command.Parameters.AddWithValue("@numero_prestamo_enc", numero_prestamo);
                 command.Parameters.AddWithValue("@id_cliente_enc", datosEnc[0]);
                 command.Parameters.AddWithValue("@total_prestamo_enc", datosEnc[1]);
@@ -185,7 +185,7 @@ namespace PrestaVende.CLASS
                 command.Parameters.AddWithValue("@monto_transaccion", monto);
                 command.Parameters.AddWithValue("@numero_prestamo_transaccion", numero_prestamo);
                 command.Parameters.AddWithValue("@usuario_transaccion", (string)HttpContext.Current.Session["usuario"]);
-                command.Parameters.AddWithValue("@id_sucursal_transaccion", (int)HttpContext.Current.Session["id_sucursal"]);
+                command.Parameters.AddWithValue("@id_sucursal_transaccion", Convert.ToInt32(HttpContext.Current.Session["id_sucursal"]));
                 insert = command.ExecuteNonQuery();
                 if (insert > 0)
                     return true;
@@ -250,7 +250,7 @@ namespace PrestaVende.CLASS
                 int update = 0;
                 command.Parameters.Clear();
                 command.CommandText = "UPDATE tbl_sucursal SET correlativo_prestamo = correlativo_prestamo + 1 WHERE id_sucursal = @id_sucursal_update";
-                command.Parameters.AddWithValue("@id_sucursal_update", (int)HttpContext.Current.Session["id_sucursal"]);
+                command.Parameters.AddWithValue("@id_sucursal_update", Convert.ToInt32(HttpContext.Current.Session["id_sucursal"]));
                 update = command.ExecuteNonQuery();
                 if (update > 0)
                     return true;
@@ -271,7 +271,7 @@ namespace PrestaVende.CLASS
                 string numero_prestamo = "";
                 command.Parameters.Clear();
                 command.CommandText = "SELECT correlativo_prestamo FROM tbl_sucursal WHERE id_sucursal = @id_sucursalGuardado";
-                command.Parameters.AddWithValue("@id_sucursalGuardado", (int)HttpContext.Current.Session["id_sucursal"]);
+                command.Parameters.AddWithValue("@id_sucursalGuardado", Convert.ToInt32(HttpContext.Current.Session["id_sucursal"]));
                 numero_prestamo = command.ExecuteScalar().ToString();
                 return numero_prestamo;
             }
@@ -293,7 +293,7 @@ namespace PrestaVende.CLASS
                 command.Parameters.Clear();
                 command.Transaction = connection.connection.BeginTransaction();
                 command.CommandText = "SELECT correlativo_prestamo + 1 FROM tbl_sucursal WHERE id_sucursal = @id_sucursal";
-                command.Parameters.AddWithValue("@id_sucursal", (int)HttpContext.Current.Session["id_sucursal"]);
+                command.Parameters.AddWithValue("@id_sucursal", Convert.ToInt32(HttpContext.Current.Session["id_sucursal"]));
                 numero_prestamo = command.ExecuteScalar().ToString();
                 return numero_prestamo;
             }
@@ -691,7 +691,7 @@ namespace PrestaVende.CLASS
                 command.Parameters.Clear();
                 command.CommandText = "exec sp_estado_cuenta_prestamo_detalle @id_sucursal, @numero_prestamo";
                 command.Parameters.AddWithValue("@numero_prestamo", numero_prestamo);
-                command.Parameters.AddWithValue("@id_sucursal", (int)HttpContext.Current.Session["id_sucursal"]);
+                command.Parameters.AddWithValue("@id_sucursal", Convert.ToInt32(HttpContext.Current.Session["id_sucursal"]));
                 dtEstadoCuentaDetalle.Load(command.ExecuteReader());
                 return dtEstadoCuentaDetalle;
             }
@@ -718,7 +718,7 @@ namespace PrestaVende.CLASS
                                       "INNER JOIN tbl_producto P ON P.id_producto = PD.id_producto " +
                                       "WHERE PD.id_prestamo_encabezado = @id_prestamo AND PD.id_sucursal = @id_sucursal";
                 command.Parameters.AddWithValue("@id_prestamo", numero_prestamo);
-                command.Parameters.AddWithValue("@id_sucursal", (int)HttpContext.Current.Session["id_sucursal"]);
+                command.Parameters.AddWithValue("@id_sucursal", Convert.ToInt32(HttpContext.Current.Session["id_sucursal"]));
                 dtDetallePrestamo.Load(command.ExecuteReader());                
             }
             catch (Exception ex)
@@ -746,7 +746,7 @@ namespace PrestaVende.CLASS
                                       "isnull((select sum(valor) from tbl_prestamo_detalle dp where dp.retirada = 1 and dp.id_prestamo_encabezado = p.id_prestamo_encabezado),0) ValorRetirado " +
                                       "from tbl_prestamo_encabezado p where p.id_prestamo_encabezado = @id_prestamo and p.id_sucursal = @id_sucursal";
                 command.Parameters.AddWithValue("@id_prestamo", numero_prestamo);
-                command.Parameters.AddWithValue("@id_sucursal", (int)HttpContext.Current.Session["id_sucursal"]);
+                command.Parameters.AddWithValue("@id_sucursal", Convert.ToInt32(HttpContext.Current.Session["id_sucursal"]));
                 dtDetallePrestamo.Load(command.ExecuteReader());
             }
             catch (Exception ex)
