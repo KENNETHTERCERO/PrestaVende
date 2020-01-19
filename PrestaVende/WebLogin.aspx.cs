@@ -64,7 +64,6 @@ namespace PrestaVende
                         caja_asignada                   = respuesta[12];
                         Session["id_tipo_caja"]         = Convert.ToInt32(respuesta[13]);
 
-                        // = CLASS.cs_usuario.id_rol;
                         userLogin.Expires = DateTime.Now.AddHours(3);
                         Response.Cookies.Add(userLogin);
 
