@@ -24,16 +24,20 @@ namespace PrestaVende.Public
             {
                 HttpCookie cookie = Request.Cookies["userLogin"];
 
-                if (cookie == null)
+                if (cookie == null && (int)Session["id_usuario"] == 0)
                 {
-                   // Response.Redirect("WFWebLogin.aspx");
+                    Response.Redirect("WFWebLogin.aspx");
                 }
                 
                     if (!IsPostBack)
                     {
-
                         buscarPrestamo(-1);
-                        
+                    }
+                    else
+                    {
+                        if (lblWarning.Text == "") { divWarning.Visible = false; }
+                        if (lblError.Text == "") { divError.Visible = false; }
+                        if (lblSuccess.Text == "") { divSucceful.Visible = false; }
                     }
                 
 
@@ -133,9 +137,23 @@ namespace PrestaVende.Public
         {
             try
             {
-                div_gridView.Visible = true;                
-                GrdVLiquidacion.DataSource = clsRecepcion.obtenerLiquidaciones(intPrestamo);
-                GrdVLiquidacion.DataBind();
+                div_gridView.Visible = true;
+
+                DataSet dsRespuesta = clsRecepcion.obtenerLiquidaciones(intPrestamo);
+
+                if (dsRespuesta.Tables[0].Rows.Count > 0)
+                {
+
+                    GrdVLiquidacion.DataSource = dsRespuesta;
+                    GrdVLiquidacion.DataBind();
+
+                }
+                else
+                {
+                    mostrarError("No se encontró información para el préstamo buscado.");
+                    TxtPrestamo.Text = "";
+                    TxtPrestamo.Focus();
+                }
 
             }
             catch (Exception ex)
