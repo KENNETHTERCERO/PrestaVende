@@ -219,7 +219,7 @@ namespace PrestaVende.CLASS
                 command.Parameters.AddWithValue("@id_serie_transaccion", id_serie);
                 command.Parameters.AddWithValue("@numero_factura_transaccion", numero_factura);
                 command.Parameters.AddWithValue("@monto_transaccion", monto);
-                command.Parameters.AddWithValue("@usuario_transaccion", (string)HttpContext.Current.Session["usuario"]);
+                command.Parameters.AddWithValue("@usuario_transaccion", HttpContext.Current.Session["usuario"].ToString());
                 command.Parameters.AddWithValue("@id_sucursal_transaccion", Convert.ToInt32(HttpContext.Current.Session["id_sucursal"]));
                 insert = command.ExecuteNonQuery();
 

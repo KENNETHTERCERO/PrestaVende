@@ -120,6 +120,7 @@
     <Content Include="Public\FacturacionProductos.aspx" />
     <Content Include="Public\image\candado.png" />
     <Content Include="Public\ImpresionFormatos.aspx" />
+    <Content Include="Public\InventarioDisponible.aspx" />
     <Content Include="Public\PrestaVende.Master" />
     <Content Include="Public\ProyeccionInteres.aspx" />
     <Content Include="Public\RecepcionCaja.aspx" />
@@ -226,6 +227,17 @@
     </Content>
     <Content Include="DATASET\DSProyeccionPrestamo.xsc">
       <DependentUpon>DSProyeccionPrestamo.xsd</DependentUpon>
+    </Content>
+    <Content Include="DATASET\DSInventarioDisponible.xsc">
+      <DependentUpon>DSInventarioDisponible.xsd</DependentUpon>
+    </Content>
+    <None Include="DATASET\DSInventarioDisponible.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DSInventarioDisponible.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="DATASET\DSInventarioDisponible.xss">
+      <DependentUpon>DSInventarioDisponible.xsd</DependentUpon>
     </Content>
     <None Include="DATASET\DSProyeccionPrestamo.xsd">
       <Generator>MSDataSetGenerator</Generator>
@@ -362,6 +374,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DSFacturaIntereses.xsd</DependentUpon>
     </Compile>
+    <Compile Include="DATASET\DSInventarioDisponible.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DSInventarioDisponible.xsd</DependentUpon>
+    </Compile>
     <Compile Include="DATASET\DSProyeccionPrestamo.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -425,6 +442,13 @@
     </Compile>
     <Compile Include="Public\ImpresionFormatos.aspx.designer.cs">
       <DependentUpon>ImpresionFormatos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\InventarioDisponible.aspx.cs">
+      <DependentUpon>InventarioDisponible.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\InventarioDisponible.aspx.designer.cs">
+      <DependentUpon>InventarioDisponible.aspx</DependentUpon>
     </Compile>
     <Compile Include="Public\PrestaVende.Master.cs">
       <DependentUpon>PrestaVende.Master</DependentUpon>
