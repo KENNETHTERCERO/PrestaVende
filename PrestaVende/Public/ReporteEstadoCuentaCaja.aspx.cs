@@ -55,7 +55,7 @@ namespace PrestaVende.Public
 
                 ddlSucursal.SelectedValue = Session["id_sucursal"].ToString();
 
-                if ((int)Session["id_rol"] == 3 || (int)Session["id_rol"] == 4 || (int)Session["id_rol"] == 5)
+                if (Convert.ToInt32(Session["id_rol"]) == 3 || Convert.ToInt32(Session["id_rol"]) == 4 || Convert.ToInt32(Session["id_rol"]) == 5)
                     ddlSucursal.Enabled = false;
             }
             catch (Exception ex)

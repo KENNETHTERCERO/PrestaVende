@@ -215,7 +215,7 @@ namespace PrestaVende.CLASS
                 command.CommandText = "INSERT INTO tbl_transaccion (id_tipo_transaccion,    id_caja,    monto,  estado_transaccion, fecha_transaccion,      usuario,            movimiento_saldo,                                             numero_factura,   id_serie,   id_sucursal) " +
                                                            "VALUES(@id_tipo_transaccion,    @id_caja_transaccion,   @monto_transaccion, 1, GETDATE(), @usuario_transaccion, (SELECT saldo + @monto_transaccion FROM tbl_caja WHERE id_caja = @id_caja_transaccion), @numero_factura_transaccion,  @id_serie_transaccion, @id_sucursal_transaccion)";
                 command.Parameters.AddWithValue("@id_tipo_transaccion", "13");
-                command.Parameters.AddWithValue("@id_caja_transaccion", (int)HttpContext.Current.Session["id_caja"]);
+                command.Parameters.AddWithValue("@id_caja_transaccion", Convert.ToInt32(HttpContext.Current.Session["id_caja"]));
                 command.Parameters.AddWithValue("@id_serie_transaccion", id_serie);
                 command.Parameters.AddWithValue("@numero_factura_transaccion", numero_factura);
                 command.Parameters.AddWithValue("@monto_transaccion", monto);

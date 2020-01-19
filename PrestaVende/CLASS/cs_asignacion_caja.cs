@@ -148,11 +148,11 @@ namespace PrestaVende.CLASS
 
                 if (id_estado_caja.Equals("3"))
                 {
-                    if ((int)HttpContext.Current.Session["id_rol"] == 3 || Convert.ToInt32(HttpContext.Current.Session["id_rol"]) == 3)
+                    if (Convert.ToInt32(HttpContext.Current.Session["id_rol"]) == 3 || Convert.ToInt32(HttpContext.Current.Session["id_rol"]) == 3)
                     {
                         querySelect = querySelect + " where tc.id_tipo_caja = @id_tipo_caja and ec.id_estado_caja in (4, 7, 8)";
                     }
-                    else if ((int)HttpContext.Current.Session["id_rol"] == 5)
+                    else if (Convert.ToInt32(HttpContext.Current.Session["id_rol"]) == 5)
                     {
                         querySelect = querySelect + " where tc.id_tipo_caja = @id_tipo_caja and ec.id_estado_caja in (4)";
                     }
@@ -309,7 +309,7 @@ namespace PrestaVende.CLASS
                                         "INNER JOIN tbl_caja AS caj ON caj.id_caja = asi.id_caja " +
                                         "INNER JOIN tbl_estado_caja AS est ON est.id_estado_caja = asi.id_estado_caja " +
                                         "INNER JOIN tbl_usuario AS us ON us.id_usuario = id_usuario_asignado ";
-                if ((int)HttpContext.Current.Session["id_rol"] == 5)
+                if (Convert.ToInt32(HttpContext.Current.Session["id_rol"]) == 5)
                 {
                     queryString = queryString + "WHERE caj.id_sucursal = @id_sucursal AND asi.id_usuario_asignado = @id_usuario " +
                                         "ORDER BY asi.fecha_creacion DESC";

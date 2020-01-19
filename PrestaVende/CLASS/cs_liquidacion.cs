@@ -53,7 +53,7 @@ namespace PrestaVende.CLASS
                 command.Parameters.Clear();
                 command.CommandText = "EXEC EjecutaLiquidacion @id_prestamo_encabezado, @id_caja, @id_usuario";
                 command.Parameters.AddWithValue("@id_prestamo_encabezado", id_prestamo_encabezado);
-                command.Parameters.AddWithValue("@id_caja", (int)HttpContext.Current.Session["id_caja"]);
+                command.Parameters.AddWithValue("@id_caja", Convert.ToInt32(HttpContext.Current.Session["id_caja"]));
                 command.Parameters.AddWithValue("@id_usuario", Convert.ToInt32(HttpContext.Current.Session["id_usuario"]));
 
                 if (int.Parse(command.ExecuteNonQuery().ToString()) > 0)

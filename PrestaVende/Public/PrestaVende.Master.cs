@@ -20,12 +20,12 @@ namespace PrestaVende.Public
                 getMenu();
                 string caja = "";
 
-                if ((int)Session["id_caja"] == 0)
+                if (Convert.ToInt32(Session["id_caja"]) == 0)
                     lblCajaAsignada.Text = "ID: CAJA NO ASIGNADA.";
                 else
-                    lblCajaAsignada.Text = "ID: " + (int)Session["id_caja"];
+                    lblCajaAsignada.Text = "ID: " + Convert.ToInt32(Session["id_caja"]);
 
-                lblUsuario.Text = "U: " + (string)Session["primer_nombre"] + " " + (string)Session["primer_apellido"];
+                lblUsuario.Text = "U: " + Session["primer_nombre"].ToString() + " " + Session["primer_apellido"].ToString();
             }
             catch (Exception ex)
             {

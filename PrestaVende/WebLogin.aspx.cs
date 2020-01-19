@@ -86,21 +86,21 @@ namespace PrestaVende
         {
             try
             {
-                if ((int)Session["id_caja"] == 0 && (int)Session["id_rol"] != 5)
+                if (Convert.ToInt32(Session["id_caja"]) == 0 && Convert.ToInt32(Session["id_rol"]) != 5)
                 {
                     Response.Redirect("~/Public/WFPrincipal.aspx", false);
                 }
                 else
                 {
-                    if (!id_asignacion.Equals("0") && estado_asignacion.Equals("0") && (int)Session["id_caja"] != 0)
+                    if (!id_asignacion.Equals("0") && estado_asignacion.Equals("0") && Convert.ToInt32(Session["id_caja"]) != 0)
                     {
                         Response.Redirect("~/Public/RecepcionCaja.aspx?id_asignacion=" + id_asignacion, false);
                     }
-                    else if (caja_asignada.Equals("1") && (int)Session["id_caja"] != 0)
+                    else if (caja_asignada.Equals("1") && Convert.ToInt32(Session["id_caja"]) != 0)
                     {
                         fecha_hoy = DateTime.Now;
 
-                        if (fecha_asignacion.Date < fecha_hoy.Date && (int)Session["id_rol"] == 5)
+                        if (fecha_asignacion.Date < fecha_hoy.Date && Convert.ToInt32(Session["id_rol"]) == 5)
                         {
                             showWarning("Usted aun tiene la caja asignada, por favor solicite al gerente que la cierre.");
                         }

@@ -24,7 +24,7 @@ namespace PrestaVende.Public
             {
                 HttpCookie cookie = Request.Cookies["userLogin"];
 
-                if (cookie == null && (int)Session["id_usuario"] == 0)
+                if (cookie == null && Convert.ToInt32(Session["id_usuario"]) == 0)
                 {
                     Response.Redirect("~/WFWebLogin.aspx");
                 }

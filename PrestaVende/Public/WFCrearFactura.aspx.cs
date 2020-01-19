@@ -99,7 +99,7 @@ namespace PrestaVende.Public
         {
             try
             {
-                int id_sucursal = (int)HttpContext.Current.Session["id_sucursal"];
+                int id_sucursal = Convert.ToInt32(Convert.ToInt32(HttpContext.Current.Session["id_sucursal"]));
                 ddlSerie.DataSource = cs_serie.getSerieDDL(ref error,id_sucursal);
                 ddlSerie.DataValueField = "id_serie";
                 ddlSerie.DataTextField = "serie";
@@ -236,9 +236,9 @@ namespace PrestaVende.Public
 
                 if (int.Parse(id_serie) > 0)
                 {
-                    if((int)Session["id_caja"] > 0)
+                    if(Convert.ToInt32(Session["id_caja"]) > 0)
                     {
-                        if ((int)Session["id_tipo_caja"] == 2)
+                        if (Convert.ToInt32(Session["id_tipo_caja"]) == 2)
                         {
                             decimal abono = 0;
                             bool abonoB = false;
@@ -257,7 +257,7 @@ namespace PrestaVende.Public
                                     string Resultado = "";
                                     string id_prestamo = Request.QueryString["id_prestamo"];
 
-                                    Resultado = cs_factura.GuardarFactura(ref error, ds_global, id_serie, id_cliente, id_tipo_transaccion, (int)Session["id_caja"], numero_prestamo, abono.ToString());
+                                    Resultado = cs_factura.GuardarFactura(ref error, ds_global, id_serie, id_cliente, id_tipo_transaccion, Convert.ToInt32(Session["id_caja"]), numero_prestamo, abono.ToString());
                                      
                                     if(Resultado == string.Empty)
                                     {

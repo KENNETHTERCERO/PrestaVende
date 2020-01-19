@@ -26,7 +26,7 @@ namespace PrestaVende.Public
             {
                 HttpCookie cookie = Request.Cookies["userLogin"];
 
-                if (cookie == null && (int)Session["id_usuario"] == 0)
+                if (cookie == null && Convert.ToInt32(Session["id_usuario"]) == 0)
                 {
                     Response.Redirect("~/WFWebLogin.aspx");
                 }
@@ -230,7 +230,7 @@ namespace PrestaVende.Public
                     string script = "window.open('WebReport.aspx?tipo_reporte=2" + "&id_factura=" + id_factura_encabezado.ToString() + "');";
                     ScriptManager.RegisterClientScriptBlock(this, GetType(), "ImpresionFactura", script, true);
 
-                    string script2 = "window.open('WebReport.aspx?tipo_reporte=5" + "&id_factura=" + id_factura_encabezado.ToString() + "&id_sucursal=" + (int)HttpContext.Current.Session["id_sucursal"] + "');";
+                    string script2 = "window.open('WebReport.aspx?tipo_reporte=5" + "&id_factura=" + id_factura_encabezado.ToString() + "&id_sucursal=" + Convert.ToInt32(HttpContext.Current.Session["id_sucursal"]) + "');";
                     ScriptManager.RegisterClientScriptBlock(this, GetType(), "ImpresionRecibo", script2, true);
 
                     string scriptText = "alert('my message'); window.location='FacturacionProductos.aspx'";
@@ -275,7 +275,7 @@ namespace PrestaVende.Public
         {
             try
             {
-                int id_sucursal = (int)HttpContext.Current.Session["id_sucursal"];
+                int id_sucursal = Convert.ToInt32(HttpContext.Current.Session["id_sucursal"]);
                 ddlSerie.DataSource = cs_serie.getSerieDDL(ref error, id_sucursal);
                 ddlSerie.DataValueField = "id_serie";
                 ddlSerie.DataTextField = "serie";

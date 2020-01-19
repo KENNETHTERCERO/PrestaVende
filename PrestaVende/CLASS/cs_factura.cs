@@ -467,7 +467,7 @@ namespace PrestaVende.CLASS
                 command.CommandText = "UPDATE tbl_caja SET saldo = saldo + @monto_update + @abono_update WHERE id_caja = @id_caja_update";
                 command.Parameters.AddWithValue("@monto_update", monto);
                 command.Parameters.AddWithValue("@abono_update", abono);
-                command.Parameters.AddWithValue("@id_caja_update", (int)HttpContext.Current.Session["id_caja"]);
+                command.Parameters.AddWithValue("@id_caja_update", Convert.ToInt32(HttpContext.Current.Session["id_caja"]));
 
                 update = command.ExecuteNonQuery();
                 if (update > 0)

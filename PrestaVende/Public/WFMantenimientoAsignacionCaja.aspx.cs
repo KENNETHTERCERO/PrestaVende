@@ -140,7 +140,7 @@ namespace PrestaVende.Public
                 getIdAsignacion();
                 hideOrShowDiv(false);
 
-                if ((int)Session["id_rol"] == 5)
+                if (Convert.ToInt32(Session["id_rol"]) == 5)
                 {
                     string id_caja_asignada = mAsignacionCaja.getIDCajaAsignada(ref error);
                     ddIdCaja.SelectedValue = id_caja_asignada;
