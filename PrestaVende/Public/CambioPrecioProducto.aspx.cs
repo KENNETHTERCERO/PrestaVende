@@ -49,7 +49,7 @@ namespace PrestaVende.Public
             {
                 div_gridView.Visible = true;
 
-                DataSet dsRespuesta = clsCambioPrecio.buscarPrestamo(intPrestamo);
+                DataSet dsRespuesta = clsCambioPrecio.buscarPrestamo(intPrestamo, id_sucursal);
 
                 if (dsRespuesta.Tables[0].Rows.Count > 0)
                 {
