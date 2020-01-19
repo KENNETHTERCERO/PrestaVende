@@ -666,7 +666,7 @@ namespace PrestaVende.CLASS
                                         "VALUES(6, @id_caja_transaccion, @monto, 1, GETDATE(), @usuario, @movimiento_saldo, @id_sucursal)";
                 command.Parameters.AddWithValue("@id_caja_transaccion", id_caja);
                 command.Parameters.AddWithValue("@monto", monto);
-                command.Parameters.AddWithValue("@usuario", Convert.ToInt32(HttpContext.Current.Session["usuario"]));
+                command.Parameters.AddWithValue("@usuario", Convert.ToString(HttpContext.Current.Session["usuario"]));
                 command.Parameters.AddWithValue("@movimiento_saldo", monto);
                 command.Parameters.AddWithValue("@id_sucursal", Convert.ToInt32(HttpContext.Current.Session["id_sucursal"]));
                 rowsUpdated = command.ExecuteNonQuery();
