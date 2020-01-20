@@ -169,16 +169,33 @@ namespace PrestaVende.Public
                     {
                         if (ChbxRecibir.Checked)
                         {
-                            if (mAsignacionCaja.recibirCierreCaja(ref error, ddidAsignacion.Text.ToString(), txtMonto.Text.ToString(), ddIdCaja.SelectedValue.ToString(), ddIdUsuarioAsignado.SelectedValue.ToString()))
+                            if (ddIdEstadoCaja.SelectedValue.ToString().Equals("4"))
                             {
-                                if (Convert.ToString(Session["id_caja"]) == ddIdCaja.SelectedValue.ToString() || (ddIdEstadoCaja.SelectedValue.ToString() == "4" && Convert.ToUInt32(Session["id_rol"]) == 5))
+                                if (mAsignacionCaja.recibirCierreCaja(ref error, ddidAsignacion.Text.ToString(), txtMonto.Text.ToString(), ddIdCaja.SelectedValue.ToString(), ddIdUsuarioAsignado.SelectedValue.ToString()))
                                 {
-                                    OpcionSalir();
-                                    Response.Redirect("~/WebLogin.aspx", false);
+                                    if (Convert.ToString(Session["id_caja"]) == ddIdCaja.SelectedValue.ToString() || (ddIdEstadoCaja.SelectedValue.ToString() == "4" && Convert.ToUInt32(Session["id_rol"]) == 5))
+                                    {
+                                        OpcionSalir();
+                                        Response.Redirect("~/WebLogin.aspx", false);
+                                    }
+                                    hideOrShowDiv(true);
+                                    getDataGrid();
+                                    isUpdate = false;
                                 }
-                                hideOrShowDiv(true);
-                                getDataGrid();
-                                isUpdate = false;
+                            }
+                            else if (ddIdEstadoCaja.SelectedValue.ToString().Equals("7"))
+                            {
+                                if (mAsignacionCaja.recibirIncrementoCapitalCaja(ref error, ddidAsignacion.Text.ToString(), txtMonto.Text.ToString(), ddIdCaja.SelectedValue.ToString(), ddIdUsuarioAsignado.SelectedValue.ToString()))
+                                {
+                                    if (Convert.ToString(Session["id_caja"]) == ddIdCaja.SelectedValue.ToString() || (ddIdEstadoCaja.SelectedValue.ToString() == "4" && Convert.ToUInt32(Session["id_rol"]) == 5))
+                                    {
+                                        OpcionSalir();
+                                        Response.Redirect("~/WebLogin.aspx", false);
+                                    }
+                                    hideOrShowDiv(true);
+                                    getDataGrid();
+                                    isUpdate = false;
+                                }
                             }
                         }
                         else
@@ -487,6 +504,10 @@ namespace PrestaVende.Public
                     if (ddIdEstadoCaja.SelectedValue.ToString() == "2")
                     {
                         showSuccess("Se realizó la asignación de caja correctamente.");
+                    }
+                    else if (ddIdEstadoCaja.SelectedValue.ToString() == "7")
+                    {
+                        showSuccess("Se realizó incremento de caja correctamente.");
                     }
                     else if (ddIdEstadoCaja.SelectedValue.ToString() == "4")
                     {
