@@ -839,5 +839,31 @@ namespace PrestaVende.CLASS
                 connection.connection.Close();
             }
         }
+
+        public DataTable GetDataReporteFacturas(ref string error, string fecha_inicio, string fecha_fin, string id_sucursal)
+        {
+            DataTable dtDatos = new DataTable("dtDatos");
+            try
+            {
+                connection.connection.Open();
+                command.Connection = connection.connection;
+                command.Parameters.Clear();
+                command.CommandText = "exec sp_reporte_facturas @fecha_inicio,@fecha_fin,@id_sucursal";
+                command.Parameters.AddWithValue("@fecha_inicio", fecha_inicio);
+                command.Parameters.AddWithValue("@fecha_fin", fecha_fin);
+                command.Parameters.AddWithValue("@id_sucursal", id_sucursal);
+                dtDatos.Load(command.ExecuteReader());
+                return dtDatos;
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                return null;
+            }
+            finally
+            {
+                connection.connection.Close();
+            }
+        }
     }
 }
