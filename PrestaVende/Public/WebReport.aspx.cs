@@ -344,6 +344,44 @@ namespace PrestaVende.Public
 
                 }
             }
+            else if (Convert.ToInt32(tipo_reporte) == 13)//Reporte cancelaciones.
+            {
+                string id_sucursal = Request.QueryString.Get("id_sucursal");
+                string fecha_inicio = Request.QueryString.Get("fecha_inicio");
+                string fecha_fin = Request.QueryString.Get("fecha_fin");
+
+                DataTable Cancelacion = new DataTable("Cancelaciones");
+                Cancelacion = cs_prestamo.GetDataReporteAbono(ref error, fecha_inicio, fecha_fin, id_sucursal);
+
+                Reports.CRCancelacion ReporteCancelacion = new Reports.CRCancelacion();
+
+                ReporteCancelacion.Load(Server.MapPath("~/Reports/CRCancelacion.rpt"));
+                ReporteCancelacion.SetDataSource(Cancelacion);
+                CrystalReportViewer1.ReportSource = ReporteCancelacion;//document;
+                CrystalReportViewer1.DataBind();
+                CrystalReportViewer1.RefreshReport();
+                ReporteCancelacion.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "");
+
+            }
+            else if (Convert.ToInt32(tipo_reporte) == 14)//Reporte facturas.
+            {
+                string id_sucursal = Request.QueryString.Get("id_sucursal");
+                string fecha_inicio = Request.QueryString.Get("fecha_inicio");
+                string fecha_fin = Request.QueryString.Get("fecha_fin");
+
+                DataTable Facturas = new DataTable("Facturas");
+                Facturas = cs_prestamo.GetDataReporteFacturas(ref error, fecha_inicio, fecha_fin, id_sucursal);
+
+                Reports.CRFacturas ReporteFacturas = new Reports.CRFacturas();
+
+                ReporteFacturas.Load(Server.MapPath("~/Reports/CRFacturas.rpt"));
+                ReporteFacturas.SetDataSource(Facturas);
+                CrystalReportViewer1.ReportSource = ReporteFacturas;//document;
+                CrystalReportViewer1.DataBind();
+                CrystalReportViewer1.RefreshReport();
+                ReporteFacturas.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "");
+
+            }
         }
     }
 }
