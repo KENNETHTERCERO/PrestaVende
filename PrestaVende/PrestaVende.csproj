@@ -283,6 +283,17 @@
     <Content Include="DATASET\DSReporteCancelaciones.xss">
       <DependentUpon>DSReporteCancelaciones.xsd</DependentUpon>
     </Content>
+    <Content Include="DATASET\DSReporteFacturas.xsc">
+      <DependentUpon>DSReporteFacturas.xsd</DependentUpon>
+    </Content>
+    <None Include="DATASET\DSReporteFacturas.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DSReporteFacturas.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="DATASET\DSReporteFacturas.xss">
+      <DependentUpon>DSReporteFacturas.xsd</DependentUpon>
+    </Content>
     <None Include="DATASET\DtsTransaccionesCaja.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
@@ -398,6 +409,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DSReporteCancelaciones.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DATASET\DSReporteFacturas.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DSReporteFacturas.xsd</DependentUpon>
     </Compile>
     <Compile Include="DATASET\DtsTransaccionesCaja.Designer.cs">
       <AutoGen>True</AutoGen>

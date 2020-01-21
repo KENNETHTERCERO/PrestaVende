@@ -384,7 +384,8 @@ namespace PrestaVende.Public
                     row["descuento"] = txtPesoDescuento.Text;
                     row["pesoReal"] = txtPesoConDescuento.Text.ToString();
                     row["valor"] = txtValor.Text.ToString();
-                    if (txtCaracteristicas.Text.ToString().Length > 0)
+
+                    if (txtCaracteristicas.Text.ToString().Length > 0 || txtCaracteristicas.Text.ToString() != "")
                     {
                         row["caracteristicas"] = txtCaracteristicas.Text.ToString();
                     }
