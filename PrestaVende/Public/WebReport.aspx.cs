@@ -14,6 +14,7 @@ namespace PrestaVende.Public
         private CLASS.cs_prestamo cs_prestamo = new CLASS.cs_prestamo();
         private CLASS.cs_factura cs_factura = new CLASS.cs_factura();
         private CLASS.cs_caja cs_caja = new CLASS.cs_caja();
+        private CLASS.cs_manejo_inventario cs_manejo_inventario = new CLASS.cs_manejo_inventario();
         private string error = "";
 
         protected void Page_Load(object sender, EventArgs e)
@@ -246,6 +247,35 @@ namespace PrestaVende.Public
                 string id_sucursal = Request.QueryString.Get("id_sucursal");
                 string fecha_inicio = Request.QueryString.Get("fecha_inicio");
                 string fecha_fin = Request.QueryString.Get("fecha_fin");
+
+                DataTable contrato = new DataTable("contrato");
+                string numero_prestamo = Request.QueryString.Get("numero_sucursal");
+
+                contrato = cs_prestamo.GetContrato(ref error, numero_prestamo, id_sucursal);
+                if (contrato.Rows.Count <= 0)
+                {
+                    error = "Error obteniendo datos de contrato." + error;
+                    throw new Exception("");
+                }
+                else
+                {
+                    try
+                    {
+                        Reports.CRContratoGeneral prestamoGeneral = new Reports.CRContratoGeneral();
+                        prestamoGeneral.Load(Server.MapPath("~/Reports/CRContratoGeneral.rpt"));
+                        prestamoGeneral.SetDataSource(contrato);
+                        CrystalReportViewer1.ReportSource = prestamoGeneral;//document;
+                        CrystalReportViewer1.DataBind();
+                        CrystalReportViewer1.RefreshReport();
+                        prestamoGeneral.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "Contrato No." + numero_prestamo);
+                    }
+                    catch (Exception ex)
+                    {
+                        error = ex.ToString();
+                    }
+
+                }
+
             }
             else if (Convert.ToInt32(tipo_reporte) == 10)//10 estado de cuenta prestamo reimpresion.
             {
@@ -314,7 +344,7 @@ namespace PrestaVende.Public
 
                 }
             }
-            if (Convert.ToInt32(tipo_reporte) == 12)//12 Contrato reimpresion.
+            else if (Convert.ToInt32(tipo_reporte) == 12)//12 Contrato reimpresion.
             {
                 DataTable contrato = new DataTable("contrato");
                 string numero_prestamo = Request.QueryString.Get("numero_prestamo");
@@ -344,6 +374,8 @@ namespace PrestaVende.Public
 
                 }
             }
+            
+
         }
     }
 }

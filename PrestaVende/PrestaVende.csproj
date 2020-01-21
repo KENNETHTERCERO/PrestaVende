@@ -696,6 +696,12 @@
       <DependentUpon>CRFacturaIntereses.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Reports\CRInventarioSucursal.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CRInventarioSucursal.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Reports\CRProyeccionIntereses.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -748,6 +754,10 @@
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>CRFacturaIntereses.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reports\CRInventarioSucursal.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>CRInventarioSucursal.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reports\CRProyeccionIntereses.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>CRProyeccionIntereses.cs</LastGenOutput>
@@ -768,7 +778,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>61105</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
