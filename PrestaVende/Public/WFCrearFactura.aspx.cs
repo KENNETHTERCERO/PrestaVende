@@ -257,6 +257,7 @@ namespace PrestaVende.Public
                                     string Resultado = "";
                                     string id_prestamo = Request.QueryString["id_prestamo"];
 
+                                    cs_factura = new CLASS.cs_factura();
                                     Resultado = cs_factura.GuardarFactura(ref error, ds_global, id_serie, id_cliente, id_tipo_transaccion, Convert.ToInt32(Session["id_caja"]), numero_prestamo, abono.ToString());
                                      
                                     if(Resultado == string.Empty)

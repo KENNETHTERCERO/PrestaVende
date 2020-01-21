@@ -375,7 +375,8 @@ namespace PrestaVende.Public
             {
                 if (ViewState["CurrentTableJoyas"] != null)
                 {
-                    row = dtTablaJoyas.NewRow();
+                    DataTable test = (DataTable)ViewState["CurrentTableJoyas"];
+                    row = test.NewRow();
                     row["id_producto"] = ddlProducto.SelectedValue;
                     row["numero_linea"] = 1;
                     row["joya"] = ddlProducto.SelectedItem.Text.ToString();
@@ -384,18 +385,20 @@ namespace PrestaVende.Public
                     row["descuento"] = txtPesoDescuento.Text;
                     row["pesoReal"] = txtPesoConDescuento.Text.ToString();
                     row["valor"] = txtValor.Text.ToString();
-                    if (txtCaracteristicas.Text.ToString().Length > 0)
+
+                    if (txtObservaciones.Text.ToString().Length > 0 || txtObservaciones.Text.ToString() != "")
                     {
-                        row["caracteristicas"] = txtCaracteristicas.Text.ToString();
+                        row["caracteristicas"] = txtObservaciones.Text.ToString();
                     }
                     else
                         row["caracteristicas"] = "N/A";
 
                     row["id_kilataje"] = ddlKilataje.SelectedValue.ToString();
-                    dtTablaJoyas.Rows.Add(row);
+                    test.Rows.Add(row);
 
-                    ViewState["CurrentTableJoyas"] = dtTablaJoyas;
-
+                    dtTablaJoyas = test;
+                    ViewState["CurrentTableJoyas"] = test;
+                    
                     gvProductoJoya.DataSource = dtTablaJoyas;
                     gvProductoJoya.DataBind();
                 }
@@ -412,9 +415,9 @@ namespace PrestaVende.Public
                     drCurrectRow["descuento"] = txtPesoDescuento.Text;
                     drCurrectRow["pesoReal"] = txtPesoConDescuento.Text.ToString();
                     drCurrectRow["valor"] = txtValor.Text.ToString();
-                    if (txtCaracteristicas.Text.ToString().Length > 0)
+                    if (txtObservaciones.Text.ToString().Length > 0 || txtObservaciones.Text.ToString() != "")
                     {
-                        drCurrectRow["caracteristicas"] = txtCaracteristicas.Text.ToString();
+                        drCurrectRow["caracteristicas"] = txtObservaciones.Text.ToString();
                     }
                     else
                         drCurrectRow["caracteristicas"] = "N/A";
@@ -442,7 +445,8 @@ namespace PrestaVende.Public
             {
                 if (ViewState["CurrentTableArticulos"] != null)
                 {
-                    row = dtTablaArticulos.NewRow();
+                    DataTable testArticulos = (DataTable)ViewState["CurrentTableArticulos"];
+                    row = testArticulos.NewRow();
                     row["id_producto"] = ddlProducto.SelectedValue.ToString();
                     row["numero_linea"] = 1;
                     row["producto"] = ddlProducto.SelectedItem.Text.ToString();
@@ -451,10 +455,10 @@ namespace PrestaVende.Public
                     row["caracteristicas"] = txtCaracteristicas.Text;
                     row["id_marca"] = ddlMarca.SelectedValue.ToString();
 
-                    dtTablaArticulos.Rows.Add(row);
+                    testArticulos.Rows.Add(row);
                     calculaTotalPrestamo();
-
-                    ViewState["CurrentTableArticulos"] = dtTablaArticulos;
+                    dtTablaArticulos = testArticulos;
+                    ViewState["CurrentTableArticulos"] = testArticulos;
 
                     gvProductoElectrodomesticos.DataSource = dtTablaArticulos;
                     gvProductoElectrodomesticos.DataBind();
@@ -706,6 +710,7 @@ namespace PrestaVende.Public
             try
             {
                 string numero_prestamo_guardado = "";
+                cs_prestamo = new CLASS.cs_prestamo();
                 if (cs_prestamo.guardar_prestamo(ref error, generaEncabezado(), dtTablaJoyas, ddlCategoria.SelectedValue.ToString(), ref numero_prestamo_guardado))
                 {
                     lblNumeroPrestamoNumero.Text = numero_prestamo_guardado;
@@ -735,6 +740,7 @@ namespace PrestaVende.Public
             try
             {
                 string numero_prestamo_guardado = "";
+                cs_prestamo = new CLASS.cs_prestamo();
                 if (cs_prestamo.guardar_prestamo(ref error, generaEncabezado(), dtTablaArticulos, ddlCategoria.SelectedValue.ToString(), ref numero_prestamo_guardado))
                 {
                     lblNumeroPrestamoNumero.Text = numero_prestamo_guardado;

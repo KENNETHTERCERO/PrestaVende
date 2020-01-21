@@ -283,6 +283,17 @@
     <Content Include="DATASET\DSReporteCancelaciones.xss">
       <DependentUpon>DSReporteCancelaciones.xsd</DependentUpon>
     </Content>
+    <Content Include="DATASET\DSReporteFacturas.xsc">
+      <DependentUpon>DSReporteFacturas.xsd</DependentUpon>
+    </Content>
+    <None Include="DATASET\DSReporteFacturas.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DSReporteFacturas.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="DATASET\DSReporteFacturas.xss">
+      <DependentUpon>DSReporteFacturas.xsd</DependentUpon>
+    </Content>
     <None Include="DATASET\DtsTransaccionesCaja.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
@@ -398,6 +409,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DSReporteCancelaciones.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DATASET\DSReporteFacturas.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DSReporteFacturas.xsd</DependentUpon>
     </Compile>
     <Compile Include="DATASET\DtsTransaccionesCaja.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -660,6 +676,18 @@
     <Compile Include="Public\WFRetiroArticulo.aspx.designer.cs">
       <DependentUpon>WFRetiroArticulo.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Reports\CRFacturas.cs">
+      <DependentUpon>CRFacturas.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Reports\CRCancelacion.cs">
+      <DependentUpon>CRCancelacion.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Reports\CRAbonosCapital.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -730,6 +758,14 @@
     <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Reports\CRFacturas.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>CRFacturas.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\CRCancelacion.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>CRCancelacion.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reports\CRAbonosCapital.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>CRAbonosCapital.cs</LastGenOutput>

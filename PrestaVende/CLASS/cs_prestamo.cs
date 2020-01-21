@@ -149,13 +149,13 @@ namespace PrestaVende.CLASS
                 {
                     if (tipo_prenda.Equals("1"))
                     {
-                        comando = "INSERT INTO tbl_prestamo_detalle (id_prestamo_encabezado, id_sucursal, numero_prestamo, id_producto,     numero_linea,               peso,       id_kilataje,            cantidad,           valor,          id_marca,           caracteristicas,            peso_descuento,         peso_con_descuento, retirada) " +
-                              $"VALUES({id_prestamo_encabezado}, {Convert.ToInt32(HttpContext.Current.Session["id_sucursal"])}, {numero_prestamo}, {item["id_producto"].ToString()}, {item["numero_linea"].ToString()}, {item["peso"].ToString()}, {item["id_kilataje"].ToString()}, 1, {item["valor"].ToString()}, 0, '{item["caracteristicas"].ToString()}', {item["descuento"].ToString()}, {item["pesoReal"].ToString()}, 0)";
+                        comando = "INSERT INTO tbl_prestamo_detalle (id_prestamo_encabezado, id_sucursal, numero_prestamo, id_producto,     numero_linea,               peso,       id_kilataje,            cantidad,           valor,          id_marca,           caracteristicas,            peso_descuento,         peso_con_descuento, retirada, liquidado) " +
+                              $"VALUES({id_prestamo_encabezado}, {Convert.ToInt32(HttpContext.Current.Session["id_sucursal"])}, {numero_prestamo}, {item["id_producto"].ToString()}, {item["numero_linea"].ToString()}, {item["peso"].ToString()}, {item["id_kilataje"].ToString()}, 1, {item["valor"].ToString()}, 0, '{item["caracteristicas"].ToString()}', {item["descuento"].ToString()}, {item["pesoReal"].ToString()}, 0, 0)";
                     }
                     else
                     {
-                        comando = "INSERT INTO tbl_prestamo_detalle (id_prestamo_encabezado, id_sucursal, numero_prestamo, id_producto,     numero_linea,               peso,       id_kilataje,            cantidad,           valor,          id_marca,           caracteristicas, peso_descuento, peso_con_descuento, retirada) " +
-                              $"VALUES({id_prestamo_encabezado}, {Convert.ToInt32(HttpContext.Current.Session["id_sucursal"])}, {numero_prestamo}, {item["id_producto"].ToString()}, {item["numero_linea"].ToString()}, 0, 0, 1, {item["valor"].ToString()}, {item["id_marca"].ToString()}, '{item["caracteristicas"].ToString()}', 0, 0, 0)";
+                        comando = "INSERT INTO tbl_prestamo_detalle (id_prestamo_encabezado, id_sucursal, numero_prestamo, id_producto,     numero_linea,               peso,       id_kilataje,            cantidad,           valor,          id_marca,           caracteristicas, peso_descuento, peso_con_descuento, retirada, liquidado) " +
+                              $"VALUES({id_prestamo_encabezado}, {Convert.ToInt32(HttpContext.Current.Session["id_sucursal"])}, {numero_prestamo}, {item["id_producto"].ToString()}, {item["numero_linea"].ToString()}, 0, 0, 1, {item["valor"].ToString()}, {item["id_marca"].ToString()}, '{item["caracteristicas"].ToString()}', 0, 0, 0, 0)";
                     }
                     command.CommandText = comando;
                     inserts += command.ExecuteNonQuery();
@@ -459,7 +459,7 @@ namespace PrestaVende.CLASS
                                             "inner join tbl_plan_prestamo pla on pla.id_plan_prestamo = pre.id_plan_prestamo " +
                                             "inner join tbl_cliente cli on cli.id_cliente = pre.id_cliente " +
                                             "where pre.estado_prestamo = 1 " +
-                                            "AND pre.id_sucursal = " + (string)HttpContext.Current.Session["id_sucursal"] + " " +
+                                            "AND pre.id_sucursal = " + HttpContext.Current.Session["id_sucursal"].ToString() + " " +
                                             "and pre.id_cliente = " + id_cliente;
                 dtReturnPrestamos.Load(command.ExecuteReader());
             }
@@ -823,6 +823,32 @@ namespace PrestaVende.CLASS
                 command.Connection = connection.connection;
                 command.Parameters.Clear();
                 command.CommandText = "exec sp_reporte_abonos_cancelaciones @fecha_inicio,@fecha_fin,@id_sucursal";
+                command.Parameters.AddWithValue("@fecha_inicio", fecha_inicio);
+                command.Parameters.AddWithValue("@fecha_fin", fecha_fin);
+                command.Parameters.AddWithValue("@id_sucursal", id_sucursal);
+                dtDatos.Load(command.ExecuteReader());
+                return dtDatos;
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                return null;
+            }
+            finally
+            {
+                connection.connection.Close();
+            }
+        }
+
+        public DataTable GetDataReporteFacturas(ref string error, string fecha_inicio, string fecha_fin, string id_sucursal)
+        {
+            DataTable dtDatos = new DataTable("dtDatos");
+            try
+            {
+                connection.connection.Open();
+                command.Connection = connection.connection;
+                command.Parameters.Clear();
+                command.CommandText = "exec sp_reporte_facturas @fecha_inicio,@fecha_fin,@id_sucursal";
                 command.Parameters.AddWithValue("@fecha_inicio", fecha_inicio);
                 command.Parameters.AddWithValue("@fecha_fin", fecha_fin);
                 command.Parameters.AddWithValue("@id_sucursal", id_sucursal);
