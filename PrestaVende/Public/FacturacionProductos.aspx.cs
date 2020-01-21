@@ -224,6 +224,8 @@ namespace PrestaVende.Public
                 encabezado[9] = "0";
                 encabezado[10] = "0";
 
+                cs_manejo_inventario = new CLASS.cs_manejo_inventario();
+
                 if (cs_manejo_inventario.GuardarFactura(ref error, dtTablaArticulos, encabezado, ref id_factura_encabezado))
                 {
                     showSuccess("Factura guardada correctamente.");
@@ -298,7 +300,7 @@ namespace PrestaVende.Public
         {
             try
             {
-                decimal montoFila = 0, porcentaje = 0, montoDescuento = 0;
+                decimal montoFila = 0, porcentaje = 0, montoDescuento = 0, montoSubTotal = 0, montoDetalleSubTotal = 0, montoDetalleIVA = 0;
                 if (gvProductoFacturar.Rows.Count > 0)
                 {
                     foreach (GridViewRow item in gvProductoFacturar.Rows)
@@ -313,6 +315,8 @@ namespace PrestaVende.Public
                     montoFila = 0;
                     porcentaje = 0;
                     montoDescuento = 0;
+                    montoSubTotal = 0;
+                    montoDetalleSubTotal = 0;
 
                     foreach (DataRow item in dtTablaArticulos.Rows)
                     {
@@ -322,7 +326,27 @@ namespace PrestaVende.Public
                         montoFila = Convert.ToDecimal(item["valor"].ToString()) - montoDescuento;
                         montoFila = Math.Round(montoFila, 2);
                         item["valor"] = montoFila.ToString();
+                        montoDetalleSubTotal += Convert.ToDecimal(item["subTotal"].ToString());
+                        montoDetalleIVA += Convert.ToDecimal(item["IVA"].ToString());
                     }
+
+                    foreach (DataRow item in dtTablaArticulos.Rows)
+                    {//revisar este codigo para descuento en venta
+                        //porcentaje = 0;
+                        //porcentaje = Math.Round((Convert.ToDecimal(item["subTotal"].ToString()) / montoDetalleSubTotal), 4);
+                        //montoDescuento = porcentaje * montoDetalleSubTotal;
+                        //montoFila = Convert.ToDecimal(item["subTotal"].ToString()) - montoDescuento;
+                        //montoFila = Math.Round(montoFila, 2);
+                        //item["subTotal"] = montoFila.ToString();
+
+                        //porcentaje = 0;
+                        //porcentaje = Math.Round((Convert.ToDecimal(item["IVA"].ToString()) / montoDetalleIVA), 4);
+                        //montoDescuento = porcentaje * montoDetalleIVA;
+                        //montoFila = Convert.ToDecimal(item["IVA"].ToString()) - montoDescuento;
+                        //montoFila = Math.Round(montoFila, 2);
+                        //item["IVA"] = montoFila.ToString();
+                    }
+
                     calculaTotalFactura();
                 }
             }

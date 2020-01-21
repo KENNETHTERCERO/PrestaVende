@@ -161,7 +161,8 @@ namespace PrestaVende.CLASS
         {
             bool Resultado = false;
             int id_factura_encabezado = 0;
-
+            connection = new cs_connection();
+            command = new SqlCommand();
             try
             {                
                 string numero_factura = "";
