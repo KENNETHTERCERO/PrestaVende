@@ -9,9 +9,82 @@ namespace PrestaVende.Public
 {
     public partial class ReporteInventario : System.Web.UI.Page
     {
+
+        #region variables
+
+        private string error = "";
+        private CLASS.cs_sucursal cs_sucursal = new CLASS.cs_sucursal();
+
+        #endregion
+
         protected void Page_Load(object sender, EventArgs e)
+        {
+            try
+            {
+                HttpCookie cookie = Request.Cookies["userLogin"];
+
+                if (cookie == null && Convert.ToInt32(Session["id_usuario"]) == 0)
+                {
+                    Response.Redirect("~/WFWebLogin.aspx");
+                }
+                else
+                {
+                    if (IsPostBack)
+                    {
+                        if (lblWarning.Text == "") { divWarning.Visible = false; }
+                        if (lblError.Text == "") { divError.Visible = false; }
+                        if (lblSuccess.Text == "") { divSucceful.Visible = false; }
+                    }
+                    else
+                    {
+                        ObtenerSucursales();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                showError(ex.ToString());
+            }
+        }
+
+        protected void btnGenerar_Click(object sender, EventArgs e)
         {
 
         }
+       
+
+        #region metodos
+
+        private void ObtenerSucursales()
+        {
+            try
+            {
+                int id_empresa = Convert.ToInt32(Session["id_empresa"]);
+                ddlSucursal.DataSource = cs_sucursal.ObtenerSucursalesPorEmpresa(ref error, id_empresa.ToString());
+                ddlSucursal.DataValueField = "id_sucursal";
+                ddlSucursal.DataTextField = "sucursal";
+                ddlSucursal.DataBind();
+
+                ddlSucursal.SelectedValue = Session["id_empresa"].ToString();
+
+                if (Convert.ToInt32(Session["id_rol"]) == 3 || Convert.ToInt32(Session["id_rol"]) == 4 || Convert.ToInt32(Session["id_rol"]) == 5)
+                    ddlSucursal.Enabled = false;
+            }
+            catch (Exception ex)
+            {
+                showError(ex.ToString());
+            }
+        }
+
+        private bool showError(string error)
+        {
+            divError.Visible = true;
+            lblError.Controls.Add(new LiteralControl(string.Format("<span style='color:Red'>{0}</span>", error)));
+            return true;
+        }
+
+        #endregion
+
+
     }
 }
