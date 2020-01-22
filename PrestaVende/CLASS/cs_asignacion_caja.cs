@@ -498,7 +498,7 @@ namespace PrestaVende.CLASS
                                             "asi.id_asignacion_caja, " +
                                             "asi.id_caja,            " +
                                             "asi.id_estado_caja,     " +
-                                            "asi.monto,              " +
+                                            "caj.saldo AS monto,     " +
                                             "asi.estado_asignacion,  " +
                                             "asi.fecha_creacion,     " +
                                             "caj.nombre_caja,        " +
@@ -580,7 +580,7 @@ namespace PrestaVende.CLASS
                                         "VALUES(5, @id_caja_transaccion, @monto, 1, GETDATE(), @usuario, @movimiento_saldo, @id_sucursal)";
                 command.Parameters.AddWithValue("@id_caja_transaccion", Convert.ToInt32(HttpContext.Current.Session["id_caja"]));
                 command.Parameters.AddWithValue("@monto", monto);
-                command.Parameters.AddWithValue("@usuario", Convert.ToInt32(HttpContext.Current.Session["id_usuario"]));
+                command.Parameters.AddWithValue("@usuario", HttpContext.Current.Session["usuario"].ToString());
                 command.Parameters.AddWithValue("@movimiento_saldo", monto);
                 command.Parameters.AddWithValue("@id_sucursal", Convert.ToInt32(HttpContext.Current.Session["id_sucursal"]));
                 rowsUpdated = command.ExecuteNonQuery();
@@ -721,10 +721,10 @@ namespace PrestaVende.CLASS
 
                 command.Parameters.Clear();
                 command.CommandText = "INSERT INTO tbl_transaccion (id_tipo_transaccion, id_caja, monto, estado_transaccion, fecha_transaccion, usuario, movimiento_saldo, id_sucursal) " +
-                                        "VALUES(15, @id_caja_transaccion, @monto, 1, GETDATE(), @usuario, @movimiento_saldo, @id_sucursal)";
+                                        "VALUES(15, @id_caja_transaccion, @monto, 1, GETDATE(), @usuario, (SELECT saldo + @movimiento_saldo FROM tbl_caja WHERE id_caja = @id_caja_transaccion), @id_sucursal)";
                 command.Parameters.AddWithValue("@id_caja_transaccion", Convert.ToInt32(HttpContext.Current.Session["id_caja"]));
                 command.Parameters.AddWithValue("@monto", monto);
-                command.Parameters.AddWithValue("@usuario", Convert.ToInt32(HttpContext.Current.Session["id_usuario"]));
+                command.Parameters.AddWithValue("@usuario", HttpContext.Current.Session["usuario"].ToString());
                 command.Parameters.AddWithValue("@movimiento_saldo", monto);
                 command.Parameters.AddWithValue("@id_sucursal", Convert.ToInt32(HttpContext.Current.Session["id_sucursal"]));
                 rowsUpdated = command.ExecuteNonQuery();

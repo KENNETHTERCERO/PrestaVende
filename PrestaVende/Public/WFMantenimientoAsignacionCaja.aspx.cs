@@ -182,12 +182,16 @@ namespace PrestaVende.Public
                                     getDataGrid();
                                     isUpdate = false;
                                 }
+                                else
+                                {
+                                    showError("No se pudo realizar recepcion de cierre de caja." + error);
+                                }
                             }
                             else if (ddIdEstadoCaja.SelectedValue.ToString().Equals("7"))
                             {
                                 if (mAsignacionCaja.recibirIncrementoCapitalCaja(ref error, ddidAsignacion.Text.ToString(), txtMonto.Text.ToString(), ddIdCaja.SelectedValue.ToString(), ddIdUsuarioAsignado.SelectedValue.ToString()))
                                 {
-                                    if (Convert.ToString(Session["id_caja"]) == ddIdCaja.SelectedValue.ToString() || (ddIdEstadoCaja.SelectedValue.ToString() == "4" && Convert.ToUInt32(Session["id_rol"]) == 5))
+                                    if (Convert.ToString(Session["id_caja"]) == ddIdCaja.SelectedValue.ToString() || ddIdEstadoCaja.SelectedValue.ToString() == "7")
                                     {
                                         OpcionSalir();
                                         Response.Redirect("~/WebLogin.aspx", false);
@@ -195,6 +199,10 @@ namespace PrestaVende.Public
                                     hideOrShowDiv(true);
                                     getDataGrid();
                                     isUpdate = false;
+                                }
+                                else
+                                {
+                                    showError("No se pudo realizar recepcion de incremento a capital." + error);
                                 }
                             }
                         }
