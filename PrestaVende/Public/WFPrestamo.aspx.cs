@@ -398,7 +398,7 @@ namespace PrestaVende.Public
 
                     dtTablaJoyas = test;
                     Session["CurrentTableJoyas"] = test;
-                    
+
                     gvProductoJoya.DataSource = dtTablaJoyas;
                     gvProductoJoya.DataBind();
                 }
@@ -422,11 +422,13 @@ namespace PrestaVende.Public
                     else
                         drCurrectRow["caracteristicas"] = "N/A";
 
-                    drCurrectRow["id_kilataje"] = ddlKilataje.SelectedValue.ToString();
-                    test.Rows.Add(drCurrectRow);
+                    row["id_kilataje"] = ddlKilataje.SelectedValue.ToString();
+                    test.Rows.Add(row);
+
+                    dtTablaJoyas = test;
                     Session["CurrentTableJoyas"] = test;
 
-                    gvProductoJoya.DataSource = test;
+                    gvProductoJoya.DataSource = dtTablaJoyas;
                     gvProductoJoya.DataBind();
                 }
                 calculaTotalPrestamo();
@@ -454,7 +456,6 @@ namespace PrestaVende.Public
                     row["id_marca"] = ddlMarca.SelectedValue.ToString();
 
                     testArticulos.Rows.Add(row);
-                    calculaTotalPrestamo();
                     dtTablaArticulos = testArticulos;
                     Session["CurrentTableArticulos"] = testArticulos;
 
@@ -466,7 +467,7 @@ namespace PrestaVende.Public
                     DataTable testArticulos = (DataTable)Session["CurrentTableArticulos"];
                     DataRow drCurrectRow = null;
 
-                    drCurrectRow = dtTablaJoyas.NewRow();
+                    drCurrectRow = testArticulos.NewRow();
                     drCurrectRow["id_producto"] = ddlProducto.SelectedValue.ToString();
                     drCurrectRow["numero_linea"] = 1;
                     drCurrectRow["producto"] = ddlProducto.SelectedItem.Text.ToString();
@@ -474,8 +475,9 @@ namespace PrestaVende.Public
                     drCurrectRow["valor"] = txtValor.Text;
                     drCurrectRow["caracteristicas"] = txtCaracteristicas.Text;
                     drCurrectRow["id_marca"] = ddlMarca.SelectedValue.ToString();
-                    
+
                     testArticulos.Rows.Add(drCurrectRow);
+                    dtTablaArticulos = testArticulos;
                     Session["CurrentTableArticulos"] = testArticulos;
 
                     gvProductoElectrodomesticos.DataSource = dtTablaArticulos;

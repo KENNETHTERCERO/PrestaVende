@@ -153,9 +153,9 @@ namespace PrestaVende.Public
 
                 getEstadoCaja(ddIdCaja.SelectedValue);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                showError("Error obteniendo Id de caja asignada a usuario." + ex.ToString());
             }
         }
 
@@ -398,6 +398,7 @@ namespace PrestaVende.Public
                     ChbxRecibir.Checked = false;
                     lblRecibir.Visible = false;
                     txtMonto.Text = "";
+                    id_usuario_caja_asignada = "0";
                 }
                 else if (opcion.Equals("cierre"))
                 {
