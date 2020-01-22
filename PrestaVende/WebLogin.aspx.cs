@@ -56,7 +56,7 @@ namespace PrestaVende
                         Session["id_sucursal"]          = Convert.ToInt32(respuesta[3]);
                         Session["usuario"]              = respuesta[4];
                         Session["primer_nombre"]        = respuesta[5];
-                        Session[" primer_apellido"]     = respuesta[6];
+                        Session["primer_apellido"]     = respuesta[6];
                         Session["id_rol"]               = Convert.ToInt32( respuesta[7]);
                         Session["id_caja"]              = Convert.ToInt32(respuesta[9]);
                         id_asignacion                   = respuesta[10];
@@ -151,7 +151,8 @@ namespace PrestaVende
                 foreach (DataRow item in asignacion_caja.getAsignacionCaja(ref error, id_asignacion).Rows)
                 {
                     fecha_asignacion = Convert.ToDateTime(item[5].ToString());
-                    Session["saldo_caja"] = Convert.ToDecimal(item[3].ToString());
+                    Session["saldo_caja"] = Convert.ToDecimal(item["monto"].ToString());
+                    Session["puede_vender"] = Convert.ToInt32(item["puede_vender"].ToString());
                 }
             }
             catch (Exception ex)

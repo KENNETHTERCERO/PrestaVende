@@ -233,7 +233,6 @@ namespace PrestaVende.Public
                     {
                         error = ex.ToString();
                     }
-
                 }
             }
             else if (Convert.ToInt32(tipo_reporte) == 8)//Reporte cancelaciones.

@@ -50,8 +50,8 @@ namespace PrestaVende.Public
                     {
                         dtTablaJoyas = new DataTable("tablaJoyas");
                         dtTablaArticulos = new DataTable("tablaArticulos");
-                        ViewState["CurrentTableJoyas"] = dtTablaJoyas;
-                        ViewState["CurrentTableArticulos"] = dtTablaArticulos;
+                        Session["CurrentTableJoyas"] = dtTablaJoyas;
+                        Session["CurrentTableArticulos"] = dtTablaArticulos;
                         getClient();
                         getCategorias();
                         getPlanPrestamo();
@@ -373,9 +373,9 @@ namespace PrestaVende.Public
         {
             try
             {
-                if (ViewState["CurrentTableJoyas"] != null)
+                if (Session["CurrentTableJoyas"] != null)
                 {
-                    DataTable test = (DataTable)ViewState["CurrentTableJoyas"];
+                    DataTable test = (DataTable)Session["CurrentTableJoyas"];
                     row = test.NewRow();
                     row["id_producto"] = ddlProducto.SelectedValue;
                     row["numero_linea"] = 1;
@@ -397,14 +397,14 @@ namespace PrestaVende.Public
                     test.Rows.Add(row);
 
                     dtTablaJoyas = test;
-                    ViewState["CurrentTableJoyas"] = test;
+                    Session["CurrentTableJoyas"] = test;
                     
                     gvProductoJoya.DataSource = dtTablaJoyas;
                     gvProductoJoya.DataBind();
                 }
                 else
                 {
-                    DataTable test = (DataTable)ViewState["CurrentTableJoyas"];
+                    DataTable test = (DataTable)Session["CurrentTableJoyas"];
                     DataRow drCurrectRow = null;
                     drCurrectRow = dtTablaJoyas.NewRow();
                     drCurrectRow["id_producto"] = ddlProducto.SelectedValue;
@@ -424,12 +424,10 @@ namespace PrestaVende.Public
 
                     drCurrectRow["id_kilataje"] = ddlKilataje.SelectedValue.ToString();
                     test.Rows.Add(drCurrectRow);
-                    ViewState["CurrentTableJoyas"] = test;
+                    Session["CurrentTableJoyas"] = test;
 
                     gvProductoJoya.DataSource = test;
                     gvProductoJoya.DataBind();
-
-                    
                 }
                 calculaTotalPrestamo();
             }
@@ -445,7 +443,7 @@ namespace PrestaVende.Public
             {
                 if (ViewState["CurrentTableArticulos"] != null)
                 {
-                    DataTable testArticulos = (DataTable)ViewState["CurrentTableArticulos"];
+                    DataTable testArticulos = (DataTable)Session["CurrentTableArticulos"];
                     row = testArticulos.NewRow();
                     row["id_producto"] = ddlProducto.SelectedValue.ToString();
                     row["numero_linea"] = 1;
@@ -458,14 +456,14 @@ namespace PrestaVende.Public
                     testArticulos.Rows.Add(row);
                     calculaTotalPrestamo();
                     dtTablaArticulos = testArticulos;
-                    ViewState["CurrentTableArticulos"] = testArticulos;
+                    Session["CurrentTableArticulos"] = testArticulos;
 
                     gvProductoElectrodomesticos.DataSource = dtTablaArticulos;
                     gvProductoElectrodomesticos.DataBind();
                 }
                 else
                 {
-                    DataTable testArticulos = (DataTable)ViewState["CurrentTableArticulos"];
+                    DataTable testArticulos = (DataTable)Session["CurrentTableArticulos"];
                     DataRow drCurrectRow = null;
 
                     drCurrectRow = dtTablaJoyas.NewRow();
@@ -478,7 +476,7 @@ namespace PrestaVende.Public
                     drCurrectRow["id_marca"] = ddlMarca.SelectedValue.ToString();
                     
                     testArticulos.Rows.Add(drCurrectRow);
-                    ViewState["CurrentTableArticulos"] = testArticulos;
+                    Session["CurrentTableArticulos"] = testArticulos;
 
                     gvProductoElectrodomesticos.DataSource = dtTablaArticulos;
                     gvProductoElectrodomesticos.DataBind();
@@ -715,12 +713,17 @@ namespace PrestaVende.Public
                 {
                     lblNumeroPrestamoNumero.Text = numero_prestamo_guardado;
                     showSuccess("Se creo prestamo correctamente.");
+
                     string script = "window.open('WebReport.aspx?tipo_reporte=1" + "&numero_prestamo=" + numero_prestamo_guardado + "');";
                     ScriptManager.RegisterClientScriptBlock(this, GetType(), "OpenContrato", script, true);
+
+                    Session["CurrentTableJoyas"] = null;
 
                     string prueba = numero_prestamo_guardado;
                     string scriptEstadoCuenta = "window.open('WebReport.aspx?tipo_reporte=3" + "&numero_prestamo=" + prueba + "');";
                     ScriptManager.RegisterClientScriptBlock(this, GetType(), "OpenEstadoCuenta", scriptEstadoCuenta, true);
+
+                    Session["CurrentTableJoyas"] = null;
 
                     string segunda = prueba;
                     string scriptEtiqueta = "window.open('WebReport.aspx?tipo_reporte=4" + "&numero_prestamo=" + segunda + "');";
@@ -748,11 +751,17 @@ namespace PrestaVende.Public
                     string script = "window.open('WebReport.aspx?tipo_reporte=1" + "&numero_prestamo=" + lblNumeroPrestamoNumero.Text + "');";
                     ScriptManager.RegisterClientScriptBlock(this, GetType(), "OpenContrato", script, true);
 
+                    Session["CurrentTableArticulos"] = null;
+
                     string scriptEstadoCuenta = "window.open('WebReport.aspx?tipo_reporte=3" + "&numero_prestamo=" + lblNumeroPrestamoNumero.Text + "');";
                     ScriptManager.RegisterClientScriptBlock(this, GetType(), "OpenEstadoCuenta", scriptEstadoCuenta, true);
 
+                    Session["CurrentTableArticulos"] = null;
+
                     string scriptEtiqueta = "window.open('WebReport.aspx?tipo_reporte=4" + "&numero_prestamo=" + lblNumeroPrestamoNumero.Text + "');";
                     ScriptManager.RegisterClientScriptBlock(this, GetType(), "OpenEtiqueta", scriptEtiqueta, true);
+
+                    Session["CurrentTableArticulos"] = null;
                 }
                 else
                     showError(error);
@@ -833,7 +842,12 @@ namespace PrestaVende.Public
                     showWarning("Usted no tiene caja asignada.");
                     return false;
                 }
-                else if (Convert.ToDecimal(Session["saldo_caja"]) < Convert.ToDecimal(lblTotalPrestamoQuetzales.Text.ToString()))
+                else if (txtMontoARecalcular.Visible && Convert.ToDecimal(Session["saldo_caja"]) < Convert.ToDecimal(txtMontoARecalcular.Text.ToString()))
+                {
+                    showWarning("El saldo de su caja es menor al monto del prestamo que quiere emitir, solicite un incremento de capital.");
+                    return false;
+                }
+                else if (!txtMontoARecalcular.Visible && Convert.ToDecimal(Session["saldo_caja"]) < Convert.ToDecimal(lblTotalPrestamoQuetzales.Text.ToString()))
                 {
                     showWarning("El saldo de su caja es menor al monto del prestamo que quiere emitir, solicite un incremento de capital.");
                     return false;

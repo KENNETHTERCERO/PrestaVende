@@ -17,15 +17,18 @@ namespace PrestaVende.Public
         {
             try
             {
-                getMenu();
-                string caja = "";
+                if (!IsPostBack)
+                {
+                    getMenu();
+                    string caja = "";
 
-                if (Convert.ToInt32(Session["id_caja"]) == 0)
-                    lblCajaAsignada.Text = "ID: CAJA NO ASIGNADA.";
-                else
-                    lblCajaAsignada.Text = "ID: " + Convert.ToInt32(Session["id_caja"]);
+                    if (Convert.ToInt32(Session["id_caja"]) == 0)
+                        lblCajaAsignada.Text = "ID: CAJA NO ASIGNADA.";
+                    else
+                        lblCajaAsignada.Text = "ID: " + Convert.ToInt32(Session["id_caja"]);
 
-                lblUsuario.Text = "U: " + Session["primer_nombre"].ToString() + " " + Session["primer_apellido"].ToString();
+                    lblUsuario.Text = "U: " + Session["primer_nombre"].ToString() + " " + Session["primer_apellido"].ToString();
+                }
             }
             catch (Exception ex)
             {
@@ -99,14 +102,15 @@ namespace PrestaVende.Public
                 Session["id_rol"] = 0;
                 Session["id_caja"] = 0;
                 Session["usuario"] = "";
+                Session["id_tipo_caja"] = 0;
                 Session["primer_nombre"] = "";
                 Session["primer_apellido"] = "";
                 Session["saldo_caja"] = 0;
-                Session["id_tipo_caja"] = 0;
+                Session.RemoveAll();
             }
             catch (Exception ex)
             {
-                //showError(ex.ToString());
+                ex.ToString();
             }
         }
     }
