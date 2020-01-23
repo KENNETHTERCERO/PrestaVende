@@ -13,6 +13,11 @@ namespace PrestaVende.CLASS
 
         cs_connection connection = new cs_connection();
         SqlCommand command = new SqlCommand();
+        public cs_prestamo()
+        {
+            command = new SqlCommand();
+            connection = new cs_connection();
+        }
 
         public bool guardar_prestamo(ref string error, string[] encabezado, DataTable detalle, string tipo_prenda, ref string numero_prestamo_guardado)
         {
@@ -20,6 +25,7 @@ namespace PrestaVende.CLASS
             {
                 string numero_prestamo = "", monto = "";
                 int id_prestamo_encabezado = 0;
+                command = new SqlCommand();
 
                 connection.connection.Open();
                 command.Connection = connection.connection;

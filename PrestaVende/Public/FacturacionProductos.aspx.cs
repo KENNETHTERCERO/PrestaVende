@@ -107,6 +107,7 @@ namespace PrestaVende.Public
                 {
                     DataTable ArticuloCompleto = new DataTable("TablaArticuloCompleto");
 
+                    cs_manejo_inventario = new CLASS.cs_manejo_inventario();
                     ArticuloCompleto = cs_manejo_inventario.getArticuloEspecifico(ref error, txtBusqueda.Text.ToString(), ddlArticulos.SelectedValue.ToString());
 
                     foreach (DataRow item in ArticuloCompleto.Rows)
@@ -278,6 +279,7 @@ namespace PrestaVende.Public
             try
             {
                 int id_sucursal = Convert.ToInt32(HttpContext.Current.Session["id_sucursal"]);
+                cs_serie = new CLASS.cs_serie();
                 ddlSerie.DataSource = cs_serie.getSerieDDL(ref error, id_sucursal);
                 ddlSerie.DataValueField = "id_serie";
                 ddlSerie.DataTextField = "serie";
@@ -495,7 +497,10 @@ namespace PrestaVende.Public
                 int id_serie = int.Parse(ddlSerie.SelectedValue.ToString());
 
                 if (id_serie > 0)
+                {
+                    cs_serie = new CLASS.cs_serie();
                     lblNumeroFactura.Text = (cs_serie.getCorrelativoSerie(ref error, id_serie) + 1).ToString();
+                }
                 else
                     lblNumeroFactura.Text = "0";
             }

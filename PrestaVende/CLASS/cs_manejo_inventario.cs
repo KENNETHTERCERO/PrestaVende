@@ -12,6 +12,12 @@ namespace PrestaVende.CLASS
         cs_connection connection = new cs_connection();
         SqlCommand command = new SqlCommand();
 
+        public cs_manejo_inventario()
+        {
+            command = new SqlCommand();
+            connection = new cs_connection();   
+        }
+
         public DataTable getArticulos(ref string error, string numero_prestamo)
         {
             try
@@ -70,6 +76,8 @@ namespace PrestaVende.CLASS
             try
             {
                 string numero_factura = "";
+
+                command = new SqlCommand();
 
                 connection.connection.Open();
                 command.Connection = connection.connection;

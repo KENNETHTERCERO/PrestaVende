@@ -179,6 +179,7 @@ namespace PrestaVende.Public
                 datosInsert[17] = ddlProfesion.SelectedValue.ToString();
                 datosInsert[18] = ddlNacionalidad.SelectedValue.ToString();
 
+                cs_cliente = new CLASS.cs_cliente();
                 if (cs_cliente.insertClient(ref error, datosInsert) > 0)
                 {
                     showSuccess("Se creo cliente sin problema.");
@@ -218,6 +219,8 @@ namespace PrestaVende.Public
                 datosUpdate[15] = txtTercerNombre.Text;
                 datosUpdate[16] = txtApellidoCasada.Text;
                 datosUpdate[17] = ddlNacionalidad.SelectedValue.ToString();
+
+                cs_cliente = new CLASS.cs_cliente();
 
                 if (cs_cliente.updateClient(ref error, datosUpdate) > 0)
                 {

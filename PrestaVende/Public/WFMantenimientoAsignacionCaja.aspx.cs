@@ -142,6 +142,7 @@ namespace PrestaVende.Public
 
                 if (Convert.ToInt32(Session["id_rol"]) == 5)
                 {
+                    mAsignacionCaja = new CLASS.cs_asignacion_caja();
                     string id_caja_asignada = mAsignacionCaja.getIDCajaAsignada(ref error);
                     ddIdCaja.SelectedValue = id_caja_asignada;
                     bloqueaCamposSegunTransaccion("cierre");
@@ -169,6 +170,7 @@ namespace PrestaVende.Public
                     {
                         if (ChbxRecibir.Checked)
                         {
+                            mAsignacionCaja = new CLASS.cs_asignacion_caja();
                             if (ddIdEstadoCaja.SelectedValue.ToString().Equals("4"))
                             {
                                 if (mAsignacionCaja.recibirCierreCaja(ref error, ddidAsignacion.Text.ToString(), txtMonto.Text.ToString(), ddIdCaja.SelectedValue.ToString(), ddIdUsuarioAsignado.SelectedValue.ToString()))
@@ -245,7 +247,7 @@ namespace PrestaVende.Public
                     GridViewRow selectedRow = GrdVAsignacionCaja.Rows[index];
 
                     TableCell id_asignacion_caja = selectedRow.Cells[1];
-
+                    mAsignacionCaja = new CLASS.cs_asignacion_caja();
                     if (mAsignacionCaja.getValidandoEstadoAsignacion(ref error, id_asignacion_caja.Text.ToString()) == "0")
                     {
                         DtAsignacionCaja = mAsignacionCaja.getDatosAsignacionCaja(ref error, id_asignacion_caja.Text.ToString());
@@ -302,6 +304,7 @@ namespace PrestaVende.Public
         {
             try
             {
+                mAsignacionCaja = new CLASS.cs_asignacion_caja();
                 ddIdCaja.DataSource = mAsignacionCaja.getCaja(ref error);
                 ddIdCaja.DataValueField = "id_caja";
                 ddIdCaja.DataTextField = "nombre_caja";
@@ -318,6 +321,7 @@ namespace PrestaVende.Public
         {
             try
             {
+                mAsignacionCaja = new CLASS.cs_asignacion_caja();
                 GrdVAsignacionCaja.DataSource = mAsignacionCaja.getAsignacionCaja(ref error);
                 GrdVAsignacionCaja.DataBind();
             }
@@ -331,6 +335,7 @@ namespace PrestaVende.Public
         {
             try
             {
+                mAsignacionCaja = new CLASS.cs_asignacion_caja();
                 ddIdUsuarioAsignado.DataSource = mAsignacionCaja.getUsuarioAsignado(ref error);
                 ddIdUsuarioAsignado.DataValueField = "id_usuario";
                 ddIdUsuarioAsignado.DataTextField = "usuario";
@@ -347,6 +352,7 @@ namespace PrestaVende.Public
         {
             try
             {
+                mAsignacionCaja = new CLASS.cs_asignacion_caja();
                 ddIdEstadoCaja.DataSource = mAsignacionCaja.getEstadosCajas(ref error, id_caja);
                 ddIdEstadoCaja.DataValueField = "id_estado_caja";
                 ddIdEstadoCaja.DataTextField = "estado_caja";
@@ -363,6 +369,7 @@ namespace PrestaVende.Public
         {
             try
             {
+                mAsignacionCaja = new CLASS.cs_asignacion_caja();
                 ddIdEstadoCaja.DataSource = mAsignacionCaja.getEstadoCajaPorRol(ref error, id_caja, ref id_usuario_caja_asignada);
                 ddIdEstadoCaja.DataValueField = "id_estado_caja";
                 ddIdEstadoCaja.DataTextField = "estado_caja";
@@ -449,6 +456,7 @@ namespace PrestaVende.Public
                 if (ddIdEstadoCaja.SelectedValue.ToString() == "4")
                 {
                     decimal saldo_caja_validacion = 0;
+                    mAsignacionCaja = new CLASS.cs_asignacion_caja();
                     saldo_caja_validacion = mAsignacionCaja.getSaldoCajaValidacion(ref error, Convert.ToInt32(ddIdCaja.SelectedValue.ToString()));
 
                     if (saldo_caja_validacion == 0 && error.Length > 0)
@@ -507,7 +515,7 @@ namespace PrestaVende.Public
                 {
                     blnRecibir = true;
                 }
-
+                mAsignacionCaja = new CLASS.cs_asignacion_caja();
                 if (mAsignacionCaja.insertAsignacionCaja(ref error, ddidAsignacion.Text, ddIdCaja.SelectedValue.ToString(), ddIdEstadoCaja.SelectedValue.ToString(), txtMonto.Text, "1", thisDay.ToString("MM/dd/yyyy HH:mm:ss"), thisDay.ToString("MM/dd/yyyy HH:mm:ss"), Session["usuario"].ToString(), ddIdUsuarioAsignado.SelectedValue.ToString(), blnRecibir, id_asignacion_recibida, ref IntCajaActualUsuario))
                 {
                     if (ddIdEstadoCaja.SelectedValue.ToString() == "2")

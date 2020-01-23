@@ -258,11 +258,12 @@ namespace PrestaVende.Public
                                     string id_prestamo = Request.QueryString["id_prestamo"];
 
                                     cs_factura = new CLASS.cs_factura();
+                                    error = "";
                                     Resultado = cs_factura.GuardarFactura(ref error, ds_global, id_serie, id_cliente, id_tipo_transaccion, Convert.ToInt32(Session["id_caja"]), numero_prestamo, abono.ToString());
                                      
                                     if(Resultado == string.Empty)
                                     {
-                                        showWarning("Error al generar la factura.");
+                                        showWarning("Error al generar la factura." + error);
                                     } else
                                     {
                                         showSuccess("Se creo prestamo correctamente.");
@@ -271,7 +272,7 @@ namespace PrestaVende.Public
 
                                         if (id_tipo_transaccion == "9" || id_tipo_transaccion == "10")
                                         {
-                                            string script2 = "window.open('WebReport.aspx?tipo_reporte=5" + "&id_factura=" + Resultado + "&id_sucursal=" + (string)Session["id_sucursal"] + "');";
+                                            string script2 = "window.open('WebReport.aspx?tipo_reporte=5" + "&id_factura=" + Resultado + "&id_sucursal=" + Session["id_sucursal"].ToString() + "');";
                                             ScriptManager.RegisterClientScriptBlock(this, GetType(), "ImpresionRecibo", script2, true);
                                         }                                        
 

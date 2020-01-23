@@ -423,7 +423,7 @@ namespace PrestaVende.CLASS
 
                 if (insert > 0)
                 {
-                    if(!update_saldo_caja(ref error, monto, "0"))
+                    if(update_saldo_caja(ref error, monto, "0"))
                     {
                         if (id_tipo_transaccion == "9" || id_tipo_transaccion == "10")
                         {
