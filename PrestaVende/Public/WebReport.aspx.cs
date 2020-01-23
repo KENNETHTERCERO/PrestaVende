@@ -244,29 +244,29 @@ namespace PrestaVende.Public
             else if (Convert.ToInt32(tipo_reporte) == 9)//Reporte inventario disponible.
             {
                 string id_sucursal = Request.QueryString.Get("id_sucursal");
-                string fecha_inicio = Request.QueryString.Get("fecha_inicio");
-                string fecha_fin = Request.QueryString.Get("fecha_fin");
+                
 
-                DataTable contrato = new DataTable("contrato");
-                string numero_prestamo = Request.QueryString.Get("numero_sucursal");
+                DataTable inventario = new DataTable("dtInventario");
 
-                contrato = cs_prestamo.GetContrato(ref error, numero_prestamo, id_sucursal);
-                if (contrato.Rows.Count <= 0)
+
+                inventario = cs_manejo_inventario.getInventarioDisponible(ref error,  id_sucursal);
+
+                if (inventario.Rows.Count <= 0)
                 {
-                    error = "Error obteniendo datos de contrato." + error;
+                    error = "Error obteniendo datos de inventario." + error;
                     throw new Exception("");
                 }
                 else
                 {
                     try
                     {
-                        Reports.CRContratoGeneral prestamoGeneral = new Reports.CRContratoGeneral();
-                        prestamoGeneral.Load(Server.MapPath("~/Reports/CRContratoGeneral.rpt"));
-                        prestamoGeneral.SetDataSource(contrato);
-                        CrystalReportViewer1.ReportSource = prestamoGeneral;//document;
+                        Reports.CRInventarioSucursal inventarioSucursal = new Reports.CRInventarioSucursal();
+                        inventarioSucursal.Load(Server.MapPath("~/Reports/CRInventarioSucursal.rpt"));
+                        inventarioSucursal.SetDataSource(inventario);
+                        CrystalReportViewer1.ReportSource = inventarioSucursal;//document;
                         CrystalReportViewer1.DataBind();
                         CrystalReportViewer1.RefreshReport();
-                        prestamoGeneral.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "Contrato No." + numero_prestamo);
+                        inventarioSucursal.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "");
                     }
                     catch (Exception ex)
                     {
