@@ -372,6 +372,8 @@ namespace PrestaVende.CLASS
                 string id_tipo_caja = "";
                 string id_caja_general = "";
 
+                command = new SqlCommand();
+
                 command.Connection = connection.connection;
                 connection.connection.Open();
                 command.Parameters.Clear();
@@ -410,16 +412,25 @@ namespace PrestaVende.CLASS
                 command.Parameters.AddWithValue("@id_sucursal", Convert.ToInt32(HttpContext.Current.Session["id_sucursal"]));
                 id_caja_general = command.ExecuteScalar().ToString();
                 
-                if (id_estado_caja == AsignacionCaja) //ESTADO ASIGNACION, SI SE ASIGNA LA CAJA EL MONTO DE ASIGNACION ES EL SALDO DE LA CAJA ACTUAL
+                if (id_estado_caja == AsignacionCaja || id_estado_caja == Incremento) //ESTADO ASIGNACION, SI SE ASIGNA LA CAJA EL MONTO DE ASIGNACION ES EL SALDO DE LA CAJA ACTUAL
                 {
                     //REALIZANDO ACTUALIZACION DE SALDO PARA LA CAJA TRANSACCIONAL
-                    command.Parameters.Clear();
-                    EstadoCajaOperacion = id_estado_caja;
-                    command.CommandText = " UPDATE tbl_caja SET saldo = @SaldoAsignado, id_estado_caja = @id_estado_caja where id_caja = @id_caja ";
-                    command.Parameters.AddWithValue("@SaldoAsignado", monto);
-                    command.Parameters.AddWithValue("@id_caja", id_caja);
-                    command.Parameters.AddWithValue("@id_estado_caja", id_estado_caja);
-                    rowsUpdated = command.ExecuteNonQuery();
+                    if (id_estado_caja == Incremento)
+                    {
+                        id_estado_caja = "3";
+                        rowsUpdated = 1;
+                    }
+                    else
+                    {
+                        id_estado_caja = "2";
+                        command.Parameters.Clear();
+                        EstadoCajaOperacion = id_estado_caja;
+                        command.CommandText = " UPDATE tbl_caja SET saldo = @SaldoAsignado, id_estado_caja = @id_estado_caja where id_caja = @id_caja ";
+                        command.Parameters.AddWithValue("@SaldoAsignado", monto);
+                        command.Parameters.AddWithValue("@id_caja", id_caja);
+                        command.Parameters.AddWithValue("@id_estado_caja", id_estado_caja);
+                        rowsUpdated = command.ExecuteNonQuery();
+                    }
 
                     if (rowsUpdated <= 0)
                     {
@@ -708,16 +719,6 @@ namespace PrestaVende.CLASS
                 {
                     throw new SystemException("Error actualizando la tabla de asignacion de caja.");
                 }
-                command.Parameters.Clear();
-                command.CommandText = "UPDATE tbl_caja SET saldo = saldo + @monto_caja WHERE id_caja = @id_caja";
-                command.Parameters.AddWithValue("@id_caja", id_caja);
-                command.Parameters.AddWithValue("@monto_caja", monto);
-                rowsUpdated = command.ExecuteNonQuery();
-
-                if (rowsUpdated <= 0)
-                {
-                    throw new SystemException("Error actualizando la tabla de caja.");
-                }
 
                 command.Parameters.Clear();
                 command.CommandText = "INSERT INTO tbl_transaccion (id_tipo_transaccion, id_caja, monto, estado_transaccion, fecha_transaccion, usuario, movimiento_saldo, id_sucursal) " +
@@ -732,6 +733,17 @@ namespace PrestaVende.CLASS
                 if (rowsUpdated <= 0)
                 {
                     throw new SystemException("Error actualizando la tabla de usuario en la recepcion.");
+                }
+
+                command.Parameters.Clear();
+                command.CommandText = "UPDATE tbl_caja SET saldo = saldo + @monto_caja WHERE id_caja = @id_caja";
+                command.Parameters.AddWithValue("@id_caja", id_caja);
+                command.Parameters.AddWithValue("@monto_caja", monto);
+                rowsUpdated = command.ExecuteNonQuery();
+
+                if (rowsUpdated <= 0)
+                {
+                    throw new SystemException("Error actualizando la tabla de caja.");
                 }
 
                 command.Transaction.Commit();
