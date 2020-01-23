@@ -25,7 +25,7 @@ namespace PrestaVende.Public
 
                 if (cookie == null && Convert.ToInt32(Session["id_usuario"]) == 0)
                 {
-                  //  Response.Redirect("~/WFWebLogin.aspx");
+                    Response.Redirect("~/WFWebLogin.aspx");
                 }
                
                     if (IsPostBack)
@@ -66,18 +66,17 @@ namespace PrestaVende.Public
         {
             try
             {
-              //  int id_empresa = Convert.ToInt32(Session["id_empresa"]);
-                int id_empresa = 1;
+                int id_empresa = Convert.ToInt32(Session["id_empresa"]);
                 ddlSucursal.DataSource = cs_sucursal.ObtenerSucursalesPorEmpresa(ref error, id_empresa.ToString());
                 ddlSucursal.DataValueField = "id_sucursal";
                 ddlSucursal.DataTextField = "sucursal";
                 ddlSucursal.DataBind();
 
-             //   ddlSucursal.SelectedValue = Session["id_empresa"].ToString();
-                ddlSucursal.SelectedValue = "1";
+                ddlSucursal.SelectedValue = Session["id_sucursal"].ToString();
 
-              //  if (Convert.ToInt32(Session["id_rol"]) == 3 || Convert.ToInt32(Session["id_rol"]) == 4 || Convert.ToInt32(Session["id_rol"]) == 5)
-              //      ddlSucursal.Enabled = false;
+
+                if (Convert.ToInt32(Session["id_rol"]) == 3 || Convert.ToInt32(Session["id_rol"]) == 4 || Convert.ToInt32(Session["id_rol"]) == 5)
+                    ddlSucursal.Enabled = false;
             }
             catch (Exception ex)
             {
