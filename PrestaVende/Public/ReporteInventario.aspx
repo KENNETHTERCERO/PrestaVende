@@ -50,7 +50,7 @@
                                                 <table>
                                                     <tr>
                                                         <td>
-                                                            <h1>Reporte de Inventario&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h1>
+                                                            <h1>Reporte de Inventario disponible&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h1>
                                                         </td>
                                                         <!--<td>
                                                             <big><asp:Label ID="lblPrestamo" runat="server">Prestamo:&nbsp;&nbsp;</asp:Label></big>
@@ -70,10 +70,10 @@
                                         <div>
                                             <table>                                                
                                                 <tr>
-                                                    <td colspan="2">
+                                                    <td >
                                                         <asp:Label ID="lblSerie" runat="server" Font-Bold="true">SUCURSAL</asp:Label>
                                                     </td>        
-                                                    <td></td>               
+                                                    <td style="width:25px"> &nbsp;&nbsp;</td>               
                                                     <td>
                                                         <asp:DropDownList ID="ddlSucursal" runat="server" CssClass="form-control"  AutoPostBack="true"></asp:DropDownList>
                                                     </td> 

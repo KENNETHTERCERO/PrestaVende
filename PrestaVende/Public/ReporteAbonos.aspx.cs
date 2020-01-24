@@ -52,7 +52,7 @@ namespace PrestaVende.Public
                 ddlSucursal.DataTextField = "sucursal";
                 ddlSucursal.DataBind();
 
-                ddlSucursal.SelectedValue = Session["id_empresa"].ToString();
+                ddlSucursal.SelectedValue = Session["id_sucursal"].ToString();
 
                 if (Convert.ToInt32(Session["id_rol"]) == 3 || Convert.ToInt32(Session["id_rol"]) == 4 || Convert.ToInt32(Session["id_rol"]) == 5)
                     ddlSucursal.Enabled = false;

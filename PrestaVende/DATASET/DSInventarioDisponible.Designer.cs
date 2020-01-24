@@ -291,9 +291,9 @@ namespace PrestaVende.DATASET {
             
             private global::System.Data.DataColumn columnnumero_linea;
             
-            private global::System.Data.DataColumn columnid_producto;
-            
             private global::System.Data.DataColumn columnproducto;
+            
+            private global::System.Data.DataColumn columncaracteristicas;
             
             private global::System.Data.DataColumn columnprecio_producto;
             
@@ -386,17 +386,17 @@ namespace PrestaVende.DATASET {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn id_productoColumn {
+            public global::System.Data.DataColumn productoColumn {
                 get {
-                    return this.columnid_producto;
+                    return this.columnproducto;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn productoColumn {
+            public global::System.Data.DataColumn caracteristicasColumn {
                 get {
-                    return this.columnproducto;
+                    return this.columncaracteristicas;
                 }
             }
             
@@ -469,7 +469,7 @@ namespace PrestaVende.DATASET {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public dtInventarioRow AdddtInventarioRow(string empresa, int id_sucursal, int sucursal, System.DateTime fecha_agregado, decimal numero_prestamo, int numero_linea, int id_producto, string producto, decimal precio_producto, decimal campo_adicional_decimal, int campo_adicional_entero, string campo_adicional_cadena) {
+            public dtInventarioRow AdddtInventarioRow(string empresa, int id_sucursal, int sucursal, System.DateTime fecha_agregado, long numero_prestamo, int numero_linea, string producto, string caracteristicas, decimal precio_producto, decimal campo_adicional_decimal, int campo_adicional_entero, string campo_adicional_cadena) {
                 dtInventarioRow rowdtInventarioRow = ((dtInventarioRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         empresa,
@@ -478,8 +478,8 @@ namespace PrestaVende.DATASET {
                         fecha_agregado,
                         numero_prestamo,
                         numero_linea,
-                        id_producto,
                         producto,
+                        caracteristicas,
                         precio_producto,
                         campo_adicional_decimal,
                         campo_adicional_entero,
@@ -512,8 +512,8 @@ namespace PrestaVende.DATASET {
                 this.columnfecha_agregado = base.Columns["fecha_agregado"];
                 this.columnnumero_prestamo = base.Columns["numero_prestamo"];
                 this.columnnumero_linea = base.Columns["numero_linea"];
-                this.columnid_producto = base.Columns["id_producto"];
                 this.columnproducto = base.Columns["producto"];
+                this.columncaracteristicas = base.Columns["caracteristicas"];
                 this.columnprecio_producto = base.Columns["precio_producto"];
                 this.columncampo_adicional_decimal = base.Columns["campo_adicional_decimal"];
                 this.columncampo_adicional_entero = base.Columns["campo_adicional_entero"];
@@ -531,14 +531,14 @@ namespace PrestaVende.DATASET {
                 base.Columns.Add(this.columnsucursal);
                 this.columnfecha_agregado = new global::System.Data.DataColumn("fecha_agregado", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnfecha_agregado);
-                this.columnnumero_prestamo = new global::System.Data.DataColumn("numero_prestamo", typeof(decimal), null, global::System.Data.MappingType.Element);
+                this.columnnumero_prestamo = new global::System.Data.DataColumn("numero_prestamo", typeof(long), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnnumero_prestamo);
                 this.columnnumero_linea = new global::System.Data.DataColumn("numero_linea", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnnumero_linea);
-                this.columnid_producto = new global::System.Data.DataColumn("id_producto", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnid_producto);
                 this.columnproducto = new global::System.Data.DataColumn("producto", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnproducto);
+                this.columncaracteristicas = new global::System.Data.DataColumn("caracteristicas", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columncaracteristicas);
                 this.columnprecio_producto = new global::System.Data.DataColumn("precio_producto", typeof(decimal), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnprecio_producto);
                 this.columncampo_adicional_decimal = new global::System.Data.DataColumn("campo_adicional_decimal", typeof(decimal), null, global::System.Data.MappingType.Element);
@@ -753,10 +753,10 @@ namespace PrestaVende.DATASET {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public decimal numero_prestamo {
+            public long numero_prestamo {
                 get {
                     try {
-                        return ((decimal)(this[this.tabledtInventario.numero_prestamoColumn]));
+                        return ((long)(this[this.tabledtInventario.numero_prestamoColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
                         throw new global::System.Data.StrongTypingException("The value for column \'numero_prestamo\' in table \'dtInventario\' is DBNull.", e);
@@ -785,22 +785,6 @@ namespace PrestaVende.DATASET {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public int id_producto {
-                get {
-                    try {
-                        return ((int)(this[this.tabledtInventario.id_productoColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'id_producto\' in table \'dtInventario\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tabledtInventario.id_productoColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public string producto {
                 get {
                     try {
@@ -812,6 +796,22 @@ namespace PrestaVende.DATASET {
                 }
                 set {
                     this[this.tabledtInventario.productoColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string caracteristicas {
+                get {
+                    try {
+                        return ((string)(this[this.tabledtInventario.caracteristicasColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'caracteristicas\' in table \'dtInventario\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tabledtInventario.caracteristicasColumn] = value;
                 }
             }
             
@@ -954,18 +954,6 @@ namespace PrestaVende.DATASET {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool Isid_productoNull() {
-                return this.IsNull(this.tabledtInventario.id_productoColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void Setid_productoNull() {
-                this[this.tabledtInventario.id_productoColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsproductoNull() {
                 return this.IsNull(this.tabledtInventario.productoColumn);
             }
@@ -974,6 +962,18 @@ namespace PrestaVende.DATASET {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetproductoNull() {
                 this[this.tabledtInventario.productoColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IscaracteristicasNull() {
+                return this.IsNull(this.tabledtInventario.caracteristicasColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetcaracteristicasNull() {
+                this[this.tabledtInventario.caracteristicasColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]

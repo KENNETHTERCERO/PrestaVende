@@ -71,6 +71,30 @@ namespace PrestaVende.CLASS
             }
         }
 
+        public DataTable getInventarioDisponible(ref string error,  string id_sucursal)
+        {
+            DataTable dtInventario = new DataTable("dtInventario");
+            try
+            {
+                connection.connection.Open();
+                command.Connection = connection.connection;
+                command.Parameters.Clear();
+                command.CommandText = "exec SP_ConsultarInventarioDisponible @id_sucursal";                
+                command.Parameters.AddWithValue("@id_sucursal", id_sucursal);
+                dtInventario.Load(command.ExecuteReader());
+                return dtInventario;
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                return null;
+            }
+            finally
+            {
+                connection.connection.Close();
+            }
+        }
+
         public bool GuardarFactura(ref string error, DataTable detalleFactura, string[] encabezado, ref int id_factura_encabezado)
         {
             try
