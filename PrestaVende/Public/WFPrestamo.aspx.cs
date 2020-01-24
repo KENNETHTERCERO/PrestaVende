@@ -711,9 +711,9 @@ namespace PrestaVende.Public
             {
                 string numero_prestamo_guardado = "";
                 cs_prestamo = new CLASS.cs_prestamo();
-                if (cs_prestamo.guardar_prestamo(ref error, generaEncabezado(), dtTablaJoyas, ddlCategoria.SelectedValue.ToString(), ref numero_prestamo_guardado))
+                if (cs_prestamo.guardar_prestamo(ref error, generaEncabezado(), dtTablaJoyas, this.ddlCategoria.SelectedValue.ToString(), ref numero_prestamo_guardado))
                 {
-                    lblNumeroPrestamoNumero.Text = numero_prestamo_guardado;
+                    this.lblNumeroPrestamoNumero.Text = numero_prestamo_guardado;
                     showSuccess("Se creo prestamo correctamente.");
 
                     string script = "window.open('WebReport.aspx?tipo_reporte=1" + "&numero_prestamo=" + numero_prestamo_guardado + "');";
@@ -746,7 +746,7 @@ namespace PrestaVende.Public
             {
                 string numero_prestamo_guardado = "";
                 cs_prestamo = new CLASS.cs_prestamo();
-                if (cs_prestamo.guardar_prestamo(ref error, generaEncabezado(), dtTablaArticulos, ddlCategoria.SelectedValue.ToString(), ref numero_prestamo_guardado))
+                if (cs_prestamo.guardar_prestamo(ref error, generaEncabezado(), dtTablaArticulos, this.ddlCategoria.SelectedValue.ToString(), ref numero_prestamo_guardado))
                 {
                     lblNumeroPrestamoNumero.Text = numero_prestamo_guardado;
                     showSuccess("Se creo prestamo correctamente.");
@@ -782,31 +782,31 @@ namespace PrestaVende.Public
                 decimal montoOriginal = 0, nuevoMonto = 0;
                 if (txtMontoARecalcular.Visible)
                 {
-                    montoOriginal = Convert.ToDecimal(lblTotalPrestamoQuetzales.Text);
-                    nuevoMonto = Convert.ToDecimal(txtMontoARecalcular.Text);
+                    montoOriginal = Convert.ToDecimal(this.lblTotalPrestamoQuetzales.Text);
+                    nuevoMonto = Convert.ToDecimal(this.txtMontoARecalcular.Text);
                 }
                 else
                 {
                     if (txtRedondeo.Text.ToString().Length <= 0)
                     {
-                        montoOriginal = Convert.ToDecimal(lblTotalPrestamoQuetzales.Text);
-                        nuevoMonto = Convert.ToDecimal(lblTotalPrestamoQuetzales.Text);
+                        montoOriginal = Convert.ToDecimal(this.lblTotalPrestamoQuetzales.Text);
+                        nuevoMonto = Convert.ToDecimal(this.lblTotalPrestamoQuetzales.Text);
                     }
                     else
                     {
-                        montoOriginal = Convert.ToDecimal(lblTotalPrestamoQuetzales.Text) - Convert.ToDecimal(txtRedondeo.Text.ToString());
-                        nuevoMonto = Convert.ToDecimal(lblTotalPrestamoQuetzales.Text);
+                        montoOriginal = Convert.ToDecimal(this.lblTotalPrestamoQuetzales.Text) - Convert.ToDecimal(this.txtRedondeo.Text.ToString());
+                        nuevoMonto = Convert.ToDecimal(this.lblTotalPrestamoQuetzales.Text);
                     }
                 }
-                encabezado[0] = lblid_cliente.Text.ToString();
+                encabezado[0] = this.lblid_cliente.Text.ToString();
                 encabezado[1] = nuevoMonto.ToString();
                 encabezado[2] = "1";
                 encabezado[3] = getFechaProximoPago().ToString();
-                encabezado[4] = lblTotalPrestamoQuetzales.Text;
+                encabezado[4] = this.lblTotalPrestamoQuetzales.Text;
                 encabezado[5] = Session["usuario"].ToString();
-                encabezado[6] = ddlTipoPrestamo.SelectedValue.ToString();
-                encabezado[7] = ddlIntereses.SelectedValue.ToString();
-                encabezado[8] = ddlCasilla.SelectedValue.ToString();
+                encabezado[6] = this.ddlTipoPrestamo.SelectedValue.ToString();
+                encabezado[7] = this.ddlIntereses.SelectedValue.ToString();
+                encabezado[8] = this.ddlCasilla.SelectedValue.ToString();
                 encabezado[9] = montoOriginal.ToString();
                 //encabezado[] = ;
                 //encabezado[] = ;

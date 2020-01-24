@@ -81,9 +81,8 @@ namespace PrestaVende.CLASS
 
                 connection.connection.Open();
                 command.Connection = connection.connection;
-                command.Parameters.Clear();
                 command.Transaction = connection.connection.BeginTransaction();
-
+                command.Parameters.Clear();
                 command.CommandText = "SELECT correlativo + 1 FROM tbl_serie WHERE id_sucursal = @id_sucursal and id_serie = @id_serie";
                 command.Parameters.AddWithValue("@id_sucursal", Convert.ToInt32(HttpContext.Current.Session["id_sucursal"]));
                 command.Parameters.AddWithValue("@id_serie", encabezado[0]);
@@ -251,9 +250,9 @@ namespace PrestaVende.CLASS
             {
                 int update = 0;
                 command.Parameters.Clear();
-                command.CommandText = "UPDATE tbl_caja SET saldo = saldo + @monto_update WHERE id_caja = @id_caja_update";
-                command.Parameters.AddWithValue("@monto_update", monto);
-                command.Parameters.AddWithValue("@id_caja_update", Convert.ToInt32(HttpContext.Current.Session["id_sucursal"]));
+                command.CommandText = "UPDATE tbl_caja SET saldo = saldo + @monto_update_venta WHERE id_caja = @id_caja_update_venta";
+                command.Parameters.AddWithValue("@monto_update_venta", monto);
+                command.Parameters.AddWithValue("@id_caja_update_venta", Convert.ToInt32(HttpContext.Current.Session["id_caja"]));
 
                 update = command.ExecuteNonQuery();
                 if (update > 0)
