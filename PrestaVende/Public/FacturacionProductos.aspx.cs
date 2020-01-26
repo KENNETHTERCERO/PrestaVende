@@ -41,7 +41,7 @@ namespace PrestaVende.Public
                     else
                     {
                         dtTablaArticulos = new DataTable("tablaJoyas");
-                        ViewState["CurrentTableJoyas"] = dtTablaArticulos;
+                        Session["CurrentTableJoyas"] = dtTablaArticulos;
                         setColumnsArticulo();
                         getSeries();
                     }
@@ -103,16 +103,16 @@ namespace PrestaVende.Public
         {
             try
             {
-                if (ViewState["CurrentTableJoyas"] != null)
+                if ((DataTable)Session["CurrentTableJoyas"] != null)
                 {
-                    DataTable ArticuloCompleto = new DataTable("TablaArticuloCompleto");
+                    DataTable ArticuloCompleto = (DataTable)Session["CurrentTableJoyas"];
 
                     cs_manejo_inventario = new CLASS.cs_manejo_inventario();
                     ArticuloCompleto = cs_manejo_inventario.getArticuloEspecifico(ref error, txtBusqueda.Text.ToString(), ddlArticulos.SelectedValue.ToString());
 
                     foreach (DataRow item in ArticuloCompleto.Rows)
                     {
-                        row = dtTablaArticulos.NewRow();
+                        row = ArticuloCompleto.NewRow();
                         row["id_inventario"] = item["id_inventario"].ToString();
                         row["numero_linea"] = item["numero_linea"].ToString();
                         row["numero_prestamo"] = item["numero_prestamo"].ToString();
@@ -123,10 +123,14 @@ namespace PrestaVende.Public
                         row["caracteristicas"] = item["caracteristicas"].ToString();
                         row["subTotal"] = item["subTotal"].ToString();
                         row["IVA"] = item["IVA"].ToString();
+                        row["valor_liquidado"] = item["valor_liquidado"].ToString();
                     }
 
-                    dtTablaArticulos.Rows.Add(row);
-                    ViewState["CurrentTableJoyas"] = dtTablaArticulos;
+                    ArticuloCompleto.Rows.Add(row);
+
+                    dtTablaArticulos = ArticuloCompleto;
+                    Session["CurrentTableJoyas"] = dtTablaArticulos;
+
                     gvProductoFacturar.DataSource = dtTablaArticulos;
                     gvProductoFacturar.DataBind();
                 }
@@ -151,6 +155,7 @@ namespace PrestaVende.Public
                 dtTablaArticulos.Columns.Add("caracteristicas");
                 dtTablaArticulos.Columns.Add("subTotal");
                 dtTablaArticulos.Columns.Add("IVA");
+                dtTablaArticulos.Columns.Add("valor_liquidado");
             }
             catch (Exception ex)
             {
@@ -206,7 +211,7 @@ namespace PrestaVende.Public
             {
                 string[] encabezado = new string[11];
                 decimal subTotal = 0, IVA = 0;
-                int id_factura_encabezado = 0;
+                int id_factura_encabezado = 0, id_recibo = 0;
                 foreach (DataRow item in dtTablaArticulos.Rows)
                 {
                     subTotal += Convert.ToDecimal(item["subTotal"]);
@@ -227,13 +232,13 @@ namespace PrestaVende.Public
 
                 cs_manejo_inventario = new CLASS.cs_manejo_inventario();
 
-                if (cs_manejo_inventario.GuardarFactura(ref error, dtTablaArticulos, encabezado, ref id_factura_encabezado))
+                if (cs_manejo_inventario.GuardarFactura(ref error, dtTablaArticulos, encabezado, ref id_factura_encabezado, ref id_recibo))
                 {
                     showSuccess("Factura guardada correctamente.");
                     string script = "window.open('WebReport.aspx?tipo_reporte=2" + "&id_factura=" + id_factura_encabezado.ToString() + "');";
                     ScriptManager.RegisterClientScriptBlock(this, GetType(), "ImpresionFactura", script, true);
 
-                    string script2 = "window.open('WebReport.aspx?tipo_reporte=5" + "&id_factura=" + id_factura_encabezado.ToString() + "&id_sucursal=" + Convert.ToInt32(HttpContext.Current.Session["id_sucursal"]) + "');";
+                    string script2 = "window.open('WebReport.aspx?tipo_reporte=5" + "&id_recibo=" + id_recibo.ToString() + "&id_sucursal=" + Session["id_sucursal"].ToString() + "');";
                     ScriptManager.RegisterClientScriptBlock(this, GetType(), "ImpresionRecibo", script2, true);
 
                     string scriptText = "alert('my message'); window.location='FacturacionProductos.aspx'";

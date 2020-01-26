@@ -154,10 +154,10 @@ namespace PrestaVende.Public
             }
             else if (Convert.ToInt32(tipo_reporte) == 5)//5 impresion de recibo.
             {
-                DataTable factura = new DataTable("DtDatos");
-                string id_factura = Request.QueryString.Get("id_factura");
+                DataTable factura = new DataTable("dtRecibo");
+                string id_recibo = Request.QueryString.Get("id_recibo");
                 string id_sucursal = Request.QueryString.Get("id_sucursal");
-                factura = cs_factura.ObtenerFacturaRecibo(ref error, id_factura, id_sucursal);
+                factura = cs_factura.ObtenerRecibo(ref error, id_recibo, id_sucursal);
 
                 if (factura.Rows.Count <= 0)
                 {

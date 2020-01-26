@@ -169,6 +169,7 @@ namespace PrestaVende.Public
                 getPrestamo();
                 getTransaccion();
                 getSeries();
+                ds_global = new DataSet();
             }
         }
 
@@ -241,6 +242,7 @@ namespace PrestaVende.Public
                         if (Convert.ToInt32(Session["id_tipo_caja"]) == 2)
                         {
                             decimal abono = 0;
+                            int id_recibo = 0;
                             bool abonoB = false;
 
                             abonoB = decimal.TryParse(txtAbonoCapital.Text, out abono);
@@ -259,7 +261,7 @@ namespace PrestaVende.Public
 
                                     cs_factura = new CLASS.cs_factura();
                                     error = "";
-                                    Resultado = cs_factura.GuardarFactura(ref error, ds_global, id_serie, id_cliente, id_tipo_transaccion, Convert.ToInt32(Session["id_caja"]), numero_prestamo, abono.ToString());
+                                    Resultado = cs_factura.GuardarFactura(ref error, ds_global, id_serie, id_cliente, id_tipo_transaccion, Convert.ToInt32(Session["id_caja"]), numero_prestamo, abono.ToString(), ref id_recibo);
                                      
                                     if(Resultado == string.Empty)
                                     {
@@ -272,7 +274,7 @@ namespace PrestaVende.Public
 
                                         if (id_tipo_transaccion == "9" || id_tipo_transaccion == "10")
                                         {
-                                            string script2 = "window.open('WebReport.aspx?tipo_reporte=5" + "&id_factura=" + Resultado + "&id_sucursal=" + Session["id_sucursal"].ToString() + "');";
+                                            string script2 = "window.open('WebReport.aspx?tipo_reporte=5" + "&id_recibo=" + id_recibo.ToString() + "&id_sucursal=" + Session["id_sucursal"].ToString() + "');";
                                             ScriptManager.RegisterClientScriptBlock(this, GetType(), "ImpresionRecibo", script2, true);
                                         }                                        
 

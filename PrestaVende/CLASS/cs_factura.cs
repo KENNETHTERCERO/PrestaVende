@@ -70,38 +70,19 @@ namespace PrestaVende.CLASS
             return dtReturnFacturas;
         }
 
-        public DataTable ObtenerFacturaRecibo(ref string error, string id_factura, string id_sucursal)
+        public DataTable ObtenerRecibo(ref string error, string id_recibo, string id_sucursal)
         {
-            DataTable dtReturnFacturas = new DataTable("dtFacturas");
-            DataSet ds = new DataSet();
+            DataTable dtReturnFacturas = new DataTable("dtRecibo");
 
             try
             {
                 connection.connection.Open();
                 command.Connection = connection.connection;
                 command.Parameters.Clear();
-
-                SqlDataAdapter adapter;
-                SqlParameter param;
-                SqlParameter paramS;
-
-                command.CommandType = CommandType.StoredProcedure;
-                command.CommandText = "sp_ConsultaImpresionRecibo";
-
-                param = new SqlParameter("@IdFactura", id_factura);                
-                param.Direction = ParameterDirection.Input;
-                param.DbType = DbType.Int16;
-                command.Parameters.Add(param);
-
-                paramS = new SqlParameter("@IdSucursal", id_sucursal);
-                paramS.Direction = ParameterDirection.Input;
-                paramS.DbType =  DbType.Int16;                
-                command.Parameters.Add(paramS);
-
-                adapter = new SqlDataAdapter(command);
-                adapter.Fill(ds);
-
-                dtReturnFacturas = ds.Tables[0];
+                command.CommandText = "exec sp_ConsultaImpresionRecibo @id_recibo, @id_sucursal";
+                command.Parameters.AddWithValue("@id_recibo", id_recibo);
+                command.Parameters.AddWithValue("@id_sucursal", id_sucursal);
+                dtReturnFacturas.Load(command.ExecuteReader());
             }
             catch (Exception ex)
             {
@@ -157,7 +138,7 @@ namespace PrestaVende.CLASS
             return ds;
         }
 
-        public string GuardarFactura(ref string error, DataSet DatosFactura, string id_serie, string id_cliente, string id_tipo_transaccion, int id_caja, string numero_prestamo, string abono)
+        public string GuardarFactura(ref string error, DataSet DatosFactura, string id_serie, string id_cliente, string id_tipo_transaccion, int id_caja, string numero_prestamo, string abono, ref int id_recibo)
         {
             bool Resultado = false;
             int id_factura_encabezado = 0;
@@ -165,10 +146,11 @@ namespace PrestaVende.CLASS
             command = new SqlCommand();
             try
             {                
-                string numero_factura = "";
+                string numero_factura = "", numero_recibo = "", id_serie_recibo = "", descripcion = "";
                 string fecha_proximo_pago = "";
                 string fecha_ultimo_pago = "";
                 string[] encabezado = new string[12];
+                DataTable datosRecibo = new DataTable();
 
                 connection.connection.Open();
                 command.Connection = connection.connection;
@@ -195,6 +177,29 @@ namespace PrestaVende.CLASS
                 fecha_ultimo_pago = DatosFactura.Tables[0].Rows[0]["calculo_fecha_ultimo_pago"].ToString();
 
                 id_factura_encabezado = insert_factura_encabezado(ref error, encabezado);
+
+                if (id_tipo_transaccion == "9" || id_tipo_transaccion == "10")
+                {
+                    command.Parameters.Clear();
+                    command.CommandText = "SELECT id_serie, correlativo + 1 AS correlativo fROM tbl_serie WHERE id_tipo_serie = 2 AND estado = 1 AND correlativo <= numero_de_facturas AND id_sucursal = @id_sucursal";
+                    command.Parameters.AddWithValue("@id_sucursal", Convert.ToInt32(HttpContext.Current.Session["id_sucursal"]));
+                    datosRecibo.Load(command.ExecuteReader());
+                    id_serie_recibo = datosRecibo.Rows[0]["id_serie"].ToString();
+                    numero_recibo = datosRecibo.Rows[0]["correlativo"].ToString();
+
+                    if (id_tipo_transaccion == "9")
+                        descripcion = "POR ABONO A CAPITAL DE PRESTAMO " + numero_prestamo;
+                    else
+                        descripcion = "POR CANCELACION DE PRESTAMO " + numero_prestamo;
+
+                    id_recibo = insertRecibo(ref error, abono, id_factura_encabezado.ToString(), Convert.ToDecimal(encabezado[3].ToString()), Convert.ToInt32(id_serie_recibo), numero_recibo, encabezado[2].ToString(), descripcion);
+
+                    if (id_recibo <= 0)
+                    {
+                        throw new Exception("No se pudo insertar recibo. " + error);
+                    }
+                }
+                
 
                 if (id_factura_encabezado > 0)
                 {
@@ -257,7 +262,6 @@ namespace PrestaVende.CLASS
             catch (Exception ex)
             {
                 error = ex.ToString();
-                Resultado = false;
                 command.Transaction.Rollback();
                 return string.Empty;
             }
@@ -519,6 +523,38 @@ namespace PrestaVende.CLASS
             {
                 error = ex.ToString();
                 return false;
+            }
+        }
+
+        private int insertRecibo(ref string error, string monto_recibo, string id_factura_encabezado, decimal total_factura, int id_serie, string numero_recibo, string id_cliente, string descripcion)
+        {
+            try
+            {
+                int inserts = 0;
+                
+                command.Parameters.Clear();
+                command.CommandText = "INSERT INTO tbl_recibo (id_sucursal, id_serie, id_tipo_transaccion, numero_recibo, id_cliente, monto, descripcion, fecha_creacion, estado, id_usuario, id_factura_encabezado) " +
+                                           "VALUES(@id_sucursal_rec, @id_serie_rec, 13, @numero_recibo_rec, @id_cliente_rec, @monto_rec, @descripcion_rec, GETDATE(), 1, @id_usuario_rec, @id_factura_encabezado_rec) ";
+
+                command.Parameters.AddWithValue("@id_sucursal_rec", Convert.ToInt32(HttpContext.Current.Session["id_sucursal"]));
+                command.Parameters.AddWithValue("@id_serie_rec", id_serie);
+                command.Parameters.AddWithValue("@numero_recibo_rec", numero_recibo);
+                command.Parameters.AddWithValue("@id_cliente_rec", id_cliente);
+                command.Parameters.AddWithValue("@monto_rec", monto_recibo);
+                command.Parameters.AddWithValue("@descripcion_rec", descripcion);
+                command.Parameters.AddWithValue("@id_usuario_rec", Convert.ToInt32(HttpContext.Current.Session["id_usuario"]));
+                command.Parameters.AddWithValue("@id_factura_encabezado_rec", id_factura_encabezado);
+                inserts = command.ExecuteNonQuery();
+
+                if (inserts > 0)
+                    return inserts;
+                else
+                    return 0;
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                return 0;
             }
         }
 

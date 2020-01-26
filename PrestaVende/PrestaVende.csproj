@@ -125,6 +125,7 @@
     <Content Include="Public\ProyeccionInteres.aspx" />
     <Content Include="Public\RecepcionCaja.aspx" />
     <Content Include="Public\RecepcionLiquidaciones.aspx" />
+    <Content Include="Public\ReimpresionFacturaRecibo.aspx" />
     <Content Include="Public\ReporteAbonos.aspx" />
     <Content Include="Public\ReporteCancelaciones.aspx" />
     <Content Include="Public\ReporteEstadoCuentaCaja.aspx" />
@@ -493,6 +494,13 @@
     </Compile>
     <Compile Include="Public\RecepcionLiquidaciones.aspx.designer.cs">
       <DependentUpon>RecepcionLiquidaciones.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\ReimpresionFacturaRecibo.aspx.cs">
+      <DependentUpon>ReimpresionFacturaRecibo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\ReimpresionFacturaRecibo.aspx.designer.cs">
+      <DependentUpon>ReimpresionFacturaRecibo.aspx</DependentUpon>
     </Compile>
     <Compile Include="Public\ReporteAbonos.aspx.cs">
       <DependentUpon>ReporteAbonos.aspx</DependentUpon>
