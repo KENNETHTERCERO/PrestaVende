@@ -417,6 +417,41 @@ namespace PrestaVende.Public
                 ReporteFacturas.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "");
 
             }
+            else if (Convert.ToInt32(tipo_reporte) == 15)//Reporte Ingresos y Egresos RIE
+            {
+                string id_sucursal = Request.QueryString.Get("id_sucursal");
+
+
+                DataTable inventario = new DataTable("dtInventario");
+
+
+                inventario = cs_manejo_inventario.getInventarioDisponible(ref error, id_sucursal);
+
+                if (inventario.Rows.Count <= 0)
+                {
+                    error = "Error obteniendo datos de inventario." + error;
+                    throw new Exception("");
+                }
+                else
+                {
+                    try
+                    {
+                        Reports.CRInventarioSucursal inventarioSucursal = new Reports.CRInventarioSucursal();
+                        inventarioSucursal.Load(Server.MapPath("~/Reports/CRInventarioSucursal.rpt"));
+                        inventarioSucursal.SetDataSource(inventario);
+                        CrystalReportViewer1.ReportSource = inventarioSucursal;//document;
+                        CrystalReportViewer1.DataBind();
+                        CrystalReportViewer1.RefreshReport();
+                        inventarioSucursal.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "");
+                    }
+                    catch (Exception ex)
+                    {
+                        error = ex.ToString();
+                    }
+
+                }
+
+            }
         }
     }
 }
