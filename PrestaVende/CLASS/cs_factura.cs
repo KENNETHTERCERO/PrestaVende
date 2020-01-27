@@ -198,6 +198,10 @@ namespace PrestaVende.CLASS
                     {
                         throw new Exception("No se pudo insertar recibo. " + error);
                     }
+                    else if (!update_correlativo_serie(ref error, id_serie_recibo, numero_recibo))
+                    {
+                        throw new Exception("No se pudo actualizar el correlativo de la serie de recibos.");
+                    }
                 }
                 
 
@@ -581,6 +585,31 @@ namespace PrestaVende.CLASS
             {
                 error = ex.ToString();
                 return false;
+            }
+        }
+
+        public DataTable getIDFactura(ref string error, string id_serie, string numero_documento)
+        {
+            try
+            {
+                DataTable datosFactura = new DataTable("dtDataFactura");
+                connection.connection.Open();
+                command.Connection = connection.connection;
+                command.Parameters.Clear();
+                command.CommandText = "SELECT id_factura_encabezado, numero_prestamo FROM tbl_factura_encabezado WHERE numero_factura = @numero_documento AND id_serie = @id_serie";
+                command.Parameters.AddWithValue("@numero_documento", numero_documento);
+                command.Parameters.AddWithValue("@id_serie", id_serie);
+                datosFactura.Load(command.ExecuteReader());
+                return datosFactura;
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                return null;
+            }
+            finally
+            {
+                connection.connection.Close();
             }
         }
     }

@@ -123,6 +123,9 @@ namespace PrestaVende.CLASS
                 id_factura_encabezado = insert_factura_encabezado(ref error, encabezado);
                 id_recibo = insertRecibo(ref error, detalleFactura, id_factura_encabezado.ToString(), Convert.ToDecimal(encabezado[3].ToString()), Convert.ToInt32(id_serie_recibo), numero_recibo, encabezado[2].ToString());
 
+                if (!update_correlativo_serie(ref error, id_serie_recibo, numero_recibo))
+                    throw new Exception("No se pudo actualizar el correlativo de factura. " + error);
+
                 if (id_factura_encabezado > 0 && id_recibo > 0)
                 {
                     if (insert_factura_detalle(ref error, detalleFactura, id_factura_encabezado.ToString()))

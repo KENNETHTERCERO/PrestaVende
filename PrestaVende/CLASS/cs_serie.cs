@@ -57,6 +57,31 @@ namespace PrestaVende.CLASS
             }
         }
 
+        public DataTable ObtenerSeriesImpresion(ref string error, int id_sucursal, int id_tipo_serie)
+        {
+            try
+            {
+                DataTable Serie = new DataTable("DtSeries");
+                connection.connection.Open();
+                command.Connection = connection.connection;
+                command.CommandText = "SELECT 0 AS id_serie, 'SELECCIONAR' AS serie UNION " +
+                                        "SELECT id_serie, serie fROM tbl_serie WHERE id_sucursal = @id_sucursal AND id_tipo_serie = @id_tipo_serie";
+                command.Parameters.AddWithValue("@id_sucursal", id_sucursal);
+                command.Parameters.AddWithValue("@id_tipo_serie", id_tipo_serie);
+                Serie.Load(command.ExecuteReader());
+                return Serie;
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                return null;
+            }
+            finally
+            {
+                connection.connection.Close();
+            }
+        }
+
         public Int64 getCorrelativoSerie(ref string error, int id_serie)
         {
             try

@@ -169,7 +169,6 @@ namespace PrestaVende.Public
                 getPrestamo();
                 getTransaccion();
                 getSeries();
-                ds_global = new DataSet();
             }
         }
 
@@ -269,7 +268,7 @@ namespace PrestaVende.Public
                                     } else
                                     {
                                         showSuccess("Se creo prestamo correctamente.");
-                                        string script = "window.open('WebReport.aspx?tipo_reporte=2" + "&id_factura=" + Resultado + "');";
+                                        string script = "window.open('WebReport.aspx?tipo_reporte=2" + "&id_factura=" + Resultado + "&id_sucursal=" + Session["id_sucursal"].ToString() + "&numero_contrato=" + lblNombrePrestamo.Text.ToString() + "');";
                                         ScriptManager.RegisterClientScriptBlock(this, GetType(), "ImpresionFactura", script, true);
 
                                         if (id_tipo_transaccion == "9" || id_tipo_transaccion == "10")

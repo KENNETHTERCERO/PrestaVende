@@ -58,8 +58,13 @@ namespace PrestaVende.Public
             else if (Convert.ToInt32(tipo_reporte) == 2) //2 factura
             {
                 DataTable factura = new DataTable("factura");
+                DataTable proyeccion = new DataTable("proyeccion");
+
                 string id_factura = Request.QueryString.Get("id_factura");
+                string id_sucursal = Request.QueryString.Get("id_sucursal");
+                string numero_contrato = Request.QueryString.Get("numero_contrato");
                 factura = cs_factura.ObtenerFactura(ref error, id_factura);
+                proyeccion = cs_prestamo.getValorProximoPago(ref error, numero_contrato);
 
                 if (factura.Rows.Count <= 0)
                 {
@@ -73,6 +78,7 @@ namespace PrestaVende.Public
                         Reports.CRFacturaIntereses ReporteFactura = new Reports.CRFacturaIntereses();
 
                         ReporteFactura.Load(Server.MapPath("~/Reports/CRFacturaIntereses.rpt"));
+                        ReporteFactura.Subreports[0].SetDataSource(proyeccion);
                         ReporteFactura.SetDataSource(factura);
                         CrystalReportViewer1.ReportSource = ReporteFactura;//document;
                         CrystalReportViewer1.DataBind();

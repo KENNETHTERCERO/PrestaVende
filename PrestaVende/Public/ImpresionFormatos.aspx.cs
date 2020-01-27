@@ -33,6 +33,7 @@ namespace PrestaVende.Public
                     }
                     else
                     {
+                        cs_sucursal = new CLASS.cs_sucursal();
                         ObtenerSucursales();
                         setNombreReimpresion();
                     }

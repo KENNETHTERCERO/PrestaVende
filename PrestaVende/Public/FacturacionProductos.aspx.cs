@@ -235,7 +235,7 @@ namespace PrestaVende.Public
                 if (cs_manejo_inventario.GuardarFactura(ref error, dtTablaArticulos, encabezado, ref id_factura_encabezado, ref id_recibo))
                 {
                     showSuccess("Factura guardada correctamente.");
-                    string script = "window.open('WebReport.aspx?tipo_reporte=2" + "&id_factura=" + id_factura_encabezado.ToString() + "');";
+                    string script = "window.open('WebReport.aspx?tipo_reporte=2&id_factura= " + id_factura_encabezado.ToString() + " &id_sucursal=" + Session["id_sucursal"].ToString() + "&numero_contrato=200000000020');";
                     ScriptManager.RegisterClientScriptBlock(this, GetType(), "ImpresionFactura", script, true);
 
                     string script2 = "window.open('WebReport.aspx?tipo_reporte=5" + "&id_recibo=" + id_recibo.ToString() + "&id_sucursal=" + Session["id_sucursal"].ToString() + "');";

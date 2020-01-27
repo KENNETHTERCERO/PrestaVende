@@ -871,5 +871,29 @@ namespace PrestaVende.CLASS
                 connection.connection.Close();
             }
         }
+
+        public DataTable getValorProximoPago(ref string error, string numero_prestamo)
+        {
+            DataTable dtDatos = new DataTable("dtDatos");
+            try
+            {
+                connection.connection.Open();
+                command.Connection = connection.connection;
+                command.Parameters.Clear();
+                command.CommandText = "exec SP_proyeccion_intereses_proximo_pago @numero_prestamo";
+                command.Parameters.AddWithValue("@numero_prestamo", numero_prestamo);
+                dtDatos.Load(command.ExecuteReader());
+                return dtDatos;
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                return null;
+            }
+            finally
+            {
+                connection.connection.Close();
+            }
+        }
     }
 }
