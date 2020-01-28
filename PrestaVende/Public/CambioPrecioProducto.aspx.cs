@@ -53,14 +53,14 @@ namespace PrestaVende.Public
 
                 if (dsRespuesta.Tables[0].Rows.Count > 0)
                 {
-                    GrdVInventario.DataSource = dsRespuesta;
-                GrdVInventario.DataBind();
+                    this.GrdVInventario.DataSource = dsRespuesta;
+                    this.GrdVInventario.DataBind();
                 }
                 else
                 {
                     showError("No se encontró información para el préstamo buscado." );
-                    TxtPrestamo.Text = "";
-                    TxtPrestamo.Focus();
+                    this.TxtPrestamo.Text = "";
+                    this.TxtPrestamo.Focus();
                 }
                
 
@@ -75,9 +75,9 @@ namespace PrestaVende.Public
         private void limpiar()
         {
 
-            TxtPrestamo.Text = "";
-            GrdVInventario.DataSource = null;
-            GrdVInventario.DataBind();
+            this.TxtPrestamo.Text = "";
+            this.GrdVInventario.DataSource = null;
+            this.GrdVInventario.DataBind();
         }
        
         #endregion
@@ -108,9 +108,9 @@ namespace PrestaVende.Public
 
         protected void btnBuscar_Click(object sender, EventArgs e)
         {
-            if (TxtPrestamo.Text.Length > 0)
+            if (this.TxtPrestamo.Text.Length > 0)
             {
-                buscarPrestamo(Decimal.Parse(TxtPrestamo.Text), Convert.ToInt32(Session["id_sucursal"]));
+                buscarPrestamo(Decimal.Parse(this.TxtPrestamo.Text), Convert.ToInt32(Session["id_sucursal"]));
             }
             else
             {
@@ -120,13 +120,12 @@ namespace PrestaVende.Public
 
         protected void btnAceptar_Click(object sender, EventArgs e)
         {
-            var rows = GrdVInventario.Rows;
-            int count = GrdVInventario.Rows.Count;
+            var rows = this.GrdVInventario.Rows;
+            int count = this.GrdVInventario.Rows.Count;
             bool algunSeleccionado = false;
 
             try
             {
-
                 for (int i = 0; i < count; i++)
                 {
                     bool isChecked = ((CheckBox)rows[i].FindControl("SelectedCheckBox")).Checked;
@@ -176,9 +175,5 @@ namespace PrestaVende.Public
                 showError("Error en el proceso de guardado: " + ex.ToString());
             }
         }
-
-        
-
-        
     }
 }

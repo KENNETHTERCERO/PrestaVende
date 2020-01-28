@@ -23,7 +23,7 @@ namespace PrestaVende.Public
             {
                 HttpCookie cookie = Request.Cookies["userLogin"];
 
-                if (cookie == null && Convert.ToInt32(HttpContext.Current.Session["id_usuario"]) == 0)
+                if (cookie == null && Convert.ToInt32(Session["id_usuario"]) == 0)
                 {
                     Response.Redirect("~/WFWebLogin.aspx");
                 }
@@ -60,11 +60,11 @@ namespace PrestaVende.Public
                 reporte = Request.QueryString.Get("reporte");
                 if (reporte == "2")
                 {
-                    lblTipoReimpresion.Text = "REIMPRESION DE FACTURA";
+                    this.lblTipoReimpresion.Text = "REIMPRESION DE FACTURA";
                 }
                 else if (reporte == "5")
                 {
-                    lblTipoReimpresion.Text = "REIMPRESION RECIBO";
+                    this.lblTipoReimpresion.Text = "REIMPRESION RECIBO";
                 }
             }
             catch (Exception)
@@ -79,15 +79,15 @@ namespace PrestaVende.Public
             try
             {
                 int id_empresa = Convert.ToInt32(Session["id_empresa"]);
-                ddlSucursal.DataSource = cs_sucursal.ObtenerSucursalesPorEmpresa(ref error, id_empresa.ToString());
-                ddlSucursal.DataValueField = "id_sucursal";
-                ddlSucursal.DataTextField = "sucursal";
-                ddlSucursal.DataBind();
+                this.ddlSucursal.DataSource = cs_sucursal.ObtenerSucursalesPorEmpresa(ref error, id_empresa.ToString());
+                this.ddlSucursal.DataValueField = "id_sucursal";
+                this.ddlSucursal.DataTextField = "sucursal";
+                this.ddlSucursal.DataBind();
 
-                ddlSucursal.SelectedValue = Session["id_sucursal"].ToString();
+                this.ddlSucursal.SelectedValue = Session["id_sucursal"].ToString();
 
                 if (Convert.ToInt32(Session["id_rol"]) == 3 || Convert.ToInt32(Session["id_rol"]) == 4 || Convert.ToInt32(Session["id_rol"]) == 5)
-                    ddlSucursal.Enabled = false;
+                    this.ddlSucursal.Enabled = false;
             }
             catch (Exception ex)
             {
@@ -119,14 +119,14 @@ namespace PrestaVende.Public
                         cs_factura = new CLASS.cs_factura();
                         DataTable data = new DataTable();
                         numero_prestamo = "";
-                        data = cs_factura.getIDFactura(ref error, ddlSerie.SelectedValue.ToString(), txtNumeroDocumento.Text.ToString());
+                        data = cs_factura.getIDFactura(ref error, this.ddlSerie.SelectedValue.ToString(), this.txtNumeroDocumento.Text.ToString());
                         resultado = data.Rows[0]["id_factura_encabezado"].ToString();
                         numero_prestamo = data.Rows[0]["numero_prestamo"].ToString();
                     }
                     else
                     {
                         cs_recibo = new CLASS.cs_recibo();
-                        resultado = cs_recibo.getIDRecibo(ref error, ddlSerie.SelectedValue.ToString(), txtNumeroDocumento.Text.ToString());
+                        resultado = cs_recibo.getIDRecibo(ref error, this.ddlSerie.SelectedValue.ToString(), this.txtNumeroDocumento.Text.ToString());
                     }
 
                     if (resultado == "" || resultado == "0" || resultado.Length <= 0)
@@ -162,10 +162,10 @@ namespace PrestaVende.Public
                     id_tipo_reporte = 2;
                 }
                 int id_sucursal = Convert.ToInt32(Session["id_sucursal"]);
-                ddlSerie.DataSource = cs_serie.ObtenerSeriesImpresion(ref error, id_sucursal, id_tipo_reporte);
-                ddlSerie.DataValueField = "id_serie";
-                ddlSerie.DataTextField = "serie";
-                ddlSerie.DataBind();
+                this.ddlSerie.DataSource = cs_serie.ObtenerSeriesImpresion(ref error, id_sucursal, id_tipo_reporte);
+                this.ddlSerie.DataValueField = "id_serie";
+                this.ddlSerie.DataTextField = "serie";
+                this.ddlSerie.DataBind();
             }
             catch (Exception ex)
             {
@@ -180,12 +180,12 @@ namespace PrestaVende.Public
                 reporte = Request.QueryString.Get("reporte");
                 if (reporte == "2")
                 {
-                    string scriptReporte = "window.open('WebReport.aspx?tipo_reporte=" + reporte + "&id_factura= " + id_documento + " &id_sucursal=" + ddlSucursal.SelectedValue.ToString() + "&numero_contrato=" + numero_prestamo + "');";
+                    string scriptReporte = "window.open('WebReport.aspx?tipo_reporte=" + reporte + "&id_factura= " + id_documento + " &id_sucursal=" + this.ddlSucursal.SelectedValue.ToString() + "&numero_contrato=" + numero_prestamo + "');";
                     ScriptManager.RegisterClientScriptBlock(this, GetType(), "scriptReporte", scriptReporte, true);
                 }
                 else if(reporte == "5")
                 {
-                    string scriptReporte = "window.open('WebReport.aspx?tipo_reporte=" + reporte + "&id_recibo= " + id_documento + " &id_sucursal=" + ddlSucursal.SelectedValue.ToString() + "');";
+                    string scriptReporte = "window.open('WebReport.aspx?tipo_reporte=" + reporte + "&id_recibo= " + id_documento + " &id_sucursal=" + this.ddlSucursal.SelectedValue.ToString() + "');";
                     ScriptManager.RegisterClientScriptBlock(this, GetType(), "scriptReporte", scriptReporte, true);
                 }
             }

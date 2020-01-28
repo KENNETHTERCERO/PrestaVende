@@ -357,7 +357,11 @@ namespace PrestaVende.CLASS
                 inserts = command.ExecuteNonQuery();
 
                 if (inserts > 0)
+                {
+                    command.CommandText = "SELECT MAX(id_recibo) FROM tbl_recibo WHERE id_serie = @id_serie_rec AND numero_recibo = @numero_recibo_rec";
+                    inserts = Convert.ToInt32(command.ExecuteScalar().ToString());
                     return inserts;
+                }
                 else
                     return 0;
             }

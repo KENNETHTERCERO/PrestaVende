@@ -69,9 +69,9 @@ namespace PrestaVende.Public
                     else
                     {
                         dtTablaPrestamos = new DataTable("tablaPrestamos");
-                        ViewState["CurrentTablePrestamos"] = dtTablaPrestamos;
-                        hideOrShowDiv(true);
                         setColumnsPrestamo();
+                        Session["CurrentTablePrestamos"] = dtTablaPrestamos;
+                        hideOrShowDiv(true);
                         //getDataGrid();
                     }
                 }
@@ -103,12 +103,11 @@ namespace PrestaVende.Public
         {
             try
             {
-                    div_gridView.Visible = true;
-                    btnSalir.Visible = true;
-                    btnCreate.Visible = false;
-                    btnCancel.Visible = false;
-                    btnLiquidar.Visible = true;
-               
+                this.div_gridView.Visible = true;
+                this.btnSalir.Visible = true;
+                this.btnCreate.Visible = false;
+                this.btnCancel.Visible = false;
+                this.btnLiquidar.Visible = true;
             }
             catch (Exception)
             {
@@ -130,8 +129,6 @@ namespace PrestaVende.Public
                   if (insertLiquidacion())
                   {
                       hideOrShowDiv(true);
-                    //addArticuloJoya();
-                    //getDataGrid();
                   }
 
             }
@@ -154,70 +151,59 @@ namespace PrestaVende.Public
 
         private bool insertLiquidacion()
         {
+            int contadorError = 0, contadorLiquidaciones = 0;
             try
             {
-                int contadorError = 0;
-                //DataTable DtLiquidacionPrestamo = new DataTable();
-                //DtLiquidacionPrestamo = mLiquidacion.getPrestamos(ref error, txtBusquedaPrestamo.Text.ToString());
-
-                foreach (GridViewRow item in GrdVLiquidacion.Rows)
+                error = "";
+                mLiquidacion = new CLASS.cs_liquidacion();
+                foreach (GridViewRow item in this.GrdVLiquidacion.Rows)
                 {
                     if (mLiquidacion.insertLiquidacion(ref error, item.Cells[0].Text.ToString()))
                     {
+                        contadorLiquidaciones++;
                     }
                     else
                     {
                         contadorError = contadorError + 1;
-                        throw new SystemException("No se pudo liquidar prestamos, favor comunicarse con el administrador.");
+                        throw new SystemException("No se pudo liquidar prestamo" + item.Cells[0].Text.ToString() + ", favor comunicarse con el administrador." + error);
                     }
                 }
 
                 if (contadorError == 0)
-                { showSuccess("Prestamos liquidados exitosamente.");
-                    GrdVLiquidacion.DataSource = null;
-                    GrdVLiquidacion.DataBind();
-                    //getDataGrid();
+                {
+                    showSuccess("Prestamos liquidados exitosamente.");
+                    this.GrdVLiquidacion.DataSource = null;
+                    this.GrdVLiquidacion.DataBind();
                 }
               
                 return true;
             }
             catch (Exception ex)
             {
-                showError(error + " - " + ex.ToString());
+                if (contadorLiquidaciones > 0)
+                {
+                    showSuccess("Se liquidaron " + contadorLiquidaciones.ToString() + " contratos correctamente.");
+                }
+                showError(ex.ToString());
                 return false;
             }
         }
-        
-        //private void getDataGrid()
-        //{
-        //    try
-        //    {
-        //      GrdVLiquidacion.DataSource = mLiquidacion.getPrestamos(ref error, txtBusquedaPrestamo.Text.ToString());
-        //      GrdVLiquidacion.DataBind();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        showError(ex.ToString());
-        //    }
-        //}
-
 
         private void addPrestamo()
         {
             try
             {
-                 DataTable dtTabla = new DataTable();
-
-                if (ViewState["CurrentTablePrestamos"] != null)
+                if ((DataTable)Session["CurrentTablePrestamos"] != null)
                 {
-                    dtTabla = mLiquidacion.getPrestamos(ref error, txtBusquedaPrestamo.Text.ToString());
-
-                    row = dtTablaPrestamos.NewRow();
+                    DataTable dtTablaSession = (DataTable)Session["CurrentTablePrestamos"];
+                    DataTable dtTabla = new DataTable("dtLiquidacion");
+                    dtTabla = mLiquidacion.getPrestamos(ref error, this.txtBusquedaPrestamo.Text.ToString());
 
                     if (dtTabla.Rows.Count > 0)
                     {
                         foreach (DataRow item in dtTabla.Rows)
                         {
+                            row = dtTablaSession.NewRow();
                             row["id_prestamo_encabezado"] = item[0].ToString();
                             row["numero_prestamo"] = item[1].ToString();
                             row["total_prestamo"] = item[2].ToString();
@@ -225,11 +211,10 @@ namespace PrestaVende.Public
                             row["estado_prestamo"] = item[4].ToString();
                         }
 
-                        dtTablaPrestamos.Rows.Add(row);
-                        ViewState["CurrentTableJoyas"] = dtTablaPrestamos;
-
-                        GrdVLiquidacion.DataSource = dtTablaPrestamos;
-                        GrdVLiquidacion.DataBind();
+                        dtTablaSession.Rows.Add(row);
+                        Session["CurrentTablePrestamos"] = dtTablaSession;
+                        this.GrdVLiquidacion.DataSource = dtTablaSession;
+                        this.GrdVLiquidacion.DataBind();
                     }
                     else
                     {
@@ -238,35 +223,30 @@ namespace PrestaVende.Public
                 }
                 else
                 {
-                    DataTable test = (DataTable)ViewState["CurrentTablePrestamos"];
-                    DataRow drCurrectRow = null;
-
-                    dtTabla = mLiquidacion.getPrestamos(ref error, txtBusquedaPrestamo.Text.ToString());
-
-                    drCurrectRow = dtTablaPrestamos.NewRow();
+                    DataTable dtTablaSession = (DataTable)Session["CurrentTablePrestamos"];
+                    DataTable dtTabla = new DataTable("dtLiquidacion");
+                    dtTabla = mLiquidacion.getPrestamos(ref error, this.txtBusquedaPrestamo.Text.ToString());
 
                     if (dtTabla.Rows.Count > 0)
                     {
-
                         foreach (DataRow item in dtTabla.Rows)
                         {
-                            drCurrectRow["id_prestamo_encabezado"] = item[0].ToString();
-                            drCurrectRow["numero_prestamo"] = item[0].ToString();
-                            drCurrectRow["total_prestamo"] = item[0].ToString();
-                            drCurrectRow["saldo_prestamo"] = item[0].ToString();
-                            drCurrectRow["estado_prestamo"] = item[0].ToString();
+                            row = dtTablaSession.NewRow();
+                            row["id_prestamo_encabezado"] = item[0].ToString();
+                            row["numero_prestamo"] = item[1].ToString();
+                            row["total_prestamo"] = item[2].ToString();
+                            row["saldo_prestamo"] = item[3].ToString();
+                            row["estado_prestamo"] = item[4].ToString();
                         }
 
-
-                        test.Rows.Add(drCurrectRow);
-                        ViewState["CurrentTablePrestamos"] = test;
-
-                        GrdVLiquidacion.DataSource = test;
-                        GrdVLiquidacion.DataBind();
+                        dtTablaSession.Rows.Add(row);
+                        Session["CurrentTablePrestamos"] = dtTablaSession;
+                        this.GrdVLiquidacion.DataSource = dtTablaSession;
+                        this.GrdVLiquidacion.DataBind();
                     }
                     else
                     {
-                        showWarning("Prestamo No Existe o No esta Activo.");
+                        showWarning("Prestamo No Disponible para Liquidar.");
                     }
                 }
             }
