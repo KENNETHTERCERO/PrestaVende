@@ -731,7 +731,8 @@ namespace PrestaVende.Public
             {
                 string numero_prestamo_guardado = "";
                 cs_prestamo = new CLASS.cs_prestamo();
-                if (cs_prestamo.guardar_prestamo(ref error, generaEncabezado(), dtTablaJoyas, this.ddlCategoria.SelectedValue.ToString(), ref numero_prestamo_guardado))
+                
+                if (cs_prestamo.guardar_prestamo(ref error, generaEncabezado(), (DataTable)this.Session["CurrentTableJoyas"], this.ddlCategoria.SelectedValue.ToString(), ref numero_prestamo_guardado))
                 {
                     this.lblNumeroPrestamoNumero.Text = numero_prestamo_guardado;
                     showSuccess("Se creo prestamo correctamente.");
@@ -766,7 +767,7 @@ namespace PrestaVende.Public
             {
                 string numero_prestamo_guardado = "";
                 cs_prestamo = new CLASS.cs_prestamo();
-                if (cs_prestamo.guardar_prestamo(ref error, generaEncabezado(), dtTablaArticulos, this.ddlCategoria.SelectedValue.ToString(), ref numero_prestamo_guardado))
+                if (cs_prestamo.guardar_prestamo(ref error, generaEncabezado(), (DataTable)this.Session["CurrentTableArticulos"], this.ddlCategoria.SelectedValue.ToString(), ref numero_prestamo_guardado))
                 {
                     this.lblNumeroPrestamoNumero.Text = numero_prestamo_guardado;
                     showSuccess("Se creo prestamo correctamente.");
