@@ -10,7 +10,7 @@
 namespace PrestaVende.Public {
     
     
-    public partial class ReporteInventario {
+    public partial class ReimpresionFacturaRecibo {
         
         /// <summary>
         /// uPanel control.
@@ -85,22 +85,13 @@ namespace PrestaVende.Public {
         protected global::System.Web.UI.WebControls.Label lblSuccess;
         
         /// <summary>
-        /// lblPrestamo control.
+        /// lblTipoReimpresion control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblPrestamo;
-        
-        /// <summary>
-        /// lblnombre_prestamo control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblnombre_prestamo;
+        protected global::System.Web.UI.WebControls.Label lblTipoReimpresion;
         
         /// <summary>
         /// div_ingresa_datos control.
@@ -112,13 +103,13 @@ namespace PrestaVende.Public {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_ingresa_datos;
         
         /// <summary>
-        /// lblSerie control.
+        /// lblSucursal control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblSerie;
+        protected global::System.Web.UI.WebControls.Label lblSucursal;
         
         /// <summary>
         /// ddlSucursal control.
@@ -128,5 +119,41 @@ namespace PrestaVende.Public {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlSucursal;
+        
+        /// <summary>
+        /// lblSerie control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblSerie;
+        
+        /// <summary>
+        /// ddlSerie control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlSerie;
+        
+        /// <summary>
+        /// lblNumeroDocumento control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblNumeroDocumento;
+        
+        /// <summary>
+        /// txtNumeroDocumento control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtNumeroDocumento;
     }
 }

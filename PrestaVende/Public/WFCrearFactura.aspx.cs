@@ -29,10 +29,10 @@ namespace PrestaVende.Public
                 foreach (DataRow item in cs_prestamo.ObtenerPrestamoEspecifico(ref error, id_prestamo).Rows)
                 {
                     //lblnombre_prestamo.Text = item[1].ToString() + " - Cliente: " + item[2].ToString() + " " + item[3].ToString() + " " + item[4].ToString() + " " + item[5].ToString();
-                    lblNombrePrestamo.Text = item[1].ToString();
-                    lblCodigoCliente.Text = item[1].ToString();
-                    lblNombreCliente.Text = item[2].ToString() + " " + item[3].ToString() + " " + item[4].ToString() + " " + item[5].ToString();
-                    lblValorInteres.Text = item[8].ToString() + "%";
+                    this.lblNombrePrestamo.Text = item[1].ToString();
+                    this.lblCodigoCliente.Text = item[1].ToString();
+                    this.lblNombreCliente.Text = item[2].ToString() + " " + item[3].ToString() + " " + item[4].ToString() + " " + item[5].ToString();
+                    this.lblValorInteres.Text = item[8].ToString() + "%";
                     id_cliente = item[6].ToString();
                     saldo_prestamo = item[7].ToString();
 
@@ -45,9 +45,9 @@ namespace PrestaVende.Public
 
                     if(tipo_transaccion == "10")
                     {
-                        txtAbonoCapital.Text = saldo_prestamo;
-                        lblAbonoCapital.Text = "MONTO CANCELACION";
-                        imgBtnBuscaSubSemana.Visible = false;
+                        this.txtAbonoCapital.Text = saldo_prestamo;
+                        this.lblAbonoCapital.Text = "MONTO CANCELACION";
+                        this.imgBtnBuscaSubSemana.Visible = false;
                     }
                 }
             }
@@ -65,15 +65,15 @@ namespace PrestaVende.Public
             {
                 case "1":
                     id_tipo_transaccion = "8";
-                    lblAbonoCapital.Visible = false;
-                    txtAbonoCapital.Visible = false;
+                    this.lblAbonoCapital.Visible = false;
+                    this.txtAbonoCapital.Visible = false;
                     break;
                 case "2":
                     id_tipo_transaccion = "9";
                     break;
                 case "3":
                     id_tipo_transaccion = "10";
-                    txtAbonoCapital.Enabled = false;
+                    this.txtAbonoCapital.Enabled = false;
                     break;
             }
 
@@ -86,8 +86,8 @@ namespace PrestaVende.Public
             {
                 string id_tipo_transaccion = getEquivalenteTransaccion(Request.QueryString["id_tipo"]);
                 
-                foreach (DataRow item in cs_transaccion.ObtenerTransaccion(ref error, id_tipo_transaccion).Rows)                
-                    lblTransaccion.Text = item[1].ToString();                                
+                foreach (DataRow item in cs_transaccion.ObtenerTransaccion(ref error, id_tipo_transaccion).Rows)
+                    this.lblTransaccion.Text = item[1].ToString();                                
             }
             catch (Exception ex)
             {
@@ -99,18 +99,18 @@ namespace PrestaVende.Public
         {
             try
             {
-                int id_sucursal = Convert.ToInt32(Convert.ToInt32(HttpContext.Current.Session["id_sucursal"]));
-                ddlSerie.DataSource = cs_serie.getSerieDDL(ref error,id_sucursal);
-                ddlSerie.DataValueField = "id_serie";
-                ddlSerie.DataTextField = "serie";
-                ddlSerie.DataBind();
+                int id_sucursal = Convert.ToInt32(Session["id_sucursal"]);
+                this.ddlSerie.DataSource = cs_serie.getSerieDDL(ref error,id_sucursal);
+                this.ddlSerie.DataValueField = "id_serie";
+                this.ddlSerie.DataTextField = "serie";
+                this.ddlSerie.DataBind();
 
-                int id_serie = int.Parse(ddlSerie.SelectedValue.ToString());
+                int id_serie = int.Parse(this.ddlSerie.SelectedValue.ToString());
 
                 if (id_serie > 0)
-                    lblNumeroPrestamoNumeroFactura.Text = (cs_serie.getCorrelativoSerie(ref error, id_serie) + 1).ToString();
+                    this.lblNumeroPrestamoNumeroFactura.Text = (cs_serie.getCorrelativoSerie(ref error, id_serie) + 1).ToString();
                 else
-                    lblNumeroPrestamoNumeroFactura.Text = "0";
+                    this.lblNumeroPrestamoNumeroFactura.Text = "0";
             }
             catch (Exception ex)
             {
@@ -126,16 +126,16 @@ namespace PrestaVende.Public
 
             if (ds_global.Tables.Count > 0)
             {
-                gvDetalleFactura.DataSource = ds_global.Tables[0];
-                gvDetalleFactura.DataBind();
+                this.gvDetalleFactura.DataSource = ds_global.Tables[0];
+                this.gvDetalleFactura.DataBind();
 
                 DataTable dt = new DataTable();
 
                 dt = ds_global.Tables[1];
 
-                lblSubTotalFactura.Text = dt.Rows[0]["SubTotal"].ToString();
-                lblIVAFactura.Text = dt.Rows[0]["IVA"].ToString();
-                lblTotalFacturaV.Text = dt.Rows[0]["Total"].ToString();
+                this.lblSubTotalFactura.Text = dt.Rows[0]["SubTotal"].ToString();
+                this.lblIVAFactura.Text = dt.Rows[0]["IVA"].ToString();
+                this.lblTotalFacturaV.Text = dt.Rows[0]["Total"].ToString();
 
                 int semanas = int.Parse(ds_global.Tables[0].Rows[0]["Cantidad"].ToString());
                 DataTable TablaSemanas = new DataTable();
@@ -147,10 +147,10 @@ namespace PrestaVende.Public
                     TablaSemanas.Rows.Add(i, i.ToString());
                 }
 
-                ddlSemanas.DataSource = TablaSemanas;
-                ddlSemanas.DataValueField = "id";
-                ddlSemanas.DataTextField = "nombre";
-                ddlSemanas.DataBind();
+                this.ddlSemanas.DataSource = TablaSemanas;
+                this.ddlSemanas.DataValueField = "id";
+                this.ddlSemanas.DataTextField = "nombre";
+                this.ddlSemanas.DataBind();
             }           
 
         }
@@ -199,12 +199,12 @@ namespace PrestaVende.Public
         {
             try
             {
-                int id_serie = int.Parse(ddlSerie.SelectedValue.ToString());
+                int id_serie = int.Parse(this.ddlSerie.SelectedValue.ToString());
 
                 if (id_serie > 0)
-                    lblNumeroPrestamoNumeroFactura.Text = (cs_serie.getCorrelativoSerie(ref error, id_serie) + 1).ToString();
+                    this.lblNumeroPrestamoNumeroFactura.Text = (cs_serie.getCorrelativoSerie(ref error, id_serie) + 1).ToString();
                 else
-                    lblNumeroPrestamoNumeroFactura.Text = "0";
+                    this.lblNumeroPrestamoNumeroFactura.Text = "0";
             }
             catch (Exception ex)
             {
@@ -218,8 +218,8 @@ namespace PrestaVende.Public
             {
                 if (CLASS.cs_usuario.autorizado)
                 {                    
-                    CLASS.cs_usuario.autorizado = false;                    
-                    ddlSemanas.Enabled = true;
+                    CLASS.cs_usuario.autorizado = false;
+                    this.ddlSemanas.Enabled = true;
                 }
             }
             catch (Exception ex)
@@ -232,7 +232,7 @@ namespace PrestaVende.Public
         {
             try
             {
-                string id_serie = ddlSerie.SelectedValue.ToString();
+                string id_serie = this.ddlSerie.SelectedValue.ToString();
 
                 if (int.Parse(id_serie) > 0)
                 {
@@ -241,36 +241,39 @@ namespace PrestaVende.Public
                         if (Convert.ToInt32(Session["id_tipo_caja"]) == 2)
                         {
                             decimal abono = 0;
+                            int id_recibo = 0;
                             bool abonoB = false;
 
-                            abonoB = decimal.TryParse(txtAbonoCapital.Text, out abono);
+                            abonoB = decimal.TryParse(this.txtAbonoCapital.Text, out abono);
 
-                            if((txtAbonoCapital.Visible == true && abono >= 5) || (txtAbonoCapital.Visible == false))
+                            if((this.txtAbonoCapital.Visible == true && abono >= 5) || (this.txtAbonoCapital.Visible == false))
                             {
                                 decimal lSaldo_prestamo = decimal.Parse(saldo_prestamo);
                                 string id_tipo_transaccion = getEquivalenteTransaccion(Request.QueryString["id_tipo"]);
 
-                                if ((txtAbonoCapital.Visible == true && abono < lSaldo_prestamo && id_tipo_transaccion == "9") || (txtAbonoCapital.Visible == false) 
-                                      || (txtAbonoCapital.Visible == true && abono == lSaldo_prestamo && id_tipo_transaccion == "10"))
+                                if ((this.txtAbonoCapital.Visible == true && abono < lSaldo_prestamo && id_tipo_transaccion == "9") || (this.txtAbonoCapital.Visible == false) 
+                                      || (this.txtAbonoCapital.Visible == true && abono == lSaldo_prestamo && id_tipo_transaccion == "10"))
                                 {                                    
-                                    string numero_prestamo = lblNombrePrestamo.Text;
+                                    string numero_prestamo = this.lblNombrePrestamo.Text;
                                     string Resultado = "";
                                     string id_prestamo = Request.QueryString["id_prestamo"];
 
-                                    Resultado = cs_factura.GuardarFactura(ref error, ds_global, id_serie, id_cliente, id_tipo_transaccion, Convert.ToInt32(Session["id_caja"]), numero_prestamo, abono.ToString());
+                                    cs_factura = new CLASS.cs_factura();
+                                    error = "";
+                                    Resultado = cs_factura.GuardarFactura(ref error, ds_global, id_serie, id_cliente, id_tipo_transaccion, Convert.ToInt32(Session["id_caja"]), numero_prestamo, abono.ToString(), ref id_recibo);
                                      
                                     if(Resultado == string.Empty)
                                     {
-                                        showWarning("Error al generar la factura.");
+                                        showWarning("Error al generar la factura." + error);
                                     } else
                                     {
                                         showSuccess("Se creo prestamo correctamente.");
-                                        string script = "window.open('WebReport.aspx?tipo_reporte=2" + "&id_factura=" + Resultado + "');";
+                                        string script = "window.open('WebReport.aspx?tipo_reporte=2" + "&id_factura=" + Resultado + "&id_sucursal=" + Session["id_sucursal"].ToString() + "&numero_contrato=" + this.lblNombrePrestamo.Text.ToString() + "');";
                                         ScriptManager.RegisterClientScriptBlock(this, GetType(), "ImpresionFactura", script, true);
 
                                         if (id_tipo_transaccion == "9" || id_tipo_transaccion == "10")
                                         {
-                                            string script2 = "window.open('WebReport.aspx?tipo_reporte=5" + "&id_factura=" + Resultado + "&id_sucursal=" + (string)Session["id_sucursal"] + "');";
+                                            string script2 = "window.open('WebReport.aspx?tipo_reporte=5" + "&id_recibo=" + id_recibo.ToString() + "&id_sucursal=" + Session["id_sucursal"].ToString() + "');";
                                             ScriptManager.RegisterClientScriptBlock(this, GetType(), "ImpresionRecibo", script2, true);
                                         }                                        
 
@@ -311,7 +314,7 @@ namespace PrestaVende.Public
         {
             try
             {
-                int semanas = int.Parse(ddlSemanas.SelectedValue.ToString());
+                int semanas = int.Parse(this.ddlSemanas.SelectedValue.ToString());
                 int dias = semanas * 7;
                 int dias_plazo = int.Parse(ds_global.Tables[0].Rows[0]["dias_plan"].ToString());
 
@@ -346,12 +349,12 @@ namespace PrestaVende.Public
                 ds_global.Tables[1].Rows[0]["IVA"] = Decimal.Round(ds_global.Tables[0].AsEnumerable().Sum(r => r.Field<decimal>("IVA")), 2).ToString();
                 ds_global.Tables[1].Rows[0]["SubTotal"] = Decimal.Round(decimal.Parse(ds_global.Tables[1].Rows[0]["Total"].ToString()) - decimal.Parse(ds_global.Tables[1].Rows[0]["IVA"].ToString()), 2).ToString();
 
-                lblSubTotalFactura.Text = ds_global.Tables[1].Rows[0]["SubTotal"].ToString();
-                lblIVAFactura.Text = ds_global.Tables[1].Rows[0]["IVA"].ToString();
-                lblTotalFacturaV.Text = ds_global.Tables[1].Rows[0]["Total"].ToString();
+                this.lblSubTotalFactura.Text = ds_global.Tables[1].Rows[0]["SubTotal"].ToString();
+                this.lblIVAFactura.Text = ds_global.Tables[1].Rows[0]["IVA"].ToString();
+                this.lblTotalFacturaV.Text = ds_global.Tables[1].Rows[0]["Total"].ToString();
 
-                gvDetalleFactura.DataSource = ds_global.Tables[0];
-                gvDetalleFactura.DataBind();
+                this.gvDetalleFactura.DataSource = ds_global.Tables[0];
+                this.gvDetalleFactura.DataBind();
             }
             catch (Exception ex)
             {

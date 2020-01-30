@@ -20,7 +20,7 @@ namespace PrestaVende.Public
             try
             {
                 getDatosCaja();
-                txtMontoRecepcion.Enabled = false;
+                this.txtMontoRecepcion.Enabled = false;
                 validaDatos();
             }
             catch (Exception ex)
@@ -39,8 +39,8 @@ namespace PrestaVende.Public
 
                 if (fecha_asignacion.Date < fecha_hoy.Date)
                 {
-                    btnRecibirAsignacion.Enabled    = false;
-                    chkRecibir.Enabled              = false;
+                    this.btnRecibirAsignacion.Enabled    = false;
+                    this.chkRecibir.Enabled              = false;
                 }
             }
             catch (Exception ex)
@@ -57,11 +57,11 @@ namespace PrestaVende.Public
                 
                 foreach (DataRow item in asignacion_caja.getAsignacionCaja(ref error, id_asignacion).Rows)
                 {
-                    Session["puede_vender"]         = Convert.ToInt32(item[7].ToString());
-                    txtMontoRecepcion.Text          = item[3].ToString();
-                    lblNumeroCajaAsignada.Text      = item[6].ToString();
+                    Session["puede_vender"]         = Convert.ToInt32(item["puede_vender"].ToString());
+                    this.txtMontoRecepcion.Text          = item[3].ToString();
+                    this.lblNumeroCajaAsignada.Text      = item[6].ToString();
                     fecha_asignacion                = Convert.ToDateTime(item[5].ToString());
-                    Session["saldo_caja"]           = Convert.ToDecimal(item[3].ToString());
+                    Session["saldo_caja"]           = Convert.ToDecimal(item["monto"].ToString());
                 }
             }
             catch (Exception ex)
@@ -80,8 +80,11 @@ namespace PrestaVende.Public
                 Session["id_rol"] = 0;
                 Session["id_caja"] = 0;
                 Session["usuario"] = "";
+                Session["id_tipo_caja"] = 0;
                 Session["primer_nombre"] = "";
                 Session["primer_apellido"] = "";
+                Session["saldo_caja"] = 0;
+                Session.RemoveAll();
             }
             catch (Exception ex)
             {
@@ -93,7 +96,7 @@ namespace PrestaVende.Public
         {
             try
             {
-                if (chkRecibir.Checked)
+                if (this.chkRecibir.Checked)
                 {
                     return true;
                 }
@@ -114,7 +117,7 @@ namespace PrestaVende.Public
         {
             try
             {
-                if (asignacion_caja.recibirAsignacionCaja(ref error, id_asignacion, txtMontoRecepcion.Text.ToString()))
+                if (asignacion_caja.recibirAsignacionCaja(ref error, id_asignacion, this.txtMontoRecepcion.Text.ToString()))
                 {
                     Response.Redirect("~/Public/WFPrincipal.aspx", false);
                 }

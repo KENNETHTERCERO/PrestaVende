@@ -20,17 +20,17 @@ namespace PrestaVende.DATASET {
     [global::System.ComponentModel.DesignerCategoryAttribute("code")]
     [global::System.ComponentModel.ToolboxItem(true)]
     [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedDataSetSchema")]
-    [global::System.Xml.Serialization.XmlRootAttribute("DSInventarioDisponible")]
+    [global::System.Xml.Serialization.XmlRootAttribute("DSProyeccionInteres")]
     [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.DataSet")]
-    public partial class DSInventarioDisponible : global::System.Data.DataSet {
+    public partial class DSProyeccionInteres : global::System.Data.DataSet {
         
-        private dtInventarioDataTable tabledtInventario;
+        private dtProyeccionInteresDataTable tabledtProyeccionInteres;
         
         private global::System.Data.SchemaSerializationMode _schemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public DSInventarioDisponible() {
+        public DSProyeccionInteres() {
             this.BeginInit();
             this.InitClass();
             global::System.ComponentModel.CollectionChangeEventHandler schemaChangedHandler = new global::System.ComponentModel.CollectionChangeEventHandler(this.SchemaChanged);
@@ -41,7 +41,7 @@ namespace PrestaVende.DATASET {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        protected DSInventarioDisponible(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+        protected DSProyeccionInteres(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
                 base(info, context, false) {
             if ((this.IsBinarySerialized(info, context) == true)) {
                 this.InitVars(false);
@@ -54,8 +54,8 @@ namespace PrestaVende.DATASET {
             if ((this.DetermineSchemaSerializationMode(info, context) == global::System.Data.SchemaSerializationMode.IncludeSchema)) {
                 global::System.Data.DataSet ds = new global::System.Data.DataSet();
                 ds.ReadXmlSchema(new global::System.Xml.XmlTextReader(new global::System.IO.StringReader(strSchema)));
-                if ((ds.Tables["dtInventario"] != null)) {
-                    base.Tables.Add(new dtInventarioDataTable(ds.Tables["dtInventario"]));
+                if ((ds.Tables["dtProyeccionInteres"] != null)) {
+                    base.Tables.Add(new dtProyeccionInteresDataTable(ds.Tables["dtProyeccionInteres"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -79,9 +79,9 @@ namespace PrestaVende.DATASET {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Browsable(false)]
         [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public dtInventarioDataTable dtInventario {
+        public dtProyeccionInteresDataTable dtProyeccionInteres {
             get {
-                return this.tabledtInventario;
+                return this.tabledtProyeccionInteres;
             }
         }
         
@@ -127,7 +127,7 @@ namespace PrestaVende.DATASET {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         public override global::System.Data.DataSet Clone() {
-            DSInventarioDisponible cln = ((DSInventarioDisponible)(base.Clone()));
+            DSProyeccionInteres cln = ((DSProyeccionInteres)(base.Clone()));
             cln.InitVars();
             cln.SchemaSerializationMode = this.SchemaSerializationMode;
             return cln;
@@ -152,8 +152,8 @@ namespace PrestaVende.DATASET {
                 this.Reset();
                 global::System.Data.DataSet ds = new global::System.Data.DataSet();
                 ds.ReadXml(reader);
-                if ((ds.Tables["dtInventario"] != null)) {
-                    base.Tables.Add(new dtInventarioDataTable(ds.Tables["dtInventario"]));
+                if ((ds.Tables["dtProyeccionInteres"] != null)) {
+                    base.Tables.Add(new dtProyeccionInteresDataTable(ds.Tables["dtProyeccionInteres"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -188,10 +188,10 @@ namespace PrestaVende.DATASET {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         internal void InitVars(bool initTable) {
-            this.tabledtInventario = ((dtInventarioDataTable)(base.Tables["dtInventario"]));
+            this.tabledtProyeccionInteres = ((dtProyeccionInteresDataTable)(base.Tables["dtProyeccionInteres"]));
             if ((initTable == true)) {
-                if ((this.tabledtInventario != null)) {
-                    this.tabledtInventario.InitVars();
+                if ((this.tabledtProyeccionInteres != null)) {
+                    this.tabledtProyeccionInteres.InitVars();
                 }
             }
         }
@@ -199,18 +199,18 @@ namespace PrestaVende.DATASET {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitClass() {
-            this.DataSetName = "DSInventarioDisponible";
+            this.DataSetName = "DSProyeccionInteres";
             this.Prefix = "";
-            this.Namespace = "http://tempuri.org/DSInventarioDisponible.xsd";
+            this.Namespace = "http://tempuri.org/DSProyeccionInteres.xsd";
             this.EnforceConstraints = true;
             this.SchemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
-            this.tabledtInventario = new dtInventarioDataTable();
-            base.Tables.Add(this.tabledtInventario);
+            this.tabledtProyeccionInteres = new dtProyeccionInteresDataTable();
+            base.Tables.Add(this.tabledtProyeccionInteres);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        private bool ShouldSerializedtInventario() {
+        private bool ShouldSerializedtProyeccionInteres() {
             return false;
         }
         
@@ -225,7 +225,7 @@ namespace PrestaVende.DATASET {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedDataSetSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
-            DSInventarioDisponible ds = new DSInventarioDisponible();
+            DSProyeccionInteres ds = new DSProyeccionInteres();
             global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
             global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
             global::System.Xml.Schema.XmlSchemaAny any = new global::System.Xml.Schema.XmlSchemaAny();
@@ -270,43 +270,29 @@ namespace PrestaVende.DATASET {
         }
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public delegate void dtInventarioRowChangeEventHandler(object sender, dtInventarioRowChangeEvent e);
+        public delegate void dtProyeccionInteresRowChangeEventHandler(object sender, dtProyeccionInteresRowChangeEvent e);
         
         /// <summary>
         ///Represents the strongly named DataTable class.
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class dtInventarioDataTable : global::System.Data.TypedTableBase<dtInventarioRow> {
+        public partial class dtProyeccionInteresDataTable : global::System.Data.TypedTableBase<dtProyeccionInteresRow> {
             
-            private global::System.Data.DataColumn columnempresa;
+            private global::System.Data.DataColumn columnid_semana;
             
-            private global::System.Data.DataColumn columnid_sucursal;
+            private global::System.Data.DataColumn columnsemana;
             
-            private global::System.Data.DataColumn columnsucursal;
+            private global::System.Data.DataColumn columnfechas;
             
-            private global::System.Data.DataColumn columnfecha_agregado;
+            private global::System.Data.DataColumn columnintereses;
             
-            private global::System.Data.DataColumn columnnumero_prestamo;
-            
-            private global::System.Data.DataColumn columnnumero_linea;
-            
-            private global::System.Data.DataColumn columnproducto;
-            
-            private global::System.Data.DataColumn columncaracteristicas;
-            
-            private global::System.Data.DataColumn columnprecio_producto;
-            
-            private global::System.Data.DataColumn columncampo_adicional_decimal;
-            
-            private global::System.Data.DataColumn columncampo_adicional_entero;
-            
-            private global::System.Data.DataColumn columncampo_adicional_cadena;
+            private global::System.Data.DataColumn columntotal_a_cancelar;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public dtInventarioDataTable() {
-                this.TableName = "dtInventario";
+            public dtProyeccionInteresDataTable() {
+                this.TableName = "dtProyeccionInteres";
                 this.BeginInit();
                 this.InitClass();
                 this.EndInit();
@@ -314,7 +300,7 @@ namespace PrestaVende.DATASET {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            internal dtInventarioDataTable(global::System.Data.DataTable table) {
+            internal dtProyeccionInteresDataTable(global::System.Data.DataTable table) {
                 this.TableName = table.TableName;
                 if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
                     this.CaseSensitive = table.CaseSensitive;
@@ -331,104 +317,48 @@ namespace PrestaVende.DATASET {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            protected dtInventarioDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+            protected dtProyeccionInteresDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
                     base(info, context) {
                 this.InitVars();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn empresaColumn {
+            public global::System.Data.DataColumn id_semanaColumn {
                 get {
-                    return this.columnempresa;
+                    return this.columnid_semana;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn id_sucursalColumn {
+            public global::System.Data.DataColumn semanaColumn {
                 get {
-                    return this.columnid_sucursal;
+                    return this.columnsemana;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn sucursalColumn {
+            public global::System.Data.DataColumn fechasColumn {
                 get {
-                    return this.columnsucursal;
+                    return this.columnfechas;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn fecha_agregadoColumn {
+            public global::System.Data.DataColumn interesesColumn {
                 get {
-                    return this.columnfecha_agregado;
+                    return this.columnintereses;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn numero_prestamoColumn {
+            public global::System.Data.DataColumn total_a_cancelarColumn {
                 get {
-                    return this.columnnumero_prestamo;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn numero_lineaColumn {
-                get {
-                    return this.columnnumero_linea;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn productoColumn {
-                get {
-                    return this.columnproducto;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn caracteristicasColumn {
-                get {
-                    return this.columncaracteristicas;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn precio_productoColumn {
-                get {
-                    return this.columnprecio_producto;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn campo_adicional_decimalColumn {
-                get {
-                    return this.columncampo_adicional_decimal;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn campo_adicional_enteroColumn {
-                get {
-                    return this.columncampo_adicional_entero;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn campo_adicional_cadenaColumn {
-                get {
-                    return this.columncampo_adicional_cadena;
+                    return this.columntotal_a_cancelar;
                 }
             }
             
@@ -443,56 +373,49 @@ namespace PrestaVende.DATASET {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public dtInventarioRow this[int index] {
+            public dtProyeccionInteresRow this[int index] {
                 get {
-                    return ((dtInventarioRow)(this.Rows[index]));
+                    return ((dtProyeccionInteresRow)(this.Rows[index]));
                 }
             }
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event dtInventarioRowChangeEventHandler dtInventarioRowChanging;
+            public event dtProyeccionInteresRowChangeEventHandler dtProyeccionInteresRowChanging;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event dtInventarioRowChangeEventHandler dtInventarioRowChanged;
+            public event dtProyeccionInteresRowChangeEventHandler dtProyeccionInteresRowChanged;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event dtInventarioRowChangeEventHandler dtInventarioRowDeleting;
+            public event dtProyeccionInteresRowChangeEventHandler dtProyeccionInteresRowDeleting;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event dtInventarioRowChangeEventHandler dtInventarioRowDeleted;
+            public event dtProyeccionInteresRowChangeEventHandler dtProyeccionInteresRowDeleted;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void AdddtInventarioRow(dtInventarioRow row) {
+            public void AdddtProyeccionInteresRow(dtProyeccionInteresRow row) {
                 this.Rows.Add(row);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public dtInventarioRow AdddtInventarioRow(string empresa, int id_sucursal, int sucursal, System.DateTime fecha_agregado, long numero_prestamo, int numero_linea, string producto, string caracteristicas, decimal precio_producto, decimal campo_adicional_decimal, int campo_adicional_entero, string campo_adicional_cadena) {
-                dtInventarioRow rowdtInventarioRow = ((dtInventarioRow)(this.NewRow()));
+            public dtProyeccionInteresRow AdddtProyeccionInteresRow(string id_semana, string semana, string fechas, string intereses, string total_a_cancelar) {
+                dtProyeccionInteresRow rowdtProyeccionInteresRow = ((dtProyeccionInteresRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
-                        empresa,
-                        id_sucursal,
-                        sucursal,
-                        fecha_agregado,
-                        numero_prestamo,
-                        numero_linea,
-                        producto,
-                        caracteristicas,
-                        precio_producto,
-                        campo_adicional_decimal,
-                        campo_adicional_entero,
-                        campo_adicional_cadena};
-                rowdtInventarioRow.ItemArray = columnValuesArray;
-                this.Rows.Add(rowdtInventarioRow);
-                return rowdtInventarioRow;
+                        id_semana,
+                        semana,
+                        fechas,
+                        intereses,
+                        total_a_cancelar};
+                rowdtProyeccionInteresRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowdtProyeccionInteresRow);
+                return rowdtProyeccionInteresRow;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public override global::System.Data.DataTable Clone() {
-                dtInventarioDataTable cln = ((dtInventarioDataTable)(base.Clone()));
+                dtProyeccionInteresDataTable cln = ((dtProyeccionInteresDataTable)(base.Clone()));
                 cln.InitVars();
                 return cln;
             }
@@ -500,79 +423,58 @@ namespace PrestaVende.DATASET {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override global::System.Data.DataTable CreateInstance() {
-                return new dtInventarioDataTable();
+                return new dtProyeccionInteresDataTable();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             internal void InitVars() {
-                this.columnempresa = base.Columns["empresa"];
-                this.columnid_sucursal = base.Columns["id_sucursal"];
-                this.columnsucursal = base.Columns["sucursal"];
-                this.columnfecha_agregado = base.Columns["fecha_agregado"];
-                this.columnnumero_prestamo = base.Columns["numero_prestamo"];
-                this.columnnumero_linea = base.Columns["numero_linea"];
-                this.columnproducto = base.Columns["producto"];
-                this.columncaracteristicas = base.Columns["caracteristicas"];
-                this.columnprecio_producto = base.Columns["precio_producto"];
-                this.columncampo_adicional_decimal = base.Columns["campo_adicional_decimal"];
-                this.columncampo_adicional_entero = base.Columns["campo_adicional_entero"];
-                this.columncampo_adicional_cadena = base.Columns["campo_adicional_cadena"];
+                this.columnid_semana = base.Columns["id_semana"];
+                this.columnsemana = base.Columns["semana"];
+                this.columnfechas = base.Columns["fechas"];
+                this.columnintereses = base.Columns["intereses"];
+                this.columntotal_a_cancelar = base.Columns["total_a_cancelar"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             private void InitClass() {
-                this.columnempresa = new global::System.Data.DataColumn("empresa", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnempresa);
-                this.columnid_sucursal = new global::System.Data.DataColumn("id_sucursal", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnid_sucursal);
-                this.columnsucursal = new global::System.Data.DataColumn("sucursal", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnsucursal);
-                this.columnfecha_agregado = new global::System.Data.DataColumn("fecha_agregado", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnfecha_agregado);
-                this.columnnumero_prestamo = new global::System.Data.DataColumn("numero_prestamo", typeof(long), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnnumero_prestamo);
-                this.columnnumero_linea = new global::System.Data.DataColumn("numero_linea", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnnumero_linea);
-                this.columnproducto = new global::System.Data.DataColumn("producto", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnproducto);
-                this.columncaracteristicas = new global::System.Data.DataColumn("caracteristicas", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columncaracteristicas);
-                this.columnprecio_producto = new global::System.Data.DataColumn("precio_producto", typeof(decimal), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnprecio_producto);
-                this.columncampo_adicional_decimal = new global::System.Data.DataColumn("campo_adicional_decimal", typeof(decimal), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columncampo_adicional_decimal);
-                this.columncampo_adicional_entero = new global::System.Data.DataColumn("campo_adicional_entero", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columncampo_adicional_entero);
-                this.columncampo_adicional_cadena = new global::System.Data.DataColumn("campo_adicional_cadena", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columncampo_adicional_cadena);
+                this.columnid_semana = new global::System.Data.DataColumn("id_semana", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnid_semana);
+                this.columnsemana = new global::System.Data.DataColumn("semana", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnsemana);
+                this.columnfechas = new global::System.Data.DataColumn("fechas", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnfechas);
+                this.columnintereses = new global::System.Data.DataColumn("intereses", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnintereses);
+                this.columntotal_a_cancelar = new global::System.Data.DataColumn("total_a_cancelar", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columntotal_a_cancelar);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public dtInventarioRow NewdtInventarioRow() {
-                return ((dtInventarioRow)(this.NewRow()));
+            public dtProyeccionInteresRow NewdtProyeccionInteresRow() {
+                return ((dtProyeccionInteresRow)(this.NewRow()));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
-                return new dtInventarioRow(builder);
+                return new dtProyeccionInteresRow(builder);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override global::System.Type GetRowType() {
-                return typeof(dtInventarioRow);
+                return typeof(dtProyeccionInteresRow);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanged(e);
-                if ((this.dtInventarioRowChanged != null)) {
-                    this.dtInventarioRowChanged(this, new dtInventarioRowChangeEvent(((dtInventarioRow)(e.Row)), e.Action));
+                if ((this.dtProyeccionInteresRowChanged != null)) {
+                    this.dtProyeccionInteresRowChanged(this, new dtProyeccionInteresRowChangeEvent(((dtProyeccionInteresRow)(e.Row)), e.Action));
                 }
             }
             
@@ -580,8 +482,8 @@ namespace PrestaVende.DATASET {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanging(e);
-                if ((this.dtInventarioRowChanging != null)) {
-                    this.dtInventarioRowChanging(this, new dtInventarioRowChangeEvent(((dtInventarioRow)(e.Row)), e.Action));
+                if ((this.dtProyeccionInteresRowChanging != null)) {
+                    this.dtProyeccionInteresRowChanging(this, new dtProyeccionInteresRowChangeEvent(((dtProyeccionInteresRow)(e.Row)), e.Action));
                 }
             }
             
@@ -589,8 +491,8 @@ namespace PrestaVende.DATASET {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleted(e);
-                if ((this.dtInventarioRowDeleted != null)) {
-                    this.dtInventarioRowDeleted(this, new dtInventarioRowChangeEvent(((dtInventarioRow)(e.Row)), e.Action));
+                if ((this.dtProyeccionInteresRowDeleted != null)) {
+                    this.dtProyeccionInteresRowDeleted(this, new dtProyeccionInteresRowChangeEvent(((dtProyeccionInteresRow)(e.Row)), e.Action));
                 }
             }
             
@@ -598,14 +500,14 @@ namespace PrestaVende.DATASET {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleting(e);
-                if ((this.dtInventarioRowDeleting != null)) {
-                    this.dtInventarioRowDeleting(this, new dtInventarioRowChangeEvent(((dtInventarioRow)(e.Row)), e.Action));
+                if ((this.dtProyeccionInteresRowDeleting != null)) {
+                    this.dtProyeccionInteresRowDeleting(this, new dtProyeccionInteresRowChangeEvent(((dtProyeccionInteresRow)(e.Row)), e.Action));
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void RemovedtInventarioRow(dtInventarioRow row) {
+            public void RemovedtProyeccionInteresRow(dtProyeccionInteresRow row) {
                 this.Rows.Remove(row);
             }
             
@@ -614,7 +516,7 @@ namespace PrestaVende.DATASET {
             public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
                 global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
                 global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
-                DSInventarioDisponible ds = new DSInventarioDisponible();
+                DSProyeccionInteres ds = new DSProyeccionInteres();
                 global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
                 any1.Namespace = "http://www.w3.org/2001/XMLSchema";
                 any1.MinOccurs = new decimal(0);
@@ -632,7 +534,7 @@ namespace PrestaVende.DATASET {
                 type.Attributes.Add(attribute1);
                 global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
                 attribute2.Name = "tableTypeName";
-                attribute2.FixedValue = "dtInventarioDataTable";
+                attribute2.FixedValue = "dtProyeccionInteresDataTable";
                 type.Attributes.Add(attribute2);
                 type.Particle = sequence;
                 global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
@@ -676,352 +578,156 @@ namespace PrestaVende.DATASET {
         /// <summary>
         ///Represents strongly named DataRow class.
         ///</summary>
-        public partial class dtInventarioRow : global::System.Data.DataRow {
+        public partial class dtProyeccionInteresRow : global::System.Data.DataRow {
             
-            private dtInventarioDataTable tabledtInventario;
+            private dtProyeccionInteresDataTable tabledtProyeccionInteres;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            internal dtInventarioRow(global::System.Data.DataRowBuilder rb) : 
+            internal dtProyeccionInteresRow(global::System.Data.DataRowBuilder rb) : 
                     base(rb) {
-                this.tabledtInventario = ((dtInventarioDataTable)(this.Table));
+                this.tabledtProyeccionInteres = ((dtProyeccionInteresDataTable)(this.Table));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string empresa {
+            public string id_semana {
                 get {
                     try {
-                        return ((string)(this[this.tabledtInventario.empresaColumn]));
+                        return ((string)(this[this.tabledtProyeccionInteres.id_semanaColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'empresa\' in table \'dtInventario\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'id_semana\' in table \'dtProyeccionInteres\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tabledtInventario.empresaColumn] = value;
+                    this[this.tabledtProyeccionInteres.id_semanaColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public int id_sucursal {
+            public string semana {
                 get {
                     try {
-                        return ((int)(this[this.tabledtInventario.id_sucursalColumn]));
+                        return ((string)(this[this.tabledtProyeccionInteres.semanaColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'id_sucursal\' in table \'dtInventario\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'semana\' in table \'dtProyeccionInteres\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tabledtInventario.id_sucursalColumn] = value;
+                    this[this.tabledtProyeccionInteres.semanaColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public int sucursal {
+            public string fechas {
                 get {
                     try {
-                        return ((int)(this[this.tabledtInventario.sucursalColumn]));
+                        return ((string)(this[this.tabledtProyeccionInteres.fechasColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'sucursal\' in table \'dtInventario\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'fechas\' in table \'dtProyeccionInteres\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tabledtInventario.sucursalColumn] = value;
+                    this[this.tabledtProyeccionInteres.fechasColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public System.DateTime fecha_agregado {
+            public string intereses {
                 get {
                     try {
-                        return ((global::System.DateTime)(this[this.tabledtInventario.fecha_agregadoColumn]));
+                        return ((string)(this[this.tabledtProyeccionInteres.interesesColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'fecha_agregado\' in table \'dtInventario\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'intereses\' in table \'dtProyeccionInteres\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tabledtInventario.fecha_agregadoColumn] = value;
+                    this[this.tabledtProyeccionInteres.interesesColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public long numero_prestamo {
+            public string total_a_cancelar {
                 get {
                     try {
-                        return ((long)(this[this.tabledtInventario.numero_prestamoColumn]));
+                        return ((string)(this[this.tabledtProyeccionInteres.total_a_cancelarColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'numero_prestamo\' in table \'dtInventario\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tabledtInventario.numero_prestamoColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public int numero_linea {
-                get {
-                    try {
-                        return ((int)(this[this.tabledtInventario.numero_lineaColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'numero_linea\' in table \'dtInventario\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tabledtInventario.numero_lineaColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string producto {
-                get {
-                    try {
-                        return ((string)(this[this.tabledtInventario.productoColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'producto\' in table \'dtInventario\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tabledtInventario.productoColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string caracteristicas {
-                get {
-                    try {
-                        return ((string)(this[this.tabledtInventario.caracteristicasColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'caracteristicas\' in table \'dtInventario\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tabledtInventario.caracteristicasColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public decimal precio_producto {
-                get {
-                    try {
-                        return ((decimal)(this[this.tabledtInventario.precio_productoColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'precio_producto\' in table \'dtInventario\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tabledtInventario.precio_productoColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public decimal campo_adicional_decimal {
-                get {
-                    try {
-                        return ((decimal)(this[this.tabledtInventario.campo_adicional_decimalColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'campo_adicional_decimal\' in table \'dtInventario\' is DBNull." +
+                        throw new global::System.Data.StrongTypingException("The value for column \'total_a_cancelar\' in table \'dtProyeccionInteres\' is DBNull." +
                                 "", e);
                     }
                 }
                 set {
-                    this[this.tabledtInventario.campo_adicional_decimalColumn] = value;
+                    this[this.tabledtProyeccionInteres.total_a_cancelarColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public int campo_adicional_entero {
-                get {
-                    try {
-                        return ((int)(this[this.tabledtInventario.campo_adicional_enteroColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'campo_adicional_entero\' in table \'dtInventario\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tabledtInventario.campo_adicional_enteroColumn] = value;
-                }
+            public bool Isid_semanaNull() {
+                return this.IsNull(this.tabledtProyeccionInteres.id_semanaColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string campo_adicional_cadena {
-                get {
-                    try {
-                        return ((string)(this[this.tabledtInventario.campo_adicional_cadenaColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'campo_adicional_cadena\' in table \'dtInventario\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tabledtInventario.campo_adicional_cadenaColumn] = value;
-                }
+            public void Setid_semanaNull() {
+                this[this.tabledtProyeccionInteres.id_semanaColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsempresaNull() {
-                return this.IsNull(this.tabledtInventario.empresaColumn);
+            public bool IssemanaNull() {
+                return this.IsNull(this.tabledtProyeccionInteres.semanaColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetempresaNull() {
-                this[this.tabledtInventario.empresaColumn] = global::System.Convert.DBNull;
+            public void SetsemanaNull() {
+                this[this.tabledtProyeccionInteres.semanaColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool Isid_sucursalNull() {
-                return this.IsNull(this.tabledtInventario.id_sucursalColumn);
+            public bool IsfechasNull() {
+                return this.IsNull(this.tabledtProyeccionInteres.fechasColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void Setid_sucursalNull() {
-                this[this.tabledtInventario.id_sucursalColumn] = global::System.Convert.DBNull;
+            public void SetfechasNull() {
+                this[this.tabledtProyeccionInteres.fechasColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IssucursalNull() {
-                return this.IsNull(this.tabledtInventario.sucursalColumn);
+            public bool IsinteresesNull() {
+                return this.IsNull(this.tabledtProyeccionInteres.interesesColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetsucursalNull() {
-                this[this.tabledtInventario.sucursalColumn] = global::System.Convert.DBNull;
+            public void SetinteresesNull() {
+                this[this.tabledtProyeccionInteres.interesesColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool Isfecha_agregadoNull() {
-                return this.IsNull(this.tabledtInventario.fecha_agregadoColumn);
+            public bool Istotal_a_cancelarNull() {
+                return this.IsNull(this.tabledtProyeccionInteres.total_a_cancelarColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void Setfecha_agregadoNull() {
-                this[this.tabledtInventario.fecha_agregadoColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool Isnumero_prestamoNull() {
-                return this.IsNull(this.tabledtInventario.numero_prestamoColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void Setnumero_prestamoNull() {
-                this[this.tabledtInventario.numero_prestamoColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool Isnumero_lineaNull() {
-                return this.IsNull(this.tabledtInventario.numero_lineaColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void Setnumero_lineaNull() {
-                this[this.tabledtInventario.numero_lineaColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsproductoNull() {
-                return this.IsNull(this.tabledtInventario.productoColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetproductoNull() {
-                this[this.tabledtInventario.productoColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IscaracteristicasNull() {
-                return this.IsNull(this.tabledtInventario.caracteristicasColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetcaracteristicasNull() {
-                this[this.tabledtInventario.caracteristicasColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool Isprecio_productoNull() {
-                return this.IsNull(this.tabledtInventario.precio_productoColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void Setprecio_productoNull() {
-                this[this.tabledtInventario.precio_productoColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool Iscampo_adicional_decimalNull() {
-                return this.IsNull(this.tabledtInventario.campo_adicional_decimalColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void Setcampo_adicional_decimalNull() {
-                this[this.tabledtInventario.campo_adicional_decimalColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool Iscampo_adicional_enteroNull() {
-                return this.IsNull(this.tabledtInventario.campo_adicional_enteroColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void Setcampo_adicional_enteroNull() {
-                this[this.tabledtInventario.campo_adicional_enteroColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool Iscampo_adicional_cadenaNull() {
-                return this.IsNull(this.tabledtInventario.campo_adicional_cadenaColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void Setcampo_adicional_cadenaNull() {
-                this[this.tabledtInventario.campo_adicional_cadenaColumn] = global::System.Convert.DBNull;
+            public void Settotal_a_cancelarNull() {
+                this[this.tabledtProyeccionInteres.total_a_cancelarColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -1029,22 +735,22 @@ namespace PrestaVende.DATASET {
         ///Row event argument class
         ///</summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public class dtInventarioRowChangeEvent : global::System.EventArgs {
+        public class dtProyeccionInteresRowChangeEvent : global::System.EventArgs {
             
-            private dtInventarioRow eventRow;
+            private dtProyeccionInteresRow eventRow;
             
             private global::System.Data.DataRowAction eventAction;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public dtInventarioRowChangeEvent(dtInventarioRow row, global::System.Data.DataRowAction action) {
+            public dtProyeccionInteresRowChangeEvent(dtProyeccionInteresRow row, global::System.Data.DataRowAction action) {
                 this.eventRow = row;
                 this.eventAction = action;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public dtInventarioRow Row {
+            public dtProyeccionInteresRow Row {
                 get {
                     return this.eventRow;
                 }

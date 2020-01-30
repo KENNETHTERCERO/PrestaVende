@@ -16,14 +16,14 @@ namespace PrestaVende.Reports {
     using CrystalDecisions.CrystalReports.Engine;
     
     
-    public class CRAbonosCapital : ReportClass {
+    public class CRProyeccionInteresCobro : ReportClass {
         
-        public CRAbonosCapital() {
+        public CRProyeccionInteresCobro() {
         }
         
         public override string ResourceName {
             get {
-                return "CRAbonosCapital.rpt";
+                return "CRProyeccionInteresCobro.rpt";
             }
             set {
                 // Do nothing
@@ -41,7 +41,7 @@ namespace PrestaVende.Reports {
         
         public override string FullResourceName {
             get {
-                return "PrestaVende.Reports.CRAbonosCapital.rpt";
+                return "PrestaVende.Reports.CRProyeccionInteresCobro.rpt";
             }
             set {
                 // Do nothing
@@ -90,9 +90,9 @@ namespace PrestaVende.Reports {
     }
     
     [System.Drawing.ToolboxBitmapAttribute(typeof(CrystalDecisions.Shared.ExportOptions), "report.bmp")]
-    public class CachedCRAbonosCapital : Component, ICachedReport {
+    public class CachedCRProyeccionInteresCobro : Component, ICachedReport {
         
-        public CachedCRAbonosCapital() {
+        public CachedCRProyeccionInteresCobro() {
         }
         
         [Browsable(false)]
@@ -129,7 +129,7 @@ namespace PrestaVende.Reports {
         }
         
         public virtual CrystalDecisions.CrystalReports.Engine.ReportDocument CreateReport() {
-            CRAbonosCapital rpt = new CRAbonosCapital();
+            CRProyeccionInteresCobro rpt = new CRProyeccionInteresCobro();
             rpt.Site = this.Site;
             return rpt;
         }

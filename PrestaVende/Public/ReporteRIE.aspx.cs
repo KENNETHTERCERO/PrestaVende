@@ -7,10 +7,15 @@ using System.Web.UI.WebControls;
 
 namespace PrestaVende.Public
 {
-    public partial class ReporteAbonos : System.Web.UI.Page
+    public partial class ReporteRIE : System.Web.UI.Page
     {
+
+        #region variables
+
         private string error = "";
         private CLASS.cs_sucursal cs_sucursal = new CLASS.cs_sucursal();
+
+        #endregion
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -22,25 +27,40 @@ namespace PrestaVende.Public
                 {
                     Response.Redirect("~/WFWebLogin.aspx");
                 }
+
+                if (IsPostBack)
+                {
+                    if (lblWarning.Text == "") { divWarning.Visible = false; }
+                    if (lblError.Text == "") { divError.Visible = false; }
+                    if (lblSuccess.Text == "") { divSucceful.Visible = false; }
+                }
                 else
                 {
-                    if (IsPostBack)
-                    {
-                        if (lblWarning.Text == "") { divWarning.Visible = false; }
-                        if (lblError.Text == "") { divError.Visible = false; }
-                        if (lblSuccess.Text == "") { divSucceful.Visible = false; }
-                    }
-                    else
-                    {
-                        ObtenerSucursales();
-                    }
+                    ObtenerSucursales();
                 }
+
             }
             catch (Exception ex)
             {
                 showError(ex.ToString());
             }
         }
+
+        protected void btnGenerar_Click(object sender, EventArgs e)
+        {
+            string id_sucursal = ddlSucursal.SelectedValue.ToString();
+
+            if (int.Parse(id_sucursal) > 0)
+            {
+                string scriptEstadoCuenta = "window.open('WebReport.aspx?tipo_reporte=15" + "&id_sucursal=" + id_sucursal + "');";
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), "NewWindow", scriptEstadoCuenta, true);
+            }
+            else
+                showWarning("Seleccione una sucursal para poder generar el reporte.");
+        }
+
+
+        #region metodos
 
         private void ObtenerSucursales()
         {
@@ -54,6 +74,7 @@ namespace PrestaVende.Public
 
                 ddlSucursal.SelectedValue = Session["id_sucursal"].ToString();
 
+
                 if (Convert.ToInt32(Session["id_rol"]) == 3 || Convert.ToInt32(Session["id_rol"]) == 4 || Convert.ToInt32(Session["id_rol"]) == 5)
                     ddlSucursal.Enabled = false;
             }
@@ -63,27 +84,11 @@ namespace PrestaVende.Public
             }
         }
 
-        protected void btnGenerar_Click(object sender, EventArgs e)
+        private bool showError(string error)
         {
-            string id_sucuarsal = ddlSucursal.SelectedValue.ToString();
-
-            if (int.Parse(id_sucuarsal) > 0)
-                if (txtFechaInicial.Text.ToString().Length < 1)
-                    showWarning("Usted debe ingresar una fecha de inicio para poder generar el reporte.");
-                else if (txtFechaFin.Text.ToString().Length < 1)
-                    showWarning("Usted debe ingresar una fecha de fin para poder generar el reporte.");
-                else
-                {
-                    string scriptEstadoCuenta = "window.open('WebReport.aspx?tipo_reporte=6" + "&id_sucursal=" + id_sucuarsal + "&fecha_inicio=" + txtFechaInicial.Text + "&fecha_fin=" + txtFechaFin.Text + "');";
-                    ScriptManager.RegisterClientScriptBlock(this, GetType(), "NewWindow", scriptEstadoCuenta, true);
-                }
-            else
-                showWarning("Seleccione una sucursal para poder generar el reporte.");
-        }
-
-        protected void ddlSucursal_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
+            divError.Visible = true;
+            lblError.Controls.Add(new LiteralControl(string.Format("<span style='color:Red'>{0}</span>", error)));
+            return true;
         }
 
         private bool showWarning(string warning)
@@ -93,11 +98,6 @@ namespace PrestaVende.Public
             return true;
         }
 
-        private bool showError(string error)
-        {
-            divError.Visible = true;
-            lblError.Controls.Add(new LiteralControl(string.Format("<span style='color:Red'>{0}</span>", error)));
-            return true;
-        }
+        #endregion
     }
 }

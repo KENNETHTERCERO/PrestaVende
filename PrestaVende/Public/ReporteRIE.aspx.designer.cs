@@ -10,7 +10,7 @@
 namespace PrestaVende.Public {
     
     
-    public partial class ReporteInventario {
+    public partial class ReporteRIE {
         
         /// <summary>
         /// uPanel control.

@@ -1,9 +1,9 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Public/PrestaVende.Master" AutoEventWireup="true" CodeBehind="ReporteInventario.aspx.cs" Inherits="PrestaVende.Public.ReporteInventario" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Public/PrestaVende.Master" AutoEventWireup="true" CodeBehind="ReimpresionFacturaRecibo.aspx.cs" Inherits="PrestaVende.Public.ReimpresionFacturaRecibo" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:UpdatePanel runat="server" ID="uPanel">
-        <ContentTemplate>
+    <ContentTemplate>
             <div class="container-fluid text-center">
                 <div class="row content">
                     <div class="col-sm-2 sidenav">
@@ -50,14 +50,8 @@
                                                 <table>
                                                     <tr>
                                                         <td>
-                                                            <h1>Reporte de Inventario disponible&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h1>
+                                                            <h1><asp:Label ID="lblTipoReimpresion" runat="server" Text=""></asp:Label></h1>
                                                         </td>
-                                                        <!--<td>
-                                                            <big><asp:Label ID="lblPrestamo" runat="server">Prestamo:&nbsp;&nbsp;</asp:Label></big>
-                                                        </td>
-                                                        <td>
-                                                            <big><asp:Label ID="lblnombre_prestamo" runat="server"></asp:Label></big>
-                                                        </td>-->
                                                     </tr>
                                                 </table>
                                             </div>
@@ -70,18 +64,29 @@
                                         <div>
                                             <table>                                                
                                                 <tr>
-                                                    <td >
-                                                        <asp:Label ID="lblSerie" runat="server" Font-Bold="true">SUCURSAL</asp:Label>
-                                                    </td>        
-                                                    <td style="width:25px"> &nbsp;&nbsp;</td>               
                                                     <td>
-                                                        <asp:DropDownList ID="ddlSucursal" runat="server" CssClass="form-control"  AutoPostBack="true"></asp:DropDownList>
+                                                        <asp:Label ID="lblSucursal" runat="server" Font-Bold="true">SUCURSAL</asp:Label>
+                                                    </td>
+                                                    <td>
+                                                        <asp:DropDownList ID="ddlSucursal" runat="server" CssClass="form-control" ></asp:DropDownList>
                                                     </td> 
-                                                </tr>                                                
-                                                <tr>
-                                                    <td colspan="4" style="height:20px;"></td>
                                                 </tr>
-                                                
+                                                <tr>
+                                                    <td>
+                                                        <asp:Label ID="lblSerie" runat="server" Font-Bold="true">SERIE</asp:Label>
+                                                    </td>
+                                                    <td>
+                                                        <asp:DropDownList ID="ddlSerie" runat="server" CssClass="form-control" ></asp:DropDownList>
+                                                    </td> 
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <asp:Label ID="lblNumeroDocumento" runat="server" Text="NUMERO DE DOCUMENTO" Font-Bold="true"></asp:Label>
+                                                    </td>
+                                                    <td>
+                                                        <asp:TextBox ID="txtNumeroDocumento" runat="server" type="number" step="1" CssClass="form-control"></asp:TextBox>
+                                                    </td>
+                                                </tr>
                                             </table>
                                         </div>
                                     </div>
@@ -98,4 +103,3 @@
         </ContentTemplate>
     </asp:UpdatePanel>
 </asp:Content>
-

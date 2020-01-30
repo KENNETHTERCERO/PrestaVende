@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DSProyeccionInteres" targetNamespace="http://tempuri.org/DSProyeccionInteres.xsd" xmlns:mstns="http://tempuri.org/DSProyeccionInteres.xsd" xmlns="http://tempuri.org/DSProyeccionInteres.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DSProyeccionInteres" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="DSProyeccionInteres" msprop:Generator_UserDSName="DSProyeccionInteres">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="dtProyeccionInteres" msprop:Generator_TableClassName="dtProyeccionInteresDataTable" msprop:Generator_TableVarName="tabledtProyeccionInteres" msprop:Generator_TablePropName="dtProyeccionInteres" msprop:Generator_RowDeletingName="dtProyeccionInteresRowDeleting" msprop:Generator_RowChangingName="dtProyeccionInteresRowChanging" msprop:Generator_RowEvHandlerName="dtProyeccionInteresRowChangeEventHandler" msprop:Generator_RowDeletedName="dtProyeccionInteresRowDeleted" msprop:Generator_UserTableName="dtProyeccionInteres" msprop:Generator_RowChangedName="dtProyeccionInteresRowChanged" msprop:Generator_RowEvArgName="dtProyeccionInteresRowChangeEvent" msprop:Generator_RowClassName="dtProyeccionInteresRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="id_semana" msprop:Generator_ColumnVarNameInTable="columnid_semana" msprop:Generator_ColumnPropNameInRow="id_semana" msprop:Generator_ColumnPropNameInTable="id_semanaColumn" msprop:Generator_UserColumnName="id_semana" type="xs:string" minOccurs="0" />
+              <xs:element name="semana" msprop:Generator_ColumnVarNameInTable="columnsemana" msprop:Generator_ColumnPropNameInRow="semana" msprop:Generator_ColumnPropNameInTable="semanaColumn" msprop:Generator_UserColumnName="semana" type="xs:string" minOccurs="0" />
+              <xs:element name="fechas" msprop:Generator_ColumnVarNameInTable="columnfechas" msprop:Generator_ColumnPropNameInRow="fechas" msprop:Generator_ColumnPropNameInTable="fechasColumn" msprop:Generator_UserColumnName="fechas" type="xs:string" minOccurs="0" />
+              <xs:element name="intereses" msprop:Generator_ColumnVarNameInTable="columnintereses" msprop:Generator_ColumnPropNameInRow="intereses" msprop:Generator_ColumnPropNameInTable="interesesColumn" msprop:Generator_UserColumnName="intereses" type="xs:string" minOccurs="0" />
+              <xs:element name="total_a_cancelar" msprop:Generator_ColumnVarNameInTable="columntotal_a_cancelar" msprop:Generator_ColumnPropNameInRow="total_a_cancelar" msprop:Generator_ColumnPropNameInTable="total_a_cancelarColumn" msprop:Generator_UserColumnName="total_a_cancelar" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

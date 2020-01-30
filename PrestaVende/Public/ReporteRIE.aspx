@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Public/PrestaVende.Master" AutoEventWireup="true" CodeBehind="ReporteInventario.aspx.cs" Inherits="PrestaVende.Public.ReporteInventario" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Public/PrestaVende.Master" AutoEventWireup="true" CodeBehind="ReporteRIE.aspx.cs" Inherits="PrestaVende.Public.ReporteRIE" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -50,7 +50,7 @@
                                                 <table>
                                                     <tr>
                                                         <td>
-                                                            <h1>Reporte de Inventario disponible&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h1>
+                                                            <h1>Reporte de Ingresos y Egresos&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h1>
                                                         </td>
                                                         <!--<td>
                                                             <big><asp:Label ID="lblPrestamo" runat="server">Prestamo:&nbsp;&nbsp;</asp:Label></big>

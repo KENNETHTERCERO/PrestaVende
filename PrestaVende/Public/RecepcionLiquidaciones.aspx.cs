@@ -52,9 +52,9 @@ namespace PrestaVende.Public
 
         protected void btnBuscar_Click(object sender, EventArgs e)
         {
-            if (TxtPrestamo.Text.Length > 0)
+            if (this.TxtPrestamo.Text.Length > 0)
             {
-                buscarPrestamo(Decimal.Parse(TxtPrestamo.Text));
+                buscarPrestamo(Decimal.Parse(this.TxtPrestamo.Text));
             }
             else
             {
@@ -64,8 +64,8 @@ namespace PrestaVende.Public
 
         protected void btnAceptar_Click(object sender, EventArgs e)
         {
-            var rows = GrdVLiquidacion.Rows;
-            int count = GrdVLiquidacion.Rows.Count;
+            var rows = this.GrdVLiquidacion.Rows;
+            int count = this.GrdVLiquidacion.Rows.Count;
             bool algunSeleccionado = false;
 
             try
@@ -144,15 +144,15 @@ namespace PrestaVende.Public
                 if (dsRespuesta.Tables[0].Rows.Count > 0)
                 {
 
-                    GrdVLiquidacion.DataSource = dsRespuesta;
-                    GrdVLiquidacion.DataBind();
+                    this.GrdVLiquidacion.DataSource = dsRespuesta;
+                    this.GrdVLiquidacion.DataBind();
 
                 }
                 else
                 {
                     mostrarError("No se encontró información para el préstamo buscado.");
-                    TxtPrestamo.Text = "";
-                    TxtPrestamo.Focus();
+                    this.TxtPrestamo.Text = "";
+                    this.TxtPrestamo.Focus();
                 }
 
             }
@@ -165,15 +165,15 @@ namespace PrestaVende.Public
 
         private void limpiar()
         {
-            
-            TxtPrestamo.Text = "";                        
+
+            this.TxtPrestamo.Text = "";                        
             buscarPrestamo(-1);
         }
 
         private void mostrarError(string mensaje)
         {
-            divError.Visible = true;
-            lblError.Text = mensaje;
+            this.divError.Visible = true;
+            this.lblError.Text = mensaje;
         }
 
         

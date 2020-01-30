@@ -13,6 +13,11 @@ namespace PrestaVende.CLASS
 
         cs_connection connection = new cs_connection();
         SqlCommand command = new SqlCommand();
+        public cs_prestamo()
+        {
+            command = new SqlCommand();
+            connection = new cs_connection();
+        }
 
         public bool guardar_prestamo(ref string error, string[] encabezado, DataTable detalle, string tipo_prenda, ref string numero_prestamo_guardado)
         {
@@ -20,6 +25,7 @@ namespace PrestaVende.CLASS
             {
                 string numero_prestamo = "", monto = "";
                 int id_prestamo_encabezado = 0;
+                command = new SqlCommand();
 
                 connection.connection.Open();
                 command.Connection = connection.connection;
@@ -205,9 +211,9 @@ namespace PrestaVende.CLASS
             {
                 int update = 0;
                 command.Parameters.Clear();
-                command.CommandText = "UPDATE tbl_caja SET saldo = saldo - @monto_update WHERE id_caja = @id_caja_update";
-                command.Parameters.AddWithValue("@monto_update", monto);
-                command.Parameters.AddWithValue("@id_caja_update", Convert.ToInt32(HttpContext.Current.Session["id_caja"]));
+                command.CommandText = "UPDATE tbl_caja SET saldo = saldo - @monto_update_pres WHERE id_caja = @id_caja_update_pres";
+                command.Parameters.AddWithValue("@monto_update_pres", monto);
+                command.Parameters.AddWithValue("@id_caja_update_pres", Convert.ToInt32(HttpContext.Current.Session["id_caja"]));
                 update = command.ExecuteNonQuery();
                 if (update > 0)
                     return true;
@@ -852,6 +858,30 @@ namespace PrestaVende.CLASS
                 command.Parameters.AddWithValue("@fecha_inicio", fecha_inicio);
                 command.Parameters.AddWithValue("@fecha_fin", fecha_fin);
                 command.Parameters.AddWithValue("@id_sucursal", id_sucursal);
+                dtDatos.Load(command.ExecuteReader());
+                return dtDatos;
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                return null;
+            }
+            finally
+            {
+                connection.connection.Close();
+            }
+        }
+
+        public DataTable getValorProximoPago(ref string error, string numero_prestamo)
+        {
+            DataTable dtDatos = new DataTable("dtDatos");
+            try
+            {
+                connection.connection.Open();
+                command.Connection = connection.connection;
+                command.Parameters.Clear();
+                command.CommandText = "exec SP_proyeccion_intereses_proximo_pago @numero_prestamo";
+                command.Parameters.AddWithValue("@numero_prestamo", numero_prestamo);
                 dtDatos.Load(command.ExecuteReader());
                 return dtDatos;
             }

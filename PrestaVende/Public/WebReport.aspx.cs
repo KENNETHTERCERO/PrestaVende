@@ -14,6 +14,7 @@ namespace PrestaVende.Public
         private CLASS.cs_prestamo cs_prestamo = new CLASS.cs_prestamo();
         private CLASS.cs_factura cs_factura = new CLASS.cs_factura();
         private CLASS.cs_caja cs_caja = new CLASS.cs_caja();
+        private CLASS.cs_manejo_inventario cs_manejo_inventario = new CLASS.cs_manejo_inventario();
         private string error = "";
 
         protected void Page_Load(object sender, EventArgs e)
@@ -57,8 +58,13 @@ namespace PrestaVende.Public
             else if (Convert.ToInt32(tipo_reporte) == 2) //2 factura
             {
                 DataTable factura = new DataTable("factura");
+                DataTable proyeccion = new DataTable("proyeccion");
+
                 string id_factura = Request.QueryString.Get("id_factura");
+                string id_sucursal = Request.QueryString.Get("id_sucursal");
+                string numero_contrato = Request.QueryString.Get("numero_contrato");
                 factura = cs_factura.ObtenerFactura(ref error, id_factura);
+                proyeccion = cs_prestamo.getValorProximoPago(ref error, numero_contrato);
 
                 if (factura.Rows.Count <= 0)
                 {
@@ -72,6 +78,7 @@ namespace PrestaVende.Public
                         Reports.CRFacturaIntereses ReporteFactura = new Reports.CRFacturaIntereses();
 
                         ReporteFactura.Load(Server.MapPath("~/Reports/CRFacturaIntereses.rpt"));
+                        ReporteFactura.Subreports[0].SetDataSource(proyeccion);
                         ReporteFactura.SetDataSource(factura);
                         CrystalReportViewer1.ReportSource = ReporteFactura;//document;
                         CrystalReportViewer1.DataBind();
@@ -153,10 +160,10 @@ namespace PrestaVende.Public
             }
             else if (Convert.ToInt32(tipo_reporte) == 5)//5 impresion de recibo.
             {
-                DataTable factura = new DataTable("DtDatos");
-                string id_factura = Request.QueryString.Get("id_factura");
+                DataTable factura = new DataTable("dtRecibo");
+                string id_recibo = Request.QueryString.Get("id_recibo");
                 string id_sucursal = Request.QueryString.Get("id_sucursal");
-                factura = cs_factura.ObtenerFacturaRecibo(ref error, id_factura, id_sucursal);
+                factura = cs_factura.ObtenerRecibo(ref error, id_recibo, id_sucursal);
 
                 if (factura.Rows.Count <= 0)
                 {
@@ -232,7 +239,6 @@ namespace PrestaVende.Public
                     {
                         error = ex.ToString();
                     }
-
                 }
             }
             else if (Convert.ToInt32(tipo_reporte) == 8)//Reporte cancelaciones.
@@ -244,8 +250,37 @@ namespace PrestaVende.Public
             else if (Convert.ToInt32(tipo_reporte) == 9)//Reporte inventario disponible.
             {
                 string id_sucursal = Request.QueryString.Get("id_sucursal");
-                string fecha_inicio = Request.QueryString.Get("fecha_inicio");
-                string fecha_fin = Request.QueryString.Get("fecha_fin");
+                
+
+                DataTable inventario = new DataTable("dtInventario");
+
+
+                inventario = cs_manejo_inventario.getInventarioDisponible(ref error,  id_sucursal);
+
+                if (inventario.Rows.Count <= 0)
+                {
+                    error = "Error obteniendo datos de inventario." + error;
+                    throw new Exception("");
+                }
+                else
+                {
+                    try
+                    {
+                        Reports.CRInventarioSucursal inventarioSucursal = new Reports.CRInventarioSucursal();
+                        inventarioSucursal.Load(Server.MapPath("~/Reports/CRInventarioSucursal.rpt"));
+                        inventarioSucursal.SetDataSource(inventario);
+                        CrystalReportViewer1.ReportSource = inventarioSucursal;//document;
+                        CrystalReportViewer1.DataBind();
+                        CrystalReportViewer1.RefreshReport();
+                        inventarioSucursal.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "");
+                    }
+                    catch (Exception ex)
+                    {
+                        error = ex.ToString();
+                    }
+
+                }
+
             }
             else if (Convert.ToInt32(tipo_reporte) == 10)//10 estado de cuenta prestamo reimpresion.
             {
@@ -314,7 +349,7 @@ namespace PrestaVende.Public
 
                 }
             }
-            if (Convert.ToInt32(tipo_reporte) == 12)//12 Contrato reimpresion.
+            else if (Convert.ToInt32(tipo_reporte) == 12)//12 Contrato reimpresion.
             {
                 DataTable contrato = new DataTable("contrato");
                 string numero_prestamo = Request.QueryString.Get("numero_prestamo");
@@ -380,6 +415,41 @@ namespace PrestaVende.Public
                 CrystalReportViewer1.DataBind();
                 CrystalReportViewer1.RefreshReport();
                 ReporteFacturas.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "");
+
+            }
+            else if (Convert.ToInt32(tipo_reporte) == 15)//Reporte Ingresos y Egresos RIE
+            {
+                string id_sucursal = Request.QueryString.Get("id_sucursal");
+
+
+                DataTable inventario = new DataTable("dtInventario");
+
+
+                inventario = cs_manejo_inventario.getInventarioDisponible(ref error, id_sucursal);
+
+                if (inventario.Rows.Count <= 0)
+                {
+                    error = "Error obteniendo datos de inventario." + error;
+                    throw new Exception("");
+                }
+                else
+                {
+                    try
+                    {
+                        Reports.CRInventarioSucursal inventarioSucursal = new Reports.CRInventarioSucursal();
+                        inventarioSucursal.Load(Server.MapPath("~/Reports/CRInventarioSucursal.rpt"));
+                        inventarioSucursal.SetDataSource(inventario);
+                        CrystalReportViewer1.ReportSource = inventarioSucursal;//document;
+                        CrystalReportViewer1.DataBind();
+                        CrystalReportViewer1.RefreshReport();
+                        inventarioSucursal.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "");
+                    }
+                    catch (Exception ex)
+                    {
+                        error = ex.ToString();
+                    }
+
+                }
 
             }
         }
