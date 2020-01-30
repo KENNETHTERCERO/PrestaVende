@@ -820,7 +820,7 @@ namespace PrestaVende.CLASS
             }
         }
 
-        public DataTable GetDataReporteAbono(ref string error, string fecha_inicio, string fecha_fin, string id_sucursal)
+        public DataTable GetDataReporteAbono(ref string error, string fecha_inicio, string fecha_fin, string id_sucursal, string transaccion)
         {
             DataTable dtDatos = new DataTable("dtDatos");
             try
@@ -828,10 +828,11 @@ namespace PrestaVende.CLASS
                 connection.connection.Open();
                 command.Connection = connection.connection;
                 command.Parameters.Clear();
-                command.CommandText = "exec sp_reporte_abonos_cancelaciones @fecha_inicio,@fecha_fin,@id_sucursal";
+                command.CommandText = "exec sp_reporte_abonos_cancelaciones @fecha_inicio,@fecha_fin,@id_sucursal,@tipo_transaccion";
                 command.Parameters.AddWithValue("@fecha_inicio", fecha_inicio);
                 command.Parameters.AddWithValue("@fecha_fin", fecha_fin);
                 command.Parameters.AddWithValue("@id_sucursal", id_sucursal);
+                command.Parameters.AddWithValue("@tipo_transaccion", transaccion);
                 dtDatos.Load(command.ExecuteReader());
                 return dtDatos;
             }

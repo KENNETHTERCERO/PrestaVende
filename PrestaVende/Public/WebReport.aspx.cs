@@ -197,7 +197,7 @@ namespace PrestaVende.Public
                 string fecha_fin = Request.QueryString.Get("fecha_fin");
 
                 DataTable AbonosCapital = new DataTable("AbonosCapital");
-                AbonosCapital = cs_prestamo.GetDataReporteAbono(ref error, fecha_inicio, fecha_fin, id_sucursal);
+                AbonosCapital = cs_prestamo.GetDataReporteAbono(ref error, fecha_inicio, fecha_fin, id_sucursal, "9");
 
                 Reports.CRAbonosCapital ReporteAbonos = new Reports.CRAbonosCapital();
 
@@ -386,7 +386,7 @@ namespace PrestaVende.Public
                 string fecha_fin = Request.QueryString.Get("fecha_fin");
 
                 DataTable Cancelacion = new DataTable("Cancelaciones");
-                Cancelacion = cs_prestamo.GetDataReporteAbono(ref error, fecha_inicio, fecha_fin, id_sucursal);
+                Cancelacion = cs_prestamo.GetDataReporteAbono(ref error, fecha_inicio, fecha_fin, id_sucursal, "10");
 
                 Reports.CRCancelacion ReporteCancelacion = new Reports.CRCancelacion();
 

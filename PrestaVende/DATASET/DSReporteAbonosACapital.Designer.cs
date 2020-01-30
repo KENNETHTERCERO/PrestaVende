@@ -459,7 +459,7 @@ namespace PrestaVende.DATASET {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public DSDatosRow AddDSDatosRow(string empresa, string sucursal, string fecha_inicio, string fecha_fin, string tipo_transaccion, string numero_prestamo, double monto, string serie, string numero_factura, string estado, string fecha_transaccion) {
+            public DSDatosRow AddDSDatosRow(string empresa, string sucursal, string fecha_inicio, string fecha_fin, string tipo_transaccion, long numero_prestamo, double monto, string serie, long numero_factura, string estado, System.DateTime fecha_transaccion) {
                 DSDatosRow rowDSDatosRow = ((DSDatosRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         empresa,
@@ -521,17 +521,17 @@ namespace PrestaVende.DATASET {
                 base.Columns.Add(this.columnfecha_fin);
                 this.columntipo_transaccion = new global::System.Data.DataColumn("tipo_transaccion", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columntipo_transaccion);
-                this.columnnumero_prestamo = new global::System.Data.DataColumn("numero_prestamo", typeof(string), null, global::System.Data.MappingType.Element);
+                this.columnnumero_prestamo = new global::System.Data.DataColumn("numero_prestamo", typeof(long), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnnumero_prestamo);
                 this.columnmonto = new global::System.Data.DataColumn("monto", typeof(double), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnmonto);
                 this.columnserie = new global::System.Data.DataColumn("serie", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnserie);
-                this.columnnumero_factura = new global::System.Data.DataColumn("numero_factura", typeof(string), null, global::System.Data.MappingType.Element);
+                this.columnnumero_factura = new global::System.Data.DataColumn("numero_factura", typeof(long), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnnumero_factura);
                 this.columnestado = new global::System.Data.DataColumn("estado", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnestado);
-                this.columnfecha_transaccion = new global::System.Data.DataColumn("fecha_transaccion", typeof(string), null, global::System.Data.MappingType.Element);
+                this.columnfecha_transaccion = new global::System.Data.DataColumn("fecha_transaccion", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnfecha_transaccion);
             }
             
@@ -755,10 +755,10 @@ namespace PrestaVende.DATASET {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string numero_prestamo {
+            public long numero_prestamo {
                 get {
                     try {
-                        return ((string)(this[this.tableDSDatos.numero_prestamoColumn]));
+                        return ((long)(this[this.tableDSDatos.numero_prestamoColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
                         throw new global::System.Data.StrongTypingException("El valor de la columna \'numero_prestamo\' de la tabla \'DSDatos\' es DBNull.", e);
@@ -803,10 +803,10 @@ namespace PrestaVende.DATASET {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string numero_factura {
+            public long numero_factura {
                 get {
                     try {
-                        return ((string)(this[this.tableDSDatos.numero_facturaColumn]));
+                        return ((long)(this[this.tableDSDatos.numero_facturaColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
                         throw new global::System.Data.StrongTypingException("El valor de la columna \'numero_factura\' de la tabla \'DSDatos\' es DBNull.", e);
@@ -835,10 +835,10 @@ namespace PrestaVende.DATASET {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string fecha_transaccion {
+            public System.DateTime fecha_transaccion {
                 get {
                     try {
-                        return ((string)(this[this.tableDSDatos.fecha_transaccionColumn]));
+                        return ((global::System.DateTime)(this[this.tableDSDatos.fecha_transaccionColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
                         throw new global::System.Data.StrongTypingException("El valor de la columna \'fecha_transaccion\' de la tabla \'DSDatos\' es DBNull.", e);
