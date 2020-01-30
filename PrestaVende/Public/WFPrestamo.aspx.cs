@@ -227,6 +227,7 @@ namespace PrestaVende.Public
             {
                 string id_cliente = Request.QueryString["id_cliente"];
                 lblid_cliente.Text = id_cliente;
+                cs_cliente = new CLASS.cs_cliente();
                 foreach (DataRow item in cs_cliente.getSpecificClient(ref error, id_cliente).Rows)
                 {
                     this.lblnombre_cliente.Text = item[3].ToString() + " " + item[4].ToString() + " " + item[5].ToString() + " " + item[6].ToString();
@@ -362,6 +363,25 @@ namespace PrestaVende.Public
                 }
                 total_precio_por_peso = gramo * precio_por_gramo;
                 this.txtValor.Text = total_precio_por_peso.ToString();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        private decimal getPrecioProducto(string peso, string id_kilataje)
+        {
+            try
+            {
+                decimal precio_por_gramo = 0, total_precio_por_peso = 0, gramo = 0;
+                gramo = Convert.ToDecimal(peso);
+                foreach (DataRow item in cs_kilataje.getKilatajeByID(ref error, id_kilataje).Rows)
+                {
+                    precio_por_gramo = Convert.ToDecimal(item["precio_kilataje"].ToString());
+                }
+                total_precio_por_peso = gramo * precio_por_gramo;
+                return total_precio_por_peso;
             }
             catch (Exception)
             {
@@ -871,16 +891,9 @@ namespace PrestaVende.Public
                 decimal montoFila = 0, porcentaje = 0;
                 if (this.gvProductoElectrodomesticos.Rows.Count > 0)
                 {
-                    foreach (GridViewRow item in this.gvProductoElectrodomesticos.Rows)
-                    {
-                        porcentaje = 0;
-                        porcentaje = Math.Round(Convert.ToDecimal(item.Cells[5].Text.ToString()) / Convert.ToDecimal(this.lblTotalPrestamoQuetzales.Text.ToString()), 4);
-                        montoFila = porcentaje * Convert.ToDecimal(this.txtMontoARecalcular.Text.ToString());
-                        montoFila = Math.Round(montoFila, 2);
-                        item.Cells[5].Text = montoFila.ToString();
-                    }
-
-                    foreach (DataRow item in dtTablaArticulos.Rows)
+                    DataTable dtRecalculoDatos = new DataTable("dtRecalculo");
+                    dtRecalculoDatos = (DataTable)this.Session["CurrentTableArticulos"];
+                    foreach (DataRow item in dtRecalculoDatos.Rows)
                     {
                         porcentaje = 0;
                         porcentaje = Math.Round(Convert.ToDecimal(item["valor"].ToString()) / Convert.ToDecimal(this.lblTotalPrestamoQuetzales.Text.ToString()), 4);
@@ -888,19 +901,16 @@ namespace PrestaVende.Public
                         montoFila = Math.Round(montoFila, 2);
                         item["valor"] = montoFila.ToString();
                     }
+                    Session["CurrentTableArticulos"] = dtRecalculoDatos;
+                    dtTablaArticulos = dtRecalculoDatos;
+                    this.gvProductoElectrodomesticos.DataSource = dtTablaArticulos;
+                    this.gvProductoElectrodomesticos.DataBind();
                 }
                 else
                 {
-                    foreach (GridViewRow item in this.gvProductoJoya.Rows)
-                    {
-                        porcentaje = 0;
-                        porcentaje = Math.Round(Convert.ToDecimal(item.Cells[8].Text.ToString()) / Convert.ToDecimal(this.lblTotalPrestamoQuetzales.Text.ToString()), 4);
-                        montoFila = porcentaje * Convert.ToDecimal(this.txtMontoARecalcular.Text.ToString());
-                        montoFila = Math.Round(montoFila, 2);
-                        item.Cells[8].Text = montoFila.ToString();
-                    }
-
-                    foreach (DataRow item in dtTablaJoyas.Rows)
+                    DataTable dtRecalculoDatos = new DataTable("dtRecalculo");
+                    dtRecalculoDatos = (DataTable)this.Session["CurrentTableJoyas"];
+                    foreach (DataRow item in dtRecalculoDatos.Rows)
                     {
                         porcentaje = 0;
                         porcentaje = Math.Round(Convert.ToDecimal(item["valor"].ToString()) / Convert.ToDecimal(this.lblTotalPrestamoQuetzales.Text.ToString()), 4);
@@ -908,6 +918,10 @@ namespace PrestaVende.Public
                         montoFila = Math.Round(montoFila, 2);
                         item["valor"] = montoFila.ToString();
                     }
+                    Session["CurrentTableJoyas"] = dtRecalculoDatos;
+                    dtTablaJoyas = dtRecalculoDatos;
+                    this.gvProductoJoya.DataSource = dtTablaJoyas;
+                    this.gvProductoJoya.DataBind();
                 }
                 getDataProyeccion();
             }
@@ -1011,6 +1025,45 @@ namespace PrestaVende.Public
                     this.ddlTipoPrestamo.SelectedValue = id_TipoPlan;
                 }
                 //ddlTipoPrestamo.Enabled = false;
+            }
+            catch (Exception ex)
+            {
+                showError(ex.ToString());
+            }
+        }
+
+        private void recalculaValorPorProducto()
+        {
+            try
+            {
+                //getPrecioProducto
+                if (this.gvProductoElectrodomesticos.Rows.Count > 0)
+                {
+                    DataTable dtRecalculoDatos = new DataTable("dtRecalculo");
+                    dtRecalculoDatos = (DataTable)this.Session["CurrentTableArticulos"];
+                    foreach (DataRow item in dtRecalculoDatos.Rows)
+                    {
+                        item["valor"] = this.lblTotalPrestamoQuetzales.Text;
+                    }
+                    Session["CurrentTableArticulos"] = dtRecalculoDatos;
+                    dtTablaArticulos = dtRecalculoDatos;
+                    this.gvProductoElectrodomesticos.DataSource = dtTablaArticulos;
+                    this.gvProductoElectrodomesticos.DataBind();
+                }
+                else
+                {
+                    DataTable dtRecalculoDatos = new DataTable("dtRecalculo");
+                    dtRecalculoDatos = (DataTable)this.Session["CurrentTableJoyas"];
+                    foreach (DataRow item in dtRecalculoDatos.Rows)
+                    {
+                        item["valor"] = getPrecioProducto(item["pesoReal"].ToString(), item["id_kilataje"].ToString()).ToString();
+                    }
+                    Session["CurrentTableJoyas"] = dtRecalculoDatos;
+                    dtTablaJoyas = dtRecalculoDatos;
+                    this.gvProductoJoya.DataSource = dtTablaJoyas;
+                    this.gvProductoJoya.DataBind();
+                }
+
             }
             catch (Exception ex)
             {
@@ -1247,6 +1300,7 @@ namespace PrestaVende.Public
 
         protected void btnRecalcularValorPrestamoTotal_Click(object sender, EventArgs e)
         {
+            recalculaValorPorProducto();
             recalculoMontoPrestamo();
         }
 

@@ -47,6 +47,7 @@ namespace PrestaVende.CLASS
                 DataTable dtKilataje = new DataTable("tblkilataje");
                 connection.connection.Open();
                 command.Connection = connection.connection;
+                command.Parameters.Clear();
                 command.CommandText = "SELECT * FROM tbl_kilataje WHERE estado = 1 AND id_kilataje = @id_kilajate";
                 command.Parameters.AddWithValue("@id_kilajate", id_kilataje);
                 dtKilataje.Load(command.ExecuteReader());
