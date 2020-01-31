@@ -46,16 +46,17 @@ namespace PrestaVende.Public
         {
             try
             {
-                int id_empresa = CLASS.cs_usuario.id_empresa;
-                ddlSucursal.DataSource = cs_sucursal.ObtenerSucursalesPorEmpresa(ref error, id_empresa.ToString());
-                ddlSucursal.DataValueField = "id_sucursal";
-                ddlSucursal.DataTextField = "sucursal";
-                ddlSucursal.DataBind();
+                int id_empresa = Convert.ToInt32(this.Session["id_sucursal"].ToString());
+                cs_sucursal = new CLASS.cs_sucursal();
+                this.ddlSucursal.DataSource = cs_sucursal.ObtenerSucursalesPorEmpresa(ref error, id_empresa.ToString());
+                this.ddlSucursal.DataValueField = "id_sucursal";
+                this.ddlSucursal.DataTextField = "sucursal";
+                this.ddlSucursal.DataBind();
 
-                ddlSucursal.SelectedValue = CLASS.cs_usuario.id_sucursal.ToString();
+                this.ddlSucursal.SelectedValue = id_empresa.ToString();
 
-                if (CLASS.cs_usuario.id_rol == 3 || CLASS.cs_usuario.id_rol == 4 || CLASS.cs_usuario.id_rol == 5)
-                    ddlSucursal.Enabled = false;
+                if (this.Session["id_rol"].ToString().Equals("3") || this.Session["id_rol"].ToString().Equals("4") || this.Session["id_rol"].ToString().Equals("5"))
+                    this.ddlSucursal.Enabled = false;
             }
             catch (Exception ex)
             {
@@ -65,16 +66,16 @@ namespace PrestaVende.Public
 
         protected void btnGenerar_Click(object sender, EventArgs e)
         {
-            string id_sucuarsal = ddlSucursal.SelectedValue.ToString();
+            string id_sucuarsal = this.ddlSucursal.SelectedValue.ToString();
 
             if (int.Parse(id_sucuarsal) > 0)
-                if (txtFechaInicial.Text.ToString().Length < 1)
+                if (this.txtFechaInicial.Text.ToString().Length < 1)
                     showWarning("Usted debe ingresar una fecha de inicio para poder generar el reporte.");
-                else if (txtFechaFin.Text.ToString().Length < 1)
+                else if (this.txtFechaFin.Text.ToString().Length < 1)
                     showWarning("Usted debe ingresar una fecha de fin para poder generar el reporte.");
                 else
                 {
-                    string scriptEstadoCuenta = "window.open('WebReport.aspx?tipo_reporte=13" + "&id_sucursal=" + id_sucuarsal + "&fecha_inicio=" + txtFechaInicial.Text + "&fecha_fin=" + txtFechaFin.Text + "');";
+                    string scriptEstadoCuenta = "window.open('WebReport.aspx?tipo_reporte=13" + "&id_sucursal=" + id_sucuarsal + "&fecha_inicio=" + this.txtFechaInicial.Text + "&fecha_fin=" + this.txtFechaFin.Text + "');";
                     ScriptManager.RegisterClientScriptBlock(this, GetType(), "NewWindow", scriptEstadoCuenta, true);
                 }
             else

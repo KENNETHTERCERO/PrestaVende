@@ -630,7 +630,7 @@ namespace PrestaVende.CLASS
                 command.Connection = connection.connection;
 
                 command.Parameters.Clear();
-                command.CommandText = "SELECT id_interes, total_prestamo, id_plan_prestamo FROM tbl_prestamo_encabezado " +
+                command.CommandText = "SELECT id_interes, saldo_prestamo, id_plan_prestamo FROM tbl_prestamo_encabezado " +
                                         "WHERE id_sucursal = @id_sucursal AND numero_prestamo = @numero_contrato";
                 command.Parameters.AddWithValue("@numero_contrato", numero_contrato);
                 command.Parameters.AddWithValue("@id_sucursal", id_sucursal);
@@ -639,7 +639,7 @@ namespace PrestaVende.CLASS
                 foreach (DataRow item in dtPrestamo.Rows)
                 {
                     id_interes_proyeccion = item["id_interes"].ToString();
-                    monto_contrato = item["total_prestamo"].ToString();
+                    monto_contrato = item["saldo_prestamo"].ToString();
                     id_plan_prestamo = item["id_plan_prestamo"].ToString();
                 }
                 

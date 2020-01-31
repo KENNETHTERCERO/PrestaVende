@@ -41,8 +41,8 @@ namespace PrestaVende.Public
                     else
                     {
                         dtTablaArticulos = new DataTable("tablaJoyas");
-                        Session["CurrentTableJoyas"] = dtTablaArticulos;
                         setColumnsArticulo();
+                        Session["CurrentTableJoyas"] = dtTablaArticulos;
                         getSeries();
                     }
                 }
@@ -59,17 +59,17 @@ namespace PrestaVende.Public
             try
             {
                 DataTable dtComprobar = new DataTable();
-                dtComprobar = cs_manejo_inventario.getArticulos(ref error, txtBusqueda.Text.ToString());
+                dtComprobar = cs_manejo_inventario.getArticulos(ref error, this.txtBusqueda.Text.ToString());
                 if (dtComprobar.Rows.Count <= 0)
                 {
                     showWarning("No se encontro ningun articulo con este numero de prestamo.");
                 }
                 else
                 {
-                    ddlArticulos.DataSource = dtComprobar;
-                    ddlArticulos.DataValueField = "id_inventario";
-                    ddlArticulos.DataTextField = "descripcion_producto";
-                    ddlArticulos.DataBind();
+                    this.ddlArticulos.DataSource = dtComprobar;
+                    this.ddlArticulos.DataValueField = "id_inventario";
+                    this.ddlArticulos.DataTextField = "descripcion_producto";
+                    this.ddlArticulos.DataBind();
                 }
             }
             catch (Exception ex)
@@ -103,9 +103,9 @@ namespace PrestaVende.Public
         {
             try
             {
-                if ((DataTable)Session["CurrentTableJoyas"] != null)
+                if ((DataTable)this.Session["CurrentTableJoyas"] != null)
                 {
-                    DataTable ArticuloCompleto = (DataTable)Session["CurrentTableJoyas"];
+                    DataTable ArticuloCompleto = (DataTable)this.Session["CurrentTableJoyas"];
                     DataTable articuloViene = new DataTable("articuloViene");
                     cs_manejo_inventario = new CLASS.cs_manejo_inventario();
                     articuloViene = cs_manejo_inventario.getArticuloEspecifico(ref error, this.txtBusqueda.Text.ToString(), this.ddlArticulos.SelectedValue.ToString());
@@ -212,7 +212,8 @@ namespace PrestaVende.Public
                 string[] encabezado = new string[11];
                 decimal subTotal = 0, IVA = 0;
                 int id_factura_encabezado = 0, id_recibo = 0;
-                foreach (DataRow item in dtTablaArticulos.Rows)
+                DataTable dtSubTotalIVA = (DataTable)this.Session["CurrentTableJoyas"];
+                foreach (DataRow item in dtSubTotalIVA.Rows)
                 {
                     subTotal += Convert.ToDecimal(item["subTotal"]);
                     IVA += Convert.ToDecimal(item["IVA"]);
@@ -231,9 +232,18 @@ namespace PrestaVende.Public
                 encabezado[10] = "0";
 
                 cs_manejo_inventario = new CLASS.cs_manejo_inventario();
-
-                if (cs_manejo_inventario.GuardarFactura(ref error, dtTablaArticulos, encabezado, ref id_factura_encabezado, ref id_recibo))
+                error = "";
+                if (cs_manejo_inventario.GuardarFactura(ref error, (DataTable)this.Session["CurrentTableJoyas"], encabezado, ref id_factura_encabezado, ref id_recibo))
                 {
+                    try
+                    { 
+                        Session["saldo_caja"] = Convert.ToString(Convert.ToDecimal(Session["saldo_caja"].ToString()) + Convert.ToDecimal(lblTotalFacturaNumero.Text.ToString()));
+                    }
+                    catch (Exception ex)
+                    {
+                        showWarning("Error sumando saldo a caja asignada, salga del sistema y vuelva ingresar. " + ex.ToString());
+                    }
+
                     showSuccess("Factura guardada correctamente.");
                     string script = "window.open('WebReport.aspx?tipo_reporte=2&id_factura= " + id_factura_encabezado.ToString() + " &id_sucursal=" + Session["id_sucursal"].ToString() + "&numero_contrato=200000000020');";
                     ScriptManager.RegisterClientScriptBlock(this, GetType(), "ImpresionFactura", script, true);
@@ -262,9 +272,12 @@ namespace PrestaVende.Public
             try
             {
                 decimal totalFactura = 0;
-                if (this.gvProductoFacturar.Rows.Count > 0 && dtTablaArticulos.Rows.Count > 0)
+                DataTable dtProducto = (DataTable)this.Session["CurrentTableJoyas"];
+
+                if (this.gvProductoFacturar.Rows.Count > 0 && dtProducto.Rows.Count > 0)
                 {
-                    foreach (DataRow item in dtTablaArticulos.Rows)
+                    
+                    foreach (DataRow item in dtProducto.Rows)
                     {
                         totalFactura += Convert.ToDecimal(item["valor"].ToString());
                     }
@@ -287,15 +300,18 @@ namespace PrestaVende.Public
             {
                 int id_sucursal = Convert.ToInt32(Session["id_sucursal"]);
                 cs_serie = new CLASS.cs_serie();
-                ddlSerie.DataSource = cs_serie.getSerieDDL(ref error, id_sucursal);
-                ddlSerie.DataValueField = "id_serie";
-                ddlSerie.DataTextField = "serie";
-                ddlSerie.DataBind();
+                this.ddlSerie.DataSource = cs_serie.getSerieDDL(ref error, id_sucursal);
+                this.ddlSerie.DataValueField = "id_serie";
+                this.ddlSerie.DataTextField = "serie";
+                this.ddlSerie.DataBind();
 
                 int id_serie = int.Parse(this.ddlSerie.SelectedValue.ToString());
 
                 if (id_serie > 0)
+                {
+                    cs_serie = new CLASS.cs_serie();
                     this.lblNumeroFactura.Text = (cs_serie.getCorrelativoSerie(ref error, id_serie) + 1).ToString();
+                }
                 else
                     this.lblNumeroFactura.Text = "0";
             }
@@ -309,25 +325,11 @@ namespace PrestaVende.Public
         {
             try
             {
-                decimal montoFila = 0, porcentaje = 0, montoDescuento = 0, montoSubTotal = 0, montoDetalleSubTotal = 0, montoDetalleIVA = 0;
-                if (gvProductoFacturar.Rows.Count > 0)
+                decimal montoFila = 0, porcentaje = 0, montoDescuento = 0, montoSubTotal = 0, montoDetalleIVA = 0;
+                if (this.gvProductoFacturar.Rows.Count > 0)
                 {
-                    foreach (GridViewRow item in this.gvProductoFacturar.Rows)
-                    {
-                        porcentaje = 0;
-                        porcentaje = Math.Round(Convert.ToDecimal(item.Cells[7].Text.ToString()) / Convert.ToDecimal(this.lblTotalFacturaNumero.Text.ToString()), 4);
-                        montoDescuento = porcentaje * Convert.ToDecimal(this.txtMontoARecalcular.Text.ToString());
-                        montoFila = Convert.ToDecimal(item.Cells[7].Text.ToString()) - montoDescuento;
-                        montoFila = Math.Round(montoFila, 2);
-                        item.Cells[7].Text = montoFila.ToString();
-                    }
-                    montoFila = 0;
-                    porcentaje = 0;
-                    montoDescuento = 0;
-                    montoSubTotal = 0;
-                    montoDetalleSubTotal = 0;
-
-                    foreach (DataRow item in dtTablaArticulos.Rows)
+                    DataTable getProductos = (DataTable)this.Session["CurrentTableJoyas"];
+                    foreach (DataRow item in getProductos.Rows)
                     {
                         porcentaje = 0;
                         porcentaje = Math.Round(Convert.ToDecimal(item["valor"].ToString()) / Convert.ToDecimal(this.lblTotalFacturaNumero.Text.ToString()), 4);
@@ -335,27 +337,15 @@ namespace PrestaVende.Public
                         montoFila = Convert.ToDecimal(item["valor"].ToString()) - montoDescuento;
                         montoFila = Math.Round(montoFila, 2);
                         item["valor"] = montoFila.ToString();
-                        montoDetalleSubTotal += Convert.ToDecimal(item["subTotal"].ToString());
-                        montoDetalleIVA += Convert.ToDecimal(item["IVA"].ToString());
+                        montoSubTotal = (montoFila / Convert.ToDecimal(1.12));
+                        item["subtotal"] = Math.Round(montoSubTotal, 2).ToString();
+                        montoDetalleIVA = montoFila - montoSubTotal;
+                        item["IVA"] = Math.Round(montoDetalleIVA, 2).ToString();
                     }
 
-                    foreach (DataRow item in dtTablaArticulos.Rows)
-                    {//revisar este codigo para descuento en venta
-                        //porcentaje = 0;
-                        //porcentaje = Math.Round((Convert.ToDecimal(item["subTotal"].ToString()) / montoDetalleSubTotal), 4);
-                        //montoDescuento = porcentaje * montoDetalleSubTotal;
-                        //montoFila = Convert.ToDecimal(item["subTotal"].ToString()) - montoDescuento;
-                        //montoFila = Math.Round(montoFila, 2);
-                        //item["subTotal"] = montoFila.ToString();
-
-                        //porcentaje = 0;
-                        //porcentaje = Math.Round((Convert.ToDecimal(item["IVA"].ToString()) / montoDetalleIVA), 4);
-                        //montoDescuento = porcentaje * montoDetalleIVA;
-                        //montoFila = Convert.ToDecimal(item["IVA"].ToString()) - montoDescuento;
-                        //montoFila = Math.Round(montoFila, 2);
-                        //item["IVA"] = montoFila.ToString();
-                    }
-
+                    Session["CurrentTableJoyas"] = getProductos;
+                    this.gvProductoFacturar.DataSource = getProductos;
+                    this.gvProductoFacturar.DataBind();
                     calculaTotalFactura();
                 }
             }
@@ -523,10 +513,12 @@ namespace PrestaVende.Public
             {
                 if (e.CommandName == "borrar")
                 {
+                    DataTable dtBorrarItem = (DataTable)this.Session["CurrentTableJoyas"];
                     int index = Convert.ToInt32(e.CommandArgument);
-                    dtTablaArticulos.Rows[index].Delete();
-                    gvProductoFacturar.DataSource = dtTablaArticulos;
-                    gvProductoFacturar.DataBind();
+                    dtBorrarItem.Rows[index].Delete();
+                    Session["CurrentTableJoyas"] = dtBorrarItem;
+                    this.gvProductoFacturar.DataSource = dtBorrarItem;
+                    this.gvProductoFacturar.DataBind();
                     calculaTotalFactura();
                 }
             }

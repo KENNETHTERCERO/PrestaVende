@@ -267,6 +267,15 @@ namespace PrestaVende.Public
                                         showWarning("Error al generar la factura." + error);
                                     } else
                                     {
+                                        try
+                                        {
+                                            Session["saldo_caja"] = Convert.ToString(Convert.ToDecimal(Session["saldo_caja"].ToString()) + abono + Convert.ToDecimal(ds_global.Tables[1].Rows[0]["Total"].ToString().Replace(",", ".")));
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            showWarning("Error sumando saldo a caja asignada, salga del sistema y vuelva ingresar." + ex.ToString());
+                                        }
+                                        
                                         showSuccess("Se creo prestamo correctamente.");
                                         string script = "window.open('WebReport.aspx?tipo_reporte=2" + "&id_factura=" + Resultado + "&id_sucursal=" + Session["id_sucursal"].ToString() + "&numero_contrato=" + this.lblNombrePrestamo.Text.ToString() + "');";
                                         ScriptManager.RegisterClientScriptBlock(this, GetType(), "ImpresionFactura", script, true);
