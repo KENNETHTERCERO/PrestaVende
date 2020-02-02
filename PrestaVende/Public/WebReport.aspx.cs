@@ -15,6 +15,8 @@ namespace PrestaVende.Public
         private CLASS.cs_factura cs_factura = new CLASS.cs_factura();
         private CLASS.cs_caja cs_caja = new CLASS.cs_caja();
         private CLASS.cs_manejo_inventario cs_manejo_inventario = new CLASS.cs_manejo_inventario();
+        private CLASS.cs_reporteria cs_reporteria = new CLASS.cs_reporteria();
+
         private string error = "";
 
         protected void Page_Load(object sender, EventArgs e)
@@ -420,29 +422,30 @@ namespace PrestaVende.Public
             else if (Convert.ToInt32(tipo_reporte) == 15)//Reporte Ingresos y Egresos RIE
             {
                 string id_sucursal = Request.QueryString.Get("id_sucursal");
+                string id_empresa = Request.QueryString.Get("id_empresa");
 
 
-                DataTable inventario = new DataTable("dtInventario");
+                DataSet dsReporteIE = new DataSet("DSReporteRIE");
 
 
-                inventario = cs_manejo_inventario.getInventarioDisponible(ref error, id_sucursal);
+                dsReporteIE = cs_reporteria.getReporteRIE(ref error, id_sucursal, id_empresa);
 
-                if (inventario.Rows.Count <= 0)
+                if (dsReporteIE.Tables.Count  <= 0)
                 {
-                    error = "Error obteniendo datos de inventario." + error;
+                    error = "Error obteniendo datos de Ingresos y Egresos." + error;
                     throw new Exception("");
                 }
                 else
                 {
                     try
                     {
-                        Reports.CRInventarioSucursal inventarioSucursal = new Reports.CRInventarioSucursal();
-                        inventarioSucursal.Load(Server.MapPath("~/Reports/CRInventarioSucursal.rpt"));
-                        inventarioSucursal.SetDataSource(inventario);
-                        CrystalReportViewer1.ReportSource = inventarioSucursal;//document;
+                        Reports.CRReporteRIE reporteIE = new Reports.CRReporteRIE();
+                        reporteIE.Load(Server.MapPath("~/Reports/CRReporteRIE.rpt"));
+                        reporteIE.SetDataSource(dsReporteIE);
+                        CrystalReportViewer1.ReportSource = reporteIE;//document;
                         CrystalReportViewer1.DataBind();
                         CrystalReportViewer1.RefreshReport();
-                        inventarioSucursal.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "");
+                        reporteIE.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "");
                     }
                     catch (Exception ex)
                     {
