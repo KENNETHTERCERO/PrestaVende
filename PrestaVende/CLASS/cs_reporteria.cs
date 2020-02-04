@@ -17,27 +17,38 @@ namespace PrestaVende.CLASS
 
             DataSet ds = new DataSet();
 
-            connection.connection.Open();
-            command.Connection = connection.connection;
-            command.Parameters.Clear();
+            try
+            {               
 
-            SqlDataAdapter adapter;
-            
+                connection.connection.Open();
+                command.Connection = connection.connection;
+                command.Parameters.Clear();
 
-            command.CommandType = CommandType.StoredProcedure;
-            command.CommandText = "SP_reporte_ingresos_egresos";
-            command.Parameters.AddWithValue("@id_sucursal", id_sucursal);
-            command.Parameters.AddWithValue("@id_empresa", id_empresa);
+                SqlDataAdapter adapter;
 
-            adapter = new SqlDataAdapter(command);
-            adapter.Fill(ds);
 
-            ds.DataSetName = "DSReporteRIE";
+                command.CommandType = CommandType.StoredProcedure;
+                command.CommandText = "SP_reporte_ingresos_egresos";
+                command.Parameters.AddWithValue("@id_sucursal", id_sucursal);
+                command.Parameters.AddWithValue("@id_empresa", id_empresa);
 
-            ds.Tables[0].TableName = "dtReporteIE";
-            ds.Tables[1].TableName = "dtTransacciones";
-            ds.Tables[2].TableName = "dtGarantias";
-            ds.Tables[3].TableName = "dtValoresCaja";
+                adapter = new SqlDataAdapter(command);
+                adapter.Fill(ds);
+
+                ds.DataSetName = "DSReporteRIE";
+
+                ds.Tables[0].TableName = "dtReporteIE";
+                ds.Tables[1].TableName = "dtTransacciones";
+                ds.Tables[2].TableName = "dtGarantias";
+                ds.Tables[3].TableName = "dtValoresCaja";
+            }catch(Exception ex)
+            {
+                error = "Error al consultar reporte: " + ex.ToString();
+            }
+            finally
+            {
+                connection.connection.Close();
+            }            
 
 
             return ds;

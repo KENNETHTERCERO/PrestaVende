@@ -990,11 +990,11 @@ namespace PrestaVende.DATASET {
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
         public partial class dtTransaccionesDataTable : global::System.Data.TypedTableBase<dtTransaccionesRow> {
             
-            private global::System.Data.DataColumn columnnombre_indicador;
+            private global::System.Data.DataColumn columntrx_nombre_indicador;
             
-            private global::System.Data.DataColumn columncant_indicador;
+            private global::System.Data.DataColumn columntrx_cant_indicador;
             
-            private global::System.Data.DataColumn columntotal_indicador;
+            private global::System.Data.DataColumn columntrx_total_indicador;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
@@ -1031,25 +1031,25 @@ namespace PrestaVende.DATASET {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn nombre_indicadorColumn {
+            public global::System.Data.DataColumn trx_nombre_indicadorColumn {
                 get {
-                    return this.columnnombre_indicador;
+                    return this.columntrx_nombre_indicador;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn cant_indicadorColumn {
+            public global::System.Data.DataColumn trx_cant_indicadorColumn {
                 get {
-                    return this.columncant_indicador;
+                    return this.columntrx_cant_indicador;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn total_indicadorColumn {
+            public global::System.Data.DataColumn trx_total_indicadorColumn {
                 get {
-                    return this.columntotal_indicador;
+                    return this.columntrx_total_indicador;
                 }
             }
             
@@ -1090,12 +1090,12 @@ namespace PrestaVende.DATASET {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public dtTransaccionesRow AdddtTransaccionesRow(string nombre_indicador, int cant_indicador, decimal total_indicador) {
+            public dtTransaccionesRow AdddtTransaccionesRow(string trx_nombre_indicador, int trx_cant_indicador, decimal trx_total_indicador) {
                 dtTransaccionesRow rowdtTransaccionesRow = ((dtTransaccionesRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
-                        nombre_indicador,
-                        cant_indicador,
-                        total_indicador};
+                        trx_nombre_indicador,
+                        trx_cant_indicador,
+                        trx_total_indicador};
                 rowdtTransaccionesRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowdtTransaccionesRow);
                 return rowdtTransaccionesRow;
@@ -1118,20 +1118,20 @@ namespace PrestaVende.DATASET {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             internal void InitVars() {
-                this.columnnombre_indicador = base.Columns["nombre_indicador"];
-                this.columncant_indicador = base.Columns["cant_indicador"];
-                this.columntotal_indicador = base.Columns["total_indicador"];
+                this.columntrx_nombre_indicador = base.Columns["trx_nombre_indicador"];
+                this.columntrx_cant_indicador = base.Columns["trx_cant_indicador"];
+                this.columntrx_total_indicador = base.Columns["trx_total_indicador"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             private void InitClass() {
-                this.columnnombre_indicador = new global::System.Data.DataColumn("nombre_indicador", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnnombre_indicador);
-                this.columncant_indicador = new global::System.Data.DataColumn("cant_indicador", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columncant_indicador);
-                this.columntotal_indicador = new global::System.Data.DataColumn("total_indicador", typeof(decimal), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columntotal_indicador);
+                this.columntrx_nombre_indicador = new global::System.Data.DataColumn("trx_nombre_indicador", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columntrx_nombre_indicador);
+                this.columntrx_cant_indicador = new global::System.Data.DataColumn("trx_cant_indicador", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columntrx_cant_indicador);
+                this.columntrx_total_indicador = new global::System.Data.DataColumn("trx_total_indicador", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columntrx_total_indicador);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1265,11 +1265,11 @@ namespace PrestaVende.DATASET {
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
         public partial class dtGarantiasDataTable : global::System.Data.TypedTableBase<dtGarantiasRow> {
             
-            private global::System.Data.DataColumn columnnombre_indicador;
+            private global::System.Data.DataColumn columngrt_nombre_indicador;
             
-            private global::System.Data.DataColumn columncant_indicador;
+            private global::System.Data.DataColumn columngrt_cant_indicador;
             
-            private global::System.Data.DataColumn columntotal_indicador;
+            private global::System.Data.DataColumn columngrt_total_indicador;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
@@ -1306,25 +1306,25 @@ namespace PrestaVende.DATASET {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn nombre_indicadorColumn {
+            public global::System.Data.DataColumn grt_nombre_indicadorColumn {
                 get {
-                    return this.columnnombre_indicador;
+                    return this.columngrt_nombre_indicador;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn cant_indicadorColumn {
+            public global::System.Data.DataColumn grt_cant_indicadorColumn {
                 get {
-                    return this.columncant_indicador;
+                    return this.columngrt_cant_indicador;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn total_indicadorColumn {
+            public global::System.Data.DataColumn grt_total_indicadorColumn {
                 get {
-                    return this.columntotal_indicador;
+                    return this.columngrt_total_indicador;
                 }
             }
             
@@ -1365,12 +1365,12 @@ namespace PrestaVende.DATASET {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public dtGarantiasRow AdddtGarantiasRow(string nombre_indicador, string cant_indicador, string total_indicador) {
+            public dtGarantiasRow AdddtGarantiasRow(string grt_nombre_indicador, int grt_cant_indicador, string grt_total_indicador) {
                 dtGarantiasRow rowdtGarantiasRow = ((dtGarantiasRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
-                        nombre_indicador,
-                        cant_indicador,
-                        total_indicador};
+                        grt_nombre_indicador,
+                        grt_cant_indicador,
+                        grt_total_indicador};
                 rowdtGarantiasRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowdtGarantiasRow);
                 return rowdtGarantiasRow;
@@ -1393,20 +1393,20 @@ namespace PrestaVende.DATASET {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             internal void InitVars() {
-                this.columnnombre_indicador = base.Columns["nombre_indicador"];
-                this.columncant_indicador = base.Columns["cant_indicador"];
-                this.columntotal_indicador = base.Columns["total_indicador"];
+                this.columngrt_nombre_indicador = base.Columns["grt_nombre_indicador"];
+                this.columngrt_cant_indicador = base.Columns["grt_cant_indicador"];
+                this.columngrt_total_indicador = base.Columns["grt_total_indicador"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             private void InitClass() {
-                this.columnnombre_indicador = new global::System.Data.DataColumn("nombre_indicador", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnnombre_indicador);
-                this.columncant_indicador = new global::System.Data.DataColumn("cant_indicador", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columncant_indicador);
-                this.columntotal_indicador = new global::System.Data.DataColumn("total_indicador", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columntotal_indicador);
+                this.columngrt_nombre_indicador = new global::System.Data.DataColumn("grt_nombre_indicador", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columngrt_nombre_indicador);
+                this.columngrt_cant_indicador = new global::System.Data.DataColumn("grt_cant_indicador", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columngrt_cant_indicador);
+                this.columngrt_total_indicador = new global::System.Data.DataColumn("grt_total_indicador", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columngrt_total_indicador);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1860,86 +1860,87 @@ namespace PrestaVende.DATASET {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string nombre_indicador {
+            public string trx_nombre_indicador {
                 get {
                     try {
-                        return ((string)(this[this.tabledtTransacciones.nombre_indicadorColumn]));
+                        return ((string)(this[this.tabledtTransacciones.trx_nombre_indicadorColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'nombre_indicador\' in table \'dtTransacciones\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'trx_nombre_indicador\' in table \'dtTransacciones\' is DBNull." +
+                                "", e);
                     }
                 }
                 set {
-                    this[this.tabledtTransacciones.nombre_indicadorColumn] = value;
+                    this[this.tabledtTransacciones.trx_nombre_indicadorColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public int cant_indicador {
+            public int trx_cant_indicador {
                 get {
                     try {
-                        return ((int)(this[this.tabledtTransacciones.cant_indicadorColumn]));
+                        return ((int)(this[this.tabledtTransacciones.trx_cant_indicadorColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'cant_indicador\' in table \'dtTransacciones\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'trx_cant_indicador\' in table \'dtTransacciones\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tabledtTransacciones.cant_indicadorColumn] = value;
+                    this[this.tabledtTransacciones.trx_cant_indicadorColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public decimal total_indicador {
+            public decimal trx_total_indicador {
                 get {
                     try {
-                        return ((decimal)(this[this.tabledtTransacciones.total_indicadorColumn]));
+                        return ((decimal)(this[this.tabledtTransacciones.trx_total_indicadorColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'total_indicador\' in table \'dtTransacciones\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'trx_total_indicador\' in table \'dtTransacciones\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tabledtTransacciones.total_indicadorColumn] = value;
+                    this[this.tabledtTransacciones.trx_total_indicadorColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool Isnombre_indicadorNull() {
-                return this.IsNull(this.tabledtTransacciones.nombre_indicadorColumn);
+            public bool Istrx_nombre_indicadorNull() {
+                return this.IsNull(this.tabledtTransacciones.trx_nombre_indicadorColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void Setnombre_indicadorNull() {
-                this[this.tabledtTransacciones.nombre_indicadorColumn] = global::System.Convert.DBNull;
+            public void Settrx_nombre_indicadorNull() {
+                this[this.tabledtTransacciones.trx_nombre_indicadorColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool Iscant_indicadorNull() {
-                return this.IsNull(this.tabledtTransacciones.cant_indicadorColumn);
+            public bool Istrx_cant_indicadorNull() {
+                return this.IsNull(this.tabledtTransacciones.trx_cant_indicadorColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void Setcant_indicadorNull() {
-                this[this.tabledtTransacciones.cant_indicadorColumn] = global::System.Convert.DBNull;
+            public void Settrx_cant_indicadorNull() {
+                this[this.tabledtTransacciones.trx_cant_indicadorColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool Istotal_indicadorNull() {
-                return this.IsNull(this.tabledtTransacciones.total_indicadorColumn);
+            public bool Istrx_total_indicadorNull() {
+                return this.IsNull(this.tabledtTransacciones.trx_total_indicadorColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void Settotal_indicadorNull() {
-                this[this.tabledtTransacciones.total_indicadorColumn] = global::System.Convert.DBNull;
+            public void Settrx_total_indicadorNull() {
+                this[this.tabledtTransacciones.trx_total_indicadorColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -1959,86 +1960,86 @@ namespace PrestaVende.DATASET {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string nombre_indicador {
+            public string grt_nombre_indicador {
                 get {
                     try {
-                        return ((string)(this[this.tabledtGarantias.nombre_indicadorColumn]));
+                        return ((string)(this[this.tabledtGarantias.grt_nombre_indicadorColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'nombre_indicador\' in table \'dtGarantias\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'grt_nombre_indicador\' in table \'dtGarantias\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tabledtGarantias.nombre_indicadorColumn] = value;
+                    this[this.tabledtGarantias.grt_nombre_indicadorColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string cant_indicador {
+            public int grt_cant_indicador {
                 get {
                     try {
-                        return ((string)(this[this.tabledtGarantias.cant_indicadorColumn]));
+                        return ((int)(this[this.tabledtGarantias.grt_cant_indicadorColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'cant_indicador\' in table \'dtGarantias\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'grt_cant_indicador\' in table \'dtGarantias\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tabledtGarantias.cant_indicadorColumn] = value;
+                    this[this.tabledtGarantias.grt_cant_indicadorColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string total_indicador {
+            public string grt_total_indicador {
                 get {
                     try {
-                        return ((string)(this[this.tabledtGarantias.total_indicadorColumn]));
+                        return ((string)(this[this.tabledtGarantias.grt_total_indicadorColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'total_indicador\' in table \'dtGarantias\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'grt_total_indicador\' in table \'dtGarantias\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tabledtGarantias.total_indicadorColumn] = value;
+                    this[this.tabledtGarantias.grt_total_indicadorColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool Isnombre_indicadorNull() {
-                return this.IsNull(this.tabledtGarantias.nombre_indicadorColumn);
+            public bool Isgrt_nombre_indicadorNull() {
+                return this.IsNull(this.tabledtGarantias.grt_nombre_indicadorColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void Setnombre_indicadorNull() {
-                this[this.tabledtGarantias.nombre_indicadorColumn] = global::System.Convert.DBNull;
+            public void Setgrt_nombre_indicadorNull() {
+                this[this.tabledtGarantias.grt_nombre_indicadorColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool Iscant_indicadorNull() {
-                return this.IsNull(this.tabledtGarantias.cant_indicadorColumn);
+            public bool Isgrt_cant_indicadorNull() {
+                return this.IsNull(this.tabledtGarantias.grt_cant_indicadorColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void Setcant_indicadorNull() {
-                this[this.tabledtGarantias.cant_indicadorColumn] = global::System.Convert.DBNull;
+            public void Setgrt_cant_indicadorNull() {
+                this[this.tabledtGarantias.grt_cant_indicadorColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool Istotal_indicadorNull() {
-                return this.IsNull(this.tabledtGarantias.total_indicadorColumn);
+            public bool Isgrt_total_indicadorNull() {
+                return this.IsNull(this.tabledtGarantias.grt_total_indicadorColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void Settotal_indicadorNull() {
-                this[this.tabledtGarantias.total_indicadorColumn] = global::System.Convert.DBNull;
+            public void Setgrt_total_indicadorNull() {
+                this[this.tabledtGarantias.grt_total_indicadorColumn] = global::System.Convert.DBNull;
             }
         }
         
