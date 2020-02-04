@@ -64,56 +64,60 @@ namespace PrestaVende.Public
 
         protected void btnAceptar_Click(object sender, EventArgs e)
         {
+            recibirPrestamos();
+        }
+
+        #endregion
+
+        #region Metodos
+
+        private void recibirPrestamos()
+        {
             var rows = this.GrdVLiquidacion.Rows;
             int count = this.GrdVLiquidacion.Rows.Count;
             bool algunSeleccionado = false;
+            string error1 = "", error2 = "";
+            int contadorErrores = 0, contadorSinError = 0;
 
             try
             {
-
+                bool respuesta = false;
                 for (int i = 0; i < count; i++)
                 {
                     bool isChecked = ((CheckBox)rows[i].FindControl("SelectedCheckBox")).Checked;
                     if (isChecked)
                     {
                         algunSeleccionado = true;
-                        //Do what you want
                         TextBox txtPrecioSeleccionado = ((TextBox)rows[i].FindControl("txtPrecio"));
                         Double precio = double.Parse(txtPrecioSeleccionado.Text);
                         Double PrecioSugerido = double.Parse(rows[i].Cells[9].Text);
-
-                        string error = "";
+                        error1 = error1 + " -*- ";
 
                         if (precio > 0)
                         {
-
-
                             if (precio >= PrecioSugerido)
                             {
-                                bool respuesta = clsRecepcion.grabarDatosInventario(int.Parse(rows[i].Cells[2].Text), 1, int.Parse(rows[i].Cells[6].Text), int.Parse(txtPrecioSeleccionado.Text), ref error);
-                                if (respuesta == true)
+                                if (clsRecepcion.grabarDatosInventario(int.Parse(rows[i].Cells[2].Text), 1, int.Parse(rows[i].Cells[6].Text), int.Parse(txtPrecioSeleccionado.Text), ref error2))
                                 {
-
-                                    divSucceful.Visible = true;
-                                    lblSuccess.Text = "Producto almacenado con éxito.";
+                                    error1 += error2;
+                                    contadorSinError += 1;
                                 }
                                 else
                                 {
-                                    mostrarError("Error al guardar producto en inventario." + error);
+                                    contadorErrores += 1;
                                 }
-
-                                limpiar();
                             }
                             else
                             {
-                                mostrarError("El precio seleccionado no puede ser menor al precio sugerido.");
+                                mostrarError("El precio seleccionado no puede ser menor al precio sugerido. Del contrato: " + rows[i].Cells[1].Text + " ID: " + rows[i].Cells[2].Text + ".");
+                                break;
                             }
                         }
                         else
                         {
-                            mostrarError("El precio seleccionado debe ser mayor a cero.");
+                            mostrarError("El precio seleccionado no puede ser 0. Del contrato: " + rows[i].Cells[1].Text + " ID: " + rows[i].Cells[2].Text + ".");
+                            break;
                         }
-
                     }
                 }
 
@@ -121,17 +125,27 @@ namespace PrestaVende.Public
                 {
                     mostrarError("Debe seleccionar algún producto para guardar en inventario.");
                 }
+                else
+                {
+                    if (contadorSinError > 0 && contadorErrores == 0)
+                    {
+                        divSucceful.Visible = true;
+                        lblSuccess.Text = contadorSinError.ToString()  + " productos recibidos con exito.";
+                        limpiar();
+                    }
+
+                    if (contadorErrores > 0)
+                    {
+                        mostrarError("Existio algun error al guardar la recepcion. " + error1);
+                        limpiar();
+                    }
+                }
             }
             catch (Exception ex)
             {
                 mostrarError("Error en el proceso de guardado: " + ex.ToString());
             }
-                
-        }       
-
-        #endregion
-
-        #region Metodos
+        }
 
         private void buscarPrestamo(Decimal intPrestamo)
         {
@@ -139,14 +153,13 @@ namespace PrestaVende.Public
             {
                 div_gridView.Visible = true;
 
-                DataSet dsRespuesta = clsRecepcion.obtenerLiquidaciones(intPrestamo);
+                clsRecepcion = new CLASS.cs_recepcion_liquidacion();
+                DataSet dsRespuesta = clsRecepcion.obtenerLiquidaciones(intPrestamo, Convert.ToInt32(Session["id_sucursal"].ToString()));
 
                 if (dsRespuesta.Tables[0].Rows.Count > 0)
                 {
-
                     this.GrdVLiquidacion.DataSource = dsRespuesta;
                     this.GrdVLiquidacion.DataBind();
-
                 }
                 else
                 {
@@ -154,13 +167,11 @@ namespace PrestaVende.Public
                     this.TxtPrestamo.Text = "";
                     this.TxtPrestamo.Focus();
                 }
-
             }
             catch (Exception ex)
             {
                 mostrarError("Error al buscar prestamo: " + ex.ToString());
             }
-
         }
 
         private void limpiar()

@@ -43,7 +43,6 @@ namespace PrestaVende.Public
 
         DataRow row = null;
         private static DataTable dtTablaPrestamos;
-
         private CLASS.cs_liquidacion mLiquidacion = new CLASS.cs_liquidacion();
 
         #endregion
@@ -124,13 +123,13 @@ namespace PrestaVende.Public
         {
             try
             {
-                 
-                  //GUARDA NUEVO
-                  if (insertLiquidacion())
-                  {
-                      hideOrShowDiv(true);
-                  }
-
+                if (validaPrestamosAgregados())
+                {
+                    if (insertLiquidacion())
+                    {
+                        hideOrShowDiv(true);
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -149,6 +148,37 @@ namespace PrestaVende.Public
             hideOrShowDiv(true);
         }
 
+        private bool validaPrestamosAgregados()
+        {
+            try
+            {
+                DataTable prestamosALiquidar = (DataTable)this.Session["CurrentTablePrestamos"];
+
+                if (prestamosALiquidar.Rows.Count > 0)
+                {
+                    if (prestamosALiquidar.Rows.Count != GrdVLiquidacion.Rows.Count)
+                    {
+                        showError("El numero de prestamos agregado en el grid y el numero de prestamos de tabla de session es diferente, por favor salga del sistema y vuelva a ingresar los contratos.");
+                        return false;
+                    }
+                    else
+                    {
+                        return true;
+                    }
+                }
+                else
+                {
+                    showWarning("Para poder liquidar usted debe agregar contratos antes.");
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                showError(ex.ToString());
+                return false;
+            }
+        }
+
         private bool insertLiquidacion()
         {
             int contadorError = 0, contadorLiquidaciones = 0;
@@ -156,22 +186,25 @@ namespace PrestaVende.Public
             {
                 error = "";
                 mLiquidacion = new CLASS.cs_liquidacion();
-                foreach (GridViewRow item in this.GrdVLiquidacion.Rows)
+
+                DataTable prestamosALiquidar = (DataTable)this.Session["CurrentTablePrestamos"];
+
+                foreach (DataRow item in prestamosALiquidar.Rows)
                 {
-                    if (mLiquidacion.insertLiquidacion(ref error, item.Cells[0].Text.ToString()))
+                    if (mLiquidacion.insertLiquidacion(ref error, item["numero_prestamo"].ToString()))// Cells[""].Text.ToString()))
                     {
                         contadorLiquidaciones++;
                     }
                     else
                     {
                         contadorError = contadorError + 1;
-                        throw new SystemException("No se pudo liquidar prestamo" + item.Cells[0].Text.ToString() + ", favor comunicarse con el administrador." + error);
+                        throw new SystemException("No se pudo liquidar prestamo" + item["numero_prestamo"].ToString() + ", favor comunicarse con el administrador." + error);
                     }
                 }
 
                 if (contadorError == 0)
                 {
-                    showSuccess("Prestamos liquidados exitosamente.");
+                    showSuccess("Se liquidaron " + contadorLiquidaciones.ToString() + " contratos correctamente.");
                     this.GrdVLiquidacion.DataSource = null;
                     this.GrdVLiquidacion.DataBind();
                 }
@@ -184,7 +217,7 @@ namespace PrestaVende.Public
                 {
                     showSuccess("Se liquidaron " + contadorLiquidaciones.ToString() + " contratos correctamente.");
                 }
-                showError(ex.ToString());
+                showError(contadorError + " contratos con error. " + ex.ToString());
                 return false;
             }
         }
@@ -193,11 +226,11 @@ namespace PrestaVende.Public
         {
             try
             {
-                if ((DataTable)Session["CurrentTablePrestamos"] != null)
+                if ((DataTable)this.Session["CurrentTablePrestamos"] != null)
                 {
-                    DataTable dtTablaSession = (DataTable)Session["CurrentTablePrestamos"];
+                    DataTable dtTablaSession = (DataTable)this.Session["CurrentTablePrestamos"];
                     DataTable dtTabla = new DataTable("dtLiquidacion");
-                    dtTabla = mLiquidacion.getPrestamos(ref error, this.txtBusquedaPrestamo.Text.ToString());
+                    dtTabla = mLiquidacion.getPrestamosLiquidacion(ref error, this.txtBusquedaPrestamo.Text.ToString());
 
                     if (dtTabla.Rows.Count > 0)
                     {
@@ -218,14 +251,14 @@ namespace PrestaVende.Public
                     }
                     else
                     {
-                        showWarning("Prestamo No Disponible para Liquidar.");
+                        showWarning("Prestamo " + this.txtBusquedaPrestamo.Text.ToString() + " no disponible para Liquidar, por favor valide las fechas si ya vencio.");
                     }                    
                 }
                 else
                 {
-                    DataTable dtTablaSession = (DataTable)Session["CurrentTablePrestamos"];
+                    DataTable dtTablaSession = (DataTable)this.Session["CurrentTablePrestamos"];
                     DataTable dtTabla = new DataTable("dtLiquidacion");
-                    dtTabla = mLiquidacion.getPrestamos(ref error, this.txtBusquedaPrestamo.Text.ToString());
+                    dtTabla = mLiquidacion.getPrestamosLiquidacion(ref error, this.txtBusquedaPrestamo.Text.ToString());
 
                     if (dtTabla.Rows.Count > 0)
                     {
@@ -246,7 +279,7 @@ namespace PrestaVende.Public
                     }
                     else
                     {
-                        showWarning("Prestamo No Disponible para Liquidar.");
+                        showWarning("Prestamo " + this.txtBusquedaPrestamo.Text.ToString() + " no disponible para Liquidar, por favor valide las fechas si ya vencio.");
                     }
                 }
             }
@@ -259,6 +292,27 @@ namespace PrestaVende.Public
         protected void btnBuscarPrestamo_Click(object sender, EventArgs e)
         {
             addPrestamo();
+            this.txtBusquedaPrestamo.Text = "";
+        }
+
+        protected void GrdVLiquidacion_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            try
+            {
+                if (e.CommandName == "borrar")
+                {
+                    int index = Convert.ToInt32(e.CommandArgument);
+                    DataTable dtActual = (DataTable)this.Session["CurrentTablePrestamos"];
+                    dtActual.Rows[index].Delete();
+                    Session["CurrentTablePrestamos"] = dtActual;
+                    this.GrdVLiquidacion.DataSource = dtActual;
+                    this.GrdVLiquidacion.DataBind();
+                }
+            }
+            catch (Exception ex)
+            {
+                showError(ex.ToString());
+            }
         }
     }
 

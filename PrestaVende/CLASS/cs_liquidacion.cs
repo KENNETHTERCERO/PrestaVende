@@ -11,21 +11,14 @@ namespace PrestaVende.CLASS
         private cs_connection connection = new cs_connection();
         private SqlCommand command = new SqlCommand();
 
-        public DataTable getPrestamos(ref string error, string NumeroPrestamo)
+        public DataTable getPrestamosLiquidacion(ref string error, string NumeroPrestamo)
         {
             try
             {
                 DataTable Liquidacion = new DataTable();
                 connection.connection.Open();
                 command.Connection = connection.connection;
-                command.CommandText = "select a.id_prestamo_encabezado, a.numero_prestamo, total_prestamo, saldo_prestamo,c.estado_prestamo from tbl_prestamo_encabezado a "
-                                       + " inner join tbl_sucursal b "
-                                       + "     on a.id_sucursal = b.id_sucursal "
-                                       + " inner join tbl_estado_prestamo c "
-                                       + "     on a.estado_prestamo = c.id_estado_prestamo "
-                                       + " where a.id_sucursal = @id_sucursal "
-                                       + " and (CAST(a.fecha_proximo_pago AS datetime) + b.dias_para_liquidar) < getdate() "
-                                       + " and a.estado_prestamo in (1,4) and a.numero_prestamo = @numero_prestamo";
+                command.CommandText = "EXEC SP_devuelve_prestamo_para_liquidar @id_sucursal, @numero_prestamo";
                 command.Parameters.AddWithValue("@id_sucursal", Convert.ToInt32(HttpContext.Current.Session["id_sucursal"]));
                 command.Parameters.AddWithValue("@numero_prestamo", NumeroPrestamo);
                 Liquidacion.Load(command.ExecuteReader()); 

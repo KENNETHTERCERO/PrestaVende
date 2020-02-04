@@ -341,7 +341,6 @@ namespace PrestaVende.CLASS
                     valor_total_liquidado += Convert.ToDecimal(item["valor_liquidado"].ToString());
                 }
 
-                total_recibo = total_factura - valor_total_liquidado;
                 command.Parameters.Clear();
                 command.CommandText = "INSERT INTO tbl_recibo (id_sucursal, id_serie, id_tipo_transaccion, numero_recibo, id_cliente, monto, descripcion, fecha_creacion, estado, id_usuario, id_factura_encabezado) " +
                                            "VALUES(@id_sucursal_rec, @id_serie_rec, 13, @numero_recibo_rec, @id_cliente_rec, @monto_rec, @descripcion_rec, GETDATE(), 1, @id_usuario_rec, @id_factura_encabezado_rec) ";
@@ -350,7 +349,7 @@ namespace PrestaVende.CLASS
                 command.Parameters.AddWithValue("@id_serie_rec", id_serie);
                 command.Parameters.AddWithValue("@numero_recibo_rec", numero_recibo);
                 command.Parameters.AddWithValue("@id_cliente_rec", id_cliente);
-                command.Parameters.AddWithValue("@monto_rec", total_recibo);
+                command.Parameters.AddWithValue("@monto_rec", valor_total_liquidado);
                 command.Parameters.AddWithValue("@descripcion_rec", "POR VENTA DE PRODUCTO");
                 command.Parameters.AddWithValue("@id_usuario_rec", Convert.ToInt32(HttpContext.Current.Session["id_usuario"]));
                 command.Parameters.AddWithValue("@id_factura_encabezado_rec", id_factura_encabezado);

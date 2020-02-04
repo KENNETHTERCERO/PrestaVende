@@ -979,6 +979,8 @@ namespace PrestaVende.Public
                 }
                 sumaTotalPrestamo = Convert.ToDecimal(lblTotalPrestamoQuetzales.Text.ToString()) + Convert.ToDecimal(txtRedondeo.Text.ToString());
                 lblTotalPrestamoQuetzales.Text = sumaTotalPrestamo.ToString();
+
+                getDataProyeccion();
             }
             catch (Exception ex)
             {
@@ -1230,7 +1232,6 @@ namespace PrestaVende.Public
 
                 Session["id_plan_prestamo_proyeccion"] = this.ddlTipoPrestamo.SelectedValue;
                 this.gvProyeccion.DataSource = cs_prestamo.getDTProyeccion(ref error);
-
                 this.gvProyeccion.DataBind();
             }
             catch (Exception ex)
@@ -1264,8 +1265,11 @@ namespace PrestaVende.Public
                 if (e.CommandName == "borrar")
                 {
                     int index = Convert.ToInt32(e.CommandArgument);
-                    dtTablaArticulos.Rows[index].Delete();
-                    this.gvProductoElectrodomesticos.DataSource = dtTablaJoyas;
+                    DataTable dtActual = (DataTable)this.Session["CurrentTableArticulos"];
+                    dtActual.Rows[index].Delete();
+                    dtTablaArticulos = dtActual;
+                    Session["CurrentTableArticulos"] = dtActual;
+                    this.gvProductoElectrodomesticos.DataSource = dtTablaArticulos;
                     this.gvProductoElectrodomesticos.DataBind();
                     blockComboBox();
                     calculaTotalPrestamo();
@@ -1285,8 +1289,11 @@ namespace PrestaVende.Public
                 if (e.CommandName == "borrar")
                 {
                     int index = Convert.ToInt32(e.CommandArgument);
-                    dtTablaJoyas.Rows[index].Delete();
-                    this.gvProductoJoya.DataSource = dtTablaJoyas;
+                    DataTable dtActual = (DataTable)this.Session["CurrentTableJoyas"];
+                    dtActual.Rows[index].Delete();
+                    Session["CurrentTableJoyas"] = dtActual;
+                    dtTablaJoyas = dtActual;
+                    this.gvProductoJoya.DataSource = dtActual;
                     this.gvProductoJoya.DataBind();
                     blockComboBox();
                     calculaTotalPrestamo();

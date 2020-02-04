@@ -231,8 +231,9 @@ namespace PrestaVende.Public
                 encabezado[9] = "0";
                 encabezado[10] = "0";
 
-                cs_manejo_inventario = new CLASS.cs_manejo_inventario();
                 error = "";
+                cs_manejo_inventario = new CLASS.cs_manejo_inventario();
+                
                 if (cs_manejo_inventario.GuardarFactura(ref error, (DataTable)this.Session["CurrentTableJoyas"], encabezado, ref id_factura_encabezado, ref id_recibo))
                 {
                     try

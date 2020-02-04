@@ -13,7 +13,7 @@ namespace PrestaVende.CLASS
         private SqlCommand command = new SqlCommand();
 
 
-        public DataSet obtenerLiquidaciones(Decimal numero_prestamo)
+        public DataSet obtenerLiquidaciones(Decimal numero_prestamo, int id_sucursal)
         {
             DataSet ds = new DataSet();
 
@@ -28,6 +28,11 @@ namespace PrestaVende.CLASS
             command.CommandText = "SP_ConsultarLiquidacionPorPrestamo";
 
             param = new SqlParameter("@numero_prestamo", numero_prestamo);
+            param.Direction = ParameterDirection.Input;
+            param.DbType = DbType.String;
+            command.Parameters.Add(param);
+
+            param = new SqlParameter("@id_sucursal", id_sucursal);
             param.Direction = ParameterDirection.Input;
             param.DbType = DbType.String;
             command.Parameters.Add(param);

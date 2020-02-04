@@ -41,9 +41,10 @@ namespace PrestaVende.CLASS
                 DataTable returnTable = new DataTable("subcategoriaMedio");
                 connection.connection.Open();
                 command.Connection = connection.connection;
+                command.Parameters.Clear();
                 command.CommandText = "SELECT 0 id_subcategoria_medio, 'SELECCIONAR' subcategoria_medio UNION " +
-                                        "SELECT id_subcategoria_medio, subcategoria_medio FROM tbl_subcategoria_medio WHERE id_subcategoria_medio = @id_subcategoria_medio";
-                command.Parameters.AddWithValue("@id_subcategoria_medio", id_categoria);
+                                        "SELECT id_subcategoria_medio, subcategoria_medio FROM tbl_subcategoria_medio WHERE id_categoria_medio = @id_categoria_medio";
+                command.Parameters.AddWithValue("@id_categoria_medio", id_categoria);
                 returnTable.Load(command.ExecuteReader());
                 return returnTable;
             }

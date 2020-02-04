@@ -81,9 +81,12 @@
                                             <tr>
                                                 <td>
                                                     <asp:GridView ID="GrdVLiquidacion" runat="server" Width="100%" CssClass="footable" AutoGenerateColumns="False" 
-                                                        ForeColor="#333333" GridLines="None" >
+                                                        ForeColor="#333333" GridLines="None" OnRowCommand="GrdVLiquidacion_RowCommand">
                                                         <AlternatingRowStyle BackColor="White" />
                                                         <Columns>
+                                                            <asp:ButtonField ButtonType="Button" ControlStyle-CssClass="btn btn-danger" FooterStyle-BackColor="#ff9a32" CommandName="borrar" HeaderText="<center>X</center>" Text="X" >
+                                                            <FooterStyle BackColor="#FF9A32" />
+                                                            </asp:ButtonField>
                                                                <asp:BoundField DataField="id_prestamo_encabezado" HeaderText="<center>ID</center>" SortExpression="id_liquidacion" HtmlEncode="false"/>                                                            
                                                                 <%--<asp:BoundField DataField="sucursal" HeaderText="<center>SUCURSAL</center>" SortExpression="sucursal" HtmlEncode="false" />--%>
                                                                 <asp:BoundField DataField="numero_prestamo" HeaderText="<center>NUMERO DE PRESTAMO</center>" SortExpression="numero_prestamo" HtmlEncode="false" />
