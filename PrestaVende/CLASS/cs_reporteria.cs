@@ -26,8 +26,8 @@ namespace PrestaVende.CLASS
 
             command.CommandType = CommandType.StoredProcedure;
             command.CommandText = "SP_reporte_ingresos_egresos";
-            command.Parameters.AddWithValue("@id_sucursal", 1);
-            command.Parameters.AddWithValue("@id_empresa", 1);
+            command.Parameters.AddWithValue("@id_sucursal", id_sucursal);
+            command.Parameters.AddWithValue("@id_empresa", id_empresa);
 
             adapter = new SqlDataAdapter(command);
             adapter.Fill(ds);
