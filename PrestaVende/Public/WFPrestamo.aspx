@@ -128,6 +128,7 @@
                                 <asp:Button ID="btnGuardarPrestamo" runat="server" Width="200px" Text="Guardar préstamo" CssClass="btn btn-primary" Visible="true" OnClick="btnGuardarPrestamo_Click"/>
                                 <br />
                                 <br />
+
                                 <br />
                                 <asp:Button ID="btnGuardarAvaluo" runat="server" Width="200px" Text="Guardar avaluo" CssClass="btn btn-info" Visible="false" />
                                 <br />
