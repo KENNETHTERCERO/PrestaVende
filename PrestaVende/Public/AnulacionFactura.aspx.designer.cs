@@ -10,7 +10,7 @@
 namespace PrestaVende.Public {
     
     
-    public partial class WFFacturacion {
+    public partial class AnulacionFactura {
         
         /// <summary>
         /// uPanel control.
@@ -22,49 +22,13 @@ namespace PrestaVende.Public {
         protected global::System.Web.UI.UpdatePanel uPanel;
         
         /// <summary>
-        /// btnCobroIntereses control.
+        /// btnGenerar control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnCobroIntereses;
-        
-        /// <summary>
-        /// btnAbonoCapital control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAbonoCapital;
-        
-        /// <summary>
-        /// btnCancelacion control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnCancelacion;
-        
-        /// <summary>
-        /// btnRetiroArticulo control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnRetiroArticulo;
-        
-        /// <summary>
-        /// btnAnularPrestamo control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAnularPrestamo;
+        protected global::System.Web.UI.WebControls.Button btnGenerar;
         
         /// <summary>
         /// divWarning control.
@@ -121,48 +85,75 @@ namespace PrestaVende.Public {
         protected global::System.Web.UI.WebControls.Label lblSuccess;
         
         /// <summary>
-        /// lblPrestamo control.
+        /// lblTipoReimpresion control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblPrestamo;
+        protected global::System.Web.UI.WebControls.Label lblTipoReimpresion;
         
         /// <summary>
-        /// lblprestamoNumero control.
+        /// div_ingresa_datos control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblprestamoNumero;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_ingresa_datos;
         
         /// <summary>
-        /// lblNombreCliente control.
+        /// lblSucursal control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblNombreCliente;
+        protected global::System.Web.UI.WebControls.Label lblSucursal;
         
         /// <summary>
-        /// div_gridView control.
+        /// ddlSucursal control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_gridView;
+        protected global::System.Web.UI.WebControls.DropDownList ddlSucursal;
         
         /// <summary>
-        /// gvFactura control.
+        /// lblSerie control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvFactura;
+        protected global::System.Web.UI.WebControls.Label lblSerie;
+        
+        /// <summary>
+        /// ddlSerie control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlSerie;
+        
+        /// <summary>
+        /// lblNumeroDocumento control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblNumeroDocumento;
+        
+        /// <summary>
+        /// txtNumeroDocumento control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtNumeroDocumento;
     }
 }

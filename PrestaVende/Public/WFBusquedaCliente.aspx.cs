@@ -154,7 +154,7 @@ namespace PrestaVende.Public
             }
         }
 
-        private void insertClient()
+        private bool insertClient()
         {
             try
             {
@@ -181,22 +181,29 @@ namespace PrestaVende.Public
                 datosInsert[18] = this.ddlNacionalidad.SelectedValue.ToString();
 
                 cs_cliente = new CLASS.cs_cliente();
-                if (cs_cliente.insertClient(ref error, datosInsert) > 0)
+                error = "";
+                int id_cliente = 0;
+                id_cliente = cs_cliente.insertClient(ref error, datosInsert);
+                if (id_cliente > 0)
                 {
                     showSuccess("Se creo cliente sin problema.");
+                    lblIdClienteNumero.Text = id_cliente.ToString();
+                    return true;
                 }
                 else
                 {
                     showError(error);
+                    return false;
                 }
             }
             catch (Exception ex)
             {
                 showError(ex.ToString());
+                return false;
             }
         }
 
-        private void editClient()
+        private bool editClient()
         {
             try
             {
@@ -222,19 +229,22 @@ namespace PrestaVende.Public
                 datosUpdate[17] = this.ddlNacionalidad.SelectedValue.ToString();
 
                 cs_cliente = new CLASS.cs_cliente();
-
+                error = "";
                 if (cs_cliente.updateClient(ref error, datosUpdate) > 0)
                 {
                     showSuccess("Se edito cliente sin problema.");
+                    return true;
                 }
                 else
                 {
                     showError(error);
+                    return false;
                 }
             }
             catch (Exception ex)
             {
                 showError(ex.ToString());
+                return false;
             }
         }
 
@@ -474,14 +484,18 @@ namespace PrestaVende.Public
                 {
                     if (isUpdate)
                     {
-                        editClient();
+                        if (editClient())
+                        {
+                            Response.Redirect("WFListadoPrestamo?id_cliente=" + this.lblIdClienteNumero.Text);
+                        }
                     }
                     else
                     {
-                        insertClient();
+                        if (insertClient())
+                        {
+                            Response.Redirect("WFListadoPrestamo?id_cliente=" + this.lblIdClienteNumero.Text);
+                        }
                     }
-
-                    Response.Redirect("WFListadoPrestamo?id_cliente=" + this.lblIdClienteNumero.Text);
                 }
             }
             catch (Exception ex)

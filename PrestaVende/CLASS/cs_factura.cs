@@ -612,5 +612,36 @@ namespace PrestaVende.CLASS
                 connection.connection.Close();
             }
         }
+
+        public bool anularFactura(ref string error, string id_sucursal, string id_serie, string numero_factura)
+        {
+            try
+            {
+                DataTable dtAnulacion = new DataTable("Anulacion");
+                connection.connection.Open();
+                command.Connection = connection.connection;
+                command.Parameters.Clear();
+                command.Transaction = connection.connection.BeginTransaction();
+                command.CommandText = "exec SP_anula_factura @id_sucursal, @id_serie, @numero_factura";
+                command.Parameters.AddWithValue("@id_sucursal", id_sucursal);
+                command.Parameters.AddWithValue("@id_serie", id_serie);
+                command.Parameters.AddWithValue("@numero_factura", numero_factura);
+                dtAnulacion.Load(command.ExecuteReader());
+
+                if (dtAnulacion.Rows.Count > 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                return false;
+            }
+        }
     }
 }

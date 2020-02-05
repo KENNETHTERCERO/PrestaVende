@@ -191,14 +191,14 @@ namespace PrestaVende.Public
 
                 foreach (DataRow item in prestamosALiquidar.Rows)
                 {
-                    if (mLiquidacion.insertLiquidacion(ref error, item["numero_prestamo"].ToString()))// Cells[""].Text.ToString()))
+                    if (mLiquidacion.insertLiquidacion(ref error, item["id_prestamo_encabezado"].ToString()))// Cells[""].Text.ToString()))
                     {
                         contadorLiquidaciones++;
                     }
                     else
                     {
                         contadorError = contadorError + 1;
-                        throw new SystemException("No se pudo liquidar prestamo" + item["numero_prestamo"].ToString() + ", favor comunicarse con el administrador." + error);
+                        throw new SystemException("No se pudo liquidar prestamo" + item["numero_prestamo"].ToString() + ", favor comunicarse con el administrador. " + error);
                     }
                 }
 
@@ -217,7 +217,7 @@ namespace PrestaVende.Public
                 {
                     showSuccess("Se liquidaron " + contadorLiquidaciones.ToString() + " contratos correctamente.");
                 }
-                showError(contadorError + " contratos con error. " + ex.ToString());
+                showError(contadorError + " contratos con error. " + ex.ToString() + error);
                 return false;
             }
         }

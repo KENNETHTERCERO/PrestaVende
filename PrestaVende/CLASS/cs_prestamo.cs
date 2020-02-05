@@ -489,7 +489,8 @@ namespace PrestaVende.CLASS
                 connection.connection.Open();
                 command.Connection = connection.connection;
                 command.Parameters.Clear();
-                command.CommandText = "select pre.id_prestamo_encabezado,pre.numero_prestamo,cli.primer_nombre,cli.segundo_nombre,cli.primer_apellido,cli.segundo_apellido, pre.id_cliente, " +
+                command.CommandText = "select pre.id_prestamo_encabezado,pre.numero_prestamo, DAY(pre.fecha_creacion_prestamo) AS dia, MONTH(pre.fecha_creacion_prestamo) AS mes, YEAR(fecha_creacion_prestamo) AS year, " +
+                                       "cli.primer_nombre,cli.segundo_nombre,cli.primer_apellido,cli.segundo_apellido, pre.id_cliente, " +
                                        "pre.saldo_prestamo,(c.factor * 100) AS factor,pre.total_prestamo,pre.id_interes,pre.id_plan_prestamo from tbl_prestamo_encabezado pre " +
                                        "inner join tbl_cliente cli on cli.id_cliente = pre.id_cliente " +
                                        "inner join tbl_sucursal su on su.id_sucursal = pre.id_sucursal " +
@@ -894,6 +895,36 @@ namespace PrestaVende.CLASS
             finally
             {
                 connection.connection.Close();
+            }
+        }
+
+        public bool anularPrestamo(ref string error, string id_sucursal, string numero_prestamo)
+        {
+            try
+            {
+                DataTable dtAnulacion = new DataTable("Anulacion");
+                connection.connection.Open();
+                command.Connection = connection.connection;
+                command.Parameters.Clear();
+                command.Transaction = connection.connection.BeginTransaction();
+                command.CommandText = "exec SP_anula_contrato @id_sucursal, @numero_prestamo";
+                command.Parameters.AddWithValue("@id_sucursal", id_sucursal);
+                command.Parameters.AddWithValue("@numero_prestamo", numero_prestamo);
+                dtAnulacion.Load(command.ExecuteReader());
+
+                if (dtAnulacion.Rows.Count > 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                return false;
             }
         }
     }

@@ -114,6 +114,7 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Public\AnulacionFactura.aspx" />
     <Content Include="Public\AutorizacionEncargado.aspx" />
     <Content Include="Public\BusquedaCliente.aspx" />
     <Content Include="Public\CambioPrecioProducto.aspx" />
@@ -459,6 +460,13 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Public\AnulacionFactura.aspx.cs">
+      <DependentUpon>AnulacionFactura.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\AnulacionFactura.aspx.designer.cs">
+      <DependentUpon>AnulacionFactura.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Public\AutorizacionEncargado.aspx.cs">
       <DependentUpon>AutorizacionEncargado.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

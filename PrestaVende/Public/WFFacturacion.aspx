@@ -30,6 +30,10 @@
                                 <br />
                                 <br />
                                 <br />
+                                <asp:Button ID="btnAnularPrestamo" runat="server" Width="200px" Text="Anular prestamo" class="btn btn-danger" Visible="true" OnClick="btnAnularPrestamo_Click"/>
+                                <br />
+                                <br />
+                                <br />
                             </div>
                         </center>
                     </div>
@@ -67,7 +71,10 @@
                                             <big><asp:Label ID="lblPrestamo" runat="server">Prestamo:&nbsp;&nbsp;</asp:Label></big>
                                         </td>
                                         <td>
-                                            <big><asp:Label ID="lblnombre_prestamo" runat="server"></asp:Label></big>
+                                            <big><asp:Label ID="lblprestamoNumero" runat="server"></asp:Label></big>
+                                        </td>
+                                        <td>
+                                            <big><asp:Label ID="lblNombreCliente" runat="server"></asp:Label></big>
                                         </td>
                                     </tr>
                                  </table>

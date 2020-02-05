@@ -167,14 +167,29 @@ namespace PrestaVende.CLASS
 
                     if (returnInt > 0)
                     {
-                        command.Transaction.Commit();
+
+                        command.CommandText = "SELECT MAX(id_cliente) FROM tbl_cliente WHERE DPI = '" + datos[0] + "'";
+                        returnInt = Convert.ToInt32(command.ExecuteScalar().ToString());
+                        if (returnInt > 0)
+                        {
+                            command.Transaction.Commit();
+                            return returnInt;
+                        }
+                        else
+                        {
+                            throw new SystemException("NO SE PUDO GUARDAR CLIENTE.");
+                        }
+                        
                     }
-                    return returnInt;
+                    else
+                    {
+                        return 0;
+                    }
                 }
                 else
                 {
                     error = "El DPI o Nit ya existe en el catalogo de clientes, por favor busquelo.";
-                    return returnInt;
+                    return 0;
                 }
             }
             catch (Exception ex)

@@ -20,10 +20,28 @@ namespace PrestaVende.Public
         {
             try
             {
+                int dia = 0, mes = 0, year = 0;
                 string id_prestamo = Request.QueryString["id_prestamo"];
+                cs_prestamo = new CLASS.cs_prestamo();
                 foreach (DataRow item in cs_prestamo.ObtenerPrestamoEspecifico(ref error, id_prestamo).Rows)
                 {
-                    lblnombre_prestamo.Text = item[1].ToString() + " - Cliente: " + item[2].ToString() + " " + item[3].ToString() + " " + item[4].ToString() + " " + item[5].ToString();
+                    lblprestamoNumero.Text = item[1].ToString();
+                    lblNombreCliente.Text = " - Cliente: " + item[2].ToString() + " " + item[3].ToString() + " " + item[4].ToString() + " " + item[5].ToString();
+                    dia = Convert.ToInt32(item["dia"].ToString());
+                    mes = Convert.ToInt32(item["mes"].ToString());
+                    year = Convert.ToInt32(item["year"].ToString());
+                }
+
+                DateTime fecha_prestamo = new DateTime(year, mes, dia);
+                DateTime fecha_hoy = DateTime.Now.Date;
+
+                if (fecha_prestamo == fecha_hoy)
+                {
+                    btnAnularPrestamo.Visible = true;
+                }
+                else
+                {
+                    btnAnularPrestamo.Visible = false;
                 }
             }
             catch (Exception ex)
@@ -37,7 +55,7 @@ namespace PrestaVende.Public
             try
             {
                 string id_prestamo = Request.QueryString["id_prestamo"];
-
+                cs_factura = new CLASS.cs_factura();
                 gvFactura.DataSource = cs_factura.ObtenerFacturas(ref error, id_prestamo);
                 gvFactura.DataBind();
             }
@@ -47,13 +65,65 @@ namespace PrestaVende.Public
             }
         }
 
+        private void anularPrestamo()
+        {
+            try
+            {
+                cs_prestamo = new CLASS.cs_prestamo();
+                error = "";
+                if (cs_prestamo.anularPrestamo(ref error, this.Session["id_sucursal"].ToString(), this.lblprestamoNumero.Text.ToString()))
+                {
+                    showSuccess("Prestamo anulado correctamente.");
+                    this.btnAbonoCapital.Enabled = false;
+                    this.btnAnularPrestamo.Enabled = false;
+                    this.btnCancelacion.Enabled = false;
+                    this.btnCobroIntereses.Enabled = false;
+                }
+                else
+                {
+                    int startIndex = 48;
+                    int lenght = 111;
+                    string errorModificado = error.Substring(startIndex, lenght);
+                    showError(errorModificado + ".");
+                }
+            }
+            catch (Exception ex)
+            {
+                showError(ex.ToString());
+            }
+        }
         #endregion
 
         #region controls
         protected void Page_Load(object sender, EventArgs e)
         {
-            getPrestamo();
-            getFactura();
+            try
+            {
+                HttpCookie cookie = Request.Cookies["userLogin"];
+
+                if (cookie == null && Convert.ToInt32(Session["id_usuario"]) == 0)
+                {
+                    Response.Redirect("~/WFWebLogin.aspx");
+                }
+                else
+                {
+                    if (IsPostBack)
+                    {
+                        if (lblWarning.Text == "") { divWarning.Visible = false; }
+                        if (lblError.Text == "") { divError.Visible = false; }
+                        if (lblSuccess.Text == "") { divSucceful.Visible = false; }
+                    }
+                    else
+                    {
+                        getPrestamo();
+                        getFactura();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                showError(ex.ToString());
+            }
         }
 
         protected void btnBack_Click(object sender, EventArgs e)
@@ -112,6 +182,11 @@ namespace PrestaVende.Public
         {
             string id_prestamo = Request.QueryString["id_prestamo"];
             Response.Redirect("WFRetiroArticulo.aspx?id_prestamo=" + id_prestamo);
+        }
+
+        protected void btnAnularPrestamo_Click(object sender, EventArgs e)
+        {
+            anularPrestamo();
         }
     }
 }
