@@ -29,12 +29,12 @@ namespace PrestaVende.Public
                 foreach (DataRow item in cs_prestamo.ObtenerPrestamoEspecifico(ref error, id_prestamo).Rows)
                 {
                     //lblnombre_prestamo.Text = item[1].ToString() + " - Cliente: " + item[2].ToString() + " " + item[3].ToString() + " " + item[4].ToString() + " " + item[5].ToString();
-                    this.lblNombrePrestamo.Text = item[1].ToString();
-                    this.lblCodigoCliente.Text = item[1].ToString();
-                    this.lblNombreCliente.Text = item[2].ToString() + " " + item[3].ToString() + " " + item[4].ToString() + " " + item[5].ToString();
-                    this.lblValorInteres.Text = item[8].ToString() + "%";
-                    id_cliente = item[6].ToString();
-                    saldo_prestamo = item[7].ToString();
+                    this.lblNombrePrestamo.Text = item["numero_prestamo"].ToString();
+                    this.lblCodigoCliente.Text = item["id_cliente"].ToString();
+                    this.lblNombreCliente.Text = item["primer_nombre"].ToString() + " " + item["segundo_nombre"].ToString() + " " + item["primer_apellido"].ToString() + " " + item["segundo_apellido"].ToString();
+                    this.lblValorInteres.Text = item["factor"].ToString() + "%";
+                    id_cliente = item["id_cliente"].ToString();
+                    saldo_prestamo = item["saldo_prestamo"].ToString();
 
                     //if (decimal.Parse(saldo_prestamo = item[8].ToString()) > 500)
                     //    imgBtnBuscaSubSemana.Visible = true;
@@ -159,16 +159,34 @@ namespace PrestaVende.Public
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (IsPostBack)
+            try
             {
+                HttpCookie cookie = Request.Cookies["userLogin"];
 
+                if (cookie == null && Convert.ToInt32(Session["id_usuario"]) == 0)
+                {
+                    Response.Redirect("~/WFWebLogin.aspx");
+                }
+                else
+                {
+                    if (IsPostBack)
+                    {
+                        if (lblWarning.Text == "") { divWarning.Visible = false; }
+                        if (lblError.Text == "") { divError.Visible = false; }
+                        if (lblSuccess.Text == "") { divSucceful.Visible = false; }
+                    }
+                    else
+                    {
+                        getDetalleFactura();
+                        getPrestamo();
+                        getTransaccion();
+                        getSeries();
+                    }
+                }
             }
-            else
+            catch(Exception ex)
             {
-                getDetalleFactura();
-                getPrestamo();
-                getTransaccion();
-                getSeries();
+                showError(ex.ToString());
             }
         }
 

@@ -25,8 +25,8 @@ namespace PrestaVende.Public
                 cs_prestamo = new CLASS.cs_prestamo();
                 foreach (DataRow item in cs_prestamo.ObtenerPrestamoEspecifico(ref error, id_prestamo).Rows)
                 {
-                    lblprestamoNumero.Text = item[1].ToString();
-                    lblNombreCliente.Text = " - Cliente: " + item[2].ToString() + " " + item[3].ToString() + " " + item[4].ToString() + " " + item[5].ToString();
+                    this.lblprestamoNumero.Text = item[1].ToString();
+                    this.lblNombreCliente.Text = " - Cliente: " + item[2].ToString() + " " + item[3].ToString() + " " + item[4].ToString() + " " + item[5].ToString();
                     dia = Convert.ToInt32(item["dia"].ToString());
                     mes = Convert.ToInt32(item["mes"].ToString());
                     year = Convert.ToInt32(item["year"].ToString());
@@ -101,7 +101,7 @@ namespace PrestaVende.Public
             {
                 HttpCookie cookie = Request.Cookies["userLogin"];
 
-                if (cookie == null && Convert.ToInt32(Session["id_usuario"]) == 0)
+                if (cookie == null && Convert.ToInt32(this.Session["id_usuario"]) == 0)
                 {
                     Response.Redirect("~/WFWebLogin.aspx");
                 }
