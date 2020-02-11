@@ -177,6 +177,12 @@ namespace PrestaVende.Public
                     }
                     else
                     {
+                        cs_prestamo = new CLASS.cs_prestamo();
+                        cs_factura = new CLASS.cs_factura();
+                        cs_transaccion = new CLASS.cs_transaccion();
+                        cs_serie = new CLASS.cs_serie();
+                        ds_global = new DataSet();
+
                         getDetalleFactura();
                         getPrestamo();
                         getTransaccion();
@@ -254,9 +260,9 @@ namespace PrestaVende.Public
 
                 if (int.Parse(id_serie) > 0)
                 {
-                    if(Convert.ToInt32(Session["id_caja"]) > 0)
+                    if(Convert.ToInt32(this.Session["id_caja"]) > 0)
                     {
-                        if (Convert.ToInt32(Session["id_tipo_caja"]) == 2)
+                        if (Convert.ToInt32(this.Session["id_tipo_caja"]) == 2)
                         {
                             decimal abono = 0;
                             int id_recibo = 0;
@@ -278,7 +284,7 @@ namespace PrestaVende.Public
 
                                     cs_factura = new CLASS.cs_factura();
                                     error = "";
-                                    Resultado = cs_factura.GuardarFactura(ref error, ds_global, id_serie, id_cliente, id_tipo_transaccion, Convert.ToInt32(Session["id_caja"]), numero_prestamo, abono.ToString(), ref id_recibo);
+                                    Resultado = cs_factura.GuardarFactura(ref error, ds_global, id_serie, id_cliente, id_tipo_transaccion, Convert.ToInt32(this.Session["id_caja"]), numero_prestamo, abono.ToString(), ref id_recibo);
                                      
                                     if(Resultado == string.Empty)
                                     {
@@ -287,7 +293,7 @@ namespace PrestaVende.Public
                                     {
                                         try
                                         {
-                                            Session["saldo_caja"] = Convert.ToString(Convert.ToDecimal(Session["saldo_caja"].ToString()) + abono + Convert.ToDecimal(ds_global.Tables[1].Rows[0]["Total"].ToString().Replace(",", ".")));
+                                            Session["saldo_caja"] = Convert.ToString(Convert.ToDecimal(this.Session["saldo_caja"].ToString()) + abono + Convert.ToDecimal(ds_global.Tables[1].Rows[0]["Total"].ToString().Replace(",", ".")));
                                         }
                                         catch (Exception ex)
                                         {
@@ -295,12 +301,12 @@ namespace PrestaVende.Public
                                         }
                                         
                                         showSuccess("Se creo prestamo correctamente.");
-                                        string script = "window.open('WebReport.aspx?tipo_reporte=2" + "&id_factura=" + Resultado + "&id_sucursal=" + Session["id_sucursal"].ToString() + "&numero_contrato=" + this.lblNombrePrestamo.Text.ToString() + "');";
+                                        string script = "window.open('WebReport.aspx?tipo_reporte=2" + "&id_factura=" + Resultado + "&id_sucursal=" + this.Session["id_sucursal"].ToString() + "&numero_contrato=" + this.lblNombrePrestamo.Text.ToString() + "');";
                                         ScriptManager.RegisterClientScriptBlock(this, GetType(), "ImpresionFactura", script, true);
 
                                         if (id_tipo_transaccion == "9" || id_tipo_transaccion == "10")
                                         {
-                                            string script2 = "window.open('WebReport.aspx?tipo_reporte=5" + "&id_recibo=" + id_recibo.ToString() + "&id_sucursal=" + Session["id_sucursal"].ToString() + "');";
+                                            string script2 = "window.open('WebReport.aspx?tipo_reporte=5" + "&id_recibo=" + id_recibo.ToString() + "&id_sucursal=" + this.Session["id_sucursal"].ToString() + "');";
                                             ScriptManager.RegisterClientScriptBlock(this, GetType(), "ImpresionRecibo", script2, true);
                                         }                                        
 
