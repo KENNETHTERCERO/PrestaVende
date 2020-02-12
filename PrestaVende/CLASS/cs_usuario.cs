@@ -49,7 +49,7 @@ namespace PrestaVende.CLASS
         {
             string errorExec = "";
             string[] error;
-            error = new string[14];
+            error = new string[15];
 
             try
             {
@@ -70,7 +70,8 @@ namespace PrestaVende.CLASS
                                             "ISNULL(asi.id_asignacion_caja, 0), " +  //9, 10
                                             "ISNULL(asi.estado_asignacion, 0), " + //10, 11
                                             "usu.caja_asignada, " +     //11, 12
-                                            "ISNULL(caj.id_tipo_caja, 0) " +       //12, 13
+                                            "ISNULL(caj.id_tipo_caja, 0), " +       //12, 13
+                                            "asi.id_estado_caja " + //13, 14
                                         "FROM " +
                                         "tbl_usuario AS usu " +
                                         "LEFT JOIN tbl_asignacion_caja AS asi ON asi.id_usuario_asignado = usu.id_usuario AND asi.id_estado_caja in (1,2,3,4,7,8) AND asi.estado_asignacion IN (0,1)  " +
@@ -99,6 +100,7 @@ namespace PrestaVende.CLASS
                         error[11] = item[10].ToString();
                         error[12] = item[11].ToString();
                         error[13] = item[12].ToString();
+                        error[14] = item[13].ToString();
                     }
                 }
                 else

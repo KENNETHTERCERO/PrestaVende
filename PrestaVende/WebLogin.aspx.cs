@@ -39,7 +39,7 @@ namespace PrestaVende
             {
                 if (validateTextBox())
                 {
-                    string[] respuesta = new string[11];
+                    string[] respuesta = new string[15];
                     
                     respuesta = login.Login(txtUser.Text, txtPassword.Text);
 
@@ -50,7 +50,7 @@ namespace PrestaVende
                     else
                     {
                         HttpCookie userLogin = new HttpCookie("userLogin");
-
+                        string id_estado_caja = "";
                         Session["id_usuario"]           = Convert.ToInt32(respuesta[1]);
                         Session["id_empresa"]           = Convert.ToInt32(respuesta[2]);
                         Session["id_sucursal"]          = Convert.ToInt32(respuesta[3]);
@@ -63,12 +63,12 @@ namespace PrestaVende
                         estado_asignacion               = respuesta[11];
                         caja_asignada                   = respuesta[12];
                         Session["id_tipo_caja"]         = Convert.ToInt32(respuesta[13]);
-
+                        id_estado_caja = respuesta[14];
                         userLogin.Expires = DateTime.Now.AddHours(3);
                         Response.Cookies.Add(userLogin);
 
                         getDatosCaja();
-                        ingresarPrincipal();
+                        ingresarPrincipal(id_estado_caja);
                     }
 
 
@@ -81,11 +81,11 @@ namespace PrestaVende
             }
         }
 
-        private void ingresarPrincipal()
+        private void ingresarPrincipal(string id_estado_caja)
         {
             try
             {
-                if (Convert.ToInt32(Session["id_caja"]) == 0 && Convert.ToInt32(Session["id_rol"]) != 5)
+                if (Convert.ToInt32(Session["id_caja"]) == 0 && Convert.ToInt32(Session["id_rol"]) != 5 || id_estado_caja == "7")
                 {
                     Response.Redirect("~/Public/WFPrincipal.aspx", false);
                 }

@@ -494,6 +494,10 @@ namespace PrestaVende.Public
                 else if (this.ddIdEstadoCaja.SelectedValue.ToString().Equals("0")) { showWarning("Usted debe seleccionar un estado de caja válido."); return false; }
                 else if (this.ddIdUsuarioAsignado.SelectedValue.Equals("0")) { showWarning("Usted debe seleccionar un usuario válido."); return false; }
                 else if (!validaMontoCierre()){ showWarning("No se puede realizar el cierre de caja."); return false; }
+                else if (this.ddIdUsuarioAsignado.SelectedValue.ToString() != this.Session["id_usuario"].ToString() && this.ddIdEstadoCaja.SelectedValue.ToString() == "7")
+                {
+                    showWarning("Usted no puede recibir el incremento de capital ya que no es quien esta asignado a ese incremento."); return false;
+                }
                 else
                     return true;
             }
