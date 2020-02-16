@@ -455,6 +455,66 @@ namespace PrestaVende.Public
                 }
 
             }
+            else if (Convert.ToInt32(tipo_reporte) == 16)//16 reporte de prestamos por fechas.
+            {
+                DataTable contrato = new DataTable("contrato");
+                string numero_prestamo = Request.QueryString.Get("numero_prestamo");
+                string id_sucursal = Request.QueryString.Get("id_sucursal");
+                contrato = cs_prestamo.GetContrato(ref error, numero_prestamo, id_sucursal);
+                if (contrato.Rows.Count <= 0)
+                {
+                    error = "Error obteniendo datos de contrato." + error;
+                    throw new Exception("");
+                }
+                else
+                {
+                    try
+                    {
+                        Reports.CRContratoGeneral prestamoGeneral = new Reports.CRContratoGeneral();
+                        prestamoGeneral.Load(Server.MapPath("~/Reports/CRContratoGeneral.rpt"));
+                        prestamoGeneral.SetDataSource(contrato);
+                        CrystalReportViewer1.ReportSource = prestamoGeneral;//document;
+                        CrystalReportViewer1.DataBind();
+                        CrystalReportViewer1.RefreshReport();
+                        prestamoGeneral.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "Contrato No." + numero_prestamo);
+                    }
+                    catch (Exception ex)
+                    {
+                        error = ex.ToString();
+                    }
+
+                }
+            }
+            else if (Convert.ToInt32(tipo_reporte) == 17)//17 reporte de liquidaciones.
+            {
+                DataTable contrato = new DataTable("contrato");
+                string numero_prestamo = Request.QueryString.Get("numero_prestamo");
+                string id_sucursal = Request.QueryString.Get("id_sucursal");
+                contrato = cs_prestamo.GetContrato(ref error, numero_prestamo, id_sucursal);
+                if (contrato.Rows.Count <= 0)
+                {
+                    error = "Error obteniendo datos de contrato." + error;
+                    throw new Exception("");
+                }
+                else
+                {
+                    try
+                    {
+                        Reports.CRContratoGeneral prestamoGeneral = new Reports.CRContratoGeneral();
+                        prestamoGeneral.Load(Server.MapPath("~/Reports/CRContratoGeneral.rpt"));
+                        prestamoGeneral.SetDataSource(contrato);
+                        CrystalReportViewer1.ReportSource = prestamoGeneral;//document;
+                        CrystalReportViewer1.DataBind();
+                        CrystalReportViewer1.RefreshReport();
+                        prestamoGeneral.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "Contrato No." + numero_prestamo);
+                    }
+                    catch (Exception ex)
+                    {
+                        error = ex.ToString();
+                    }
+
+                }
+            }
         }
     }
 }

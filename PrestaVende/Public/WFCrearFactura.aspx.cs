@@ -19,6 +19,46 @@ namespace PrestaVende.Public
         private static string id_cliente = "0";
         private static string saldo_prestamo = "0";
 
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            try
+            {
+                HttpCookie cookie = Request.Cookies["userLogin"];
+
+                if (cookie == null && Convert.ToInt32(Session["id_usuario"]) == 0)
+                {
+                    Response.Redirect("~/WFWebLogin.aspx");
+                }
+                else
+                {
+                    if (IsPostBack)
+                    {
+                        if (lblWarning.Text == "") { divWarning.Visible = false; }
+                        if (lblError.Text == "") { divError.Visible = false; }
+                        if (lblSuccess.Text == "") { divSucceful.Visible = false; }
+                    }
+                    else
+                    {
+                        cs_prestamo = new CLASS.cs_prestamo();
+                        cs_factura = new CLASS.cs_factura();
+                        cs_transaccion = new CLASS.cs_transaccion();
+                        cs_serie = new CLASS.cs_serie();
+                        ds_global = new DataSet();
+                        Session["dsGlobal"] = ds_global;
+
+                        getDetalleFactura();
+                        getPrestamo();
+                        getTransaccion();
+                        getSeries();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                showError(ex.ToString());
+            }
+        }
+
         #region funciones
 
         private void getPrestamo()
@@ -26,6 +66,7 @@ namespace PrestaVende.Public
             try
             {
                 string id_prestamo = Request.QueryString["id_prestamo"];
+                cs_prestamo = new CLASS.cs_prestamo();
                 foreach (DataRow item in cs_prestamo.ObtenerPrestamoEspecifico(ref error, id_prestamo).Rows)
                 {
                     //lblnombre_prestamo.Text = item[1].ToString() + " - Cliente: " + item[2].ToString() + " " + item[3].ToString() + " " + item[4].ToString() + " " + item[5].ToString();
@@ -85,7 +126,8 @@ namespace PrestaVende.Public
             try
             {
                 string id_tipo_transaccion = getEquivalenteTransaccion(Request.QueryString["id_tipo"]);
-                
+
+                cs_transaccion = new CLASS.cs_transaccion();
                 foreach (DataRow item in cs_transaccion.ObtenerTransaccion(ref error, id_tipo_transaccion).Rows)
                     this.lblTransaccion.Text = item[1].ToString();                                
             }
@@ -99,6 +141,7 @@ namespace PrestaVende.Public
         {
             try
             {
+                cs_serie = new CLASS.cs_serie();
                 int id_sucursal = Convert.ToInt32(Session["id_sucursal"]);
                 this.ddlSerie.DataSource = cs_serie.getSerieDDL(ref error,id_sucursal);
                 this.ddlSerie.DataValueField = "id_serie";
@@ -108,7 +151,10 @@ namespace PrestaVende.Public
                 int id_serie = int.Parse(this.ddlSerie.SelectedValue.ToString());
 
                 if (id_serie > 0)
+                {
+                    cs_serie = new CLASS.cs_serie();
                     this.lblNumeroPrestamoNumeroFactura.Text = (cs_serie.getCorrelativoSerie(ref error, id_serie) + 1).ToString();
+                }
                 else
                     this.lblNumeroPrestamoNumeroFactura.Text = "0";
             }
@@ -120,81 +166,51 @@ namespace PrestaVende.Public
 
         private void getDetalleFactura()
         {
-            string id_prestamo = Request.QueryString["id_prestamo"];                     
-
-            ds_global = cs_factura.ObtenerDetalleFacturas(ref error, id_prestamo);            
-
-            if (ds_global.Tables.Count > 0)
-            {
-                this.gvDetalleFactura.DataSource = ds_global.Tables[0];
-                this.gvDetalleFactura.DataBind();
-
-                DataTable dt = new DataTable();
-
-                dt = ds_global.Tables[1];
-
-                this.lblSubTotalFactura.Text = dt.Rows[0]["SubTotal"].ToString();
-                this.lblIVAFactura.Text = dt.Rows[0]["IVA"].ToString();
-                this.lblTotalFacturaV.Text = dt.Rows[0]["Total"].ToString();
-
-                int semanas = int.Parse(ds_global.Tables[0].Rows[0]["Cantidad"].ToString());
-                DataTable TablaSemanas = new DataTable();
-                TablaSemanas.Columns.Add("id", typeof(int));
-                TablaSemanas.Columns.Add("nombre", typeof(string));
-
-                for (int i = semanas; i > 0; i--)
-                {
-                    TablaSemanas.Rows.Add(i, i.ToString());
-                }
-
-                this.ddlSemanas.DataSource = TablaSemanas;
-                this.ddlSemanas.DataValueField = "id";
-                this.ddlSemanas.DataTextField = "nombre";
-                this.ddlSemanas.DataBind();
-            }           
-
-        }
-
-        #endregion
-
-        protected void Page_Load(object sender, EventArgs e)
-        {
             try
             {
-                HttpCookie cookie = Request.Cookies["userLogin"];
+                DataSet getDataSetActual = (DataSet)this.Session["dsGlobal"];
 
-                if (cookie == null && Convert.ToInt32(Session["id_usuario"]) == 0)
-                {
-                    Response.Redirect("~/WFWebLogin.aspx");
-                }
-                else
-                {
-                    if (IsPostBack)
-                    {
-                        if (lblWarning.Text == "") { divWarning.Visible = false; }
-                        if (lblError.Text == "") { divError.Visible = false; }
-                        if (lblSuccess.Text == "") { divSucceful.Visible = false; }
-                    }
-                    else
-                    {
-                        cs_prestamo = new CLASS.cs_prestamo();
-                        cs_factura = new CLASS.cs_factura();
-                        cs_transaccion = new CLASS.cs_transaccion();
-                        cs_serie = new CLASS.cs_serie();
-                        ds_global = new DataSet();
+                string id_prestamo = Request.QueryString["id_prestamo"];
+                cs_factura = new CLASS.cs_factura();
 
-                        getDetalleFactura();
-                        getPrestamo();
-                        getTransaccion();
-                        getSeries();
+                getDataSetActual = cs_factura.ObtenerDetalleFacturas(ref error, id_prestamo);
+
+                if (getDataSetActual.Tables.Count > 0)
+                {
+                    this.gvDetalleFactura.DataSource = getDataSetActual.Tables[0];
+                    this.gvDetalleFactura.DataBind();
+
+                    DataTable dt = new DataTable();
+
+                    dt = getDataSetActual.Tables[1];
+
+                    this.lblSubTotalFactura.Text = dt.Rows[0]["SubTotal"].ToString();
+                    this.lblIVAFactura.Text = dt.Rows[0]["IVA"].ToString();
+                    this.lblTotalFacturaV.Text = dt.Rows[0]["Total"].ToString();
+
+                    int semanas = int.Parse(getDataSetActual.Tables[0].Rows[0]["Cantidad"].ToString());
+                    DataTable TablaSemanas = new DataTable();
+                    TablaSemanas.Columns.Add("id", typeof(int));
+                    TablaSemanas.Columns.Add("nombre", typeof(string));
+
+                    for (int i = semanas; i > 0; i--)
+                    {
+                        TablaSemanas.Rows.Add(i, i.ToString());
                     }
+
+                    this.ddlSemanas.DataSource = TablaSemanas;
+                    this.ddlSemanas.DataValueField = "id";
+                    this.ddlSemanas.DataTextField = "nombre";
+                    this.ddlSemanas.DataBind();
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 showError(ex.ToString());
             }
         }
+
+        #endregion
 
         #region messages
         private bool showWarning(string warning)
@@ -226,7 +242,10 @@ namespace PrestaVende.Public
                 int id_serie = int.Parse(this.ddlSerie.SelectedValue.ToString());
 
                 if (id_serie > 0)
+                { 
+                    cs_serie = new CLASS.cs_serie();
                     this.lblNumeroPrestamoNumeroFactura.Text = (cs_serie.getCorrelativoSerie(ref error, id_serie) + 1).ToString();
+                }
                 else
                     this.lblNumeroPrestamoNumeroFactura.Text = "0";
             }
@@ -264,6 +283,7 @@ namespace PrestaVende.Public
                     {
                         if (Convert.ToInt32(this.Session["id_tipo_caja"]) == 2)
                         {
+                            DataSet DataSActual = (DataSet)this.Session["dsGlobal"];
                             decimal abono = 0;
                             int id_recibo = 0;
                             bool abonoB = false;
@@ -284,7 +304,7 @@ namespace PrestaVende.Public
 
                                     cs_factura = new CLASS.cs_factura();
                                     error = "";
-                                    Resultado = cs_factura.GuardarFactura(ref error, ds_global, id_serie, id_cliente, id_tipo_transaccion, Convert.ToInt32(this.Session["id_caja"]), numero_prestamo, abono.ToString(), ref id_recibo);
+                                    Resultado = cs_factura.GuardarFactura(ref error, DataSActual, id_serie, id_cliente, id_tipo_transaccion, Convert.ToInt32(this.Session["id_caja"]), numero_prestamo, abono.ToString(), ref id_recibo);
                                      
                                     if(Resultado == string.Empty)
                                     {
@@ -293,14 +313,13 @@ namespace PrestaVende.Public
                                     {
                                         try
                                         {
-                                            Session["saldo_caja"] = Convert.ToString(Convert.ToDecimal(this.Session["saldo_caja"].ToString()) + abono + Convert.ToDecimal(ds_global.Tables[1].Rows[0]["Total"].ToString().Replace(",", ".")));
+                                            Session["saldo_caja"] = Convert.ToString(Convert.ToDecimal(this.Session["saldo_caja"].ToString()) + abono + Convert.ToDecimal(DataSActual.Tables[1].Rows[0]["Total"].ToString().Replace(",", ".")));
                                         }
                                         catch (Exception ex)
                                         {
                                             showWarning("Error sumando saldo a caja asignada, salga del sistema y vuelva ingresar." + ex.ToString());
                                         }
                                         
-                                        showSuccess("Se creo prestamo correctamente.");
                                         string script = "window.open('WebReport.aspx?tipo_reporte=2" + "&id_factura=" + Resultado + "&id_sucursal=" + this.Session["id_sucursal"].ToString() + "&numero_contrato=" + this.lblNombrePrestamo.Text.ToString() + "');";
                                         ScriptManager.RegisterClientScriptBlock(this, GetType(), "ImpresionFactura", script, true);
 
@@ -347,16 +366,15 @@ namespace PrestaVende.Public
         {
             try
             {
+                DataSet dataSActual = (DataSet)this.Session["dsGlobal"];
                 int semanas = int.Parse(this.ddlSemanas.SelectedValue.ToString());
                 int dias = semanas * 7;
-                int dias_plazo = int.Parse(ds_global.Tables[0].Rows[0]["dias_plan"].ToString());
+                int dias_plazo = int.Parse(dataSActual.Tables[0].Rows[0]["dias_plan"].ToString());
 
-                for (int i = 0; i < ds_global.Tables[0].Rows.Count; i++)
+                for (int i = 0; i < dataSActual.Tables[0].Rows.Count; i++)
                 {
-                    //DateTime FechaUltimoPago = Convert.ToDateTime(ds_global.Tables[0].Rows[i]["fecha_ultimo_pago"].ToString());
-
                     String[] separador = { "/" };
-                    String cadena = ds_global.Tables[0].Rows[i]["fecha_ultimo_pago"].ToString();
+                    String cadena = dataSActual.Tables[0].Rows[i]["fecha_ultimo_pago"].ToString();
 
                     String[] strlist = cadena.Split(separador, 3, StringSplitOptions.RemoveEmptyEntries);
 
@@ -366,27 +384,26 @@ namespace PrestaVende.Public
 
                     DateTime FechaUltimoPago = new DateTime(anio, mes, dia);
 
-                    ds_global.Tables[0].Rows[i]["calculo_fecha_ultimo_pago"] = FechaUltimoPago.AddDays(dias).ToString("dd/MM/yyyy");
-                    ds_global.Tables[0].Rows[i]["calculo_fecha_proximo_pago"] = FechaUltimoPago.AddDays(dias + dias_plazo).ToString("dd/MM/yyyy");
+                    dataSActual.Tables[0].Rows[i]["calculo_fecha_ultimo_pago"] = FechaUltimoPago.AddDays(dias).ToString("dd/MM/yyyy");
+                    dataSActual.Tables[0].Rows[i]["calculo_fecha_proximo_pago"] = FechaUltimoPago.AddDays(dias + dias_plazo).ToString("dd/MM/yyyy");
 
-                    if (ds_global.Tables[0].Rows[i]["cargo"].ToString().ToLower() != "mora")
+                    if (dataSActual.Tables[0].Rows[i]["cargo"].ToString().ToLower() != "mora")
                     {
-                        ds_global.Tables[0].Rows[i]["Subtotal"] = (decimal.Parse(ds_global.Tables[0].Rows[i]["Precio"].ToString()) * semanas).ToString();
-                        ds_global.Tables[0].Rows[i]["IVA"] = (decimal.Parse(ds_global.Tables[0].Rows[i]["Subtotal"].ToString()) *
-                                                                decimal.Parse(ds_global.Tables[0].Rows[i]["factor_impuesto"].ToString()) / 100).ToString();
-                        ds_global.Tables[0].Rows[i]["Cantidad"] = semanas.ToString();
+                        dataSActual.Tables[0].Rows[i]["Subtotal"] = (decimal.Parse(dataSActual.Tables[0].Rows[i]["Precio"].ToString()) * semanas).ToString();
+                        dataSActual.Tables[0].Rows[i]["IVA"] = (decimal.Parse(dataSActual.Tables[0].Rows[i]["Subtotal"].ToString()) *
+                                                                decimal.Parse(dataSActual.Tables[0].Rows[i]["factor_impuesto"].ToString()) / 100).ToString();
+                        dataSActual.Tables[0].Rows[i]["Cantidad"] = semanas.ToString();
                     }
                 }
 
-                ds_global.Tables[1].Rows[0]["Total"] = Decimal.Round(ds_global.Tables[0].AsEnumerable().Sum(r => r.Field<decimal>("SubTotal")), 2).ToString();
-                ds_global.Tables[1].Rows[0]["IVA"] = Decimal.Round(ds_global.Tables[0].AsEnumerable().Sum(r => r.Field<decimal>("IVA")), 2).ToString();
-                ds_global.Tables[1].Rows[0]["SubTotal"] = Decimal.Round(decimal.Parse(ds_global.Tables[1].Rows[0]["Total"].ToString()) - decimal.Parse(ds_global.Tables[1].Rows[0]["IVA"].ToString()), 2).ToString();
+                dataSActual.Tables[1].Rows[0]["Total"] = Decimal.Round(dataSActual.Tables[0].AsEnumerable().Sum(r => r.Field<decimal>("SubTotal")), 2).ToString();
+                dataSActual.Tables[1].Rows[0]["IVA"] = Decimal.Round(dataSActual.Tables[0].AsEnumerable().Sum(r => r.Field<decimal>("IVA")), 2).ToString();
+                dataSActual.Tables[1].Rows[0]["SubTotal"] = Decimal.Round(decimal.Parse(dataSActual.Tables[1].Rows[0]["Total"].ToString()) - decimal.Parse(dataSActual.Tables[1].Rows[0]["IVA"].ToString()), 2).ToString();
 
-                this.lblSubTotalFactura.Text = ds_global.Tables[1].Rows[0]["SubTotal"].ToString();
-                this.lblIVAFactura.Text = ds_global.Tables[1].Rows[0]["IVA"].ToString();
-                this.lblTotalFacturaV.Text = ds_global.Tables[1].Rows[0]["Total"].ToString();
-
-                this.gvDetalleFactura.DataSource = ds_global.Tables[0];
+                this.lblSubTotalFactura.Text = dataSActual.Tables[1].Rows[0]["SubTotal"].ToString();
+                this.lblIVAFactura.Text = dataSActual.Tables[1].Rows[0]["IVA"].ToString();
+                this.lblTotalFacturaV.Text = dataSActual.Tables[1].Rows[0]["Total"].ToString();
+                this.gvDetalleFactura.DataSource = dataSActual.Tables[0];
                 this.gvDetalleFactura.DataBind();
             }
             catch (Exception ex)

@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace PrestaVende.Public
 {
-    public partial class ReporteCancelaciones : System.Web.UI.Page
+    public partial class ReportePrestamos : System.Web.UI.Page
     {
         private string error = "";
         private CLASS.cs_sucursal cs_sucursal = new CLASS.cs_sucursal();
@@ -77,7 +77,7 @@ namespace PrestaVende.Public
                         showWarning("Usted debe ingresar una fecha de fin para poder generar el reporte.");
                     else
                     {
-                        string scriptEstadoCuenta = "window.open('WebReport.aspx?tipo_reporte=16" + "&id_sucursal=" + id_sucuarsal + "&fecha_inicio=" + this.txtFechaInicial.Text + "&fecha_fin=" + this.txtFechaFin.Text + "');";
+                        string scriptEstadoCuenta = "window.open('WebReport.aspx?tipo_reporte=13" + "&id_sucursal=" + id_sucuarsal + "&fecha_inicio=" + this.txtFechaInicial.Text + "&fecha_fin=" + this.txtFechaFin.Text + "');";
                         ScriptManager.RegisterClientScriptBlock(this, GetType(), "NewWindow", scriptEstadoCuenta, true);
                     }
                 else
@@ -87,16 +87,6 @@ namespace PrestaVende.Public
             {
                 showError(ex.ToString());
             }
-        }
-
-        protected void btnGenerar_Click(object sender, EventArgs e)
-        {
-            generaReporte();
-        }
-
-        protected void ddlSucursal_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
         }
 
         private bool showWarning(string warning)
@@ -111,6 +101,11 @@ namespace PrestaVende.Public
             divError.Visible = true;
             lblError.Controls.Add(new LiteralControl(string.Format("<span style='color:Red'>{0}</span>", error)));
             return true;
+        }
+
+        protected void btnGenerar_Click(object sender, EventArgs e)
+        {
+            generaReporte();
         }
     }
 }
