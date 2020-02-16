@@ -630,6 +630,7 @@ namespace PrestaVende.CLASS
 
                 if (dtAnulacion.Rows.Count > 0)
                 {
+                    command.Transaction.Commit();
                     return true;
                 }
                 else
@@ -639,6 +640,7 @@ namespace PrestaVende.CLASS
             }
             catch (Exception ex)
             {
+                command.Transaction.Rollback();
                 error = ex.ToString();
                 return false;
             }
