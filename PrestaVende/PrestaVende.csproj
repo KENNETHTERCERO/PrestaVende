@@ -313,6 +313,28 @@
     <Content Include="DATASET\DSReporteRIE.xsc">
       <DependentUpon>DSReporteRIE.xsd</DependentUpon>
     </Content>
+    <Content Include="DATASET\DSReportePrestamos.xsc">
+      <DependentUpon>DSReportePrestamos.xsd</DependentUpon>
+    </Content>
+    <Content Include="DATASET\DSReporteLiquidaciones.xsc">
+      <DependentUpon>DSReporteLiquidaciones.xsd</DependentUpon>
+    </Content>
+    <None Include="DATASET\DSReporteLiquidaciones.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DSReporteLiquidaciones.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="DATASET\DSReporteLiquidaciones.xss">
+      <DependentUpon>DSReporteLiquidaciones.xsd</DependentUpon>
+    </Content>
+    <None Include="DATASET\DSReportePrestamos.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DSReportePrestamos.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="DATASET\DSReportePrestamos.xss">
+      <DependentUpon>DSReportePrestamos.xsd</DependentUpon>
+    </Content>
     <None Include="DATASET\DSReporteRIE.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
@@ -448,6 +470,16 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DSReporteFacturas.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DATASET\DSReporteLiquidaciones.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DSReporteLiquidaciones.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DATASET\DSReportePrestamos.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DSReportePrestamos.xsd</DependentUpon>
     </Compile>
     <Compile Include="DATASET\DSReporteRIE.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -822,6 +854,12 @@
       <DependentUpon>CRReporteEstadoDeCuentaCaja.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Reports\CRReporteLiquidaciones.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CRReporteLiquidaciones.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Reports\CRReporteRIE.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -891,6 +929,10 @@
     <EmbeddedResource Include="Reports\CRReporteEstadoDeCuentaCaja.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>CRReporteEstadoDeCuentaCaja.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\CRReporteLiquidaciones.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>CRReporteLiquidaciones.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\CRReporteRIE.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

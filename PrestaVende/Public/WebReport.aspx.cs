@@ -457,10 +457,11 @@ namespace PrestaVende.Public
             }
             else if (Convert.ToInt32(tipo_reporte) == 16)//16 reporte de prestamos por fechas.
             {
-                DataTable contrato = new DataTable("contrato");
-                string numero_prestamo = Request.QueryString.Get("numero_prestamo");
-                string id_sucursal = Request.QueryString.Get("id_sucursal");
-                contrato = cs_prestamo.GetContrato(ref error, numero_prestamo, id_sucursal);
+                DataTable contrato = new DataTable("ReporteContratos");
+                string id_sucursal = Request.QueryString.Get("numero_prestamo");
+                string fecha_inicio = Request.QueryString.Get("id_sucursal");
+                string fecha_fin = "";
+                contrato = cs_prestamo.getDataPrestamosPorFecha(ref error, fecha_inicio, fecha_fin, id_sucursal);
                 if (contrato.Rows.Count <= 0)
                 {
                     error = "Error obteniendo datos de contrato." + error;
@@ -476,7 +477,7 @@ namespace PrestaVende.Public
                         CrystalReportViewer1.ReportSource = prestamoGeneral;//document;
                         CrystalReportViewer1.DataBind();
                         CrystalReportViewer1.RefreshReport();
-                        prestamoGeneral.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "Contrato No." + numero_prestamo);
+                        prestamoGeneral.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "Sucursal No." + id_sucursal);
                     }
                     catch (Exception ex)
                     {

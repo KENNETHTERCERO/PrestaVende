@@ -898,6 +898,32 @@ namespace PrestaVende.CLASS
             }
         }
 
+        public DataTable getDataPrestamosPorFecha(ref string error, string fecha_inicio, string fecha_fin, string id_sucursal)
+        {
+            DataTable dtReturnClient = new DataTable("dtReturnReportePrestamos");
+            try
+            {
+                connection.connection.Open();
+                command.Connection = connection.connection;
+                command.Parameters.Clear();
+                command.CommandText = "";
+                command.Parameters.AddWithValue("@id_sucursal", id_sucursal);
+                command.Parameters.AddWithValue("@fecha_inicio", id_sucursal);
+                command.Parameters.AddWithValue("@fecha_fin", id_sucursal);
+                dtReturnClient.Load(command.ExecuteReader());
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                return null;
+            }
+            finally
+            {
+                connection.connection.Close();
+            }
+            return dtReturnClient;
+        }
+
         public bool anularPrestamo(ref string error, string id_sucursal, string numero_prestamo)
         {
             try
