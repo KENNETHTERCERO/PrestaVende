@@ -217,6 +217,13 @@
                                                     <td>
                                                         <asp:TextBox ID="txtAbonoCapital" runat="server" CssClass="form-control" Value="0.00" type="number" step="0.01"></asp:TextBox>
                                                     </td>
+                                                    <td></td>
+                                                    <td>
+                                                        <asp:Label ID="lblSaldoPrestamo" runat="server" Font-Bold="true" Text="SALDO PRESTAMO"></asp:Label>
+                                                    </td>
+                                                    <td>
+                                                        <asp:Label ID="lblSaldoPrestamoNumero" runat="server" Text="0"></asp:Label>
+                                                    </td>
                                                 </tr>
                                             </table>
                                         </div>

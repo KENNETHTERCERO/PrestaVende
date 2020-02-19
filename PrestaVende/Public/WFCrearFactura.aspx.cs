@@ -77,10 +77,11 @@ namespace PrestaVende.Public
                     this.lblValorInteres.Text = item["factor"].ToString() + "%";
 
                     string tipo_transaccion = getEquivalenteTransaccion(Request.QueryString["id_tipo"]);
+                    this.lblSaldoPrestamoNumero.Text = item["saldo_prestamo"].ToString();
 
-                    if(tipo_transaccion == "10")
+                    if (tipo_transaccion == "10")
                     {
-                        this.txtAbonoCapital.Text = item["saldo_prestamo"].ToString(); ;
+                        this.txtAbonoCapital.Text = item["saldo_prestamo"].ToString();
                         this.lblAbonoCapital.Text = "MONTO CANCELACION";
                         this.imgBtnBuscaSubSemana.Visible = false;
                     }
@@ -279,7 +280,7 @@ namespace PrestaVende.Public
                         if (Convert.ToInt32(this.Session["id_tipo_caja"]) == 2)
                         {
                             DataSet DataSActual = (DataSet)this.Session["dsGlobal"];
-                            decimal abono = 0;
+                            decimal abono = 0, saldo_prestamo_actual = 0;
                             int id_recibo = 0;
                             bool abonoB = false;
 
@@ -287,7 +288,12 @@ namespace PrestaVende.Public
 
                             if((this.txtAbonoCapital.Visible == true && abono >= 5) || (this.txtAbonoCapital.Visible == false))
                             {
-                                decimal lSaldo_prestamo = decimal.Parse(this.txtAbonoCapital.Text.ToString());
+                                if (this.txtAbonoCapital.Text.ToString() == "" || this.txtAbonoCapital.Text.ToString().Length <= 0)
+                                    saldo_prestamo_actual = 0;
+                                else
+                                    saldo_prestamo_actual = decimal.Parse(this.txtAbonoCapital.Text.ToString());
+                                
+                                decimal lSaldo_prestamo = Convert.ToDecimal(this.lblSaldoPrestamoNumero.Text.ToString());
                                 string id_tipo_transaccion = getEquivalenteTransaccion(Request.QueryString["id_tipo"]);
 
                                 if ((this.txtAbonoCapital.Visible == true && abono < lSaldo_prestamo && id_tipo_transaccion == "9") || (this.txtAbonoCapital.Visible == false) 
