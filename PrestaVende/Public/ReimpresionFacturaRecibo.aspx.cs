@@ -84,10 +84,11 @@ namespace PrestaVende.Public
                 this.ddlSucursal.DataTextField = "sucursal";
                 this.ddlSucursal.DataBind();
 
-                this.ddlSucursal.SelectedValue = Session["id_sucursal"].ToString();
-
-                if (Convert.ToInt32(Session["id_rol"]) == 3 || Convert.ToInt32(Session["id_rol"]) == 4 || Convert.ToInt32(Session["id_rol"]) == 5)
+                if (this.Session["id_rol"].ToString().Equals("3") || this.Session["id_rol"].ToString().Equals("4") || this.Session["id_rol"].ToString().Equals("5"))
+                {
+                    this.ddlSucursal.SelectedValue = this.Session["id_sucursal"].ToString();
                     this.ddlSucursal.Enabled = false;
+                }
             }
             catch (Exception ex)
             {

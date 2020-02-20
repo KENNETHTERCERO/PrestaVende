@@ -23,7 +23,7 @@ namespace PrestaVende.Public
             {
                 HttpCookie cookie = Request.Cookies["userLogin"];
 
-                if (cookie == null && Convert.ToInt32(Session["id_usuario"]) == 0)
+                if (cookie == null && Convert.ToInt32(this.Session["id_usuario"].ToString()) == 0)
                 {
                     Response.Redirect("~/WFWebLogin.aspx");
                 }
@@ -48,11 +48,11 @@ namespace PrestaVende.Public
 
         protected void btnGenerar_Click(object sender, EventArgs e)
         {
-            string id_sucursal = ddlSucursal.SelectedValue.ToString();
+            string id_sucursal = this.ddlSucursal.SelectedValue.ToString();
 
             if (int.Parse(id_sucursal) > 0)
             {
-                string scriptEstadoCuenta = "window.open('WebReport.aspx?tipo_reporte=15" + "&id_sucursal=" + id_sucursal + "&id_empresa=" + Convert.ToInt32(Session["id_empresa"]) + "');";
+                string scriptEstadoCuenta = "window.open('WebReport.aspx?tipo_reporte=15" + "&id_sucursal=" + id_sucursal + "&id_empresa=" + Convert.ToInt32(this.Session["id_empresa"]) + "');";
                 ScriptManager.RegisterClientScriptBlock(this, GetType(), "NewWindow", scriptEstadoCuenta, true);
             }
             else
@@ -66,20 +66,18 @@ namespace PrestaVende.Public
         {
             try
             {
-                int id_empresa = Convert.ToInt32(Session["id_empresa"]);                
-                //int id_empresa = 1;
+                int id_empresa = Convert.ToInt32(Session["id_empresa"]);
+                cs_sucursal = new CLASS.cs_sucursal();
+                this.ddlSucursal.DataSource = cs_sucursal.ObtenerSucursalesPorEmpresa(ref error, id_empresa.ToString());
+                this.ddlSucursal.DataValueField = "id_sucursal";
+                this.ddlSucursal.DataTextField = "sucursal";
+                this.ddlSucursal.DataBind();
 
-                ddlSucursal.DataSource = cs_sucursal.ObtenerSucursalesPorEmpresa(ref error, id_empresa.ToString());
-                ddlSucursal.DataValueField = "id_sucursal";
-                ddlSucursal.DataTextField = "sucursal";
-                ddlSucursal.DataBind();
-
-                ddlSucursal.SelectedValue = Session["id_sucursal"].ToString();
-                //ddlSucursal.SelectedValue = "1";
-
-
-                if (Convert.ToInt32(Session["id_rol"]) == 3 || Convert.ToInt32(Session["id_rol"]) == 4 || Convert.ToInt32(Session["id_rol"]) == 5)
-                    ddlSucursal.Enabled = false;
+                if (this.Session["id_rol"].ToString().Equals("3") || this.Session["id_rol"].ToString().Equals("4") || this.Session["id_rol"].ToString().Equals("5"))
+                {
+                    this.ddlSucursal.SelectedValue = this.Session["id_sucursal"].ToString();
+                    this.ddlSucursal.Enabled = false;
+                }
             }
             catch (Exception ex)
             {

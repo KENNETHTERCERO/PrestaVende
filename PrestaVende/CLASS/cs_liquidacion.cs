@@ -35,7 +35,6 @@ namespace PrestaVende.CLASS
             }
         }
 
-
         public bool insertLiquidacion(ref string error, string id_prestamo_encabezado)
         {
             try
@@ -71,7 +70,6 @@ namespace PrestaVende.CLASS
             }
         }
 
-
         public DataTable getSucursal(ref string error)
         {
             try
@@ -82,6 +80,31 @@ namespace PrestaVende.CLASS
                 command.CommandText = "SELECT 0 AS id_sucursal, 'SELECCIONAR' AS sucursal UNION SELECT id_sucursal, UPPER(sucursal) from tbl_sucursal WHERE estado = 1";
                 Sucursal.Load(command.ExecuteReader());
                 return Sucursal;
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                return null;
+            }
+            finally
+            {
+                connection.connection.Close();
+            }
+        }
+
+        public DataTable getReporteLiquidacion(ref string error, string id_sucursal, string fecha_inicio, string fecha_fin)
+        {
+            try
+            {
+                DataTable Liquidacion = new DataTable("reporteLiquidaciones");
+                connection.connection.Open();
+                command.Connection = connection.connection;
+                command.CommandText = "EXEC SP_reporte_liquidaciones @id_sucursal, @fecha_inicio, @fecha_fin";
+                command.Parameters.AddWithValue("@id_sucursal", id_sucursal);
+                command.Parameters.AddWithValue("@fecha_inicio", fecha_inicio);
+                command.Parameters.AddWithValue("@fecha_fin", fecha_fin);
+                Liquidacion.Load(command.ExecuteReader());
+                return Liquidacion;
             }
             catch (Exception ex)
             {

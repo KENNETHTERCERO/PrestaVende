@@ -860,6 +860,12 @@
       <DependentUpon>CRReporteLiquidaciones.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Reports\CRReportePrestamos.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CRReportePrestamos.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Reports\CRReporteRIE.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -933,6 +939,10 @@
     <EmbeddedResource Include="Reports\CRReporteLiquidaciones.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>CRReporteLiquidaciones.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\CRReportePrestamos.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>CRReportePrestamos.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\CRReporteRIE.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

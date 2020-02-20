@@ -16,7 +16,7 @@ namespace PrestaVende.Public
         private CLASS.cs_caja cs_caja = new CLASS.cs_caja();
         private CLASS.cs_manejo_inventario cs_manejo_inventario = new CLASS.cs_manejo_inventario();
         private CLASS.cs_reporteria cs_reporteria = new CLASS.cs_reporteria();
-
+        private CLASS.cs_liquidacion cs_liquidacion = new CLASS.cs_liquidacion();
         private string error = "";
 
         protected void Page_Load(object sender, EventArgs e)
@@ -457,12 +457,13 @@ namespace PrestaVende.Public
             }
             else if (Convert.ToInt32(tipo_reporte) == 16)//16 reporte de prestamos por fechas.
             {
-                DataTable contrato = new DataTable("ReporteContratos");
-                string id_sucursal = Request.QueryString.Get("numero_prestamo");
-                string fecha_inicio = Request.QueryString.Get("id_sucursal");
-                string fecha_fin = "";
-                contrato = cs_prestamo.getDataPrestamosPorFecha(ref error, fecha_inicio, fecha_fin, id_sucursal);
-                if (contrato.Rows.Count <= 0)
+                DataTable ReporteContrato = new DataTable("ReporteContratos");
+                string id_sucursal = this.Request.QueryString.Get("id_sucursal");
+                string fecha_inicio = this.Request.QueryString.Get("fecha_inicio");
+                string fecha_fin = this.Request.QueryString.Get("fecha_fin");
+                cs_prestamo = new CLASS.cs_prestamo();
+                ReporteContrato = cs_prestamo.getDataPrestamosPorFecha(ref error, id_sucursal, fecha_inicio, fecha_fin);
+                if (ReporteContrato.Rows.Count <= 0)
                 {
                     error = "Error obteniendo datos de contrato." + error;
                     throw new Exception("");
@@ -471,13 +472,13 @@ namespace PrestaVende.Public
                 {
                     try
                     {
-                        Reports.CRContratoGeneral prestamoGeneral = new Reports.CRContratoGeneral();
-                        prestamoGeneral.Load(Server.MapPath("~/Reports/CRContratoGeneral.rpt"));
-                        prestamoGeneral.SetDataSource(contrato);
-                        CrystalReportViewer1.ReportSource = prestamoGeneral;//document;
+                        Reports.CRReportePrestamos ReportePrestamos = new Reports.CRReportePrestamos();
+                        ReportePrestamos.Load(Server.MapPath("~/Reports/CRReportePrestamos.rpt"));
+                        ReportePrestamos.SetDataSource(ReporteContrato);
+                        CrystalReportViewer1.ReportSource = ReportePrestamos;//document;
                         CrystalReportViewer1.DataBind();
                         CrystalReportViewer1.RefreshReport();
-                        prestamoGeneral.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "Sucursal No." + id_sucursal);
+                        ReportePrestamos.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "Sucursal No." + id_sucursal);
                     }
                     catch (Exception ex)
                     {
@@ -488,11 +489,13 @@ namespace PrestaVende.Public
             }
             else if (Convert.ToInt32(tipo_reporte) == 17)//17 reporte de liquidaciones.
             {
-                DataTable contrato = new DataTable("contrato");
-                string numero_prestamo = Request.QueryString.Get("numero_prestamo");
-                string id_sucursal = Request.QueryString.Get("id_sucursal");
-                contrato = cs_prestamo.GetContrato(ref error, numero_prestamo, id_sucursal);
-                if (contrato.Rows.Count <= 0)
+                DataTable liquidados = new DataTable("reporteLiquidados");
+                string id_sucursal = this.Request.QueryString.Get("id_sucursal");
+                string fecha_inicio = this.Request.QueryString.Get("fecha_inicio");
+                string fecha_fin = this.Request.QueryString.Get("fecha_fin");
+                cs_liquidacion = new CLASS.cs_liquidacion();
+                liquidados = cs_liquidacion.getReporteLiquidacion(ref error, id_sucursal, fecha_inicio, fecha_fin);
+                if (liquidados.Rows.Count <= 0)
                 {
                     error = "Error obteniendo datos de contrato." + error;
                     throw new Exception("");
@@ -501,13 +504,13 @@ namespace PrestaVende.Public
                 {
                     try
                     {
-                        Reports.CRContratoGeneral prestamoGeneral = new Reports.CRContratoGeneral();
-                        prestamoGeneral.Load(Server.MapPath("~/Reports/CRContratoGeneral.rpt"));
-                        prestamoGeneral.SetDataSource(contrato);
-                        CrystalReportViewer1.ReportSource = prestamoGeneral;//document;
+                        Reports.CRReporteLiquidaciones ReporteLiquidaciones = new Reports.CRReporteLiquidaciones();
+                        ReporteLiquidaciones.Load(Server.MapPath("~/Reports/CRReporteLiquidaciones.rpt"));
+                        ReporteLiquidaciones.SetDataSource(liquidados);
+                        CrystalReportViewer1.ReportSource = ReporteLiquidaciones;//document;
                         CrystalReportViewer1.DataBind();
                         CrystalReportViewer1.RefreshReport();
-                        prestamoGeneral.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "Contrato No." + numero_prestamo);
+                        ReporteLiquidaciones.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "Sucursal No." + id_sucursal);
                     }
                     catch (Exception ex)
                     {

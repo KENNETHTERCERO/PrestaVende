@@ -898,7 +898,7 @@ namespace PrestaVende.CLASS
             }
         }
 
-        public DataTable getDataPrestamosPorFecha(ref string error, string fecha_inicio, string fecha_fin, string id_sucursal)
+        public DataTable getDataPrestamosPorFecha(ref string error, string id_sucursal, string fecha_inicio, string fecha_fin)
         {
             DataTable dtReturnClient = new DataTable("dtReturnReportePrestamos");
             try
@@ -906,10 +906,10 @@ namespace PrestaVende.CLASS
                 connection.connection.Open();
                 command.Connection = connection.connection;
                 command.Parameters.Clear();
-                command.CommandText = "";
+                command.CommandText = "EXEC SP_reporte_prestamos @id_sucursal, @fecha_inicio, @fecha_fin";
                 command.Parameters.AddWithValue("@id_sucursal", id_sucursal);
-                command.Parameters.AddWithValue("@fecha_inicio", id_sucursal);
-                command.Parameters.AddWithValue("@fecha_fin", id_sucursal);
+                command.Parameters.AddWithValue("@fecha_inicio", fecha_inicio);
+                command.Parameters.AddWithValue("@fecha_fin", fecha_fin);
                 dtReturnClient.Load(command.ExecuteReader());
             }
             catch (Exception ex)

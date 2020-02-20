@@ -71,6 +71,7 @@ namespace PrestaVende.Public
             try
             {
                 int id_empresa = Convert.ToInt32(Session["id_empresa"]);
+                cs_factura = new CLASS.cs_factura();
                 this.ddlSucursal.DataSource = cs_sucursal.ObtenerSucursalesPorEmpresa(ref error, id_empresa.ToString());
                 this.ddlSucursal.DataValueField = "id_sucursal";
                 this.ddlSucursal.DataTextField = "sucursal";
@@ -91,11 +92,11 @@ namespace PrestaVende.Public
         {
             try
             {
-                if (txtNumeroDocumento.Text.ToString() == "")
+                if (this.txtNumeroDocumento.Text.ToString() == "")
                 {
                     showWarning("Debe ingresar un numero de documento para poder anular.");
                 }
-                else if (ddlSerie.SelectedValue == "0")
+                else if (this.ddlSerie.SelectedValue == "0")
                 {
                     showWarning("Debe seleccionar una serie para poder anular.");
                 }
@@ -104,16 +105,13 @@ namespace PrestaVende.Public
                     cs_factura = new CLASS.cs_factura();
 
                     error = "";
-                    if (cs_factura.anularFactura(ref error, this.Session["id_sucursal"].ToString(), this.ddlSerie.SelectedValue.ToString(), txtNumeroDocumento.Text.ToString()))
+                    if (cs_factura.anularFactura(ref error, this.Session["id_sucursal"].ToString(), this.ddlSerie.SelectedValue.ToString(), this.txtNumeroDocumento.Text.ToString()))
                     {
                         showSuccess("Factura anulada correctamente.");
                     }
                     else
                     {
-                        int startIndex = 48;
-                        int lenght = 150;
-                        string errorModificado = error.Substring(startIndex, lenght);
-                        showError(errorModificado + ".");
+                        showError(error + ".");
                     }
                 }
             }
@@ -130,6 +128,7 @@ namespace PrestaVende.Public
                 int id_tipo_serie = 0;
                 id_tipo_serie = 1;
                 int id_sucursal = Convert.ToInt32(Session["id_sucursal"]);
+                cs_serie = new CLASS.cs_serie();
                 this.ddlSerie.DataSource = cs_serie.ObtenerSeriesImpresion(ref error, id_sucursal, id_tipo_serie);
                 this.ddlSerie.DataValueField = "id_serie";
                 this.ddlSerie.DataTextField = "serie";
