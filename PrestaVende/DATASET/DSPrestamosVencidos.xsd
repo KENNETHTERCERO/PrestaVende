@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DSPrestamosVencidos" targetNamespace="http://tempuri.org/DSPrestamosVencidos.xsd" xmlns:mstns="http://tempuri.org/DSPrestamosVencidos.xsd" xmlns="http://tempuri.org/DSPrestamosVencidos.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DSPrestamosVencidos" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="DSPrestamosVencidos" msprop:Generator_UserDSName="DSPrestamosVencidos">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="DTPrestamosVencidos" msprop:Generator_TableClassName="DTPrestamosVencidosDataTable" msprop:Generator_TableVarName="tableDTPrestamosVencidos" msprop:Generator_TablePropName="DTPrestamosVencidos" msprop:Generator_RowDeletingName="DTPrestamosVencidosRowDeleting" msprop:Generator_RowChangingName="DTPrestamosVencidosRowChanging" msprop:Generator_RowEvHandlerName="DTPrestamosVencidosRowChangeEventHandler" msprop:Generator_RowDeletedName="DTPrestamosVencidosRowDeleted" msprop:Generator_UserTableName="DTPrestamosVencidos" msprop:Generator_RowChangedName="DTPrestamosVencidosRowChanged" msprop:Generator_RowEvArgName="DTPrestamosVencidosRowChangeEvent" msprop:Generator_RowClassName="DTPrestamosVencidosRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="id_sucursal" msprop:Generator_ColumnVarNameInTable="columnid_sucursal" msprop:Generator_ColumnPropNameInRow="id_sucursal" msprop:Generator_ColumnPropNameInTable="id_sucursalColumn" msprop:Generator_UserColumnName="id_sucursal" type="xs:int" minOccurs="0" />
+              <xs:element name="sucursal" msprop:Generator_ColumnVarNameInTable="columnsucursal" msprop:Generator_ColumnPropNameInRow="sucursal" msprop:Generator_ColumnPropNameInTable="sucursalColumn" msprop:Generator_UserColumnName="sucursal" type="xs:string" minOccurs="0" />
+              <xs:element name="id_cliente" msprop:Generator_ColumnVarNameInTable="columnid_cliente" msprop:Generator_ColumnPropNameInRow="id_cliente" msprop:Generator_ColumnPropNameInTable="id_clienteColumn" msprop:Generator_UserColumnName="id_cliente" type="xs:long" minOccurs="0" />
+              <xs:element name="nombreCliente" msprop:Generator_ColumnVarNameInTable="columnnombreCliente" msprop:Generator_ColumnPropNameInRow="nombreCliente" msprop:Generator_ColumnPropNameInTable="nombreClienteColumn" msprop:Generator_UserColumnName="nombreCliente" type="xs:string" minOccurs="0" />
+              <xs:element name="id_prestamo_encabezado" msprop:Generator_ColumnVarNameInTable="columnid_prestamo_encabezado" msprop:Generator_ColumnPropNameInRow="id_prestamo_encabezado" msprop:Generator_ColumnPropNameInTable="id_prestamo_encabezadoColumn" msprop:Generator_UserColumnName="id_prestamo_encabezado" type="xs:long" minOccurs="0" />
+              <xs:element name="numero_prestamo" msprop:Generator_ColumnVarNameInTable="columnnumero_prestamo" msprop:Generator_ColumnPropNameInRow="numero_prestamo" msprop:Generator_ColumnPropNameInTable="numero_prestamoColumn" msprop:Generator_UserColumnName="numero_prestamo" type="xs:decimal" minOccurs="0" />
+              <xs:element name="fecha_creacion_prestamo" msprop:Generator_ColumnVarNameInTable="columnfecha_creacion_prestamo" msprop:Generator_ColumnPropNameInRow="fecha_creacion_prestamo" msprop:Generator_ColumnPropNameInTable="fecha_creacion_prestamoColumn" msprop:Generator_UserColumnName="fecha_creacion_prestamo" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="saldo_prestamo" msprop:Generator_ColumnVarNameInTable="columnsaldo_prestamo" msprop:Generator_ColumnPropNameInRow="saldo_prestamo" msprop:Generator_ColumnPropNameInTable="saldo_prestamoColumn" msprop:Generator_UserColumnName="saldo_prestamo" type="xs:decimal" minOccurs="0" />
+              <xs:element name="fecha_ultimo_pago" msprop:Generator_ColumnVarNameInTable="columnfecha_ultimo_pago" msprop:Generator_ColumnPropNameInRow="fecha_ultimo_pago" msprop:Generator_ColumnPropNameInTable="fecha_ultimo_pagoColumn" msprop:Generator_UserColumnName="fecha_ultimo_pago" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="fecha_proximo_pago" msprop:Generator_ColumnVarNameInTable="columnfecha_proximo_pago" msprop:Generator_ColumnPropNameInRow="fecha_proximo_pago" msprop:Generator_ColumnPropNameInTable="fecha_proximo_pagoColumn" msprop:Generator_UserColumnName="fecha_proximo_pago" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="categoria" msprop:Generator_ColumnVarNameInTable="columncategoria" msprop:Generator_ColumnPropNameInRow="categoria" msprop:Generator_ColumnPropNameInTable="categoriaColumn" msprop:Generator_UserColumnName="categoria" type="xs:string" minOccurs="0" />
+              <xs:element name="campoInteger" msprop:Generator_ColumnVarNameInTable="columncampoInteger" msprop:Generator_ColumnPropNameInRow="campoInteger" msprop:Generator_ColumnPropNameInTable="campoIntegerColumn" msprop:Generator_UserColumnName="campoInteger" type="xs:int" minOccurs="0" />
+              <xs:element name="campoDecimal" msprop:Generator_ColumnVarNameInTable="columncampoDecimal" msprop:Generator_ColumnPropNameInRow="campoDecimal" msprop:Generator_ColumnPropNameInTable="campoDecimalColumn" msprop:Generator_UserColumnName="campoDecimal" type="xs:decimal" minOccurs="0" />
+              <xs:element name="campoString" msprop:Generator_ColumnVarNameInTable="columncampoString" msprop:Generator_ColumnPropNameInRow="campoString" msprop:Generator_ColumnPropNameInTable="campoStringColumn" msprop:Generator_UserColumnName="campoString" type="xs:string" minOccurs="0" />
+              <xs:element name="campoDate" msprop:Generator_ColumnVarNameInTable="columncampoDate" msprop:Generator_ColumnPropNameInRow="campoDate" msprop:Generator_ColumnPropNameInTable="campoDateColumn" msprop:Generator_UserColumnName="campoDate" type="xs:dateTime" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

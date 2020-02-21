@@ -383,28 +383,41 @@ namespace PrestaVende.Public
             }
             else if (Convert.ToInt32(tipo_reporte) == 13)//Reporte cancelaciones.
             {
-                string id_sucursal = Request.QueryString.Get("id_sucursal");
-                string fecha_inicio = Request.QueryString.Get("fecha_inicio");
-                string fecha_fin = Request.QueryString.Get("fecha_fin");
+                string id_sucursal =    this.Request.QueryString.Get("id_sucursal");
+                string fecha_inicio =   this.Request.QueryString.Get("fecha_inicio");
+                string fecha_fin =      this.Request.QueryString.Get("fecha_fin");
+                string transaccion =    this.Request.QueryString.Get("transaccion");
 
                 DataTable Cancelacion = new DataTable("Cancelaciones");
-                Cancelacion = cs_prestamo.GetDataReporteAbono(ref error, fecha_inicio, fecha_fin, id_sucursal, "10");
+                Cancelacion = cs_prestamo.GetDataReporteAbono(ref error, fecha_inicio, fecha_fin, id_sucursal, transaccion);
 
-                Reports.CRCancelacion ReporteCancelacion = new Reports.CRCancelacion();
-
-                ReporteCancelacion.Load(Server.MapPath("~/Reports/CRCancelacion.rpt"));
-                ReporteCancelacion.SetDataSource(Cancelacion);
-                CrystalReportViewer1.ReportSource = ReporteCancelacion;//document;
-                CrystalReportViewer1.DataBind();
-                CrystalReportViewer1.RefreshReport();
-                ReporteCancelacion.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "");
+                if (transaccion == "10")
+                {
+                    Reports.CRCancelacion ReporteCancelacion = new Reports.CRCancelacion();
+                    ReporteCancelacion.Load(Server.MapPath("~/Reports/CRCancelacion.rpt"));
+                    ReporteCancelacion.SetDataSource(Cancelacion);
+                    CrystalReportViewer1.ReportSource = ReporteCancelacion;//document;
+                    CrystalReportViewer1.DataBind();
+                    CrystalReportViewer1.RefreshReport();
+                    ReporteCancelacion.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "");
+                }
+                else if (transaccion == "9")
+                {
+                    Reports.CRAbonosCapital ReporteAbonos = new Reports.CRAbonosCapital();
+                    ReporteAbonos.Load(Server.MapPath("~/Reports/CRAbonosCapital.rpt"));
+                    ReporteAbonos.SetDataSource(Cancelacion);
+                    CrystalReportViewer1.ReportSource = ReporteAbonos;//document;
+                    CrystalReportViewer1.DataBind();
+                    CrystalReportViewer1.RefreshReport();
+                    ReporteAbonos.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "");
+                }
 
             }
             else if (Convert.ToInt32(tipo_reporte) == 14)//Reporte facturas.
             {
-                string id_sucursal = Request.QueryString.Get("id_sucursal");
-                string fecha_inicio = Request.QueryString.Get("fecha_inicio");
-                string fecha_fin = Request.QueryString.Get("fecha_fin");
+                string id_sucursal =    this.Request.QueryString.Get("id_sucursal");
+                string fecha_inicio =   this.Request.QueryString.Get("fecha_inicio");
+                string fecha_fin =      this.Request.QueryString.Get("fecha_fin");
 
                 DataTable Facturas = new DataTable("Facturas");
                 Facturas = cs_prestamo.GetDataReporteFacturas(ref error, fecha_inicio, fecha_fin, id_sucursal);
@@ -511,6 +524,37 @@ namespace PrestaVende.Public
                         CrystalReportViewer1.DataBind();
                         CrystalReportViewer1.RefreshReport();
                         ReporteLiquidaciones.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "Sucursal No." + id_sucursal);
+                    }
+                    catch (Exception ex)
+                    {
+                        error = ex.ToString();
+                    }
+
+                }
+            }
+            else if (Convert.ToInt32(tipo_reporte) == 18)//18 reporte de prestamos vencidos.
+            {
+                DataTable ReporteContrato = new DataTable("ReporteContratos");
+                string id_sucursal = this.Request.QueryString.Get("id_sucursal");
+                
+                cs_prestamo = new CLASS.cs_prestamo();
+                ReporteContrato = cs_prestamo.getDataPrestamosVencidos(ref error, id_sucursal);
+                if (ReporteContrato.Rows.Count <= 0)
+                {
+                    error = "Error obteniendo datos de contrato." + error;
+                    throw new Exception("");
+                }
+                else
+                {
+                    try
+                    {
+                        Reports.CRReporteVencidos ReportePrestamosVencidos = new Reports.CRReporteVencidos();
+                        ReportePrestamosVencidos.Load(Server.MapPath("~/Reports/CRReporteVencidos.rpt"));
+                        ReportePrestamosVencidos.SetDataSource(ReporteContrato);
+                        CrystalReportViewer1.ReportSource = ReportePrestamosVencidos;//document;
+                        CrystalReportViewer1.DataBind();
+                        CrystalReportViewer1.RefreshReport();
+                        ReportePrestamosVencidos.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "Sucursal No." + id_sucursal);
                     }
                     catch (Exception ex)
                     {

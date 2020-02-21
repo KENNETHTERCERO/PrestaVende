@@ -136,6 +136,7 @@
     <Content Include="Public\ReporteLiquidaciones.aspx" />
     <Content Include="Public\ReportePrestamos.aspx" />
     <Content Include="Public\ReporteRIE.aspx" />
+    <Content Include="Public\ReporteVencidos.aspx" />
     <Content Include="Public\WebReport.aspx" />
     <Content Include="Public\WFBusquedaCliente.aspx" />
     <Content Include="Public\WFBusquedaClienteFacturacion.aspx" />
@@ -246,6 +247,17 @@
     </Content>
     <Content Include="DATASET\DSProyeccionInteres.xsc">
       <DependentUpon>DSProyeccionInteres.xsd</DependentUpon>
+    </Content>
+    <Content Include="DATASET\DSPrestamosVencidos.xsc">
+      <DependentUpon>DSPrestamosVencidos.xsd</DependentUpon>
+    </Content>
+    <None Include="DATASET\DSPrestamosVencidos.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DSPrestamosVencidos.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="DATASET\DSPrestamosVencidos.xss">
+      <DependentUpon>DSPrestamosVencidos.xsd</DependentUpon>
     </Content>
     <None Include="DATASET\DSProyeccionInteres.xsd">
       <SubType>Designer</SubType>
@@ -440,6 +452,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DSInventarioDisponible.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DATASET\DSPrestamosVencidos.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DSPrestamosVencidos.xsd</DependentUpon>
     </Compile>
     <Compile Include="DATASET\DSProyeccionInteres.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -641,6 +658,13 @@
     </Compile>
     <Compile Include="Public\ReporteRIE.aspx.designer.cs">
       <DependentUpon>ReporteRIE.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\ReporteVencidos.aspx.cs">
+      <DependentUpon>ReporteVencidos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\ReporteVencidos.aspx.designer.cs">
+      <DependentUpon>ReporteVencidos.aspx</DependentUpon>
     </Compile>
     <Compile Include="Public\WebReport.aspx.cs">
       <DependentUpon>WebReport.aspx</DependentUpon>
@@ -872,6 +896,12 @@
       <DependentUpon>CRReporteRIE.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Reports\CRReporteVencidos.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CRReporteVencidos.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="WebLogin.aspx.cs">
       <DependentUpon>WebLogin.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -947,6 +977,10 @@
     <EmbeddedResource Include="Reports\CRReporteRIE.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>CRReporteRIE.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\CRReporteVencidos.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>CRReporteVencidos.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

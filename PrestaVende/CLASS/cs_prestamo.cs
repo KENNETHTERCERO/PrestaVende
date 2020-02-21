@@ -924,6 +924,30 @@ namespace PrestaVende.CLASS
             return dtReturnClient;
         }
 
+        public DataTable getDataPrestamosVencidos(ref string error, string id_sucursal)
+        {
+            DataTable dtReturnVencidos = new DataTable("dtReturnReportePrestamosVencidos");
+            try
+            {
+                connection.connection.Open();
+                command.Connection = connection.connection;
+                command.Parameters.Clear();
+                command.CommandText = "EXEC SP_reporte_vencidos @id_sucursal";
+                command.Parameters.AddWithValue("@id_sucursal", id_sucursal);
+                dtReturnVencidos.Load(command.ExecuteReader());
+                return dtReturnVencidos;
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                return null;
+            }
+            finally
+            {
+                connection.connection.Close();
+            }
+        }
+
         public bool anularPrestamo(ref string error, string id_sucursal, string numero_prestamo)
         {
             try
