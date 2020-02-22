@@ -924,7 +924,7 @@ namespace PrestaVende.CLASS
             return dtReturnClient;
         }
 
-        public DataTable getDataPrestamosVencidos(ref string error, string id_sucursal)
+        public DataTable getDataPrestamosVencidos(ref string error, string id_sucursal, string fecha_inicio, string fecha_fin)
         {
             DataTable dtReturnVencidos = new DataTable("dtReturnReportePrestamosVencidos");
             try
@@ -932,8 +932,10 @@ namespace PrestaVende.CLASS
                 connection.connection.Open();
                 command.Connection = connection.connection;
                 command.Parameters.Clear();
-                command.CommandText = "EXEC SP_reporte_vencidos @id_sucursal";
+                command.CommandText = "EXEC SP_reporte_vencidos @id_sucursal, @fecha_inicio, @fecha_fin";
                 command.Parameters.AddWithValue("@id_sucursal", id_sucursal);
+                command.Parameters.AddWithValue("@fecha_inicio", fecha_inicio);
+                command.Parameters.AddWithValue("@fecha_fin", fecha_fin);
                 dtReturnVencidos.Load(command.ExecuteReader());
                 return dtReturnVencidos;
             }

@@ -71,18 +71,18 @@ namespace PrestaVende.Public
             {
                 string id_sucuarsal = this.ddlSucursal.SelectedValue.ToString();
 
-                //if (int.Parse(id_sucuarsal) > 0)
-                //    if (this.txtFechaInicial.Text.ToString().Length < 1)
-                //        showWarning("Usted debe ingresar una fecha de inicio para poder generar el reporte.");
-                //    else if (this.txtFechaFin.Text.ToString().Length < 1)
-                //        showWarning("Usted debe ingresar una fecha de fin para poder generar el reporte.");
-                //    else
-                //    {
-                        string scriptEstadoCuenta = "window.open('WebReport.aspx?tipo_reporte=18" + "&id_sucursal=" + id_sucuarsal + "');";
+                if (int.Parse(id_sucuarsal) > 0)
+                    if (this.txtFechaInicial.Text.ToString().Length < 1)
+                        showWarning("Usted debe ingresar una fecha de inicio para poder generar el reporte.");
+                    else if (this.txtFechaFin.Text.ToString().Length < 1)
+                        showWarning("Usted debe ingresar una fecha de fin para poder generar el reporte.");
+                    else
+                    {
+                        string scriptEstadoCuenta = "window.open('WebReport.aspx?tipo_reporte=18" + "&id_sucursal=" + id_sucuarsal + "&fecha_inicio=" + this.txtFechaInicial.Text + "&fecha_fin=" + this.txtFechaFin.Text + "');";
                         ScriptManager.RegisterClientScriptBlock(this, GetType(), "NewWindow", scriptEstadoCuenta, true);
-                //    }
-                //else
-                //    showWarning("Seleccione una sucursal para poder generar el reporte.");
+                    }
+                else
+                    showWarning("Seleccione una sucursal para poder generar el reporte.");
             }
             catch (Exception ex)
             {

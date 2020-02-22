@@ -464,9 +464,7 @@ namespace PrestaVende.Public
                     {
                         error = ex.ToString();
                     }
-
                 }
-
             }
             else if (Convert.ToInt32(tipo_reporte) == 16)//16 reporte de prestamos por fechas.
             {
@@ -536,9 +534,11 @@ namespace PrestaVende.Public
             {
                 DataTable ReporteContrato = new DataTable("ReporteContratos");
                 string id_sucursal = this.Request.QueryString.Get("id_sucursal");
-                
+                string fecha_inicio = this.Request.QueryString.Get("fecha_inicio");
+                string fecha_fin = this.Request.QueryString.Get("fecha_fin");
+
                 cs_prestamo = new CLASS.cs_prestamo();
-                ReporteContrato = cs_prestamo.getDataPrestamosVencidos(ref error, id_sucursal);
+                ReporteContrato = cs_prestamo.getDataPrestamosVencidos(ref error, id_sucursal, fecha_inicio, fecha_fin);
                 if (ReporteContrato.Rows.Count <= 0)
                 {
                     error = "Error obteniendo datos de contrato." + error;

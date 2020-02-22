@@ -10,11 +10,8 @@ namespace PrestaVende.Public
 {
     public partial class AnulacionFactura : System.Web.UI.Page
     {
-        private string error = "";
-        private static string reporte = "";
         private CLASS.cs_sucursal cs_sucursal;
         private CLASS.cs_serie cs_serie;
-        private CLASS.cs_recibo cs_recibo;
         private CLASS.cs_factura cs_factura;
 
         protected void Page_Load(object sender, EventArgs e)
@@ -39,7 +36,6 @@ namespace PrestaVende.Public
                     {
                         cs_sucursal = new CLASS.cs_sucursal();
                         cs_serie = new CLASS.cs_serie();
-                        cs_recibo = new CLASS.cs_recibo();
                         cs_factura = new CLASS.cs_factura();
                         ObtenerSucursales();
                         setNombreReimpresion();
@@ -70,6 +66,7 @@ namespace PrestaVende.Public
         {
             try
             {
+                string error = "";
                 int id_empresa = Convert.ToInt32(Session["id_empresa"]);
                 cs_factura = new CLASS.cs_factura();
                 this.ddlSucursal.DataSource = cs_sucursal.ObtenerSucursalesPorEmpresa(ref error, id_empresa.ToString());
@@ -103,15 +100,15 @@ namespace PrestaVende.Public
                 else
                 {
                     cs_factura = new CLASS.cs_factura();
-
+                    string error = "";
                     error = "";
                     if (cs_factura.anularFactura(ref error, this.Session["id_sucursal"].ToString(), this.ddlSerie.SelectedValue.ToString(), this.txtNumeroDocumento.Text.ToString()))
                     {
-                        showSuccess("Factura anulada correctamente.");
+                        Response.Redirect("~/WebLogin.aspx", false);
                     }
                     else
                     {
-                        showError(error + ".");
+                        showError("NO SE PUDO ANULAR FACTURA, VALIDE QUE SEA LA ULTIMA TRANSACCION DE ESTA CAJA PARA PODER ANULAR. " + error + ".");
                     }
                 }
             }
@@ -123,8 +120,10 @@ namespace PrestaVende.Public
 
         private void ObtenerSeries()
         {
+            string error = "";
             try
             {
+
                 int id_tipo_serie = 0;
                 id_tipo_serie = 1;
                 int id_sucursal = Convert.ToInt32(Session["id_sucursal"]);

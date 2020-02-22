@@ -149,6 +149,8 @@ namespace PrestaVende.CLASS
                 string numero_factura = "", numero_recibo = "", id_serie_recibo = "", descripcion = "";
                 string fecha_proximo_pago = "";
                 string fecha_ultimo_pago = "";
+                string fecha_proximo_pago_anterior = "";
+                string fecha_ultimo_pago_anterior = "";
                 string[] encabezado = new string[12];
                 DataTable datosRecibo = new DataTable();
 
@@ -175,8 +177,10 @@ namespace PrestaVende.CLASS
                 encabezado[10] = (id_tipo_transaccion == "10") ? abono : "0";
                 fecha_proximo_pago = DatosFactura.Tables[0].Rows[0]["calculo_fecha_proximo_pago"].ToString();
                 fecha_ultimo_pago = DatosFactura.Tables[0].Rows[0]["calculo_fecha_ultimo_pago"].ToString();
+                fecha_proximo_pago_anterior = DatosFactura.Tables[0].Rows[0]["fecha_proximo_pago"].ToString();
+                fecha_ultimo_pago_anterior = DatosFactura.Tables[0].Rows[0]["fecha_ultimo_pago"].ToString();
 
-                id_factura_encabezado = insert_factura_encabezado(ref error, encabezado);
+                id_factura_encabezado = insert_factura_encabezado(ref error, encabezado, fecha_proximo_pago_anterior, fecha_ultimo_pago_anterior);
 
                 if (id_tipo_transaccion == "9" || id_tipo_transaccion == "10")
                 {
@@ -265,9 +269,9 @@ namespace PrestaVende.CLASS
             }
             catch (Exception ex)
             {
-                error = ex.ToString();
+                error = ex.ToString() + " ********** " + error;
                 command.Transaction.Rollback();
-                return string.Empty;
+                return "";
             }
             finally
             {
@@ -277,13 +281,13 @@ namespace PrestaVende.CLASS
             return Convert.ToString(id_factura_encabezado);
         }
 
-        private int insert_factura_encabezado(ref string error, string[] datosEnc)
+        private int insert_factura_encabezado(ref string error, string[] datosEnc, string fecha_proximo_pago, string fecha_ultimo_pago)
         {
             try
             {
                 int insert = 0;
                 command.Parameters.Clear();
-                command.CommandText = "INSERT INTO tbl_factura_encabezado ([id_serie],[numero_factura],[id_cliente],[total_factura],[sub_total_factura],[iva_total_factura],[id_tipo_transaccion],[id_caja],[numero_prestamo],[monto_abono_capital],[monto_cancelacion],[estado_factura], fecha_creacion) " +
+                command.CommandText = "INSERT INTO tbl_factura_encabezado ([id_serie],[numero_factura],[id_cliente],[total_factura],[sub_total_factura],[iva_total_factura],[id_tipo_transaccion],[id_caja],[numero_prestamo],[monto_abono_capital],[monto_cancelacion],[estado_factura], fecha_creacion, fecha_proximo_pago, fecha_ultimo_pago) " +
                                             "VALUES( " +
                                             "@id_serie_enc,             " +
                                             "@numero_factura_enc,       " +
@@ -297,7 +301,9 @@ namespace PrestaVende.CLASS
                                             "@monto_abono_capital_enc,  " +
                                             "@monto_cancelacion_enc,    " +
                                             "@estado_enc, " +
-                                            "GETDATE())";
+                                            "GETDATE(), " +
+                                            "CONVERT(DATE,@fecha_proximo_pago,103), " +
+                                            "CONVERT(DATE,@fecha_ultimo_pago,103))";
                 command.Parameters.AddWithValue("@id_serie_enc", datosEnc[0]);
                 command.Parameters.AddWithValue("@numero_factura_enc", datosEnc[1]);
                 command.Parameters.AddWithValue("@id_cliente_enc", datosEnc[2]);
@@ -310,6 +316,8 @@ namespace PrestaVende.CLASS
                 command.Parameters.AddWithValue("@monto_abono_capital_enc", datosEnc[9]);
                 command.Parameters.AddWithValue("@monto_cancelacion_enc", datosEnc[10]);
                 command.Parameters.AddWithValue("@estado_enc", "1");
+                command.Parameters.AddWithValue("@fecha_proximo_pago", fecha_proximo_pago);
+                command.Parameters.AddWithValue("@fecha_ultimo_pago", fecha_ultimo_pago);
                 insert = Convert.ToInt32(command.ExecuteNonQuery());
                 if (insert > 0)
                 {

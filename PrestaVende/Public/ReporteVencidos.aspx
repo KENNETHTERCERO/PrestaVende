@@ -52,12 +52,6 @@
                                                         <td>
                                                             <h1>Reporte Prestamos Vencidos&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h1>
                                                         </td>
-                                                        <!--<td>
-                                                            <big><asp:Label ID="lblPrestamo" runat="server">Prestamo:&nbsp;&nbsp;</asp:Label></big>
-                                                        </td>
-                                                        <td>
-                                                            <big><asp:Label ID="lblnombre_prestamo" runat="server"></asp:Label></big>
-                                                        </td>-->
                                                     </tr>
                                                 </table>
                                             </div>
@@ -78,7 +72,7 @@
                                                         <asp:DropDownList ID="ddlSucursal" runat="server" CssClass="form-control"></asp:DropDownList>
                                                     </td> 
                                                 </tr>                                                
-                                               <%-- <tr>
+                                                <tr>
                                                     <td colspan="4" style="height:20px;"></td>
                                                 </tr>
                                                 <tr>
@@ -98,7 +92,7 @@
                                                     <td>
                                                         <asp:TextBox ID="txtFechaFin" runat="server" class="form-control" TextMode="Date"></asp:TextBox>
                                                     </td>                                                                                                                                                      
-                                                </tr>--%>
+                                                </tr>
                                             </table>
                                         </div>
                                     </div>

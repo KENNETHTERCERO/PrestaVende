@@ -294,7 +294,7 @@ namespace PrestaVende.Public
                                     saldo_prestamo_actual = decimal.Parse(this.txtAbonoCapital.Text.ToString());
                                 
                                 decimal lSaldo_prestamo = Convert.ToDecimal(this.lblSaldoPrestamoNumero.Text.ToString());
-                                string id_tipo_transaccion = getEquivalenteTransaccion(Request.QueryString["id_tipo"]);
+                                string id_tipo_transaccion = getEquivalenteTransaccion(this.Request.QueryString["id_tipo"]);
 
                                 if ((this.txtAbonoCapital.Visible == true && abono < lSaldo_prestamo && id_tipo_transaccion == "9") || (this.txtAbonoCapital.Visible == false) 
                                       || (this.txtAbonoCapital.Visible == true && abono == lSaldo_prestamo && id_tipo_transaccion == "10"))
@@ -307,9 +307,9 @@ namespace PrestaVende.Public
                                     error = "";
                                     Resultado = cs_factura.GuardarFactura(ref error, DataSActual, id_serie, this.lblCodigoCliente.Text.ToString(), id_tipo_transaccion, Convert.ToInt32(this.Session["id_caja"]), numero_prestamo, abono.ToString(), ref id_recibo);
                                      
-                                    if(Resultado == string.Empty)
+                                    if(Resultado == "")
                                     {
-                                        showWarning("Error al generar la factura." + error);
+                                        showWarning("Error al generar la factura. " + error);
                                     } else
                                     {
                                         try
