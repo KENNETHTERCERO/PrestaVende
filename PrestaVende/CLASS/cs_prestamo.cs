@@ -848,7 +848,7 @@ namespace PrestaVende.CLASS
             }
         }
 
-        public DataTable GetDataReporteFacturas(ref string error, string fecha_inicio, string fecha_fin, string id_sucursal)
+        public DataTable GetDataReporteFacturas(ref string error, string fecha_inicio, string fecha_fin, string id_sucursal, string tipo_factura)
         {
             DataTable dtDatos = new DataTable("dtDatos");
             try
@@ -856,10 +856,11 @@ namespace PrestaVende.CLASS
                 connection.connection.Open();
                 command.Connection = connection.connection;
                 command.Parameters.Clear();
-                command.CommandText = "exec sp_reporte_facturas @fecha_inicio,@fecha_fin,@id_sucursal";
+                command.CommandText = "exec sp_reporte_facturas @fecha_inicio, @fecha_fin, @id_sucursal, @tipo_factura";
                 command.Parameters.AddWithValue("@fecha_inicio", fecha_inicio);
                 command.Parameters.AddWithValue("@fecha_fin", fecha_fin);
                 command.Parameters.AddWithValue("@id_sucursal", id_sucursal);
+                command.Parameters.AddWithValue("@tipo_factura", tipo_factura);
                 dtDatos.Load(command.ExecuteReader());
                 return dtDatos;
             }

@@ -653,5 +653,30 @@ namespace PrestaVende.CLASS
                 return false;
             }
         }
+
+        public DataTable ObtenerTipoFactura(ref string error)
+        {
+            DataTable dtReturnFacturas = new DataTable("dtFacturas");
+            try
+            {
+                connection.connection.Open();
+                command.Connection = connection.connection;
+                command.Parameters.Clear();
+                command.CommandText = "SELECT 0 AS id_tipo_transaccion, 'TODAS' AS transaccion UNION " +
+                                    "SELECT 1 AS id_tipo_transaccion, 'INTERESES' AS transaccion UNION " +
+                                    "SELECT 2 AS id_tipo_transaccion, 'VENTAS' AS transaccion";
+                dtReturnFacturas.Load(command.ExecuteReader());
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                return null;
+            }
+            finally
+            {
+                connection.connection.Close();
+            }
+            return dtReturnFacturas;
+        }
     }
 }

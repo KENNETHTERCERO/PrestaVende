@@ -68,16 +68,25 @@
                                     <br />
                                     <div id="div_ingresa_datos" runat="server" visible="true">
                                         <div>
-                                            <table>                                                
+                                            <table>
                                                 <tr>
                                                     <td colspan="2">
                                                         <asp:Label ID="lblSerie" runat="server" Font-Bold="true">SUCURSALES</asp:Label>
-                                                    </td>        
-                                                    <td></td>               
+                                                    </td>
+                                                    <td></td>
                                                     <td>
                                                         <asp:DropDownList ID="ddlSucursal" runat="server" CssClass="form-control" OnSelectedIndexChanged="ddlSucursal_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
-                                                    </td> 
-                                                </tr>                                                
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <asp:Label ID="lblTipoFactura" runat="server" Font-Bold="true">TIPO FACTURA</asp:Label>
+                                                    </td>
+                                                    <td></td>
+                                                    <td>
+                                                        <asp:DropDownList ID="ddlTipoFactura" runat="server" CssClass="form-control" ></asp:DropDownList>
+                                                    </td>
+                                                </tr>
                                                 <tr>
                                                     <td colspan="4" style="height:20px;"></td>
                                                 </tr>

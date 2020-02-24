@@ -33,6 +33,7 @@ namespace PrestaVende.Public
                     else
                     {
                         ObtenerSucursales();
+                        ObtenerTipoFactura();
                     }
                 }
             }
@@ -64,6 +65,22 @@ namespace PrestaVende.Public
             }
         }
 
+        private void ObtenerTipoFactura()
+        {
+            try
+            {
+                CLASS.cs_factura cs_factura = new CLASS.cs_factura();
+                this.ddlTipoFactura.DataSource = cs_factura.ObtenerTipoFactura(ref error);
+                this.ddlTipoFactura.DataValueField = "id_tipo_transaccion";
+                this.ddlTipoFactura.DataTextField = "transaccion";
+                this.ddlTipoFactura.DataBind();
+            }
+            catch (Exception ex)
+            {
+                showError(ex.ToString());
+            }
+        }
+
         protected void btnGenerar_Click(object sender, EventArgs e)
         {
             string id_sucuarsal = this.ddlSucursal.SelectedValue.ToString();
@@ -75,7 +92,7 @@ namespace PrestaVende.Public
                     showWarning("Usted debe ingresar una fecha de fin para poder generar el reporte.");
                 else
                 {
-                    string scriptEstadoCuenta = "window.open('WebReport.aspx?tipo_reporte=14" + "&id_sucursal=" + id_sucuarsal + "&fecha_inicio=" + this.txtFechaInicial.Text + "&fecha_fin=" + this.txtFechaFin.Text + "');";
+                    string scriptEstadoCuenta = "window.open('WebReport.aspx?tipo_reporte=14" + "&id_sucursal=" + id_sucuarsal + "&fecha_inicio=" + this.txtFechaInicial.Text + "&fecha_fin=" + this.txtFechaFin.Text + "&tipo_factura=" + this.ddlTipoFactura.SelectedValue.ToString() + "');";
                     ScriptManager.RegisterClientScriptBlock(this, GetType(), "NewWindow", scriptEstadoCuenta, true);
                 }
             else

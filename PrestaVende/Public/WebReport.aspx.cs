@@ -418,9 +418,10 @@ namespace PrestaVende.Public
                 string id_sucursal =    this.Request.QueryString.Get("id_sucursal");
                 string fecha_inicio =   this.Request.QueryString.Get("fecha_inicio");
                 string fecha_fin =      this.Request.QueryString.Get("fecha_fin");
+                string tipo_factura = this.Request.QueryString.Get("tipo_factura");
 
                 DataTable Facturas = new DataTable("Facturas");
-                Facturas = cs_prestamo.GetDataReporteFacturas(ref error, fecha_inicio, fecha_fin, id_sucursal);
+                Facturas = cs_prestamo.GetDataReporteFacturas(ref error, fecha_inicio, fecha_fin, id_sucursal, tipo_factura);
 
                 Reports.CRFacturas ReporteFacturas = new Reports.CRFacturas();
 
