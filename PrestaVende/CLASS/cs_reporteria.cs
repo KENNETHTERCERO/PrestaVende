@@ -12,7 +12,7 @@ namespace PrestaVende.CLASS
         cs_connection connection = new cs_connection();
         SqlCommand command = new SqlCommand();
 
-        public DataSet getReporteRIE(ref string error, string id_sucursal, string id_empresa)
+        public DataSet getReporteRIE(ref string error, string id_sucursal, string id_empresa, string fecha_inicio, string fecha_fin)
         {
 
             DataSet ds = new DataSet();
@@ -31,6 +31,8 @@ namespace PrestaVende.CLASS
                 command.CommandText = "SP_reporte_ingresos_egresos";
                 command.Parameters.AddWithValue("@id_sucursal", id_sucursal);
                 command.Parameters.AddWithValue("@id_empresa", id_empresa);
+                command.Parameters.AddWithValue("@fecha_inicio", fecha_inicio);
+                command.Parameters.AddWithValue("@fecha_fin", fecha_fin);
 
                 adapter = new SqlDataAdapter(command);
                 adapter.Fill(ds);
@@ -38,9 +40,10 @@ namespace PrestaVende.CLASS
                 ds.DataSetName = "DSReporteRIE";
 
                 ds.Tables[0].TableName = "dtReporteIE";
-                ds.Tables[1].TableName = "dtTransacciones";
-                ds.Tables[2].TableName = "dtGarantias";
-                ds.Tables[3].TableName = "dtValoresCaja";
+                ds.Tables[1].TableName = "dtAgencia";
+                ds.Tables[2].TableName = "dtTransacciones";
+                ds.Tables[3].TableName = "dtGarantias";
+                ds.Tables[4].TableName = "dtValoresCaja";
             }catch(Exception ex)
             {
                 error = "Error al consultar reporte: " + ex.ToString();

@@ -36,6 +36,8 @@ namespace PrestaVende.Public
                 }
                 else
                 {
+                    txtFechaInicial.Text = DateTime.Now.ToString("yyyy-MM-dd");
+                    txtFechaFin.Text = DateTime.Now.ToString("yyyy-MM-dd");
                     ObtenerSucursales();
                 }
 
@@ -52,8 +54,15 @@ namespace PrestaVende.Public
 
             if (int.Parse(id_sucursal) > 0)
             {
-                string scriptEstadoCuenta = "window.open('WebReport.aspx?tipo_reporte=15" + "&id_sucursal=" + id_sucursal + "&id_empresa=" + Convert.ToInt32(this.Session["id_empresa"]) + "');";
-                ScriptManager.RegisterClientScriptBlock(this, GetType(), "NewWindow", scriptEstadoCuenta, true);
+                if (txtFechaInicial.Text.ToString().Length < 1)
+                    showWarning("Usted debe ingresar una fecha de inicio para poder generar el reporte.");
+                else if (txtFechaFin.Text.ToString().Length < 1)
+                    showWarning("Usted debe ingresar una fecha de fin para poder generar el reporte.");
+                else
+                {
+                    string scriptEstadoCuenta = "window.open('WebReport.aspx?tipo_reporte=15" + "&id_sucursal=" + id_sucursal + "&id_empresa=" + Convert.ToInt32(this.Session["id_empresa"]) + "&fecha_inicio=" + txtFechaInicial.Text + "&fecha_fin=" + txtFechaFin.Text + "');";
+                    ScriptManager.RegisterClientScriptBlock(this, GetType(), "NewWindow", scriptEstadoCuenta, true);
+                }
             }
             else
                 showWarning("Seleccione una sucursal para poder generar el reporte.");
@@ -67,6 +76,8 @@ namespace PrestaVende.Public
             try
             {
                 int id_empresa = Convert.ToInt32(Session["id_empresa"]);
+                //int id_empresa = 1;
+
                 cs_sucursal = new CLASS.cs_sucursal();
                 this.ddlSucursal.DataSource = cs_sucursal.ObtenerSucursalesPorEmpresa(ref error, id_empresa.ToString());
                 this.ddlSucursal.DataValueField = "id_sucursal";
@@ -76,6 +87,7 @@ namespace PrestaVende.Public
                 if (this.Session["id_rol"].ToString().Equals("3") || this.Session["id_rol"].ToString().Equals("4") || this.Session["id_rol"].ToString().Equals("5"))
                 {
                     this.ddlSucursal.SelectedValue = this.Session["id_sucursal"].ToString();
+                    //this.ddlSucursal.SelectedValue = "1";
                     this.ddlSucursal.Enabled = false;
                 }
             }
