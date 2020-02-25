@@ -70,18 +70,35 @@
                                         <div>
                                             <table>                                                
                                                 <tr>
-                                                    <td >
-                                                        <asp:Label ID="lblSerie" runat="server" Font-Bold="true">SUCURSAL</asp:Label>
+                                                    <td colspan="2">
+                                                        <asp:Label ID="lblSerie" runat="server" Font-Bold="true">SUCURSALES</asp:Label>
                                                     </td>        
-                                                    <td style="width:25px"> &nbsp;&nbsp;</td>               
+                                                    <td></td>               
                                                     <td>
-                                                        <asp:DropDownList ID="ddlSucursal" runat="server" CssClass="form-control"  AutoPostBack="true"></asp:DropDownList>
+                                                        <asp:DropDownList ID="ddlSucursal" runat="server" CssClass="form-control" AutoPostBack="true"></asp:DropDownList>
                                                     </td> 
                                                 </tr>                                                
                                                 <tr>
                                                     <td colspan="4" style="height:20px;"></td>
                                                 </tr>
-                                                
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <asp:Label ID="lblFechaInicio" runat="server" Text="FECHA INICIO" Font-Bold="true"></asp:Label>
+                                                    </td>
+                                                    <td style="width:40px"></td>
+                                                    <td>
+                                                        <asp:Label ID="lblFechaFin" runat="server" Text="FECHA FIN"  Font-Bold="true"></asp:Label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <asp:TextBox ID="txtFechaInicial" runat="server" class="form-control" TextMode="Date"></asp:TextBox>
+                                                    </td>
+                                                    <td></td>
+                                                    <td>
+                                                        <asp:TextBox ID="txtFechaFin" runat="server" class="form-control" TextMode="Date"></asp:TextBox>
+                                                    </td>                                                                                                                                                      
+                                                </tr>
                                             </table>
                                         </div>
                                     </div>

@@ -437,12 +437,14 @@ namespace PrestaVende.Public
             {
                 string id_sucursal = Request.QueryString.Get("id_sucursal");
                 string id_empresa = Request.QueryString.Get("id_empresa");
+                string fecha_inicio = Request.QueryString.Get("fecha_inicio");
+                string fecha_fin = Request.QueryString.Get("fecha_fin");
 
 
                 DataSet dsReporteIE = new DataSet("DSReporteRIE");
 
 
-                dsReporteIE = cs_reporteria.getReporteRIE(ref error, id_sucursal, id_empresa);
+                dsReporteIE = cs_reporteria.getReporteRIE(ref error, id_sucursal, id_empresa, fecha_inicio, fecha_fin);
 
                 if (dsReporteIE.Tables.Count  <= 0)
                 {
