@@ -215,7 +215,7 @@
                                                         <asp:Label ID="lblAbonoCapital" runat="server" Text="ABONO A CAPITAL"></asp:Label>
                                                     </td>
                                                     <td>
-                                                        <asp:TextBox ID="txtAbonoCapital" runat="server" CssClass="form-control" Value="0.00" type="number" step="0.01"></asp:TextBox>
+                                                        <asp:TextBox ID="txtAbonoCapital" runat="server" CssClass="form-control" Value="0.00" type="number" AutoPostBack="true" step="0.01" OnTextChanged="txtAbonoCapital_TextChanged"></asp:TextBox>
                                                     </td>
                                                     <td></td>
                                                     <td>
@@ -223,6 +223,14 @@
                                                     </td>
                                                     <td>
                                                         <asp:Label ID="lblSaldoPrestamoNumero" runat="server" Text="0"></asp:Label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <asp:Label ID="lblTotalFacturaSaldoMasInteres" runat="server" Font-Bold="true" style="color:blue;font-size:18px;" Text="TOTAL COBRO  Q"></asp:Label>
+                                                    </td>
+                                                    <td>
+                                                        <asp:Label ID="lblTotalCobro" runat="server" Font-Bold="true" style="color:darkred;font-size:18px;" Text="0"></asp:Label>
                                                     </td>
                                                 </tr>
                                             </table>

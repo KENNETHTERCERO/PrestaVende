@@ -400,6 +400,24 @@ namespace PrestaVende.Public {
         protected global::System.Web.UI.WebControls.Label lblSaldoPrestamoNumero;
         
         /// <summary>
+        /// lblTotalFacturaSaldoMasInteres control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTotalFacturaSaldoMasInteres;
+        
+        /// <summary>
+        /// lblTotalCobro control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTotalCobro;
+        
+        /// <summary>
         /// div_gridView control.
         /// </summary>
         /// <remarks>

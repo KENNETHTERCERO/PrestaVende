@@ -65,7 +65,7 @@ namespace PrestaVende.Public
         {
             try
             {
-                string id_prestamo = Request.QueryString["id_prestamo"];
+                string id_prestamo = this.Request.QueryString["id_prestamo"];
                 cs_prestamo = new CLASS.cs_prestamo();
 
                 foreach (DataRow item in cs_prestamo.ObtenerPrestamoEspecifico(ref error, id_prestamo).Rows)
@@ -76,7 +76,7 @@ namespace PrestaVende.Public
                     this.lblNombreCliente.Text = item["primer_nombre"].ToString() + " " + item["segundo_nombre"].ToString() + " " + item["primer_apellido"].ToString() + " " + item["segundo_apellido"].ToString();
                     this.lblValorInteres.Text = item["factor"].ToString() + "%";
 
-                    string tipo_transaccion = getEquivalenteTransaccion(Request.QueryString["id_tipo"]);
+                    string tipo_transaccion = getEquivalenteTransaccion(this.Request.QueryString["id_tipo"]);
                     this.lblSaldoPrestamoNumero.Text = item["saldo_prestamo"].ToString();
 
                     if (tipo_transaccion == "10")
@@ -120,7 +120,7 @@ namespace PrestaVende.Public
         {
             try
             {
-                string id_tipo_transaccion = getEquivalenteTransaccion(Request.QueryString["id_tipo"]);
+                string id_tipo_transaccion = getEquivalenteTransaccion(this.Request.QueryString["id_tipo"]);
 
                 cs_transaccion = new CLASS.cs_transaccion();
                 foreach (DataRow item in cs_transaccion.ObtenerTransaccion(ref error, id_tipo_transaccion).Rows)
@@ -182,6 +182,24 @@ namespace PrestaVende.Public
                     this.lblSubTotalFactura.Text = dt.Rows[0]["SubTotal"].ToString();
                     this.lblIVAFactura.Text = dt.Rows[0]["IVA"].ToString();
                     this.lblTotalFacturaV.Text = dt.Rows[0]["Total"].ToString();
+
+                    string id_tipo_transaccion = getEquivalenteTransaccion(this.Request.QueryString["id_tipo"]);
+                    decimal total_cobro = 0;
+                    
+                    if (id_tipo_transaccion == "9" || id_tipo_transaccion == "10")
+                    {
+                        if (this.txtAbonoCapital.Text == "")
+                        {
+                            this.txtAbonoCapital.Text = "0";
+                        }
+                        
+                        total_cobro = Convert.ToDecimal(dt.Rows[0]["Total"].ToString()) + Convert.ToDecimal(this.txtAbonoCapital.Text.ToString());
+                        this.lblTotalCobro.Text = total_cobro.ToString();
+                    }
+                    else
+                    {
+                        this.lblTotalCobro.Text = dt.Rows[0]["Total"].ToString();
+                    }
 
                     int semanas = int.Parse(getDataSetActual.Tables[0].Rows[0]["Cantidad"].ToString());
                     DataTable TablaSemanas = new DataTable();
@@ -406,12 +424,65 @@ namespace PrestaVende.Public
                 this.lblTotalFacturaV.Text = dataSActual.Tables[1].Rows[0]["Total"].ToString();
                 this.gvDetalleFactura.DataSource = dataSActual.Tables[0];
                 this.gvDetalleFactura.DataBind();
+
+                string id_tipo_transaccion = getEquivalenteTransaccion(this.Request.QueryString["id_tipo"]);
+                decimal total_cobro = 0;
+
+                if (id_tipo_transaccion == "9" || id_tipo_transaccion == "10")
+                {
+                    if (this.txtAbonoCapital.Text == "")
+                    {
+                        this.txtAbonoCapital.Text = "0";
+                    }
+                    total_cobro = Convert.ToDecimal(dataSActual.Tables[1].Rows[0]["Total"].ToString()) + Convert.ToDecimal(this.txtAbonoCapital.Text.ToString());
+                    this.lblTotalCobro.Text = total_cobro.ToString();
+                }
+                else
+                {
+                    this.lblTotalCobro.Text = dataSActual.Tables[1].Rows[0]["Total"].ToString();
+                }
             }
             catch (Exception ex)
             {
                 showWarning(ex.ToString());
             }
             
+        }
+
+        protected void txtAbonoCapital_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                DataSet getDataSetActual = (DataSet)this.Session["dsGlobal"];
+
+                if (getDataSetActual.Tables.Count > 0)
+                {
+                    DataTable dt = new DataTable();
+
+                    dt = getDataSetActual.Tables[1];
+
+                    string id_tipo_transaccion = getEquivalenteTransaccion(this.Request.QueryString["id_tipo"]);
+                    decimal total_cobro = 0;
+
+                    if (id_tipo_transaccion == "9" || id_tipo_transaccion == "10")
+                    {
+                        if (this.txtAbonoCapital.Text == "")
+                        {
+                            this.txtAbonoCapital.Text = "0";
+                        }
+                        total_cobro = Convert.ToDecimal(dt.Rows[0]["Total"].ToString()) + Convert.ToDecimal(this.txtAbonoCapital.Text.ToString());
+                        this.lblTotalCobro.Text = total_cobro.ToString();
+                    }
+                    else
+                    {
+                        this.lblTotalCobro.Text = dt.Rows[0]["Total"].ToString();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                showError(ex.ToString());
+            }
         }
     }
 }
