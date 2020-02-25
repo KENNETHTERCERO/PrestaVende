@@ -84,8 +84,19 @@ namespace PrestaVende.Public
                         this.txtAbonoCapital.Text = item["saldo_prestamo"].ToString();
                         this.lblAbonoCapital.Text = "MONTO CANCELACION";
                         this.imgBtnBuscaSubSemana.Visible = false;
+
+                        decimal total_cobro = 0;
+                        if (this.txtAbonoCapital.Text == "")
+                        {
+                            this.txtAbonoCapital.Text = "0";
+                        }
+
+                        total_cobro = Convert.ToDecimal(this.lblTotalFacturaV.Text.ToString()) + Convert.ToDecimal(this.txtAbonoCapital.Text.ToString());
+                        this.lblTotalCobro.Text = total_cobro.ToString();
                     }
                 }
+
+                
             }
             catch (Exception ex)
             {
