@@ -194,21 +194,39 @@ namespace PrestaVende.Public
             }
             else if (Convert.ToInt32(tipo_reporte) == 6)//Reporte abono capital.
             {
-                string id_sucursal = Request.QueryString.Get("id_sucursal");
-                string fecha_inicio = Request.QueryString.Get("fecha_inicio");
-                string fecha_fin = Request.QueryString.Get("fecha_fin");
+                try
+                {
+                    string id_sucursal = Request.QueryString.Get("id_sucursal");
+                    string fecha_inicio = Request.QueryString.Get("fecha_inicio");
+                    string fecha_fin = Request.QueryString.Get("fecha_fin");
+                    
 
-                DataTable AbonosCapital = new DataTable("AbonosCapital");
-                AbonosCapital = cs_prestamo.GetDataReporteAbono(ref error, fecha_inicio, fecha_fin, id_sucursal, "9");
+                    DataTable AbonosCapital = new DataTable("AbonosCapital");
+                    AbonosCapital = cs_prestamo.GetDataReporteAbono(ref error, fecha_inicio, fecha_fin, id_sucursal, "9");
 
-                Reports.CRAbonosCapital ReporteAbonos = new Reports.CRAbonosCapital();
+                    Reports.CRAbonosCapital ReporteAbonos = new Reports.CRAbonosCapital();
 
-                ReporteAbonos.Load(Server.MapPath("~/Reports/CRAbonosCapital.rpt"));
-                ReporteAbonos.SetDataSource(AbonosCapital);
-                CrystalReportViewer1.ReportSource = ReporteAbonos;//document;
-                CrystalReportViewer1.DataBind();
-                CrystalReportViewer1.RefreshReport();
-                ReporteAbonos.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "");
+                    ReporteAbonos.Load(Server.MapPath("~/Reports/CRAbonosCapital.rpt"));
+                    ReporteAbonos.SetDataSource(AbonosCapital);
+                    CrystalReportViewer1.ReportSource = ReporteAbonos;//document;
+                    CrystalReportViewer1.DataBind();
+                    CrystalReportViewer1.RefreshReport();
+
+                    string tipo = this.Request.QueryString.Get("tipo");
+                    if (tipo=="excel")
+                    {
+                        ReporteAbonos.ExportToHttpResponse(ExportFormatType.ExcelWorkbook, Response, false, "Abonos a capital");
+                    }
+                    else
+                    {
+                        ReporteAbonos.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "Abonos a capital");
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                    throw;
+                }
 
             }
             else if (Convert.ToInt32(tipo_reporte) == 7)//Reporte Estado de Cuenta Caja
@@ -235,7 +253,15 @@ namespace PrestaVende.Public
                         CrystalReportViewer1.ReportSource = CRReporteEstadoDeCuentaCaja;//document;
                         CrystalReportViewer1.DataBind();
                         CrystalReportViewer1.RefreshReport();
-                        CRReporteEstadoDeCuentaCaja.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "Estado de cuenta caja de " + fecha_inicio + " a " + fecha_fin);
+                        string tipo = this.Request.QueryString.Get("tipo");
+                        if (tipo == "excel")
+                        {
+                            CRReporteEstadoDeCuentaCaja.ExportToHttpResponse(ExportFormatType.ExcelWorkbook, Response, false, "Abonos a capital");
+                        }
+                        else
+                        {
+                            CRReporteEstadoDeCuentaCaja.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "Estado de cuenta caja de " + fecha_inicio + " a " + fecha_fin);
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -243,11 +269,39 @@ namespace PrestaVende.Public
                     }
                 }
             }
-            else if (Convert.ToInt32(tipo_reporte) == 8)//Reporte cancelaciones.
+            else if (Convert.ToInt32(tipo_reporte) == 8)//Reporte ventas detallado.
             {
-                string id_sucursal = Request.QueryString.Get("id_sucursal");
-                string fecha_inicio = Request.QueryString.Get("fecha_inicio");
-                string fecha_fin = Request.QueryString.Get("fecha_fin");
+                try
+                {
+                    string id_sucursal = this.Request.QueryString.Get("id_sucursal");
+                    string fecha_inicio = this.Request.QueryString.Get("fecha_inicio");
+                    string fecha_fin = this.Request.QueryString.Get("fecha_fin");
+
+                    DataTable Facturas = new DataTable("Facturas");
+                    Facturas = cs_manejo_inventario.getDataReporteVentas(ref error, id_sucursal, fecha_inicio, fecha_fin);
+
+                    Reports.CRReporteVentasDetallado ReporteFacturasVentas = new Reports.CRReporteVentasDetallado();
+
+                    ReporteFacturasVentas.Load(Server.MapPath("~/Reports/CRFacturas.rpt"));
+                    ReporteFacturasVentas.SetDataSource(Facturas);
+                    CrystalReportViewer1.ReportSource = ReporteFacturasVentas;//document;
+                    CrystalReportViewer1.DataBind();
+                    CrystalReportViewer1.RefreshReport();
+                    string tipo = this.Request.QueryString.Get("tipo");
+                    if (tipo == "excel")
+                    {
+                        ReporteFacturasVentas.ExportToHttpResponse(ExportFormatType.ExcelWorkbook, Response, false, "Facturas");
+                    }
+                    else
+                    {
+                        ReporteFacturasVentas.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "Facturas");
+                    }
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
             }
             else if (Convert.ToInt32(tipo_reporte) == 9)//Reporte inventario disponible.
             {
@@ -274,7 +328,16 @@ namespace PrestaVende.Public
                         CrystalReportViewer1.ReportSource = inventarioSucursal;//document;
                         CrystalReportViewer1.DataBind();
                         CrystalReportViewer1.RefreshReport();
-                        inventarioSucursal.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "");
+                        string tipo = this.Request.QueryString.Get("tipo");
+                        if (tipo == "excel")
+                        {
+                            inventarioSucursal.ExportToHttpResponse(ExportFormatType.ExcelWorkbook, Response, false, "Inventario");
+                        }
+                        else
+                        {
+                            inventarioSucursal.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "Inventario");
+                        }
+                        
                     }
                     catch (Exception ex)
                     {
@@ -312,7 +375,15 @@ namespace PrestaVende.Public
                         CrystalReportViewer1.ReportSource = EstadoCuentaPrestamo;//document;
                         CrystalReportViewer1.DataBind();
                         CrystalReportViewer1.RefreshReport();
-                        EstadoCuentaPrestamo.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "Estado de cuenta No." + numero_prestamo);
+                        string tipo = this.Request.QueryString.Get("tipo");
+                        if (tipo == "excel")
+                        {
+                            EstadoCuentaPrestamo.ExportToHttpResponse(ExportFormatType.ExcelWorkbook, Response, false, "Estado de cuenta No." + numero_prestamo);
+                        }
+                        else
+                        {
+                            EstadoCuentaPrestamo.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "Estado de cuenta No." + numero_prestamo);
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -342,7 +413,15 @@ namespace PrestaVende.Public
                         CrystalReportViewer1.ReportSource = Etiquetaprestamo;//document;
                         CrystalReportViewer1.DataBind();
                         CrystalReportViewer1.RefreshReport();
-                        Etiquetaprestamo.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "Etiqueta No." + numero_prestamo);
+                        string tipo = this.Request.QueryString.Get("tipo");
+                        if (tipo == "excel")
+                        {
+                            Etiquetaprestamo.ExportToHttpResponse(ExportFormatType.ExcelWorkbook, Response, false, "Etiqueta No." + numero_prestamo);
+                        }
+                        else
+                        {
+                            Etiquetaprestamo.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "Etiqueta No." + numero_prestamo);
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -372,7 +451,15 @@ namespace PrestaVende.Public
                         CrystalReportViewer1.ReportSource = prestamoGeneral;//document;
                         CrystalReportViewer1.DataBind();
                         CrystalReportViewer1.RefreshReport();
-                        prestamoGeneral.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "Contrato No." + numero_prestamo);
+                        string tipo = this.Request.QueryString.Get("tipo");
+                        if (tipo == "excel")
+                        {
+                            prestamoGeneral.ExportToHttpResponse(ExportFormatType.ExcelWorkbook, Response, false, "Contrato No." + numero_prestamo);
+                        }
+                        else
+                        {
+                            prestamoGeneral.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "Contrato No." + numero_prestamo);
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -399,7 +486,15 @@ namespace PrestaVende.Public
                     CrystalReportViewer1.ReportSource = ReporteCancelacion;//document;
                     CrystalReportViewer1.DataBind();
                     CrystalReportViewer1.RefreshReport();
-                    ReporteCancelacion.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "");
+                    string tipo = this.Request.QueryString.Get("tipo");
+                    if (tipo == "excel")
+                    {
+                        ReporteCancelacion.ExportToHttpResponse(ExportFormatType.ExcelWorkbook, Response, false, "Cancelaciones");
+                    }
+                    else
+                    {
+                        ReporteCancelacion.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "Cancelaciones");
+                    }
                 }
                 else if (transaccion == "9")
                 {
@@ -409,7 +504,15 @@ namespace PrestaVende.Public
                     CrystalReportViewer1.ReportSource = ReporteAbonos;//document;
                     CrystalReportViewer1.DataBind();
                     CrystalReportViewer1.RefreshReport();
-                    ReporteAbonos.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "");
+                    string tipo = this.Request.QueryString.Get("tipo");
+                    if (tipo == "excel")
+                    {
+                        ReporteAbonos.ExportToHttpResponse(ExportFormatType.ExcelWorkbook, Response, false, "Cancelaciones");
+                    }
+                    else
+                    {
+                        ReporteAbonos.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "Cancelaciones");
+                    }
                 }
 
             }
@@ -430,8 +533,15 @@ namespace PrestaVende.Public
                 CrystalReportViewer1.ReportSource = ReporteFacturas;//document;
                 CrystalReportViewer1.DataBind();
                 CrystalReportViewer1.RefreshReport();
-                ReporteFacturas.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "");
-
+                string tipo = this.Request.QueryString.Get("tipo");
+                if (tipo == "excel")
+                {
+                    ReporteFacturas.ExportToHttpResponse(ExportFormatType.ExcelWorkbook, Response, false, "Facturas");
+                }
+                else
+                {
+                    ReporteFacturas.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "Facturas");
+                }
             }
             else if (Convert.ToInt32(tipo_reporte) == 15)//Reporte Ingresos y Egresos RIE
             {
@@ -461,7 +571,15 @@ namespace PrestaVende.Public
                         CrystalReportViewer1.ReportSource = reporteIE;//document;
                         CrystalReportViewer1.DataBind();
                         CrystalReportViewer1.RefreshReport();
-                        reporteIE.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "");
+                        string tipo = this.Request.QueryString.Get("tipo");
+                        if (tipo == "excel")
+                        {
+                            reporteIE.ExportToHttpResponse(ExportFormatType.ExcelWorkbook, Response, false, "RIE");
+                        }
+                        else
+                        {
+                            reporteIE.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "RIE");
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -492,7 +610,16 @@ namespace PrestaVende.Public
                         CrystalReportViewer1.ReportSource = ReportePrestamos;//document;
                         CrystalReportViewer1.DataBind();
                         CrystalReportViewer1.RefreshReport();
-                        ReportePrestamos.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "Sucursal No." + id_sucursal);
+                        string tipo = this.Request.QueryString.Get("tipo");
+                        if (tipo == "excel")
+                        {
+                            ReportePrestamos.ExportToHttpResponse(ExportFormatType.ExcelWorkbook, Response, false, "Sucursal No." + id_sucursal);
+                        }
+                        else
+                        {
+                            ReportePrestamos.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "Sucursal No." + id_sucursal);
+                        }
+                        
                     }
                     catch (Exception ex)
                     {
@@ -524,7 +651,16 @@ namespace PrestaVende.Public
                         CrystalReportViewer1.ReportSource = ReporteLiquidaciones;//document;
                         CrystalReportViewer1.DataBind();
                         CrystalReportViewer1.RefreshReport();
-                        ReporteLiquidaciones.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "Sucursal No." + id_sucursal);
+                        string tipo = this.Request.QueryString.Get("tipo");
+                        if (tipo == "excel")
+                        {
+                            ReporteLiquidaciones.ExportToHttpResponse(ExportFormatType.ExcelWorkbook, Response, false, "Sucursal No." + id_sucursal);
+                        }
+                        else
+                        {
+                            ReporteLiquidaciones.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "Sucursal No." + id_sucursal);
+                        }
+                        
                     }
                     catch (Exception ex)
                     {
@@ -557,7 +693,16 @@ namespace PrestaVende.Public
                         CrystalReportViewer1.ReportSource = ReportePrestamosVencidos;//document;
                         CrystalReportViewer1.DataBind();
                         CrystalReportViewer1.RefreshReport();
-                        ReportePrestamosVencidos.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "Sucursal No." + id_sucursal);
+                        string tipo = this.Request.QueryString.Get("tipo");
+                        if (tipo == "excel")
+                        {
+                            ReportePrestamosVencidos.ExportToHttpResponse(ExportFormatType.ExcelWorkbook, Response, false, "Sucursal No." + id_sucursal);
+                        }
+                        else
+                        {
+                            ReportePrestamosVencidos.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "Sucursal No." + id_sucursal);
+                        }
+                        
                     }
                     catch (Exception ex)
                     {

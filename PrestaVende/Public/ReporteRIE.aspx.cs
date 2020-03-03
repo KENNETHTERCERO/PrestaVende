@@ -54,13 +54,13 @@ namespace PrestaVende.Public
 
             if (int.Parse(id_sucursal) > 0)
             {
-                if (txtFechaInicial.Text.ToString().Length < 1)
+                if (this.txtFechaInicial.Text.ToString().Length < 1)
                     showWarning("Usted debe ingresar una fecha de inicio para poder generar el reporte.");
-                else if (txtFechaFin.Text.ToString().Length < 1)
+                else if (this.txtFechaFin.Text.ToString().Length < 1)
                     showWarning("Usted debe ingresar una fecha de fin para poder generar el reporte.");
                 else
                 {
-                    string scriptEstadoCuenta = "window.open('WebReport.aspx?tipo_reporte=15" + "&id_sucursal=" + id_sucursal + "&id_empresa=" + Convert.ToInt32(this.Session["id_empresa"]) + "&fecha_inicio=" + txtFechaInicial.Text + "&fecha_fin=" + txtFechaFin.Text + "');";
+                    string scriptEstadoCuenta = "window.open('WebReport.aspx?tipo_reporte=15" + "&id_sucursal=" + id_sucursal + "&id_empresa=" + Convert.ToInt32(this.Session["id_empresa"]) + "&fecha_inicio=" + this.txtFechaInicial.Text + "&fecha_fin=" + this.txtFechaFin.Text + "');";
                     ScriptManager.RegisterClientScriptBlock(this, GetType(), "NewWindow", scriptEstadoCuenta, true);
                 }
             }
@@ -112,5 +112,25 @@ namespace PrestaVende.Public
         }
 
         #endregion
+
+        protected void btnGenerarExcel_Click(object sender, EventArgs e)
+        {
+            string id_sucursal = this.ddlSucursal.SelectedValue.ToString();
+
+            if (int.Parse(id_sucursal) > 0)
+            {
+                if (this.txtFechaInicial.Text.ToString().Length < 1)
+                    showWarning("Usted debe ingresar una fecha de inicio para poder generar el reporte.");
+                else if (this.txtFechaFin.Text.ToString().Length < 1)
+                    showWarning("Usted debe ingresar una fecha de fin para poder generar el reporte.");
+                else
+                {
+                    string scriptEstadoCuenta = "window.open('WebReport.aspx?tipo_reporte=15" + "&id_sucursal=" + id_sucursal + "&id_empresa=" + Convert.ToInt32(this.Session["id_empresa"]) + "&fecha_inicio=" + this.txtFechaInicial.Text + "&fecha_fin=" + this.txtFechaFin.Text + "&tipo=excel');";
+                    ScriptManager.RegisterClientScriptBlock(this, GetType(), "NewWindow", scriptEstadoCuenta, true);
+                }
+            }
+            else
+                showWarning("Seleccione una sucursal para poder generar el reporte.");
+        }
     }
 }

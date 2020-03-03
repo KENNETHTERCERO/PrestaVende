@@ -14,10 +14,11 @@
                                 <br />
                                 <br />
                                 <br />
-                                <asp:Button ID="btnGenerar" runat="server" Width="200px" Text="Generar Reporte" class="btn btn-primary" Visible="true" OnClick="btnGenerar_Click"/>
+                                <asp:Button ID="btnGenerar" runat="server" Width="200px" Text="Generar PDF" class="btn btn-danger" Visible="true" OnClick="btnGenerar_Click"/>
                                 <br />
                                 <br />
                                 <br />
+                                <asp:Button ID="btnGenerarExcel" runat="server" Width="200px" Text="Generar EXCEL" class="btn btn-success" Visible="true" OnClick="btnGenerarExcel_Click"/>
                             </div>
                         </center>
                     </div>

@@ -48,7 +48,7 @@ namespace PrestaVende.Public
 
         protected void btnGenerar_Click(object sender, EventArgs e)
         {
-            string id_sucuarsal = ddlSucursal.SelectedValue.ToString();
+            string id_sucuarsal = this.ddlSucursal.SelectedValue.ToString();
 
             if (int.Parse(id_sucuarsal) > 0)
             {
@@ -98,8 +98,20 @@ namespace PrestaVende.Public
             return true;
         }
 
+
         #endregion
 
+        protected void btnGenerarExcel_Click(object sender, EventArgs e)
+        {
+            string id_sucuarsal = this.ddlSucursal.SelectedValue.ToString();
 
+            if (int.Parse(id_sucuarsal) > 0)
+            {
+                string scriptEstadoCuenta = "window.open('WebReport.aspx?tipo_reporte=9" + "&id_sucursal=" + id_sucuarsal + "&tipo=excel');";
+                ScriptManager.RegisterClientScriptBlock(this, GetType(), "NewWindow", scriptEstadoCuenta, true);
+            }
+            else
+                showWarning("Seleccione una sucursal para poder generar el reporte.");
+        }
     }
 }

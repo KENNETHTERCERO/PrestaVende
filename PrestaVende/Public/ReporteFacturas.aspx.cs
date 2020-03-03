@@ -117,5 +117,23 @@ namespace PrestaVende.Public
             lblError.Controls.Add(new LiteralControl(string.Format("<span style='color:Red'>{0}</span>", error)));
             return true;
         }
+
+        protected void btnGenerarExcel_Click(object sender, EventArgs e)
+        {
+            string id_sucuarsal = this.ddlSucursal.SelectedValue.ToString();
+
+            if (int.Parse(id_sucuarsal) > 0)
+                if (this.txtFechaInicial.Text.ToString().Length < 1)
+                    showWarning("Usted debe ingresar una fecha de inicio para poder generar el reporte.");
+                else if (this.txtFechaFin.Text.ToString().Length < 1)
+                    showWarning("Usted debe ingresar una fecha de fin para poder generar el reporte.");
+                else
+                {
+                    string scriptEstadoCuenta = "window.open('WebReport.aspx?tipo_reporte=14" + "&id_sucursal=" + id_sucuarsal + "&fecha_inicio=" + this.txtFechaInicial.Text + "&fecha_fin=" + this.txtFechaFin.Text + "&tipo_factura=" + this.ddlTipoFactura.SelectedValue.ToString() + "&tipo=excel');";
+                    ScriptManager.RegisterClientScriptBlock(this, GetType(), "NewWindow", scriptEstadoCuenta, true);
+                }
+            else
+                showWarning("Seleccione una sucursal para poder generar el reporte.");
+        }
     }
 }
