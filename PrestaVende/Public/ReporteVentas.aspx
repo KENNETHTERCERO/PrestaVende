@@ -1,8 +1,8 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Public/PrestaVende.Master" AutoEventWireup="true" CodeBehind="ReporteEstadoCuentaCaja.aspx.cs" Inherits="PrestaVende.Public.ReporteEstadoCuentaCaja" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Public/PrestaVende.Master" AutoEventWireup="true" CodeBehind="ReporteVentas.aspx.cs" Inherits="PrestaVende.Public.ReporteVentas" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-<asp:UpdatePanel runat="server" ID="uPanel">
+    <asp:UpdatePanel runat="server" ID="uPanel">
         <ContentTemplate>
             <div class="container-fluid text-center">
                 <div class="row content">
@@ -14,7 +14,7 @@
                                 <br />
                                 <br />
                                 <br />
-                                <asp:Button ID="btnGenerar" runat="server" Width="200px" Text="Generar PDF" class="btn btn-danger" Visible="true" OnClick="btnGenerar_Click"/>
+                                <asp:Button ID="btnGenerar" runat="server" Width="200px" Text="Generar PDF" class="btn btn-danger" Visible="true" OnClick="btnGenerar_Click" />
                                 <br />
                                 <br />
                                 <br />
@@ -51,7 +51,7 @@
                                                 <table>
                                                     <tr>
                                                         <td>
-                                                            <h1>Reporte Estado de Cuenta Por Caja&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h1>
+                                                            <h1>Reporte Liquidaciones&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h1>
                                                         </td>
                                                         <!--<td>
                                                             <big><asp:Label ID="lblPrestamo" runat="server">Prestamo:&nbsp;&nbsp;</asp:Label></big>
@@ -76,41 +76,29 @@
                                                     </td>        
                                                     <td></td>               
                                                     <td>
-                                                        <asp:DropDownList ID="ddlSucursal" runat="server" CssClass="form-control" AutoPostBack="true"></asp:DropDownList>
-                                                    </td>
+                                                        <asp:DropDownList ID="ddlSucursal" runat="server" CssClass="form-control"></asp:DropDownList>
+                                                    </td> 
                                                 </tr>                                                
                                                 <tr>
-                                                    <td colspan="4" style="height:20px;">
-
+                                                    <td colspan="4" style="height:20px;"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <asp:Label ID="lblFechaInicio" runat="server" Text="FECHA INICIO" Font-Bold="true"></asp:Label>
+                                                    </td>
+                                                    <td style="width:40px"></td>
+                                                    <td>
+                                                        <asp:Label ID="lblFechaFin" runat="server" Text="FECHA FIN"  Font-Bold="true"></asp:Label>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td colspan="2">
-                                                        <asp:Label ID="lblCajas" runat="server" Font-Bold="true">CAJA</asp:Label>
+                                                        <asp:TextBox ID="txtFechaInicial" runat="server" class="form-control" TextMode="Date"></asp:TextBox>
                                                     </td>
                                                     <td></td>
                                                     <td>
-                                                        <asp:DropDownList ID="ddlCaja" runat="server" AutoPostBack="true" CssClass="form-control">
-                                                        </asp:DropDownList>
-                                                    </td>
-                                                    <tr>
-                                                        <td colspan="2">
-                                                            <asp:Label ID="lblFechaInicio" runat="server" Font-Bold="true" Text="FECHA INICIO"></asp:Label>
-                                                        </td>
-                                                        <td style="width:40px"></td>
-                                                        <td>
-                                                            <asp:Label ID="lblFechaFin" runat="server" Font-Bold="true" Text="FECHA FIN"></asp:Label>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td colspan="2">
-                                                            <asp:TextBox ID="txtFechaInicial" runat="server" class="form-control" TextMode="Date"></asp:TextBox>
-                                                        </td>
-                                                        <td></td>
-                                                        <td>
-                                                            <asp:TextBox ID="txtFechaFin" runat="server" class="form-control" TextMode="Date"></asp:TextBox>
-                                                        </td>
-                                                    </tr>
+                                                        <asp:TextBox ID="txtFechaFin" runat="server" class="form-control" TextMode="Date"></asp:TextBox>
+                                                    </td>                                                                                                                                                      
                                                 </tr>
                                             </table>
                                         </div>
@@ -127,5 +115,4 @@
             </div>
         </ContentTemplate>
     </asp:UpdatePanel>
-
 </asp:Content>
