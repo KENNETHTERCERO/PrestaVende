@@ -154,6 +154,7 @@
     <Content Include="Public\WFMantenimientoTipoCaja.aspx" />
     <Content Include="Public\WFMantAreaEmpresa.aspx" />
     <Content Include="Public\WFMantenimientoAsignacionCaja.aspx" />
+    <Content Include="Public\WFMantenimientoUsuario.aspx" />
     <Content Include="Public\WFPrestamo.aspx" />
     <Content Include="Public\WFRetiroArticulo.aspx" />
     <Content Include="WebLogin.aspx" />
@@ -784,6 +785,13 @@
     </Compile>
     <Compile Include="Public\WFMantenimientoAsignacionCaja.aspx.designer.cs">
       <DependentUpon>WFMantenimientoAsignacionCaja.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\WFMantenimientoUsuario.aspx.cs">
+      <DependentUpon>WFMantenimientoUsuario.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\WFMantenimientoUsuario.aspx.designer.cs">
+      <DependentUpon>WFMantenimientoUsuario.aspx</DependentUpon>
     </Compile>
     <Compile Include="Public\WFPrestamo.aspx.cs">
       <DependentUpon>WFPrestamo.aspx</DependentUpon>
