@@ -127,5 +127,144 @@ namespace PrestaVende.CLASS
             }
             return error;
         }
+
+        public DataTable ObtenerEmpresa(ref string error)
+        {
+            try
+            {
+                DataTable datosEmpresa = new DataTable();
+                connect.connection.Open();
+                command.Connection = connect.connection;
+                command.CommandText = "select id_empresa, empresa from tbl_empresa where estado = 1";
+                datosEmpresa.Load(command.ExecuteReader());
+                return datosEmpresa;
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                return null;
+            }
+            finally
+            {
+                connect.connection.Close();
+            }
+        }
+
+        public DataTable ObtenerRoles(ref string error)
+        {
+            try
+            {
+                DataTable datosRol = new DataTable();
+                connect.connection.Open();
+                command.Connection = connect.connection;
+                command.CommandText = "select id_rol, descripcion as rol from tbl_rol where estado = 1";
+                datosRol.Load(command.ExecuteReader());
+                return datosRol;
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                return null;
+            }
+            finally
+            {
+                connect.connection.Close();
+            }
+        }
+
+        public DataSet ObtenerUsuarios(ref string error, int id_sucursal, int id_usuario = -1)
+        {
+
+            DataSet ds = new DataSet();
+
+            try
+            {
+
+                connect.connection.Open();
+                command.Connection = connect.connection;
+
+                SqlDataAdapter adapter;
+                SqlParameter param;
+
+                command.CommandType = CommandType.StoredProcedure;
+                command.CommandText = "SP_consultar_usuario";
+
+                param = new SqlParameter("@id_sucursal", (id_sucursal == 0 ? DBNull.Value : (object) id_sucursal));
+                param.Direction = ParameterDirection.Input;                
+                command.Parameters.Add(param);
+
+                param = new SqlParameter("@id_usuario", (id_usuario == -1 ? DBNull.Value : (object)id_usuario));
+                param.Direction = ParameterDirection.Input;                
+                command.Parameters.Add(param);
+
+                adapter = new SqlDataAdapter(command);
+                adapter.Fill(ds);
+                               
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                
+            }
+            finally
+            {
+                connect.connection.Close();
+            }
+
+            return ds;
+        }
+
+        public bool crearActualizarUsuario(ref string error, int id_usuario, int id_empresa,  int id_sucursal, string usuario, string password_user, string primer_nombre, string segundo_nombre, string primer_apellido, string segundo_apellido, int id_rol, int estado, int caja_asignada, bool cambio_estado)
+        {
+
+            try
+            {
+                connect.connection.Open();
+                command.Connection = connect.connection;
+                command.Transaction = connect.connection.BeginTransaction();
+                command.Parameters.Clear();
+                command.CommandText = "SP_crear_actualizar_usuario";
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@id_usuario", (id_usuario == -1 ? DBNull.Value : (object)id_usuario));
+                command.Parameters.AddWithValue("@id_empresa", id_empresa);
+                command.Parameters.AddWithValue("@id_sucursal", id_sucursal);
+                command.Parameters.AddWithValue("@usuario", usuario);
+                command.Parameters.AddWithValue("@password_user", password_user);
+                command.Parameters.AddWithValue("@primer_nombre", primer_nombre);
+                command.Parameters.AddWithValue("@segundo_nombre", segundo_nombre);
+                command.Parameters.AddWithValue("@primer_apellido", primer_apellido);
+                command.Parameters.AddWithValue("@segundo_apellido", segundo_apellido);
+                command.Parameters.AddWithValue("@id_rol", id_rol);
+                command.Parameters.AddWithValue("@estado", estado);
+                command.Parameters.AddWithValue("@caja_asignada", caja_asignada);
+                command.Parameters.AddWithValue("@cambio_estado", cambio_estado);
+
+
+                if (int.Parse(command.ExecuteNonQuery().ToString()) > 0)
+                {
+                    command.Transaction.Commit();
+                    return true;
+                }
+                else
+                {
+                    throw new SystemException("No se pudo "+ (id_usuario==-1? "crear" : "actualizar") + " el Usuario, por favor, valide los datos o comuniquese con el administrador del sistema.");
+                }
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                command.Transaction.Rollback();
+                return false;
+            }
+            finally
+            {
+                connect.connection.Close();
+            }          
+            
+              
+         
+        }
+
+
     }
 }
