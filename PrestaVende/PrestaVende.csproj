@@ -118,9 +118,11 @@
     <Content Include="Public\AutorizacionEncargado.aspx" />
     <Content Include="Public\BusquedaCliente.aspx" />
     <Content Include="Public\CambioPrecioProducto.aspx" />
+    <Content Include="Public\Casillas.aspx" />
     <Content Include="Public\FacturacionProductos.aspx" />
     <Content Include="Public\image\candado.png" />
     <Content Include="Public\ImpresionFormatos.aspx" />
+    <Content Include="Public\IncrementosDecrementos.aspx" />
     <Content Include="Public\Intereses.aspx" />
     <Content Include="Public\Marcas.aspx" />
     <Content Include="Public\PrestaVende.Master" />
@@ -557,6 +559,13 @@
     <Compile Include="Public\CambioPrecioProducto.aspx.designer.cs">
       <DependentUpon>CambioPrecioProducto.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Public\Casillas.aspx.cs">
+      <DependentUpon>Casillas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\Casillas.aspx.designer.cs">
+      <DependentUpon>Casillas.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Public\FacturacionProductos.aspx.cs">
       <DependentUpon>FacturacionProductos.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -570,6 +579,13 @@
     </Compile>
     <Compile Include="Public\ImpresionFormatos.aspx.designer.cs">
       <DependentUpon>ImpresionFormatos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\IncrementosDecrementos.aspx.cs">
+      <DependentUpon>IncrementosDecrementos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\IncrementosDecrementos.aspx.designer.cs">
+      <DependentUpon>IncrementosDecrementos.aspx</DependentUpon>
     </Compile>
     <Compile Include="Public\Intereses.aspx.cs">
       <DependentUpon>Intereses.aspx</DependentUpon>
