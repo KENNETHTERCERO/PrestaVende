@@ -116,6 +116,7 @@
     </Content>
     <Content Include="Public\AnulacionFactura.aspx" />
     <Content Include="Public\AutorizacionEncargado.aspx" />
+    <Content Include="Public\BuscarClienteSeguimiento.aspx" />
     <Content Include="Public\BusquedaCliente.aspx" />
     <Content Include="Public\CambioPrecioProducto.aspx" />
     <Content Include="Public\Casillas.aspx" />
@@ -124,6 +125,7 @@
     <Content Include="Public\ImpresionFormatos.aspx" />
     <Content Include="Public\IncrementosDecrementos.aspx" />
     <Content Include="Public\Intereses.aspx" />
+    <Content Include="Public\ListadoPrestamoSeguimiento.aspx" />
     <Content Include="Public\Marcas.aspx" />
     <Content Include="Public\PrestaVende.Master" />
     <Content Include="Public\ProyeccionInteres.aspx" />
@@ -546,6 +548,13 @@
     <Compile Include="Public\AutorizacionEncargado.aspx.designer.cs">
       <DependentUpon>AutorizacionEncargado.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Public\BuscarClienteSeguimiento.aspx.cs">
+      <DependentUpon>BuscarClienteSeguimiento.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\BuscarClienteSeguimiento.aspx.designer.cs">
+      <DependentUpon>BuscarClienteSeguimiento.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Public\BusquedaCliente.aspx.cs">
       <DependentUpon>BusquedaCliente.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -594,6 +603,13 @@
     </Compile>
     <Compile Include="Public\Intereses.aspx.designer.cs">
       <DependentUpon>Intereses.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\ListadoPrestamoSeguimiento.aspx.cs">
+      <DependentUpon>ListadoPrestamoSeguimiento.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\ListadoPrestamoSeguimiento.aspx.designer.cs">
+      <DependentUpon>ListadoPrestamoSeguimiento.aspx</DependentUpon>
     </Compile>
     <Compile Include="Public\Marcas.aspx.cs">
       <DependentUpon>Marcas.aspx</DependentUpon>

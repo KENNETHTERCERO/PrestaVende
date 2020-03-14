@@ -982,5 +982,87 @@ namespace PrestaVende.CLASS
                 return false;
             }
         }
+
+        public DataTable GetSeguimientos(ref string error, string id_prestamo, string id_sucursal)
+        {
+            DataTable dtContrato = new DataTable("dtContrato");
+            try
+            {
+                connection.connection.Open();
+                command.Connection = connection.connection;
+                command.Parameters.Clear();
+                command.CommandText = "select ts.tipo_seguimiento,s.descripcion,convert(varchar, s.fecha_creacion, 103) as fecha_creacion from tbl_seguimiento s" +
+                                       " inner join tbl_tipo_seguimiento ts on ts.id_tipo_seguimiento = s.id_tipo_seguimiento" +
+                                       " where s.numero_prestamo = @id_prestamo and s.id_sucursal = @id_sucursal";
+                command.Parameters.AddWithValue("@id_prestamo", id_prestamo);
+                command.Parameters.AddWithValue("@id_sucursal", id_sucursal);
+                dtContrato.Load(command.ExecuteReader());
+                return dtContrato;
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                return null;
+            }
+            finally
+            {
+                connection.connection.Close();
+            }
+        }
+
+        public bool GuardarSeguimientos(ref string error, string numero_prestamo, string id_sucursal, string id_tipo_seguimiento, string descripcion)
+        {            
+            try
+            {
+                int insert = 0;
+                connection.connection.Open();
+                command.Connection = connection.connection;
+                command.Parameters.Clear();
+                command.CommandText = "INSERT INTO tbl_seguimiento ([id_tipo_seguimiento],[numero_prestamo],[id_sucursal],[descripcion],[fecha_creacion],[fecha_modificacion])" +
+                                      " VALUES(@id_tipo_seguimiento, @numero_prestamo, @id_sucursal, @descripcion, GETDATE(), GETDATE())";
+                command.Parameters.AddWithValue("@numero_prestamo", numero_prestamo);
+                command.Parameters.AddWithValue("@id_sucursal", id_sucursal);
+                command.Parameters.AddWithValue("@id_tipo_seguimiento", id_tipo_seguimiento);
+                command.Parameters.AddWithValue("@descripcion", descripcion);
+                insert = command.ExecuteNonQuery();
+
+                if (insert > 0)
+                    return true;
+                else
+                    return false;
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                return false;
+            }
+            finally
+            {
+                connection.connection.Close();
+            }
+        }
+
+        public DataTable getTipoSeguimiento(ref string error)
+        {
+            try
+            {
+                DataTable dtPlanPrestamo = new DataTable("planPrestamo");
+                connection.connection.Open();
+                command.Connection = connection.connection;
+                command.CommandText = "SELECT 0 AS id_tipo_seguimiento, 'SELECCIONAR' AS tipo_seguimiento UNION " +
+                                      "SELECT id_tipo_seguimiento, tipo_seguimiento FROM tbl_tipo_seguimiento WHERE estado = 1";
+                dtPlanPrestamo.Load(command.ExecuteReader());
+                return dtPlanPrestamo;
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                return null;
+            }
+            finally
+            {
+                connection.connection.Close();
+            }
+        }
     }
 }
