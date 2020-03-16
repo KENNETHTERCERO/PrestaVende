@@ -207,6 +207,24 @@ namespace PrestaVende.Public
                                     showError("No se pudo realizar recepcion de incremento a capital." + error);
                                 }
                             }
+                            else if (this.ddIdEstadoCaja.SelectedValue.ToString().Equals("8"))
+                            {
+                                if (mAsignacionCaja.recibirIncrementoCapitalCaja(ref error, this.ddidAsignacion.Text.ToString(), this.txtMonto.Text.ToString(), this.ddIdCaja.SelectedValue.ToString(), this.ddIdUsuarioAsignado.SelectedValue.ToString()))
+                                {
+                                    if (Convert.ToString(Session["id_caja"]) == this.ddIdCaja.SelectedValue.ToString() || this.ddIdEstadoCaja.SelectedValue.ToString() == "7")
+                                    {
+                                        OpcionSalir();
+                                        Response.Redirect("~/WebLogin.aspx", false);
+                                    }
+                                    hideOrShowDiv(true);
+                                    getDataGrid();
+                                    isUpdate = false;
+                                }
+                                else
+                                {
+                                    showError("No se pudo realizar recepcion de incremento a capital." + error);
+                                }
+                            }
                         }
                         else
                         {
@@ -494,7 +512,7 @@ namespace PrestaVende.Public
                 else if (this.ddIdEstadoCaja.SelectedValue.ToString().Equals("0")) { showWarning("Usted debe seleccionar un estado de caja válido."); return false; }
                 else if (this.ddIdUsuarioAsignado.SelectedValue.Equals("0")) { showWarning("Usted debe seleccionar un usuario válido."); return false; }
                 else if (!validaMontoCierre()){ showWarning("No se puede realizar el cierre de caja."); return false; }
-                else if (this.ddIdUsuarioAsignado.SelectedValue.ToString() != this.Session["id_usuario"].ToString() && this.ddIdEstadoCaja.SelectedValue.ToString() == "7")
+                else if ((this.ddIdUsuarioAsignado.SelectedValue.ToString() != this.Session["id_usuario"].ToString() && this.ddIdEstadoCaja.SelectedValue.ToString() == "7") && isUpdate)
                 {
                     showWarning("Usted no puede recibir el incremento de capital ya que no es quien esta asignado a ese incremento."); return false;
                 }

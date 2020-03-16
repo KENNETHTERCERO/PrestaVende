@@ -280,7 +280,90 @@ namespace PrestaVende.CLASS
                 connection.connection.Close();
             }
         }
+
+        public DataTable getCajaGeneral(ref string error, string id_sucursal)
+        {
+            try
+            {
+                DataTable Caja = new DataTable("CajaGeneral");
+                connection.connection.Open();
+                command.Connection = connection.connection;
+                command.CommandText = "SELECT 0 AS id_caja, 'SELECCIONAR' nombre_caja UNION " +
+                                        "SELECT id_caja, nombre_caja FROM tbl_caja WHERE id_tipo_caja = 1 AND id_sucursal = @id_sucursal";
+                command.Parameters.AddWithValue("@id_sucursal", id_sucursal);
+                Caja.Load(command.ExecuteReader());
+                return Caja;
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                return null;
+            }
+            finally
+            {
+                connection.connection.Close();
+            }
+        }
+
+        public DataTable getTipoMovimiento(ref string error)
+        {
+            try
+            {
+                DataTable Caja = new DataTable("CajaGeneral");
+                connection.connection.Open();
+                command.Connection = connection.connection;
+                command.CommandText = "SELECT 0 AS id_estado_caja, 'SELECCIONAR' estado_caja UNION " +
+                                        "SELECT id_estado_caja, estado_caja FROM tbl_estado_caja WHERE id_estado_caja in (7, 8)";
+                Caja.Load(command.ExecuteReader());
+                return Caja;
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                return null;
+            }
+            finally
+            {
+                connection.connection.Close();
+            }
+        }
+
+        public bool insertMovimientoCaja(ref string error, string id_sucursal, string monto, string tipo_transaccion)
+        {
+            try
+            {
+                DataTable dtVAlidacionDatos = new DataTable("validaDatos");
+                connection.connection.Open();
+                command.Connection = connection.connection;
+                command.Transaction = connection.connection.BeginTransaction();
+                command.Parameters.Clear();
+                command.CommandText = "exec SP_MovimientosCajaGeneral @id_sucursal, @monto, @tipo_transaccion, @usuario_asigna, (SELECT TOP 1 id_usuario FROM tbl_usuario WHERE id_sucursal = @id_sucursal AND id_rol in (3, 4)) ";
+                command.Parameters.AddWithValue("@id_sucursal", id_sucursal);
+                command.Parameters.AddWithValue("@monto", monto);
+                command.Parameters.AddWithValue("@tipo_transaccion", tipo_transaccion);
+                command.Parameters.AddWithValue("@usuario_asigna", Convert.ToInt32(HttpContext.Current.Session["id_usuario"]));
+                dtVAlidacionDatos.Load(command.ExecuteReader());
+
+                if (dtVAlidacionDatos.Rows.Count > 0)
+                {
+                    command.Transaction.Commit();
+                    return true;
+                }
+                else
+                {
+                    throw new SystemException("No se pudo insertar el movimiento, por favor valide de nuevo.");
+                }
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                command.Transaction.Rollback();
+                return false;
+            }
+            finally
+            {
+                connection.connection.Close();
+            }
+        }
     }
-
-
 }
