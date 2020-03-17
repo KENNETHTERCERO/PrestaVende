@@ -10,7 +10,7 @@
                         <center>
                         <h2>Opciones</h2>
                             <div class=".btn-group-vertical">
-                                <asp:Button ID="btnSalir" runat="server" Width="200px" Text="Regresar" class="btn btn-default" Visible="false" OnClick="btnSalir_Click"/>
+                                <button id="btnBack" onclick="goBack()" style="width: 200px;" class="btn btn-default">Regresar</button>
                                 <br />
                                 <br />
                                 <br />

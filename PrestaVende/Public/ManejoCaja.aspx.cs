@@ -34,6 +34,7 @@ namespace PrestaVende.Public
                     else
                     {
                         ObtenerSucursales();
+                        ObtenerTipoMovimiento();
                     }
                 }
             }
@@ -130,7 +131,7 @@ namespace PrestaVende.Public
                 error = "";
                 if (cs_caja.insertMovimientoCaja(ref error, this.ddlSucursal.SelectedValue.ToString(), this.txtMonto.Text.ToString(), this.ddlTipoMovimiento.SelectedValue.ToString()))
                 {
-                    showSuccess("Se realizo el " + this.ddlTipoMovimiento.Text.ToString() + " de Q" + this.txtMonto.Text.ToString());
+                    showSuccess("Se realizo el " + this.ddlTipoMovimiento.SelectedItem.ToString() + " de Q" + this.txtMonto.Text.ToString());
                     ddlSucursal.SelectedValue = "0";
                     ddlCajaGeneral.SelectedValue = "0";
                     ddlTipoMovimiento.SelectedValue = "0";

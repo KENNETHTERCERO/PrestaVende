@@ -337,7 +337,7 @@ namespace PrestaVende.CLASS
                 command.Connection = connection.connection;
                 command.Transaction = connection.connection.BeginTransaction();
                 command.Parameters.Clear();
-                command.CommandText = "exec SP_MovimientosCajaGeneral @id_sucursal, @monto, @tipo_transaccion, @usuario_asigna, (SELECT TOP 1 id_usuario FROM tbl_usuario WHERE id_sucursal = @id_sucursal AND id_rol in (3, 4)) ";
+                command.CommandText = "exec SP_MovimientosCajaGeneral @id_sucursal, @monto, @tipo_transaccion, @usuario_asigna, @usuario_asigna";
                 command.Parameters.AddWithValue("@id_sucursal", id_sucursal);
                 command.Parameters.AddWithValue("@monto", monto);
                 command.Parameters.AddWithValue("@tipo_transaccion", tipo_transaccion);

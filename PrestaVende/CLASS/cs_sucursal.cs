@@ -216,7 +216,7 @@ namespace PrestaVende.CLASS
                 DataTable DatosAreaEmpresa = new DataTable();
                 connection.connection.Open();
                 command.Connection = connection.connection;
-                command.CommandText = esAdmin ? "select id_sucursal, sucursal from tbl_sucursal" : "select id_sucursal, sucursal from tbl_sucursal where id_empresa = @id_empresa";
+                command.CommandText = esAdmin ? "SELECT 0 AS id_sucursal, 'SELECCIONAR' AS sucursal UNION select id_sucursal, sucursal from tbl_sucursal" : "SELECT 0 AS id_sucursal, 'SELECCIONAR' AS sucursal UNION select id_sucursal, sucursal from tbl_sucursal where id_empresa = @id_empresa";
                 command.Parameters.AddWithValue("@id_empresa", id_empresa);
                 DatosAreaEmpresa.Load(command.ExecuteReader());
                 return DatosAreaEmpresa;
