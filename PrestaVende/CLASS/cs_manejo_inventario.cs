@@ -18,7 +18,7 @@ namespace PrestaVende.CLASS
             connection = new cs_connection();   
         }
 
-        public DataTable getArticulos(ref string error, string numero_prestamo)
+        public DataTable getArticulos(ref string error, string numero_prestamo, int id_sucursal)
         {
             try
             {
@@ -29,7 +29,7 @@ namespace PrestaVende.CLASS
                 command.Parameters.Clear();
                 command.CommandText = "exec sp_obtiene_producto_venta @id_sucursal, @numero_prestamo";
                 command.Parameters.AddWithValue("@numero_prestamo", numero_prestamo);
-                command.Parameters.AddWithValue("@id_sucursal", Convert.ToInt32(HttpContext.Current.Session["id_sucursal"]));
+                command.Parameters.AddWithValue("@id_sucursal", id_sucursal);
                 dtArticulos.Load(command.ExecuteReader());
                 return dtArticulos;
             }
@@ -44,7 +44,7 @@ namespace PrestaVende.CLASS
             }
         }
 
-        public DataTable getArticuloEspecifico(ref string error, string numero_prestamo, string id_inventario)
+        public DataTable getArticuloEspecifico(ref string error, string numero_prestamo, string id_inventario, int id_sucursal)
         {
             try
             {
@@ -55,7 +55,7 @@ namespace PrestaVende.CLASS
                 command.Parameters.Clear();
                 command.CommandText = "exec sp_obtiene_producto_venta_detalle @id_sucursal, @numero_prestamo, @id_inventario";
                 command.Parameters.AddWithValue("@numero_prestamo", numero_prestamo);
-                command.Parameters.AddWithValue("@id_sucursal", Convert.ToInt32(HttpContext.Current.Session["id_sucursal"]));
+                command.Parameters.AddWithValue("@id_sucursal", id_sucursal);
                 command.Parameters.AddWithValue("@id_inventario", id_inventario);
                 dtArticulos.Load(command.ExecuteReader());
                 return dtArticulos;
@@ -371,7 +371,7 @@ namespace PrestaVende.CLASS
             }
         }
 
-        private bool update_correlativo_serie(ref string error, string id_serie, string numero_factura)
+        public bool update_correlativo_serie(ref string error, string id_serie, string numero_factura)
         {
             try
             {

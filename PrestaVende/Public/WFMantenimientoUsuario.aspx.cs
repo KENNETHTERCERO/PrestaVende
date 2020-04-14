@@ -27,9 +27,9 @@ namespace PrestaVende.Public
                 else
                 {
                     //Pruebas
-                    //this.Session["id_empresa"] = 1;
-                    //this.Session["id_rol"] = 3;
-                    //this.Session["id_sucursal"] = 2;
+                    //    this.Session["id_empresa"] = 1;
+                    //this.Session["id_rol"] = 1;
+                    //this.Session["id_sucursal"] = 0;
 
                     if (IsPostBack)
                     {

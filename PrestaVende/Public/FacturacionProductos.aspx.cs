@@ -59,7 +59,7 @@ namespace PrestaVende.Public
             try
             {
                 DataTable dtComprobar = new DataTable();
-                dtComprobar = cs_manejo_inventario.getArticulos(ref error, this.txtBusqueda.Text.ToString());
+                dtComprobar = cs_manejo_inventario.getArticulos(ref error, this.txtBusqueda.Text.ToString(), int.Parse(this.Session["id_sucursal"].ToString()));
                 if (dtComprobar.Rows.Count <= 0)
                 {
                     showWarning("No se encontro ningun articulo con este numero de prestamo.");
@@ -108,7 +108,7 @@ namespace PrestaVende.Public
                     DataTable ArticuloCompleto = (DataTable)this.Session["CurrentTableJoyas"];
                     DataTable articuloViene = new DataTable("articuloViene");
                     cs_manejo_inventario = new CLASS.cs_manejo_inventario();
-                    articuloViene = cs_manejo_inventario.getArticuloEspecifico(ref error, this.txtBusqueda.Text.ToString(), this.ddlArticulos.SelectedValue.ToString());
+                    articuloViene = cs_manejo_inventario.getArticuloEspecifico(ref error, this.txtBusqueda.Text.ToString(), this.ddlArticulos.SelectedValue.ToString(), Convert.ToInt32(this.Session["id_sucursal"]));
 
                     foreach (DataRow item in articuloViene.Rows)
                     {

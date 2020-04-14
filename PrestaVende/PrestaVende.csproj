@@ -131,6 +131,7 @@
     <Content Include="Public\ProyeccionInteres.aspx" />
     <Content Include="Public\RecepcionCaja.aspx" />
     <Content Include="Public\RecepcionLiquidaciones.aspx" />
+    <Content Include="Public\RecepcionTrasladoArticulos.aspx" />
     <Content Include="Public\ReimpresionFacturaRecibo.aspx" />
     <Content Include="Public\ReporteAbonos.aspx" />
     <Content Include="Public\ReporteCancelaciones.aspx" />
@@ -142,6 +143,7 @@
     <Content Include="Public\ReporteRIE.aspx" />
     <Content Include="Public\ReporteVencidos.aspx" />
     <Content Include="Public\ReporteVentas.aspx" />
+    <Content Include="Public\TrasladoArticulos.aspx" />
     <Content Include="Public\WebReport.aspx" />
     <Content Include="Public\WFBusquedaCliente.aspx" />
     <Content Include="Public\WFBusquedaClienteFacturacion.aspx" />
@@ -165,6 +167,17 @@
     <Content Include="WebLogin.aspx" />
     <Content Include="DATASET\DSContratoPrestamo.xsc">
       <DependentUpon>DSContratoPrestamo.xsd</DependentUpon>
+    </Content>
+    <Content Include="DATASET\DSBoletaTraslado.xsc">
+      <DependentUpon>DSBoletaTraslado.xsd</DependentUpon>
+    </Content>
+    <None Include="DATASET\DSBoletaTraslado.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DSBoletaTraslado.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="DATASET\DSBoletaTraslado.xss">
+      <DependentUpon>DSBoletaTraslado.xsd</DependentUpon>
     </Content>
     <None Include="DATASET\DSContratoPrestamo.xsd">
       <SubType>Designer</SubType>
@@ -425,8 +438,14 @@
     <Compile Include="CLASS\cs_plan_prestamo.cs" />
     <Compile Include="CLASS\cs_producto.cs" />
     <Compile Include="CLASS\cs_subcategoria.cs" />
+    <Compile Include="CLASS\cs_traslado.cs" />
     <Compile Include="CLASS\cs_transaccion.cs" />
     <Compile Include="CLASS\cs_usuario.cs" />
+    <Compile Include="DATASET\DSBoletaTraslado.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DSBoletaTraslado.xsd</DependentUpon>
+    </Compile>
     <Compile Include="DATASET\DSContratoPrestamo.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -646,6 +665,13 @@
     <Compile Include="Public\RecepcionLiquidaciones.aspx.designer.cs">
       <DependentUpon>RecepcionLiquidaciones.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Public\RecepcionTrasladoArticulos.aspx.cs">
+      <DependentUpon>RecepcionTrasladoArticulos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\RecepcionTrasladoArticulos.aspx.designer.cs">
+      <DependentUpon>RecepcionTrasladoArticulos.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Public\ReimpresionFacturaRecibo.aspx.cs">
       <DependentUpon>ReimpresionFacturaRecibo.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -722,6 +748,13 @@
     </Compile>
     <Compile Include="Public\ReporteVentas.aspx.designer.cs">
       <DependentUpon>ReporteVentas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\TrasladoArticulos.aspx.cs">
+      <DependentUpon>TrasladoArticulos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\TrasladoArticulos.aspx.designer.cs">
+      <DependentUpon>TrasladoArticulos.aspx</DependentUpon>
     </Compile>
     <Compile Include="Public\WebReport.aspx.cs">
       <DependentUpon>WebReport.aspx</DependentUpon>
@@ -870,6 +903,12 @@
     <Compile Include="Public\WFRetiroArticulo.aspx.designer.cs">
       <DependentUpon>WFRetiroArticulo.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Reports\CRBoletaTraslado.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CRBoletaTraslado.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Reports\CRFacturas.cs">
       <DependentUpon>CRFacturas.rpt</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -988,6 +1027,10 @@
     <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Reports\CRBoletaTraslado.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>CRBoletaTraslado.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reports\CRFacturas.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>CRFacturas.cs</LastGenOutput>
