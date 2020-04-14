@@ -299,6 +299,16 @@ namespace PrestaVende.DATASET {
             
             private global::System.Data.DataColumn columnsucursal_destino;
             
+            private global::System.Data.DataColumn columnid_serie;
+            
+            private global::System.Data.DataColumn columnnumero_boleta;
+            
+            private global::System.Data.DataColumn columnobservaciones;
+            
+            private global::System.Data.DataColumn columnserie;
+            
+            private global::System.Data.DataColumn columnmarca;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public dtBoletaDataTable() {
@@ -414,6 +424,46 @@ namespace PrestaVende.DATASET {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn id_serieColumn {
+                get {
+                    return this.columnid_serie;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn numero_boletaColumn {
+                get {
+                    return this.columnnumero_boleta;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn observacionesColumn {
+                get {
+                    return this.columnobservaciones;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn serieColumn {
+                get {
+                    return this.columnserie;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn marcaColumn {
+                get {
+                    return this.columnmarca;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -449,7 +499,7 @@ namespace PrestaVende.DATASET {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public dtBoletaRow AdddtBoletaRow(string empresa, int id_sucursal_origen, string sucursal_origen, long numero_prestamo, int numero_linea, string producto, string caracteristicas, decimal precio_producto, int id_sucursal_destino, string sucursal_destino) {
+            public dtBoletaRow AdddtBoletaRow(string empresa, int id_sucursal_origen, string sucursal_origen, long numero_prestamo, int numero_linea, string producto, string caracteristicas, decimal precio_producto, int id_sucursal_destino, string sucursal_destino, int id_serie, int numero_boleta, string observaciones, string serie, string marca) {
                 dtBoletaRow rowdtBoletaRow = ((dtBoletaRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         empresa,
@@ -461,7 +511,12 @@ namespace PrestaVende.DATASET {
                         caracteristicas,
                         precio_producto,
                         id_sucursal_destino,
-                        sucursal_destino};
+                        sucursal_destino,
+                        id_serie,
+                        numero_boleta,
+                        observaciones,
+                        serie,
+                        marca};
                 rowdtBoletaRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowdtBoletaRow);
                 return rowdtBoletaRow;
@@ -494,6 +549,11 @@ namespace PrestaVende.DATASET {
                 this.columnprecio_producto = base.Columns["precio_producto"];
                 this.columnid_sucursal_destino = base.Columns["id_sucursal_destino"];
                 this.columnsucursal_destino = base.Columns["sucursal_destino"];
+                this.columnid_serie = base.Columns["id_serie"];
+                this.columnnumero_boleta = base.Columns["numero_boleta"];
+                this.columnobservaciones = base.Columns["observaciones"];
+                this.columnserie = base.Columns["serie"];
+                this.columnmarca = base.Columns["marca"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -519,6 +579,16 @@ namespace PrestaVende.DATASET {
                 base.Columns.Add(this.columnid_sucursal_destino);
                 this.columnsucursal_destino = new global::System.Data.DataColumn("sucursal_destino", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnsucursal_destino);
+                this.columnid_serie = new global::System.Data.DataColumn("id_serie", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnid_serie);
+                this.columnnumero_boleta = new global::System.Data.DataColumn("numero_boleta", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnnumero_boleta);
+                this.columnobservaciones = new global::System.Data.DataColumn("observaciones", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnobservaciones);
+                this.columnserie = new global::System.Data.DataColumn("serie", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnserie);
+                this.columnmarca = new global::System.Data.DataColumn("marca", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnmarca);
                 this.columnid_sucursal_origen.Caption = "id_sucursal";
                 this.columnsucursal_origen.Caption = "sucursal";
             }
@@ -823,6 +893,86 @@ namespace PrestaVende.DATASET {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int id_serie {
+                get {
+                    try {
+                        return ((int)(this[this.tabledtBoleta.id_serieColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'id_serie\' in table \'dtBoleta\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tabledtBoleta.id_serieColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int numero_boleta {
+                get {
+                    try {
+                        return ((int)(this[this.tabledtBoleta.numero_boletaColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'numero_boleta\' in table \'dtBoleta\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tabledtBoleta.numero_boletaColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string observaciones {
+                get {
+                    try {
+                        return ((string)(this[this.tabledtBoleta.observacionesColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'observaciones\' in table \'dtBoleta\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tabledtBoleta.observacionesColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string serie {
+                get {
+                    try {
+                        return ((string)(this[this.tabledtBoleta.serieColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'serie\' in table \'dtBoleta\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tabledtBoleta.serieColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string marca {
+                get {
+                    try {
+                        return ((string)(this[this.tabledtBoleta.marcaColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'marca\' in table \'dtBoleta\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tabledtBoleta.marcaColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsempresaNull() {
                 return this.IsNull(this.tabledtBoleta.empresaColumn);
             }
@@ -939,6 +1089,66 @@ namespace PrestaVende.DATASET {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void Setsucursal_destinoNull() {
                 this[this.tabledtBoleta.sucursal_destinoColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Isid_serieNull() {
+                return this.IsNull(this.tabledtBoleta.id_serieColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setid_serieNull() {
+                this[this.tabledtBoleta.id_serieColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Isnumero_boletaNull() {
+                return this.IsNull(this.tabledtBoleta.numero_boletaColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setnumero_boletaNull() {
+                this[this.tabledtBoleta.numero_boletaColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsobservacionesNull() {
+                return this.IsNull(this.tabledtBoleta.observacionesColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetobservacionesNull() {
+                this[this.tabledtBoleta.observacionesColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsserieNull() {
+                return this.IsNull(this.tabledtBoleta.serieColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetserieNull() {
+                this[this.tabledtBoleta.serieColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsmarcaNull() {
+                return this.IsNull(this.tabledtBoleta.marcaColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetmarcaNull() {
+                this[this.tabledtBoleta.marcaColumn] = global::System.Convert.DBNull;
             }
         }
         

@@ -396,13 +396,14 @@ namespace PrestaVende.Public
 
         private void actualizarTabla()
         {
-            DataTable ArticuloCompleto = (DataTable)this.Session["tablaArticulos"];
+            dtTablaArticulos = new DataTable("tablaArticulos");
+            setColumnsArticulo();
 
             foreach (GridViewRow item in this.gvProductoTraslado.Rows)
             {
                 TextBox txtObservaciones = ((TextBox)item.FindControl("txtObservaciones"));
 
-                row = ArticuloCompleto.NewRow();
+                row = dtTablaArticulos.NewRow();
                 row["id_inventario"] = item.Cells[1].Text.ToString();
                 row["numero_linea"] = item.Cells[2].Text.ToString(); 
                 row["numero_prestamo"] = item.Cells[3].Text.ToString();
@@ -414,9 +415,8 @@ namespace PrestaVende.Public
                 row["observaciones"] = txtObservaciones.Text;
             }
 
-            ArticuloCompleto.Rows.Add(row);
-
-            dtTablaArticulos = ArticuloCompleto;
+            dtTablaArticulos.Rows.Add(row);
+            
             Session["tablaArticulos"] = dtTablaArticulos;
         }
 
@@ -456,6 +456,7 @@ namespace PrestaVende.Public
                 
                 string id_serie_recibo = ddlSerie.SelectedValue.ToString();
                 string numero_recibo = lblNumeroFactura.Text;
+                string id_traslado_encabezado = "";
 
                 if ((DataTable)this.Session["tablaArticulos"] != null)
                 {
@@ -466,12 +467,16 @@ namespace PrestaVende.Public
 
                         actualizarTabla();
 
-                        bool respuesta = cs_traslado.grabarTraslado(int.Parse(ddlSucursalOrigen.SelectedValue.ToString()), int.Parse(ddlSucursalDestino.SelectedValue.ToString()), int.Parse(id_serie_recibo), int.Parse(lblNumeroFactura.Text), (DataTable)this.Session["tablaArticulos"], ref error);
+                        bool respuesta = cs_traslado.grabarTraslado(int.Parse(ddlSucursalOrigen.SelectedValue.ToString()), int.Parse(ddlSucursalDestino.SelectedValue.ToString()), int.Parse(id_serie_recibo), int.Parse(lblNumeroFactura.Text), (DataTable)this.Session["tablaArticulos"], ref id_traslado_encabezado, ref error);
 
                         if (respuesta)
                         {
                             showSuccess("Traslado almacenado con éxito.");
                             Limpiar();
+
+                            string scriptBoletaTraslado = "window.open('WebReport.aspx?tipo_reporte=19" + "&id_traslado_encabezado=" + id_traslado_encabezado + "');";
+                            ScriptManager.RegisterClientScriptBlock(this, GetType(), "NewWindow", scriptBoletaTraslado, true);
+                            
                         }
                         else
                         {

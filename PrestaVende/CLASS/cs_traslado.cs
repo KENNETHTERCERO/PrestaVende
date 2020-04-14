@@ -207,6 +207,7 @@ namespace PrestaVende.CLASS
             {
                 int update = 0;                
                 command.Parameters.Clear();
+                command.CommandType = CommandType.Text;
                 command.CommandText = "UPDATE tbl_serie SET correlativo = @numero_factura_update, " +
                                       "estado = CASE WHEN @numero_factura_update >= numero_de_facturas THEN  0 ELSE estado END " +
                                       "WHERE id_sucursal = @id_sucursal_update AND id_serie = @id_serie_update";
@@ -232,7 +233,7 @@ namespace PrestaVende.CLASS
             }
         }
 
-        internal bool grabarTraslado(int id_sucursal_origen, int id_sucursal_destino, int id_serie, int numero_boleta, DataTable dtArticulos, ref string error)
+        internal bool grabarTraslado(int id_sucursal_origen, int id_sucursal_destino, int id_serie, int numero_boleta, DataTable dtArticulos, ref string str_id_traslado_encabezado, ref string error)
         {
             int id_traslado_encabezado = 0;
             bool respuesta = false;
@@ -258,6 +259,7 @@ namespace PrestaVende.CLASS
                             }
                             else
                             {
+                                str_id_traslado_encabezado = id_traslado_encabezado.ToString();
                                 respuesta = true;                                
                             }
                         }
@@ -294,6 +296,31 @@ namespace PrestaVende.CLASS
             }
 
             return respuesta;
+        }
+
+        internal DataTable ObtenerDatosBoletaTraslado(ref string error, string id_traslado_encabezado)
+        {
+            DataTable dtInventario = new DataTable("dtBoleta");
+
+            try
+            {
+                connection.connection.Open();
+                command.Connection = connection.connection;
+                command.Parameters.Clear();
+                command.CommandText = "exec SP_ObtenerDatosBoletaTraslado @id_traslado_encabezado";
+                command.Parameters.AddWithValue("@id_traslado_encabezado", id_traslado_encabezado);
+                dtInventario.Load(command.ExecuteReader());
+                return dtInventario;
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                return null;
+            }
+            finally
+            {
+                connection.connection.Close();
+            }
         }
     }
 }

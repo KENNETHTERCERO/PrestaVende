@@ -122,7 +122,7 @@ namespace PrestaVende.Public
             {
                 int id_sucursal = Convert.ToInt32(ddlSucursal.SelectedValue.ToString());
                 cs_serie = new CLASS.cs_serie();
-                this.ddlSerie.DataSource = cs_serie.ObtenerSeriesImpresion(ref error, id_sucursal, 3); //2 recibos
+                this.ddlSerie.DataSource = cs_serie.ObtenerSeriesRecepcion(ref error, id_sucursal, 3); //3 boletas traslado
                 this.ddlSerie.DataValueField = "id_serie";
                 this.ddlSerie.DataTextField = "serie";
                 this.ddlSerie.DataBind();                
