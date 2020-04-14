@@ -41,7 +41,7 @@ namespace PrestaVende.CLASS
                 command.Connection = connection.connection;
                 command.CommandText = "SELECT  id_serie,serie"
                                     + " FROM tbl_serie       "
-                                    + " WHERE estado = 1 AND id_sucursal = @id_sucursal";
+                                    + " WHERE estado = 1 AND id_tipo_serie = 1 AND id_sucursal = @id_sucursal";
                 command.Parameters.AddWithValue("@id_sucursal", id_sucursal);
                 Serie.Load(command.ExecuteReader());
                 return Serie;

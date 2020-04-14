@@ -256,6 +256,24 @@ namespace PrestaVende.Public {
         protected global::System.Web.UI.WebControls.Button btnSeguimiento;
         
         /// <summary>
+        /// Control lblSeguimientoNumeroPrestamo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblSeguimientoNumeroPrestamo;
+        
+        /// <summary>
+        /// Control lblNumeroPrestamoSeguimiento.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblNumeroPrestamoSeguimiento;
+        
+        /// <summary>
         /// Control gvSeguimientos.
         /// </summary>
         /// <remarks>

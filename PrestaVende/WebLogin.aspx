@@ -49,7 +49,7 @@
 
         </div>
         <div>
-            <img src="Public/Vista/Images/Logo_TEMP_PALKI.JPG" width="300px" height="300px" />
+            <img src="Public/image/EMPRENDA.png" width="300px" height="100px" />
         </div>
         <div>
             <center>

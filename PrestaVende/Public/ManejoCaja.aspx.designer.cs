@@ -10,7 +10,7 @@
 namespace PrestaVende.Public {
     
     
-    public partial class WFMantenimientoSerie {
+    public partial class ManejoCaja {
         
         /// <summary>
         /// uPanel control.
@@ -22,15 +22,6 @@ namespace PrestaVende.Public {
         protected global::System.Web.UI.UpdatePanel uPanel;
         
         /// <summary>
-        /// btnCreate control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnCreate;
-        
-        /// <summary>
         /// btnGuardar control.
         /// </summary>
         /// <remarks>
@@ -38,15 +29,6 @@ namespace PrestaVende.Public {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnGuardar;
-        
-        /// <summary>
-        /// btnCancel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnCancel;
         
         /// <summary>
         /// divWarning control.
@@ -103,6 +85,24 @@ namespace PrestaVende.Public {
         protected global::System.Web.UI.WebControls.Label lblSuccess;
         
         /// <summary>
+        /// lblPrestamo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblPrestamo;
+        
+        /// <summary>
+        /// lblnombre_prestamo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblnombre_prestamo;
+        
+        /// <summary>
         /// div_ingresa_datos control.
         /// </summary>
         /// <remarks>
@@ -110,42 +110,6 @@ namespace PrestaVende.Public {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_ingresa_datos;
-        
-        /// <summary>
-        /// lblIdSerie control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblIdSerie;
-        
-        /// <summary>
-        /// ddidSerie control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label ddidSerie;
-        
-        /// <summary>
-        /// lblIdSucursal control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblIdSucursal;
-        
-        /// <summary>
-        /// ddidSucursal control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddidSucursal;
         
         /// <summary>
         /// lblSerie control.
@@ -157,102 +121,66 @@ namespace PrestaVende.Public {
         protected global::System.Web.UI.WebControls.Label lblSerie;
         
         /// <summary>
-        /// txtSerie control.
+        /// ddlSucursal control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtSerie;
+        protected global::System.Web.UI.WebControls.DropDownList ddlSucursal;
         
         /// <summary>
-        /// lblResolucion control.
+        /// lblCajaGeneral control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblResolucion;
+        protected global::System.Web.UI.WebControls.Label lblCajaGeneral;
         
         /// <summary>
-        /// txtResolucion control.
+        /// ddlCajaGeneral control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtResolucion;
+        protected global::System.Web.UI.WebControls.DropDownList ddlCajaGeneral;
         
         /// <summary>
-        /// lblFechaResolucion control.
+        /// lblTipoMovimiento control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblFechaResolucion;
+        protected global::System.Web.UI.WebControls.Label lblTipoMovimiento;
         
         /// <summary>
-        /// txtFechaResolucion control.
+        /// ddlTipoMovimiento control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtFechaResolucion;
+        protected global::System.Web.UI.WebControls.DropDownList ddlTipoMovimiento;
         
         /// <summary>
-        /// lblNumeroDeFacturas control.
+        /// lblMonto control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblNumeroDeFacturas;
+        protected global::System.Web.UI.WebControls.Label lblMonto;
         
         /// <summary>
-        /// txtNumeroDeFacturas control.
+        /// txtMonto control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtNumeroDeFacturas;
-        
-        /// <summary>
-        /// lblEstado control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblEstado;
-        
-        /// <summary>
-        /// ddEstado control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddEstado;
-        
-        /// <summary>
-        /// div_gridView control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_gridView;
-        
-        /// <summary>
-        /// GrdVSerie control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GrdVSerie;
+        protected global::System.Web.UI.WebControls.TextBox txtMonto;
     }
 }

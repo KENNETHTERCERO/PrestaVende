@@ -991,7 +991,7 @@ namespace PrestaVende.CLASS
                 connection.connection.Open();
                 command.Connection = connection.connection;
                 command.Parameters.Clear();
-                command.CommandText = "select ts.tipo_seguimiento,s.descripcion,convert(varchar, s.fecha_creacion, 103) as fecha_creacion from tbl_seguimiento s" +
+                command.CommandText = "select ts.tipo_seguimiento,s.descripcion, s.fecha_creacion from tbl_seguimiento s" +
                                        " inner join tbl_tipo_seguimiento ts on ts.id_tipo_seguimiento = s.id_tipo_seguimiento" +
                                        " where s.numero_prestamo = @id_prestamo and s.id_sucursal = @id_sucursal";
                 command.Parameters.AddWithValue("@id_prestamo", id_prestamo);

@@ -86,7 +86,6 @@ namespace PrestaVende.Public
                 {
                     div_ingresa_datos.Visible = false;
                     div_gridView.Visible = true;
-                    btnSalir.Visible = true;
                     btnCreate.Visible = true;
                     btnCancel.Visible = false;
                     btnGuardar.Visible = false;
@@ -95,7 +94,6 @@ namespace PrestaVende.Public
                 {
                     div_ingresa_datos.Visible = true;
                     div_gridView.Visible = false;
-                    btnSalir.Visible = false;
                     btnCreate.Visible = false;
                     btnCancel.Visible = true;
                     btnGuardar.Visible = true;
@@ -105,11 +103,6 @@ namespace PrestaVende.Public
             {
                 throw;
             }
-        }
-
-        protected void btnSalir_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("WFPrincipal.aspx");
         }
 
         protected void btnCreate_Click(object sender, EventArgs e)

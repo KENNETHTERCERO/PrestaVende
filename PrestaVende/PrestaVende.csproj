@@ -122,9 +122,11 @@
     <Content Include="Public\Casillas.aspx" />
     <Content Include="Public\FacturacionProductos.aspx" />
     <Content Include="Public\image\candado.png" />
+    <Content Include="Public\image\EMPRENDA.png" />
     <Content Include="Public\ImpresionFormatos.aspx" />
     <Content Include="Public\IncrementosDecrementos.aspx" />
     <Content Include="Public\Intereses.aspx" />
+    <Content Include="Public\ManejoCaja.aspx" />
     <Content Include="Public\ListadoPrestamoSeguimiento.aspx" />
     <Content Include="Public\Marcas.aspx" />
     <Content Include="Public\PrestaVende.Master" />
@@ -622,6 +624,13 @@
     </Compile>
     <Compile Include="Public\Intereses.aspx.designer.cs">
       <DependentUpon>Intereses.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\ManejoCaja.aspx.cs">
+      <DependentUpon>ManejoCaja.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\ManejoCaja.aspx.designer.cs">
+      <DependentUpon>ManejoCaja.aspx</DependentUpon>
     </Compile>
     <Compile Include="Public\ListadoPrestamoSeguimiento.aspx.cs">
       <DependentUpon>ListadoPrestamoSeguimiento.aspx</DependentUpon>

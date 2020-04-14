@@ -228,7 +228,9 @@
                                                         <SelectedRowStyle BackColor="#ff9a32" Font-Bold="True" ForeColor="#333333" />
                                                     </asp:GridView>     
                                                     <br />
-                                                    <asp:Button ID="btnSeguimiento" runat="server" Width="200px" Text="Proyeccion" CssClass="btn btn-danger" Visible="false"/>                                                    
+                                                    <asp:Button ID="btnSeguimiento" runat="server" Width="200px" Text="Seguimientos" CssClass="btn btn-danger" Visible="false"/> 
+                                                    <b><big><asp:Label ID="lblSeguimientoNumeroPrestamo" runat="server" Visible="false">&nbsp;&nbsp;PRESTAMO:&nbsp;&nbsp;</asp:Label></big></b>
+                                                    <b><big><asp:Label ID="lblNumeroPrestamoSeguimiento" runat="server" Visible="false"></asp:Label></big></b>
                                                     <br />                                                        
                                                     <br />      
                                                     <asp:GridView ID="gvSeguimientos" runat="server" Width="100%" CssClass="footable" AutoGenerateColumns="False" 

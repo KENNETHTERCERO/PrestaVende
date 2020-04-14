@@ -113,6 +113,9 @@ namespace PrestaVende.Public
                     TableCell numero_prestamo = selectedRow.Cells[2];
                     Session["prestamo_seleccionado"] = numero_prestamo.Text.ToString();
                     btnSeguimiento.Visible = true;
+                    lblNumeroPrestamoSeguimiento.Text = Session["prestamo_seleccionado"].ToString();
+                    lblNumeroPrestamoSeguimiento.Visible = true;
+                    lblSeguimientoNumeroPrestamo.Visible = true;
 
                     gvSeguimientos.DataSource = cs_prestamo.GetSeguimientos(ref error, Session["prestamo_seleccionado"].ToString(), HttpContext.Current.Session["id_sucursal"].ToString());
                     gvSeguimientos.DataBind();
