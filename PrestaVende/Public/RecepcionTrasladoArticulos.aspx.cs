@@ -70,6 +70,7 @@ namespace PrestaVende.Public
             ddlRecibos.DataSource = null;
             ddlRecibos.Enabled = false;
             ddlRecibos.DataBind();
+            
             gvProductoTraslado.DataSource = null;
             gvProductoTraslado.DataBind();
         }
@@ -293,26 +294,35 @@ namespace PrestaVende.Public
                     int id_serie = int.Parse(ddlSerie.SelectedValue.ToString());
                     int numero_boleta = int.Parse(ddlRecibos.SelectedValue.ToString());
                     int  id_inventario =   int.Parse(item.Cells[1].Text.ToString());
+                    decimal PrecioSugerido = decimal.Parse(item.Cells[6].Text);
 
                     bool respuesta = false;
                     string error ="";
 
                     if (precio > 0)
                     {
-
-                        respuesta = cs_traslado.RecibirDatosTrasladoPorBoleta(ref error, id_serie, numero_boleta, id_inventario, precio);
-
-                        if (respuesta)
+                        if (precio >= PrecioSugerido)
                         {
-                            showSuccess("El traslado fue recibido con éxito.");
-                            validarSucursales();
-                            Limpiar();
+                            respuesta = cs_traslado.RecibirDatosTrasladoPorBoleta(ref error, id_serie, numero_boleta, id_inventario, precio);
+
+                            if (respuesta)
+                            {
+                                showSuccess("El traslado fue recibido con éxito.");
+                                validarSucursales();
+                                Limpiar();
+                            }
+                            else
+                            {
+                                throw new Exception("No se pudo recibir la boleta de traslado. " + error);
+                            }
                         }
                         else
                         {
-                            throw new Exception("No se pudo recibir la boleta de traslado. " + error);
+                            showError("El precio seleccionado no puede ser menor al valor prestado. Producto: " + item.Cells[4].Text);
+                            break;
                         }
-                    }else
+                    }
+                    else
                     {
                         showWarning("El precio seleccionado debe ser mayor a 0.00");
                     }
