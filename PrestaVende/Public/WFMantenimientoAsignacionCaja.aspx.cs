@@ -274,10 +274,10 @@ namespace PrestaVende.Public
                         {
                             this.ddidAsignacion.Text = id_asignacion_caja.Text.ToString();
                             this.ddIdCaja.SelectedValue = item["id_caja"].ToString();
+                            getEstadoCaja(this.ddIdCaja.SelectedValue);
                             this.ddIdEstadoCaja.SelectedValue = item["id_estado_caja"].ToString();
                             this.txtMonto.Text = item["monto"].ToString();
                             this.ddIdUsuarioAsignado.SelectedValue = item["id_usuario_asignado"].ToString();
-                            getEstadoCaja(this.ddIdCaja.SelectedValue);
                         }
                         bloqueaCamposSegunTransaccion("recepcionCierre");
                         isUpdate = true;

@@ -382,6 +382,7 @@
     <Content Include="DATASET\DtsTransaccionesCaja.xss">
       <DependentUpon>DtsTransaccionesCaja.xsd</DependentUpon>
     </Content>
+    <None Include="Properties\PublishProfiles\PRESTAVENDEEMPRENDA.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

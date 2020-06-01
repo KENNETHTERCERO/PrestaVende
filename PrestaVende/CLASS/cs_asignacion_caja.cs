@@ -110,7 +110,7 @@ namespace PrestaVende.CLASS
                 
                 //SI LA CAJA ESTA CERRADA NO DEBE APARECER EL ESTADO DE CIERRE
                 
-                queryString = "SELECT caj.id_estado_caja, caj.id_tipo_caja, asi.id_usuario_asignado " +
+                queryString = "SELECT TOP 1 caj.id_estado_caja, caj.id_tipo_caja, asi.id_usuario_asignado " +
                                         "FROM tbl_caja AS caj " +
                                         "INNER JOIN tbl_asignacion_caja AS asi ON asi.id_caja = caj.id_caja AND asi.id_estado_caja = 2 AND asi.id_usuario_asignado <> 0 " +
                                         "WHERE caj.id_caja = @id_caja " +
@@ -148,13 +148,13 @@ namespace PrestaVende.CLASS
 
                 if (id_estado_caja.Equals("3"))
                 {
-                    if (Convert.ToInt32(HttpContext.Current.Session["id_rol"]) == 3 || Convert.ToInt32(HttpContext.Current.Session["id_rol"]) == 3)
+                    if (Convert.ToInt32(HttpContext.Current.Session["id_rol"]) == 3 || Convert.ToInt32(HttpContext.Current.Session["id_rol"]) == 4)
                     {
                         querySelect = querySelect + " where tc.id_tipo_caja = @id_tipo_caja and ec.id_estado_caja in (4, 7, 8)";
                     }
                     else if (Convert.ToInt32(HttpContext.Current.Session["id_rol"]) == 5)
                     {
-                        querySelect = querySelect + " where tc.id_tipo_caja = @id_tipo_caja and ec.id_estado_caja in (4)";
+                        querySelect = querySelect + " where tc.id_tipo_caja = @id_tipo_caja and ec.id_estado_caja in (4, 7, 8)";
                     }
                     else
                     {
