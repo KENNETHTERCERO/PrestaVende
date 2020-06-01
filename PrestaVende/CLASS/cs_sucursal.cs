@@ -259,6 +259,29 @@ namespace PrestaVende.CLASS
             }
         }
 
+        public DataTable ObtenerSucursalesPorEmpresaRestantes(ref string error, string id_empresa, int sucursal_origen = -1)
+        {
+            try
+            {
+                DataTable DatosAreaEmpresa = new DataTable();
+                connection.connection.Open();
+                command.Connection = connection.connection;
+                command.CommandText = (sucursal_origen > 0 ? "select id_sucursal, sucursal from tbl_sucursal where id_empresa = @id_empresa and not id_sucursal = " + sucursal_origen : "select id_sucursal, sucursal from tbl_sucursal where id_empresa = @id_empresa");
+                command.Parameters.AddWithValue("@id_empresa", id_empresa);
+                DatosAreaEmpresa.Load(command.ExecuteReader());
+                return DatosAreaEmpresa;
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                return null;
+            }
+            finally
+            {
+                connection.connection.Close();
+            }
+        }
+
     }
 
 

@@ -17,6 +17,7 @@ namespace PrestaVende.Public
         private CLASS.cs_manejo_inventario cs_manejo_inventario = new CLASS.cs_manejo_inventario();
         private CLASS.cs_reporteria cs_reporteria = new CLASS.cs_reporteria();
         private CLASS.cs_liquidacion cs_liquidacion = new CLASS.cs_liquidacion();
+        private CLASS.cs_traslado cs_traslado = new CLASS.cs_traslado();
         private string error = "";
 
         protected void Page_Load(object sender, EventArgs e)
@@ -710,6 +711,50 @@ namespace PrestaVende.Public
                     }
 
                 }
+            }
+            else if (Convert.ToInt32(tipo_reporte) == 19)//Boleta de traslado.
+            {
+                string id_traslado_encabezado = Request.QueryString.Get("id_traslado_encabezado");
+
+
+                DataTable dtBoletaTraslado = new DataTable("dtBoleta");
+
+
+                dtBoletaTraslado = cs_traslado.ObtenerDatosBoletaTraslado(ref error, id_traslado_encabezado);
+
+                if (dtBoletaTraslado.Rows.Count <= 0)
+                {
+                    error = "Error obteniendo datos de inventario." + error;
+                    throw new Exception("");
+                }
+                else
+                {
+                    try
+                    {
+                        Reports.CRBoletaTraslado boletaTraslado = new Reports.CRBoletaTraslado();
+                        boletaTraslado.Load(Server.MapPath("~/Reports/CRBoletaTraslado.rpt"));
+                        boletaTraslado.SetDataSource(dtBoletaTraslado);
+                        CrystalReportViewer1.ReportSource = boletaTraslado;//document;
+                        CrystalReportViewer1.DataBind();
+                        CrystalReportViewer1.RefreshReport();
+                        string tipo = this.Request.QueryString.Get("tipo");
+                        if (tipo == "excel")
+                        {
+                            boletaTraslado.ExportToHttpResponse(ExportFormatType.ExcelWorkbook, Response, false, "BoletaTraslado");
+                        }
+                        else
+                        {
+                            boletaTraslado.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "BoletaTraslado");
+                        }
+
+                    }
+                    catch (Exception ex)
+                    {
+                        error = ex.ToString();
+                    }
+
+                }
+
             }
         }
     }

@@ -82,6 +82,30 @@ namespace PrestaVende.CLASS
             }
         }
 
+        public DataTable ObtenerSeriesRecepcion(ref string error, int id_sucursal, int id_tipo_serie)
+        {
+            try
+            {
+                DataTable Serie = new DataTable("DtSeries");
+                connection.connection.Open();
+                command.Connection = connection.connection;                
+                command.CommandText = "Exec SP_ObtenerSeriesPendientesRecibir  @id_sucursal, @id_tipo_serie";                                         
+                command.Parameters.AddWithValue("@id_sucursal", id_sucursal);
+                command.Parameters.AddWithValue("@id_tipo_serie", id_tipo_serie);
+                Serie.Load(command.ExecuteReader());
+                return Serie;
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                return null;
+            }
+            finally
+            {
+                connection.connection.Close();
+            }
+        }
+
         public Int64 getCorrelativoSerie(ref string error, int id_serie)
         {
             try
