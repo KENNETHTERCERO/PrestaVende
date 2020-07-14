@@ -63,5 +63,55 @@ namespace PrestaVende.CLASS
                 connection.connection.Close();
             }
         }
+
+        public DataTable getKilatajeCambioPrecio(ref string error)
+        {
+            try
+            {
+                DataTable dtKilataje = new DataTable("tblkilatajePrecio");
+                connection.connection.Open();
+                command.Connection = connection.connection;
+                command.Parameters.Clear();
+                command.CommandText = "SELECT id_kilataje, kilataje, precio_kilataje FROM tbl_kilataje WHERE estado = 1";
+                dtKilataje.Load(command.ExecuteReader());
+                return dtKilataje;
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                return null;
+            }
+            finally
+            {
+                connection.connection.Close();
+            }
+        }
+
+        public int updatePrecioKilataje(ref string error, string id_kilataje, decimal precio_nuevo)
+        {
+            try
+            {
+                int numberReturn = 0;
+                command = new SqlCommand();
+                connection.connection.Open();
+                command.Connection = connection.connection;
+                command.Parameters.Clear();
+                command.CommandText = "UPDATE tbl_kilataje SET precio_kilataje = @precio_nuevo, fecha_modificacion = GETDATE() WHERE id_kilataje = @id_kilataje";
+                command.Parameters.AddWithValue("@id_kilataje", id_kilataje);
+                command.Parameters.AddWithValue("@precio_nuevo", precio_nuevo);
+                numberReturn = command.ExecuteNonQuery();
+
+                return numberReturn;
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                return 999999;
+            }
+            finally
+            {
+                connection.connection.Close();
+            }
+        }
     }
 }

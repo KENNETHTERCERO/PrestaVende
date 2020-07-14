@@ -113,5 +113,10 @@ namespace PrestaVende.Public
                 ex.ToString();
             }
         }
+
+        protected void btnCambio_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("WFMantenimientoContraseña.aspx", false);
+        }
     }
 }

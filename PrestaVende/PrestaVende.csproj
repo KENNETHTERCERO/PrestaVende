@@ -130,6 +130,7 @@
     <Content Include="Public\ManejoCaja.aspx" />
     <Content Include="Public\ListadoPrestamoSeguimiento.aspx" />
     <Content Include="Public\Marcas.aspx" />
+    <Content Include="Public\PrecioKilataje.aspx" />
     <Content Include="Public\PrestaVende.Master" />
     <Content Include="Public\ProyeccionInteres.aspx" />
     <Content Include="Public\RecepcionCaja.aspx" />
@@ -655,6 +656,13 @@
     </Compile>
     <Compile Include="Public\Marcas.aspx.designer.cs">
       <DependentUpon>Marcas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\PrecioKilataje.aspx.cs">
+      <DependentUpon>PrecioKilataje.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\PrecioKilataje.aspx.designer.cs">
+      <DependentUpon>PrecioKilataje.aspx</DependentUpon>
     </Compile>
     <Compile Include="Public\PrestaVende.Master.cs">
       <DependentUpon>PrestaVende.Master</DependentUpon>
