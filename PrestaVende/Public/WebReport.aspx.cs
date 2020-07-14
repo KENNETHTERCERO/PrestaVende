@@ -740,11 +740,11 @@ namespace PrestaVende.Public
                         string tipo = this.Request.QueryString.Get("tipo");
                         if (tipo == "excel")
                         {
-                            boletaTraslado.ExportToHttpResponse(ExportFormatType.ExcelWorkbook, Response, false, "BoletaTraslado");
+                            boletaTraslado.ExportToHttpResponse(ExportFormatType.ExcelWorkbook, Response, false, "BoletaTrasladoIDTraslado" + id_traslado_encabezado);
                         }
                         else
                         {
-                            boletaTraslado.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "BoletaTraslado");
+                            boletaTraslado.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "BoletaTrasladoIDTraslado" + id_traslado_encabezado);
                         }
 
                     }

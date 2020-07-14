@@ -1329,6 +1329,22 @@ namespace PrestaVende.Public
             }
         }
 
+        protected void btnAceptarAutorizacion_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (CLASS.cs_usuario.autorizado)
+                {
+                    ddlIntereses.Enabled = true;
+                    CLASS.cs_usuario.autorizado = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                showError(ex.ToString());
+            }
+        }
+
         protected void btnRedondear_Click(object sender, EventArgs e)
         {
             recalculoRedondeoPrestamo();
@@ -1364,6 +1380,11 @@ namespace PrestaVende.Public
             {
                 showError(ex.ToString());
             }
+        }
+
+        protected void ddlIntereses_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            getDataProyeccion();
         }
     }
 }

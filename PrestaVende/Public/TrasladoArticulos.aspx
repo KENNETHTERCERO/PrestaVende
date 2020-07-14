@@ -221,8 +221,8 @@
                                                             <asp:BoundField DataField="marca"               HeaderText="<center>Marca</center>"             SortExpression="marca"              HtmlEncode="false" />
                                                             <asp:BoundField DataField="monto_prestado"               HeaderText="<center>Valor prestado</center>"             SortExpression="monto_prestado"              HtmlEncode="false" />
                                                             <asp:BoundField DataField="valor"               HeaderText="<center>Valor</center>"             SortExpression="valor"              HtmlEncode="false" />
-                                                            <asp:BoundField DataField="caracteristicas"     HeaderText="<center>Caracteristicas</center>"   SortExpression="caracteristicas"    HtmlEncode="false"/>
-                                                            <asp:TemplateField HeaderText=" <center> Observaciones </center>" HeaderStyle-HorizontalAlign="Center" >
+                                                            <asp:BoundField DataField="caracteristicas"     HeaderText="<center>Caracteristicas</center>"   SortExpression="caracteristicas"    HtmlEncode="false" />
+                                                            <asp:TemplateField HeaderText=" <center> Observaciones </center>" HeaderStyle-HorizontalAlign="Center" Visible="false">
                                                                     <ItemTemplate>
                                                                         <asp:TextBox ID="txtObservaciones" runat="server" text="" TextMode="MultiLine" style="overflow:hidden"  ></asp:TextBox>                                                                        
                                                                     </ItemTemplate>                                                                    
