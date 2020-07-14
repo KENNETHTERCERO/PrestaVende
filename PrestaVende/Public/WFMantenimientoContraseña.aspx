@@ -53,7 +53,7 @@
                                                 <table>
                                                     <tr>
                                                         <td>
-                                                            <h1>Mantenimiento Usuarios &nbsp;&nbsp;</h1>
+                                                            <h1>Cambio de contraseña &nbsp;&nbsp;</h1>
                                                         </td>
                                                         <td></td>
                                                     </tr>
@@ -116,7 +116,7 @@
                                                         <big><asp:Label ID="lblNewPassword" runat="server" Text="NUEVA CONTRASEÑA"></asp:Label></big>
                                                     </td>
                                                     <td>
-                                                         <asp:TextBox ID="txtNewPassword" runat="server" class="form-control"></asp:TextBox>
+                                                         <asp:TextBox ID="txtNewPassword" runat="server" class="form-control" TextMode="Password"></asp:TextBox>
                                                     </td>
                                                 </tr>
                                                 
@@ -125,7 +125,7 @@
                                                         <big><asp:Label ID="lblNewPassword2" runat="server" Text="CONFIRMAR CONTRASEÑA"></asp:Label></big>
                                                     </td>
                                                     <td>
-                                                         <asp:TextBox ID="txtNewPassword2" runat="server" class="form-control"></asp:TextBox>
+                                                         <asp:TextBox ID="txtNewPassword2" runat="server" class="form-control" TextMode="Password"></asp:TextBox>
                                                     </td>
                                                 </tr> 
                                                                                                                                                                                                                                                                                                                                                                                                                                   
