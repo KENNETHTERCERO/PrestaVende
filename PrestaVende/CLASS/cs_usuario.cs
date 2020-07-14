@@ -260,9 +260,50 @@ namespace PrestaVende.CLASS
             {
                 connect.connection.Close();
             }          
-            
-              
-         
+                                   
+        }
+
+        public bool actualizarContraseña(ref string error, int id_usuario, int id_empresa, int id_sucursal, string password_user)
+        {
+
+            try
+            {
+                connect.connection.Open();
+                command.Connection = connect.connection;
+                command.Transaction = connect.connection.BeginTransaction();
+                command.Parameters.Clear();
+                command.CommandText = "SP_actualizar_password";
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@id_usuario", id_usuario);
+                command.Parameters.AddWithValue("@id_empresa", id_empresa);
+                command.Parameters.AddWithValue("@id_sucursal", id_sucursal);                
+                command.Parameters.AddWithValue("@password_user", password_user);
+               
+
+
+                if (int.Parse(command.ExecuteNonQuery().ToString()) > 0)
+                {
+                    command.Transaction.Commit();
+                    return true;
+                }
+                else
+                {
+                    throw new SystemException("No se pudo actualizar la contraseña del Usuario, por favor, valide los datos o comuniquese con el administrador del sistema.");
+                }
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                command.Transaction.Rollback();
+                return false;
+            }
+            finally
+            {
+                connect.connection.Close();
+            }
+
+
+
         }
 
 
