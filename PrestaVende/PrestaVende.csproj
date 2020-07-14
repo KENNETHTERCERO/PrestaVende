@@ -118,6 +118,7 @@
     <Content Include="Public\AutorizacionEncargado.aspx" />
     <Content Include="Public\BuscarClienteSeguimiento.aspx" />
     <Content Include="Public\BusquedaCliente.aspx" />
+    <Content Include="Public\CambioInteresPrestamo.aspx" />
     <Content Include="Public\CambioPrecioProducto.aspx" />
     <Content Include="Public\Casillas.aspx" />
     <Content Include="Public\FacturacionProductos.aspx" />
@@ -153,6 +154,7 @@
     <Content Include="Public\WFFacturacion.aspx" />
     <Content Include="Public\WFListadoPrestamo.aspx" />
     <Content Include="Public\WFMantenimientoCaja.aspx" />
+    <Content Include="Public\WFMantenimientoContraseña.aspx" />
     <Content Include="Public\WFMantenimientoProducto.aspx" />
     <Content Include="Public\WFMantenimientoLiquidaciones.aspx" />
     <Content Include="Public\WFMantenimientoSerie.aspx" />
@@ -584,6 +586,13 @@
     <Compile Include="Public\BusquedaCliente.aspx.designer.cs">
       <DependentUpon>BusquedaCliente.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Public\CambioInteresPrestamo.aspx.cs">
+      <DependentUpon>CambioInteresPrestamo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\CambioInteresPrestamo.aspx.designer.cs">
+      <DependentUpon>CambioInteresPrestamo.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Public\CambioPrecioProducto.aspx.cs">
       <DependentUpon>CambioPrecioProducto.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -814,6 +823,13 @@
     </Compile>
     <Compile Include="Public\WFMantenimientoCaja.aspx.designer.cs">
       <DependentUpon>WFMantenimientoCaja.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\WFMantenimientoContraseña.aspx.cs">
+      <DependentUpon>WFMantenimientoContraseña.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\WFMantenimientoContraseña.aspx.designer.cs">
+      <DependentUpon>WFMantenimientoContraseña.aspx</DependentUpon>
     </Compile>
     <Compile Include="Public\WFMantenimientoProducto.aspx.cs">
       <DependentUpon>WFMantenimientoProducto.aspx</DependentUpon>
