@@ -113,7 +113,7 @@
                     <asp:Label ID="lblUsuario" runat="server" Text =""></asp:Label>
                 </li>
                 <li>
-                    <asp:LinkButton ID="btnCambio" runat="server" Text="Cambio de password" ></asp:LinkButton>
+                    <asp:LinkButton ID="btnCambio" runat="server" Text="Cambio de password" OnClick="btnCambio_Click" ></asp:LinkButton>
                 </li>
                 <li>
                     <asp:LinkButton ID="btnSalir" runat="server" Text="Salir" OnClick="btnSalir_Click" ></asp:LinkButton>

@@ -216,10 +216,9 @@ namespace PrestaVende.Public
                             row["monto_prestado"] = item["monto_prestado"].ToString();
                             row["valor"] = item["valor"].ToString();
                             row["caracteristicas"] = item["caracteristicas"].ToString();
-                            row["observaciones"] = item["observaciones"].ToString();                            
+                            row["observaciones"] = item["observaciones"].ToString();
+                            ArticuloCompleto.Rows.Add(row);
                         }
-
-                        ArticuloCompleto.Rows.Add(row);
 
                         dtTablaArticulos = ArticuloCompleto;
                         Session["tablaArticulos"] = dtTablaArticulos;
@@ -246,6 +245,56 @@ namespace PrestaVende.Public
                 showError("Error al cargar boleta: " + ex.ToString());
             }
                                   
+        }
+
+        private bool validaPrecio()
+        {
+            try
+            {
+                int contadorErrores = 0;
+
+                foreach (GridViewRow item in this.gvProductoTraslado.Rows)
+                {
+                    TextBox txtPrecio = ((TextBox)item.FindControl("txtPrecio"));
+                    decimal precio = decimal.Parse(txtPrecio.Text);
+                    int id_serie = int.Parse(ddlSerie.SelectedValue.ToString());
+                    int numero_boleta = int.Parse(ddlRecibos.SelectedValue.ToString());
+                    string id_inventario = item.Cells[1].Text.ToString();
+                    decimal PrecioSugerido = decimal.Parse(item.Cells[6].Text);
+
+                    bool respuesta = false;
+                    string error = "";
+
+                    if (precio > 0)
+                    {
+                        if (precio < PrecioSugerido)
+                        {
+                            showWarning("El precio no puede ser menor al precio sugerido del prestamo " + id_inventario);
+                            contadorErrores++;
+                        }
+                    }
+                    else
+                    {
+                        showWarning("El precio seleccionado debe ser mayor a 0.00 para el prestamo " + id_inventario);
+                        contadorErrores++;
+                    }
+
+                }
+                if (contadorErrores > 0)
+                {
+                    showError("Existieron " + contadorErrores.ToString() + " errores, por favor valide el precio de los articulos.");
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                showError("Error al recibir boleta: " + ex.ToString());
+                return false;
+            }
         }
 
         #region messages
@@ -287,46 +336,34 @@ namespace PrestaVende.Public
         {
             try
             {
-                foreach (GridViewRow item in this.gvProductoTraslado.Rows)
+                int contadorErrores = 0;
+                string error = "";
+                bool respuesta = false;
+
+                if (validaPrecio())
                 {
-                    TextBox txtPrecio = ((TextBox)item.FindControl("txtPrecio"));
-                    decimal precio = decimal.Parse(txtPrecio.Text);
-                    int id_serie = int.Parse(ddlSerie.SelectedValue.ToString());
-                    int numero_boleta = int.Parse(ddlRecibos.SelectedValue.ToString());
-                    int  id_inventario =   int.Parse(item.Cells[1].Text.ToString());
-                    decimal PrecioSugerido = decimal.Parse(item.Cells[6].Text);
-
-                    bool respuesta = false;
-                    string error ="";
-
-                    if (precio > 0)
+                    foreach (GridViewRow item in this.gvProductoTraslado.Rows)
                     {
-                        if (precio >= PrecioSugerido)
-                        {
-                            respuesta = cs_traslado.RecibirDatosTrasladoPorBoleta(ref error, id_serie, numero_boleta, id_inventario, precio);
+                        TextBox txtPrecio = ((TextBox)item.FindControl("txtPrecio"));
 
-                            if (respuesta)
-                            {
-                                showSuccess("El traslado fue recibido con éxito.");
-                                validarSucursales();
-                                Limpiar();
-                            }
-                            else
-                            {
-                                throw new Exception("No se pudo recibir la boleta de traslado. " + error);
-                            }
-                        }
-                        else
+                        respuesta = cs_traslado.RecibirDatosTrasladoPorBoleta(ref error, Convert.ToInt32(ddlSerie.SelectedValue.ToString()), Convert.ToInt32(ddlRecibos.SelectedValue.ToString()), Convert.ToInt32(item.Cells[1].Text.ToString()), Convert.ToDecimal(txtPrecio.Text.ToString()));
+
+                        if (!respuesta)
                         {
-                            showError("El precio seleccionado no puede ser menor al valor prestado. Producto: " + item.Cells[4].Text);
-                            break;
+                            contadorErrores++;   
                         }
+                    }
+
+                    if (contadorErrores > 0)
+                    {
+                        throw new Exception("No se pudo recibir la boleta de traslado. " + error);
                     }
                     else
                     {
-                        showWarning("El precio seleccionado debe ser mayor a 0.00");
+                        showSuccess("El traslado fue recibido con éxito.");
+                        validarSucursales();
+                        Limpiar();
                     }
-
                 }
             }
             catch (Exception ex)

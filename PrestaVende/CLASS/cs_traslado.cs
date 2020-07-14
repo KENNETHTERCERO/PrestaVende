@@ -235,7 +235,7 @@ namespace PrestaVende.CLASS
 
         internal bool grabarTraslado(int id_sucursal_origen, int id_sucursal_destino, int id_serie, int numero_boleta, DataTable dtArticulos, ref string str_id_traslado_encabezado, ref string error)
         {
-            int id_traslado_encabezado = 0;
+            int id_traslado_encabezado = 0, contador_errores = 0;
             bool respuesta = false;
 
             try
@@ -251,29 +251,36 @@ namespace PrestaVende.CLASS
 
                         respuesta = grabarTrasladoDetalle(id_traslado_encabezado, int.Parse(item["id_inventario"].ToString()), item["observaciones"].ToString(), ref error);
 
-                        if (respuesta)
+                        if (!respuesta)
                         {
-                            if (!update_correlativo_serie(ref error, id_serie.ToString(), numero_boleta.ToString(), id_sucursal_origen.ToString()))
-                            {
-                                throw new Exception("No se pudo actualizar el correlativo de la boleta. " + error);
-                            }
-                            else
-                            {
-                                str_id_traslado_encabezado = id_traslado_encabezado.ToString();
-                                respuesta = true;                                
-                            }
+                            error += ("Error al grabar el detalle del traslado: " + item["id_inventario"].ToString() + " -*- ");
+                            contador_errores++;
+                        }
+                    }
+
+                    if (contador_errores > 0)
+                    {
+                        respuesta = false;
+                        throw new Exception("No se pudo insertar detalle de la boleta. " + error);
+                    }
+                    else
+                    {
+                        if (!update_correlativo_serie(ref error, id_serie.ToString(), numero_boleta.ToString(), id_sucursal_origen.ToString()))
+                        {
+                            respuesta = false;
+                            throw new Exception("No se pudo actualizar el correlativo de la boleta. " + error);
                         }
                         else
                         {
-                            respuesta = false;
-                            error = ("Error al grabar el detalle del traslado: " + error);                            
+                            str_id_traslado_encabezado = id_traslado_encabezado.ToString();
+                            respuesta = true;
                         }
                     }
                 }
                 else
                 {
                     respuesta = false;                    
-                    error = ("Error al grabar el traslado: " + error);
+                    throw new Exception("No se pudo actualizar el correlativo de la boleta. " + error);
                 }
             }catch(Exception ex)
             {

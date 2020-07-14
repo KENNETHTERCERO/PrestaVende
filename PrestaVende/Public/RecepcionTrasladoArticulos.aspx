@@ -195,7 +195,11 @@
                                                                     </ItemTemplate>                                                                    
                                                                 </asp:TemplateField>
                                                             <asp:BoundField DataField="caracteristicas"     HeaderText="<center>Caracteristicas</center>"   SortExpression="caracteristicas"    HtmlEncode="false"/>
-                                                            <asp:BoundField DataField="observaciones"     HeaderText="<center>Observaciones</center>"   SortExpression="observaciones"    HtmlEncode="false"/>                                                           
+                                                            <asp:TemplateField HeaderText=" <center> Observaciones </center>" HeaderStyle-HorizontalAlign="Center" Visible="false">
+                                                                    <ItemTemplate>
+                                                                        <asp:TextBox ID="txtObservaciones" runat="server" text="" TextMode="MultiLine" style="overflow:hidden"  ></asp:TextBox>                                                                        
+                                                                    </ItemTemplate>                                                                    
+                                                                </asp:TemplateField>
                                                         </Columns>
                                                         <EditRowStyle BackColor="#7C6F57" />
                                                         <FooterStyle BackColor="#1C5E55" Font-Bold="False" ForeColor="White" />

@@ -97,19 +97,6 @@
                 }
             }
         }
-     <%--   function EnterEvent(e) 
-        {
-            if ((e.keyCode === 13)) {
-                    //alert("1");
-                    var btnName = $get("<%=btnBuscarPorCodigo.ClientID%>").name;
-                    //alert("2");
-                    __doPostBack(btnName, "");
-                    //alert("3");
-                    e.preventDefault();
-                    //alert("4");
-                    return false;
-                }
-        }--%>
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -292,11 +279,11 @@
                                                     </td>
                                                     <td>
                                                         <div>
-                                                                    <asp:ImageButton ID="imgBtnBuscaSubCliente" runat="server" 
-                                                                        AlternateText="Busca Sub cliente" 
-                                                                        ImageUrl="~/Public/image/candado.png"
-                                                                        Height="50" Width="50" Visible="true"/>
-                                                                </div>
+                                                            <asp:ImageButton ID="imgBtnBuscaSubCliente" runat="server" 
+                                                                AlternateText="Busca Sub cliente" 
+                                                                ImageUrl="~/Public/image/candado.png"
+                                                                Height="50" Width="50" Visible="true"/>
+                                                       </div>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -385,6 +372,7 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
+                                                    
                                                     <td>
                                                         <asp:DropDownList ID="ddlKilataje" runat="server" AutoPostBack="true" class="form-control" OnSelectedIndexChanged="ddlKilataje_SelectedIndexChanged"></asp:DropDownList>
                                                     </td>
@@ -392,12 +380,11 @@
                                                         <asp:TextBox ID="txtObservaciones" TextMode="multiline" Columns="50" Rows="5" runat="server" class="form-control"></asp:TextBox>
                                                     </td>
                                                     <td>
-
-                                                    </td>
-                                                    <td>
                                                         <asp:TextBox ID="txtRedondeo" type="number" min="0" max="10" runat="server" Width="200px" class="form-control" Visible="false"></asp:TextBox>
                                                     </td>
-                                                    
+                                                    <td>
+
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td>
@@ -428,16 +415,60 @@
                                                         <asp:TextBox ID="txtValor" type="number" step="0.01" runat="server" CssClass="form-control"></asp:TextBox>
                                                     </td>
                                                     <td>
-                                                        <asp:DropDownList ID="ddlIntereses" runat="server" CssClass="form-control"></asp:DropDownList>
+                                                        <asp:DropDownList ID="ddlIntereses" runat="server" AutoPostBack="true" CssClass="form-control" OnSelectedIndexChanged="ddlIntereses_SelectedIndexChanged"></asp:DropDownList>
                                                     </td>
                                                     <td>
                                                         <asp:Button ID="btnAgregar" runat="server" CssClass="btn btn-success" Text="AGREGAR ARTICULO" OnClick="btnAgregar_Click" />
+                                                    </td>
+                                                    <td><div>
+                                                            <asp:ImageButton ID="imgBtnAutorizaTaza" runat="server" 
+                                                                AlternateText="Autorización Intereses" 
+                                                                ImageUrl="~/Public/image/candado.png"
+                                                                Height="50" Width="50" Visible="true"/>
+                                                       </div>
                                                     </td>
                                                     <td>
                                                         <asp:TextBox ID="txtMontoARecalcular" type="number" step="0.01" runat="server" CssClass="form-control" Visible="false"></asp:TextBox>
                                                     </td>
                                                     <td>
                                                         <asp:Button ID="btnRecalcularValorPrestamoTotal" runat="server" CssClass="btn btn-primary" Text="RECALCULAR" Visible="false" OnClick="btnRecalcularValorPrestamoTotal_Click"/>
+                                                    </td>
+                                                    <td>
+                                                        <div>
+                                                            <%--aqui va la parte de modal windows--%>
+                                                            <asp:Panel ID="panelModalAutorizacion" class="modalPopup" runat="server" Style="display: none; width:400px; height:400px; overflow:scroll; resize: vertical;" align="center">
+                                                                <div class="header">
+                                                                    Autorización cambio intereses
+                                                                </div>
+                                                                <div class="body">
+                                                                    <iframe style="width: 300px; height: 300px;" id="Iframe2" src="AutorizacionEncargado.aspx" runat="server"></iframe>
+                                                                </div>
+                                                                <div class="footer" align="center">
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <asp:Button ID="ButtonCancelAutorizacion" runat="server" Text="Cancelar" class="no" />
+                                                                            </td>
+                                                                            <td>
+                                                                                <asp:Button ID="btnAceptarAutorizacion" runat="server" Text="Aceptar" class="yes" OnClick="btnAceptarAutorizacion_Click"/>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </div>
+                                                            </asp:Panel>
+                                                            <ajaxToolkit:ModalPopupExtender 
+                                                                ID="ModalPopupExtender3"
+                                                                runat="server"
+                                                                CancelControlID="ButtonCancelAutorizacion"
+                                                                PopupControlID="panelModalAutorizacion"
+                                                                TargetControlID="imgBtnAutorizaTaza"
+                                                                BackgroundCssClass="modalBackground"
+                                                                PopupDragHandleControlID="panelModalAutorizacion"
+                                                                Drag="true"
+                                                                RepositionMode="RepositionOnWindowResizeAndScroll"
+                                                                DropShadow="false">
+                                                            </ajaxToolkit:ModalPopupExtender>
+                                                        </div>
                                                     </td>
                                                 </tr>
                                             </table>

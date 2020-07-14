@@ -85,7 +85,7 @@ namespace PrestaVende
         {
             try
             {
-                if (Convert.ToInt32(Session["id_caja"]) == 0 && Convert.ToInt32(Session["id_rol"]) != 5 || id_estado_caja == "7")
+                if (Convert.ToInt32(Session["id_caja"]) == 0 && (Convert.ToInt32(Session["id_rol"]) != 5 || id_estado_caja == "7"))
                 {
                     Response.Redirect("~/Public/WFPrincipal.aspx", false);
                 }
@@ -151,8 +151,9 @@ namespace PrestaVende
                 foreach (DataRow item in asignacion_caja.getAsignacionCaja(ref error, id_asignacion).Rows)
                 {
                     fecha_asignacion = Convert.ToDateTime(item[5].ToString());
-                    Session["saldo_caja"] = Convert.ToDecimal(item["monto"].ToString());
-                    Session["puede_vender"] = Convert.ToInt32(item["puede_vender"].ToString());
+                    Session["saldo_caja"] = Convert.ToDecimal((item["monto"].ToString() != "") ? item["monto"].ToString() : "0");
+                    Session["puede_vender"] = Convert.ToDecimal((item["puede_vender"].ToString() != "") ? item["puede_vender"].ToString() : "0");
+                    Session["puede_vender"] = Convert.ToDecimal((item["puede_vender"].ToString() != "") ? item["puede_vender"].ToString() : "0");
                 }
             }
             catch (Exception ex)

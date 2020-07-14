@@ -94,8 +94,11 @@ namespace PrestaVende.Public
                         total_cobro = Convert.ToDecimal(this.lblTotalFacturaV.Text.ToString()) + Convert.ToDecimal(this.txtAbonoCapital.Text.ToString());
                         this.lblTotalCobro.Text = total_cobro.ToString();
                     }
+                    else if (tipo_transaccion == "9")
+                    {
+                        this.imgBtnBuscaSubSemana.Visible = false;
+                    }
                 }
-
                 
             }
             catch (Exception ex)

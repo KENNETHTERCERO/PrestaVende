@@ -412,11 +412,9 @@ namespace PrestaVende.Public
                 row["monto_prestado"] = item.Cells[6].Text.ToString();
                 row["valor"] = item.Cells[7].Text.ToString();
                 row["caracteristicas"] = item.Cells[8].Text.ToString();               
-                row["observaciones"] = txtObservaciones.Text;
+                row["observaciones"] = "";
+                dtTablaArticulos.Rows.Add(row);
             }
-
-            dtTablaArticulos.Rows.Add(row);
-            
             Session["tablaArticulos"] = dtTablaArticulos;
         }
 
