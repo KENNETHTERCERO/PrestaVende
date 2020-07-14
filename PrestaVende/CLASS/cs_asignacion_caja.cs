@@ -534,7 +534,7 @@ namespace PrestaVende.CLASS
                                         "FROM                        " +
                                         "tbl_asignacion_caja AS asi  " +
                                         "INNER JOIN tbl_caja AS caj ON caj.id_caja = asi.id_caja " +
-                                        "WHERE asi.estado_asignacion = 0 AND asi.id_asignacion_caja = @id_asignacion_caja";
+                                        "WHERE asi.id_asignacion_caja = @id_asignacion_caja";
                 command.Parameters.AddWithValue("@id_asignacion_caja", id_asignacion_caja);
                 dtAsignacionCaja.Load(command.ExecuteReader());
                 return dtAsignacionCaja;
