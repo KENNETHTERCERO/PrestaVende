@@ -76,7 +76,14 @@ namespace PrestaVende.CLASS
             command.CommandType = CommandType.StoredProcedure;
             command.CommandText = "SP_ConsultarDatosPrestamo";
             command.Parameters.AddWithValue("@numero_prestamo", numero_prestamo);
-            command.Parameters.AddWithValue("@id_sucursal", (id_sucursal == -1 ? null : id_sucursal.ToString()));
+            if (id_sucursal == -1)
+            {
+                command.Parameters.AddWithValue("@id_sucursal", DBNull.Value);
+            }
+            else
+            {
+                command.Parameters.AddWithValue("@id_sucursal", id_sucursal);
+            }
 
             adapter = new SqlDataAdapter(command);
             adapter.Fill(ds);
@@ -97,7 +104,16 @@ namespace PrestaVende.CLASS
                 command.CommandText = "SP_ActualizarInteresPrestamo";
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@numero_prestamo", numero_prestamo);
-                command.Parameters.AddWithValue("@id_sucursal", (id_sucursal == -1 ? null : id_sucursal.ToString()));
+
+                if (id_sucursal == -1)
+                {
+                    command.Parameters.AddWithValue("@id_sucursal", DBNull.Value);
+                }
+                else
+                {
+                    command.Parameters.AddWithValue("@id_sucursal", id_sucursal);
+                }
+
                 command.Parameters.AddWithValue("@id_interes", id_interes);
 
 
