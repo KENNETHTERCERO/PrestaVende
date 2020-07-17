@@ -62,5 +62,83 @@ namespace PrestaVende.CLASS
                 connection.connection.Close();
             }
         }
+
+        public DataSet buscarPrestamo(Decimal numero_prestamo, int id_sucursal)
+        {
+            DataSet ds = new DataSet();
+
+            connection.connection.Open();
+            command.Connection = connection.connection;
+            command.Parameters.Clear();
+
+            SqlDataAdapter adapter;
+
+            command.CommandType = CommandType.StoredProcedure;
+            command.CommandText = "SP_ConsultarDatosPrestamo";
+            command.Parameters.AddWithValue("@numero_prestamo", numero_prestamo);
+            if (id_sucursal == -1)
+            {
+                command.Parameters.AddWithValue("@id_sucursal", DBNull.Value);
+            }
+            else
+            {
+                command.Parameters.AddWithValue("@id_sucursal", id_sucursal);
+            }
+
+            adapter = new SqlDataAdapter(command);
+            adapter.Fill(ds);
+
+
+            return ds;
+        }
+
+        public bool actualizarInteresPrestamo(ref string error, Int64 numero_prestamo, int id_sucursal, int id_interes)
+        {
+
+            try
+            {
+                connection.connection.Open();
+                command.Connection = connection.connection;
+                command.Transaction = connection.connection.BeginTransaction();
+                command.Parameters.Clear();
+                command.CommandText = "SP_ActualizarInteresPrestamo";
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@numero_prestamo", numero_prestamo);
+
+                if (id_sucursal == -1)
+                {
+                    command.Parameters.AddWithValue("@id_sucursal", DBNull.Value);
+                }
+                else
+                {
+                    command.Parameters.AddWithValue("@id_sucursal", id_sucursal);
+                }
+
+                command.Parameters.AddWithValue("@id_interes", id_interes);
+
+
+
+                if (int.Parse(command.ExecuteNonQuery().ToString()) > 0)
+                {
+                    command.Transaction.Commit();
+                    return true;
+                }
+                else
+                {
+                    command.Transaction.Rollback();
+                    throw new SystemException("No se pudo actualizar el interés del préstamo, por favor valide los datos o comuniquese con el administrador del sistema.");
+                }
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                command.Transaction.Rollback();
+                return false;
+            }
+            finally
+            {
+                connection.connection.Close();
+            }
+        }
     }
 }
