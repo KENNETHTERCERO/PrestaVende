@@ -85,7 +85,7 @@ namespace PrestaVende
         {
             try
             {
-                if (Convert.ToInt32(Session["id_caja"]) == 0 && (Convert.ToInt32(Session["id_rol"]) != 5 || id_estado_caja == "7"))
+                if ((Convert.ToInt32(Session["id_caja"]) == 0 && (Convert.ToInt32(Session["id_rol"]) != 5) || id_estado_caja == "7"))
                 {
                     Response.Redirect("~/Public/WFPrincipal.aspx", false);
                 }

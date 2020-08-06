@@ -98,6 +98,7 @@ namespace PrestaVende.Public
                         
             div_DatosPrestamo.Visible = false;
         }
+
         private void getInteres()
         {
             try
