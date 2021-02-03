@@ -92,6 +92,18 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.ReportViewer.Common, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Report.Viewer.11.0.0.0\lib\net\Microsoft.ReportViewer.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.ProcessingObjectModel, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Report.Viewer.11.0.0.0\lib\net\Microsoft.ReportViewer.ProcessingObjectModel.DLL</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Report.Viewer.11.0.0.0\lib\net\Microsoft.ReportViewer.WebForms.DLL</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -137,6 +149,7 @@
     <Content Include="Public\RecepcionLiquidaciones.aspx" />
     <Content Include="Public\RecepcionTrasladoArticulos.aspx" />
     <Content Include="Public\ReimpresionFacturaRecibo.aspx" />
+    <Content Include="Public\Report.aspx" />
     <Content Include="Public\ReporteAbonos.aspx" />
     <Content Include="Public\ReporteCancelaciones.aspx" />
     <Content Include="Public\ReporteEstadoCuentaCaja.aspx" />
@@ -705,6 +718,13 @@
     </Compile>
     <Compile Include="Public\ReimpresionFacturaRecibo.aspx.designer.cs">
       <DependentUpon>ReimpresionFacturaRecibo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\Report.aspx.cs">
+      <DependentUpon>Report.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\Report.aspx.designer.cs">
+      <DependentUpon>Report.aspx</DependentUpon>
     </Compile>
     <Compile Include="Public\ReporteAbonos.aspx.cs">
       <DependentUpon>ReporteAbonos.aspx</DependentUpon>
