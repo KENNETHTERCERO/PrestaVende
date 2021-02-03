@@ -75,6 +75,8 @@ namespace PrestaVende.Public
                     showWarning("Usted debe ingresar una fecha de fin para poder generar el reporte.");
                 else
                 {
+                    //El comentado es para Reporting Services.
+                    //string scriptEstadoCuenta = "window.open('Report.aspx?tipo_reporte=6" + "&id_sucursal=" + id_sucuarsal + "&fecha_inicio=" + txtFechaInicial.Text + "&fecha_fin=" + txtFechaFin.Text + "&transaccion=9');";
                     string scriptEstadoCuenta = "window.open('WebReport.aspx?tipo_reporte=6" + "&id_sucursal=" + id_sucuarsal + "&fecha_inicio=" + txtFechaInicial.Text + "&fecha_fin=" + txtFechaFin.Text + "&transaccion=9');";
                     ScriptManager.RegisterClientScriptBlock(this, GetType(), "NewWindow", scriptEstadoCuenta, true);
                 }
