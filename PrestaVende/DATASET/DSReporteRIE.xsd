@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DSReporteRIE" targetNamespace="http://tempuri.org/DSReporteRIE.xsd" xmlns:mstns="http://tempuri.org/DSReporteRIE.xsd" xmlns="http://tempuri.org/DSReporteRIE.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DSReporteRIE" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="DSReporteRIE" msprop:Generator_UserDSName="DSReporteRIE">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="dtValoresCaja" msprop:Generator_TableClassName="dtValoresCajaDataTable" msprop:Generator_TableVarName="tabledtValoresCaja" msprop:Generator_TablePropName="dtValoresCaja" msprop:Generator_RowDeletingName="dtValoresCajaRowDeleting" msprop:Generator_RowChangingName="dtValoresCajaRowChanging" msprop:Generator_RowEvHandlerName="dtValoresCajaRowChangeEventHandler" msprop:Generator_RowDeletedName="dtValoresCajaRowDeleted" msprop:Generator_UserTableName="dtValoresCaja" msprop:Generator_RowChangedName="dtValoresCajaRowChanged" msprop:Generator_RowEvArgName="dtValoresCajaRowChangeEvent" msprop:Generator_RowClassName="dtValoresCajaRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="nombre_caja" msprop:Generator_ColumnVarNameInTable="columnnombre_caja" msprop:Generator_ColumnPropNameInRow="nombre_caja" msprop:Generator_ColumnPropNameInTable="nombre_cajaColumn" msprop:Generator_UserColumnName="nombre_caja" type="xs:string" minOccurs="0" />
+              <xs:element name="total_caja" msprop:Generator_ColumnVarNameInTable="columntotal_caja" msprop:Generator_ColumnPropNameInRow="total_caja" msprop:Generator_ColumnPropNameInTable="total_cajaColumn" msprop:Generator_UserColumnName="total_caja" type="xs:decimal" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="dtTransacciones" msprop:Generator_TableClassName="dtTransaccionesDataTable" msprop:Generator_TableVarName="tabledtTransacciones" msprop:Generator_TablePropName="dtTransacciones" msprop:Generator_RowDeletingName="dtTransaccionesRowDeleting" msprop:Generator_RowChangingName="dtTransaccionesRowChanging" msprop:Generator_RowEvHandlerName="dtTransaccionesRowChangeEventHandler" msprop:Generator_RowDeletedName="dtTransaccionesRowDeleted" msprop:Generator_UserTableName="dtTransacciones" msprop:Generator_RowChangedName="dtTransaccionesRowChanged" msprop:Generator_RowEvArgName="dtTransaccionesRowChangeEvent" msprop:Generator_RowClassName="dtTransaccionesRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="trx_nombre_indicador" msprop:Generator_ColumnVarNameInTable="columntrx_nombre_indicador" msprop:Generator_ColumnPropNameInRow="trx_nombre_indicador" msprop:Generator_ColumnPropNameInTable="trx_nombre_indicadorColumn" msprop:Generator_UserColumnName="trx_nombre_indicador" type="xs:string" minOccurs="0" />
+              <xs:element name="trx_cant_indicador" msprop:Generator_ColumnVarNameInTable="columntrx_cant_indicador" msprop:Generator_ColumnPropNameInRow="trx_cant_indicador" msprop:Generator_ColumnPropNameInTable="trx_cant_indicadorColumn" msprop:Generator_UserColumnName="trx_cant_indicador" type="xs:int" minOccurs="0" />
+              <xs:element name="trx_total_indicador" msprop:Generator_ColumnVarNameInTable="columntrx_total_indicador" msprop:Generator_ColumnPropNameInRow="trx_total_indicador" msprop:Generator_ColumnPropNameInTable="trx_total_indicadorColumn" msprop:Generator_UserColumnName="trx_total_indicador" type="xs:decimal" minOccurs="0" />
+              <xs:element name="trx_orden" msprop:Generator_ColumnVarNameInTable="columntrx_orden" msprop:Generator_ColumnPropNameInRow="trx_orden" msprop:Generator_ColumnPropNameInTable="trx_ordenColumn" msprop:Generator_UserColumnName="trx_orden" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="dtGarantias" msprop:Generator_TableClassName="dtGarantiasDataTable" msprop:Generator_TableVarName="tabledtGarantias" msprop:Generator_TablePropName="dtGarantias" msprop:Generator_RowDeletingName="dtGarantiasRowDeleting" msprop:Generator_RowChangingName="dtGarantiasRowChanging" msprop:Generator_RowEvHandlerName="dtGarantiasRowChangeEventHandler" msprop:Generator_RowDeletedName="dtGarantiasRowDeleted" msprop:Generator_UserTableName="dtGarantias" msprop:Generator_RowChangedName="dtGarantiasRowChanged" msprop:Generator_RowEvArgName="dtGarantiasRowChangeEvent" msprop:Generator_RowClassName="dtGarantiasRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="grt_nombre_indicador" msprop:Generator_ColumnVarNameInTable="columngrt_nombre_indicador" msprop:Generator_ColumnPropNameInRow="grt_nombre_indicador" msprop:Generator_ColumnPropNameInTable="grt_nombre_indicadorColumn" msprop:Generator_UserColumnName="grt_nombre_indicador" type="xs:string" minOccurs="0" />
+              <xs:element name="grt_cant_indicador" msprop:Generator_ColumnVarNameInTable="columngrt_cant_indicador" msprop:Generator_ColumnPropNameInRow="grt_cant_indicador" msprop:Generator_ColumnPropNameInTable="grt_cant_indicadorColumn" msprop:Generator_UserColumnName="grt_cant_indicador" type="xs:int" minOccurs="0" />
+              <xs:element name="grt_total_indicador" msprop:Generator_ColumnVarNameInTable="columngrt_total_indicador" msprop:Generator_ColumnPropNameInRow="grt_total_indicador" msprop:Generator_ColumnPropNameInTable="grt_total_indicadorColumn" msprop:Generator_UserColumnName="grt_total_indicador" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="dtAgencia" msprop:Generator_TableClassName="dtAgenciaDataTable" msprop:Generator_TableVarName="tabledtAgencia" msprop:Generator_TablePropName="dtAgencia" msprop:Generator_RowDeletingName="dtAgenciaRowDeleting" msprop:Generator_RowChangingName="dtAgenciaRowChanging" msprop:Generator_RowEvHandlerName="dtAgenciaRowChangeEventHandler" msprop:Generator_RowDeletedName="dtAgenciaRowDeleted" msprop:Generator_UserTableName="dtAgencia" msprop:Generator_RowChangedName="dtAgenciaRowChanged" msprop:Generator_RowEvArgName="dtAgenciaRowChangeEvent" msprop:Generator_RowClassName="dtAgenciaRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ag_nombre_indicador" msprop:Generator_ColumnVarNameInTable="columnag_nombre_indicador" msprop:Generator_ColumnPropNameInRow="ag_nombre_indicador" msprop:Generator_ColumnPropNameInTable="ag_nombre_indicadorColumn" msprop:Generator_UserColumnName="ag_nombre_indicador" type="xs:string" minOccurs="0" />
+              <xs:element name="ag_total_indicador" msprop:Generator_ColumnVarNameInTable="columnag_total_indicador" msprop:Generator_ColumnPropNameInRow="ag_total_indicador" msprop:Generator_ColumnPropNameInTable="ag_total_indicadorColumn" msprop:Generator_UserColumnName="ag_total_indicador" type="xs:decimal" minOccurs="0" />
+              <xs:element name="ag_orden" msprop:Generator_ColumnVarNameInTable="columnag_orden" msprop:Generator_ColumnPropNameInRow="ag_orden" msprop:Generator_ColumnPropNameInTable="ag_ordenColumn" msprop:Generator_UserColumnName="ag_orden" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="dtReporteIE" msprop:Generator_TableClassName="dtReporteIEDataTable" msprop:Generator_TableVarName="tabledtReporteIE" msprop:Generator_TablePropName="dtReporteIE" msprop:Generator_RowDeletingName="dtReporteIERowDeleting" msprop:Generator_RowChangingName="dtReporteIERowChanging" msprop:Generator_RowEvHandlerName="dtReporteIERowChangeEventHandler" msprop:Generator_RowDeletedName="dtReporteIERowDeleted" msprop:Generator_UserTableName="dtReporteIE" msprop:Generator_RowChangedName="dtReporteIERowChanged" msprop:Generator_RowEvArgName="dtReporteIERowChangeEvent" msprop:Generator_RowClassName="dtReporteIERow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="empresa" msprop:Generator_ColumnVarNameInTable="columnempresa" msprop:Generator_ColumnPropNameInRow="empresa" msprop:Generator_ColumnPropNameInTable="empresaColumn" msprop:Generator_UserColumnName="empresa" type="xs:string" minOccurs="0" />
+              <xs:element name="sucursal" msprop:Generator_ColumnVarNameInTable="columnsucursal" msprop:Generator_ColumnPropNameInRow="sucursal" msprop:Generator_ColumnPropNameInTable="sucursalColumn" msprop:Generator_UserColumnName="sucursal" type="xs:string" minOccurs="0" />
+              <xs:element name="id_sucursal" msprop:Generator_ColumnVarNameInTable="columnid_sucursal" msprop:Generator_ColumnPropNameInRow="id_sucursal" msprop:Generator_ColumnPropNameInTable="id_sucursalColumn" msprop:Generator_UserColumnName="id_sucursal" type="xs:int" minOccurs="0" />
+              <xs:element name="fecha_inicio" msprop:Generator_ColumnVarNameInTable="columnfecha_inicio" msprop:Generator_ColumnPropNameInRow="fecha_inicio" msprop:Generator_ColumnPropNameInTable="fecha_inicioColumn" msprop:Generator_UserColumnName="fecha_inicio" type="xs:string" minOccurs="0" />
+              <xs:element name="fecha_fin" msprop:Generator_ColumnVarNameInTable="columnfecha_fin" msprop:Generator_ColumnPropNameInRow="fecha_fin" msprop:Generator_ColumnPropNameInTable="fecha_finColumn" msprop:Generator_UserColumnName="fecha_fin" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

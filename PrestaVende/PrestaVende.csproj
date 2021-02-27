@@ -1,0 +1,1196 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{613342BD-B6B0-4356-B06C-FA67F00E2FBC}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PrestaVende</RootNamespace>
+    <AssemblyName>PrestaVende</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AjaxControlToolkit, Version=19.1.0.0, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e, processorArchitecture=MSIL">
+      <HintPath>..\packages\AjaxControlToolkit.19.1.0\lib\net40\AjaxControlToolkit.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CrystalDecisions.ReportSource, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CrystalDecisions.Shared, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="CrystalDecisions.Web, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Microsoft.AI.Agent.Intercept, Version=1.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.1.2.1\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.DependencyCollector, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.DependencyCollector.2.0.0\lib\net45\Microsoft.AI.DependencyCollector.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.PerfCounterCollector, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.PerfCounterCollector.2.0.0\lib\net45\Microsoft.AI.PerfCounterCollector.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.ServerTelemetryChannel, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.2.0.0\lib\net45\Microsoft.AI.ServerTelemetryChannel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.Web, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Web.2.0.0\lib\net45\Microsoft.AI.Web.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.WindowsServer, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.2.0.0\lib\net45\Microsoft.AI.WindowsServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ApplicationInsights, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.2.0.0\lib\net45\Microsoft.ApplicationInsights.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.ReportViewer.Common, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Report.Viewer.11.0.0.0\lib\net\Microsoft.ReportViewer.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.ProcessingObjectModel, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Report.Viewer.11.0.0.0\lib\net\Microsoft.ReportViewer.ProcessingObjectModel.DLL</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Report.Viewer.11.0.0.0\lib\net\Microsoft.ReportViewer.WebForms.DLL</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+    <Content Include="ApplicationInsights.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Public\AnulacionFactura.aspx" />
+    <Content Include="Public\AutorizacionEncargado.aspx" />
+    <Content Include="Public\BuscarClienteSeguimiento.aspx" />
+    <Content Include="Public\BusquedaCliente.aspx" />
+    <Content Include="Public\CambioInteresPrestamo.aspx" />
+    <Content Include="Public\CambioPrecioProducto.aspx" />
+    <Content Include="Public\Casillas.aspx" />
+    <Content Include="Public\FacturacionProductos.aspx" />
+    <Content Include="Public\image\candado.png" />
+    <Content Include="Public\image\EMPRENDA.png" />
+    <Content Include="Public\ImpresionFormatos.aspx" />
+    <Content Include="Public\IncrementosDecrementos.aspx" />
+    <Content Include="Public\Intereses.aspx" />
+    <Content Include="Public\ManejoCaja.aspx" />
+    <Content Include="Public\ListadoPrestamoSeguimiento.aspx" />
+    <Content Include="Public\Marcas.aspx" />
+    <Content Include="Public\PrecioKilataje.aspx" />
+    <Content Include="Public\PrestaVende.Master" />
+    <Content Include="Public\ProyeccionInteres.aspx" />
+    <Content Include="Public\RecepcionCaja.aspx" />
+    <Content Include="Public\RecepcionLiquidaciones.aspx" />
+    <Content Include="Public\RecepcionTrasladoArticulos.aspx" />
+    <Content Include="Public\ReimpresionFacturaRecibo.aspx" />
+    <Content Include="Public\Report.aspx" />
+    <Content Include="Public\ReporteAbonos.aspx" />
+    <Content Include="Public\ReporteCancelaciones.aspx" />
+    <Content Include="Public\ReporteEstadoCuentaCaja.aspx" />
+    <Content Include="Public\ReporteFacturas.aspx" />
+    <Content Include="Public\ReporteInventario.aspx" />
+    <Content Include="Public\ReporteLiquidaciones.aspx" />
+    <Content Include="Public\ReportePrestamos.aspx" />
+    <Content Include="Public\ReporteRIE.aspx" />
+    <Content Include="Public\ReporteVencidos.aspx" />
+    <Content Include="Public\ReporteVentas.aspx" />
+    <Content Include="Public\TrasladoArticulos.aspx" />
+    <Content Include="Public\WebReport.aspx" />
+    <Content Include="Public\WFBusquedaCliente.aspx" />
+    <Content Include="Public\WFBusquedaClienteFacturacion.aspx" />
+    <Content Include="Public\WFCrearFactura.aspx" />
+    <Content Include="Public\WFFacturacion.aspx" />
+    <Content Include="Public\WFListadoPrestamo.aspx" />
+    <Content Include="Public\WFMantenimientoCaja.aspx" />
+    <Content Include="Public\WFMantenimientoContraseña.aspx" />
+    <Content Include="Public\WFMantenimientoProducto.aspx" />
+    <Content Include="Public\WFMantenimientoLiquidaciones.aspx" />
+    <Content Include="Public\WFMantenimientoSerie.aspx" />
+    <Content Include="Public\WFMantenimientoSubCategoria.aspx" />
+    <Content Include="Public\WFMantenimientoCategoria.aspx" />
+    <Content Include="Public\WFMantenimientoEmpresa.aspx" />
+    <Content Include="Public\WFMantenimientoSucursal.aspx" />
+    <Content Include="Public\WFMantenimientoTipoCaja.aspx" />
+    <Content Include="Public\WFMantAreaEmpresa.aspx" />
+    <Content Include="Public\WFMantenimientoAsignacionCaja.aspx" />
+    <Content Include="Public\WFMantenimientoUsuario.aspx" />
+    <Content Include="Public\WFPrestamo.aspx" />
+    <Content Include="Public\WFRetiroArticulo.aspx" />
+    <Content Include="WebLogin.aspx" />
+    <Content Include="DATASET\DSContratoPrestamo.xsc">
+      <DependentUpon>DSContratoPrestamo.xsd</DependentUpon>
+    </Content>
+    <Content Include="DATASET\DSBoletaTraslado.xsc">
+      <DependentUpon>DSBoletaTraslado.xsd</DependentUpon>
+    </Content>
+    <None Include="DATASET\DSBoletaTraslado.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DSBoletaTraslado.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="DATASET\DSBoletaTraslado.xss">
+      <DependentUpon>DSBoletaTraslado.xsd</DependentUpon>
+    </Content>
+    <None Include="DATASET\DSContratoPrestamo.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DSContratoPrestamo.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="DATASET\DSContratoPrestamo.xss">
+      <DependentUpon>DSContratoPrestamo.xsd</DependentUpon>
+    </Content>
+    <Content Include="DATASET\DSFacturaIntereses.xsc">
+      <DependentUpon>DSFacturaIntereses.xsd</DependentUpon>
+    </Content>
+    <Content Include="DATASET\DSEstadoCuentaCaja.xsc">
+      <DependentUpon>DSEstadoCuentaCaja.xsd</DependentUpon>
+    </Content>
+    <None Include="DATASET\DSEstadoCuentaCaja.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DSEstadoCuentaCaja.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="DATASET\DSEstadoCuentaCaja.xss">
+      <DependentUpon>DSEstadoCuentaCaja.xsd</DependentUpon>
+    </Content>
+    <None Include="DATASET\DSEstadoCuentaPrestamo.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DSEstadoCuentaPrestamo.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="DATASET\DSEstadoCuentaPrestamo.xss">
+      <DependentUpon>DSEstadoCuentaPrestamo.xsd</DependentUpon>
+    </Content>
+    <Content Include="DATASET\DSEstadoCuentaPrestamoDetalleArticulos.xsc">
+      <DependentUpon>DSEstadoCuentaPrestamoDetalleArticulos.xsd</DependentUpon>
+    </Content>
+    <None Include="DATASET\DSEstadoCuentaPrestamoDetalleArticulos.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DSEstadoCuentaPrestamoDetalleArticulos.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="DATASET\DSEstadoCuentaPrestamoDetalleArticulos.xss">
+      <DependentUpon>DSEstadoCuentaPrestamoDetalleArticulos.xsd</DependentUpon>
+    </Content>
+    <Content Include="DATASET\DSEtiquetaPrestamo.xsc">
+      <DependentUpon>DSEtiquetaPrestamo.xsd</DependentUpon>
+    </Content>
+    <Content Include="DATASET\DSEstadoCuentaPrestamoF.xsc">
+      <DependentUpon>DSEstadoCuentaPrestamoF.xsd</DependentUpon>
+    </Content>
+    <None Include="DATASET\DSEstadoCuentaPrestamoF.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DSEstadoCuentaPrestamoF.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="DATASET\DSEstadoCuentaPrestamoF.xss">
+      <DependentUpon>DSEstadoCuentaPrestamoF.xsd</DependentUpon>
+    </Content>
+    <None Include="DATASET\DSEtiquetaPrestamo.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DSEtiquetaPrestamo.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="DATASET\DSEtiquetaPrestamo.xss">
+      <DependentUpon>DSEtiquetaPrestamo.xsd</DependentUpon>
+    </Content>
+    <None Include="DATASET\DSFacturaIntereses.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DSFacturaIntereses.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="DATASET\DSFacturaIntereses.xss">
+      <DependentUpon>DSFacturaIntereses.xsd</DependentUpon>
+    </Content>
+    <Content Include="DATASET\DSProyeccionPrestamo.xsc">
+      <DependentUpon>DSProyeccionPrestamo.xsd</DependentUpon>
+    </Content>
+    <Content Include="DATASET\DSInventarioDisponible.xsc">
+      <DependentUpon>DSInventarioDisponible.xsd</DependentUpon>
+    </Content>
+    <None Include="DATASET\DSInventarioDisponible.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DSInventarioDisponible.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="DATASET\DSInventarioDisponible.xss">
+      <DependentUpon>DSInventarioDisponible.xsd</DependentUpon>
+    </Content>
+    <Content Include="DATASET\DSProyeccionInteres.xsc">
+      <DependentUpon>DSProyeccionInteres.xsd</DependentUpon>
+    </Content>
+    <Content Include="DATASET\DSPrestamosVencidos.xsc">
+      <DependentUpon>DSPrestamosVencidos.xsd</DependentUpon>
+    </Content>
+    <None Include="DATASET\DSPrestamosVencidos.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DSPrestamosVencidos.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="DATASET\DSPrestamosVencidos.xss">
+      <DependentUpon>DSPrestamosVencidos.xsd</DependentUpon>
+    </Content>
+    <None Include="DATASET\DSProyeccionInteres.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DSProyeccionInteres.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="DATASET\DSProyeccionInteres.xss">
+      <DependentUpon>DSProyeccionInteres.xsd</DependentUpon>
+    </Content>
+    <None Include="DATASET\DSProyeccionPrestamo.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DSProyeccionPrestamo.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="DATASET\DSProyeccionPrestamo.xss">
+      <DependentUpon>DSProyeccionPrestamo.xsd</DependentUpon>
+    </Content>
+    <Content Include="DATASET\DtsTransaccionesCaja.xsc">
+      <DependentUpon>DtsTransaccionesCaja.xsd</DependentUpon>
+    </Content>
+    <Content Include="DATASET\DSReciboFactura.xsc">
+      <DependentUpon>DSReciboFactura.xsd</DependentUpon>
+    </Content>
+    <None Include="DATASET\DSReciboFactura.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DSReciboFactura.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="DATASET\DSReciboFactura.xss">
+      <DependentUpon>DSReciboFactura.xsd</DependentUpon>
+    </Content>
+    <Content Include="DATASET\DSReporteCancelaciones.xsc">
+      <DependentUpon>DSReporteCancelaciones.xsd</DependentUpon>
+    </Content>
+    <Content Include="DATASET\DSReporteAbonosACapital.xsc">
+      <DependentUpon>DSReporteAbonosACapital.xsd</DependentUpon>
+    </Content>
+    <None Include="DATASET\DSReporteAbonosACapital.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DSReporteAbonosACapital.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="DATASET\DSReporteAbonosACapital.xss">
+      <DependentUpon>DSReporteAbonosACapital.xsd</DependentUpon>
+    </Content>
+    <None Include="DATASET\DSReporteCancelaciones.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DSReporteCancelaciones.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="DATASET\DSReporteCancelaciones.xss">
+      <DependentUpon>DSReporteCancelaciones.xsd</DependentUpon>
+    </Content>
+    <Content Include="DATASET\DSReporteFacturas.xsc">
+      <DependentUpon>DSReporteFacturas.xsd</DependentUpon>
+    </Content>
+    <None Include="DATASET\DSReporteFacturas.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DSReporteFacturas.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="DATASET\DSReporteFacturas.xss">
+      <DependentUpon>DSReporteFacturas.xsd</DependentUpon>
+    </Content>
+    <Content Include="DATASET\DSReporteRIE.xsc">
+      <DependentUpon>DSReporteRIE.xsd</DependentUpon>
+    </Content>
+    <Content Include="DATASET\DSReportePrestamos.xsc">
+      <DependentUpon>DSReportePrestamos.xsd</DependentUpon>
+    </Content>
+    <Content Include="DATASET\DSReporteLiquidaciones.xsc">
+      <DependentUpon>DSReporteLiquidaciones.xsd</DependentUpon>
+    </Content>
+    <Content Include="DATASET\DSReporteFacturasVentasDetalle.xsc">
+      <DependentUpon>DSReporteFacturasVentasDetalle.xsd</DependentUpon>
+    </Content>
+    <None Include="DATASET\DSReporteFacturasVentasDetalle.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DSReporteFacturasVentasDetalle.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="DATASET\DSReporteFacturasVentasDetalle.xss">
+      <DependentUpon>DSReporteFacturasVentasDetalle.xsd</DependentUpon>
+    </Content>
+    <None Include="DATASET\DSReporteLiquidaciones.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DSReporteLiquidaciones.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="DATASET\DSReporteLiquidaciones.xss">
+      <DependentUpon>DSReporteLiquidaciones.xsd</DependentUpon>
+    </Content>
+    <None Include="DATASET\DSReportePrestamos.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DSReportePrestamos.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="DATASET\DSReportePrestamos.xss">
+      <DependentUpon>DSReportePrestamos.xsd</DependentUpon>
+    </Content>
+    <None Include="DATASET\DSReporteRIE.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DSReporteRIE.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="DATASET\DSReporteRIE.xss">
+      <DependentUpon>DSReporteRIE.xsd</DependentUpon>
+    </Content>
+    <None Include="DATASET\DtsTransaccionesCaja.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DtsTransaccionesCaja.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="DATASET\DtsTransaccionesCaja.xss">
+      <DependentUpon>DtsTransaccionesCaja.xsd</DependentUpon>
+    </Content>
+    <None Include="Properties\PublishProfiles\PRESTAVENDEEMPRENDA.pubxml" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Global.asax" />
+    <Content Include="Public\WFPrincipal.aspx" />
+    <Content Include="scripts\ai.0.22.9-build00167.js" />
+    <Content Include="scripts\ai.0.22.9-build00167.min.js" />
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CLASS\cs_caja.cs" />
+    <Compile Include="CLASS\cs_cambio_precio.cs" />
+    <Compile Include="CLASS\cs_casilla.cs" />
+    <Compile Include="CLASS\cs_factura.cs" />
+    <Compile Include="CLASS\cs_inventario.cs" />
+    <Compile Include="CLASS\cs_liquidacion.cs" />
+    <Compile Include="CLASS\cs_empresa.cs" />
+    <Compile Include="CLASS\cs_manejo_inventario.cs" />
+    <Compile Include="CLASS\cs_manejo_medios.cs" />
+    <Compile Include="CLASS\cs_manejo_pais.cs" />
+    <Compile Include="CLASS\cs_prestamo.cs" />
+    <Compile Include="CLASS\cs_profesion.cs" />
+    <Compile Include="CLASS\cs_recepcion_liquidacion.cs" />
+    <Compile Include="CLASS\cs_recibo.cs" />
+    <Compile Include="CLASS\cs_reporteria.cs" />
+    <Compile Include="CLASS\cs_serie.cs" />
+    <Compile Include="CLASS\cs_sucursal.cs" />
+    <Compile Include="CLASS\cs_tipo_caja.cs" />
+    <Compile Include="CLASS\cs_areaempresa.cs" />
+    <Compile Include="CLASS\cs_categoria.cs" />
+    <Compile Include="CLASS\cs_asignacion_caja.cs" />
+    <Compile Include="CLASS\cs_cliente.cs" />
+    <Compile Include="CLASS\cs_connection.cs" />
+    <Compile Include="CLASS\cs_interes.cs" />
+    <Compile Include="CLASS\cs_kilataje.cs" />
+    <Compile Include="CLASS\cs_marca.cs" />
+    <Compile Include="CLASS\cs_menu.cs" />
+    <Compile Include="CLASS\cs_plan_prestamo.cs" />
+    <Compile Include="CLASS\cs_producto.cs" />
+    <Compile Include="CLASS\cs_subcategoria.cs" />
+    <Compile Include="CLASS\cs_traslado.cs" />
+    <Compile Include="CLASS\cs_transaccion.cs" />
+    <Compile Include="CLASS\cs_usuario.cs" />
+    <Compile Include="DATASET\DSBoletaTraslado.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DSBoletaTraslado.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DATASET\DSContratoPrestamo.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DSContratoPrestamo.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DATASET\DSEstadoCuentaCaja.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DSEstadoCuentaCaja.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DATASET\DSEstadoCuentaPrestamo.cs">
+      <DependentUpon>DSEstadoCuentaPrestamo.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DATASET\DSEstadoCuentaPrestamo.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DSEstadoCuentaPrestamo.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DATASET\DSEstadoCuentaPrestamoDetalleArticulos.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DSEstadoCuentaPrestamoDetalleArticulos.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DATASET\DSEstadoCuentaPrestamoF.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DSEstadoCuentaPrestamoF.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DATASET\DSEtiquetaPrestamo.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DSEtiquetaPrestamo.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DATASET\DSFacturaIntereses.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DSFacturaIntereses.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DATASET\DSInventarioDisponible.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DSInventarioDisponible.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DATASET\DSPrestamosVencidos.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DSPrestamosVencidos.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DATASET\DSProyeccionInteres.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DSProyeccionInteres.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DATASET\DSProyeccionPrestamo.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DSProyeccionPrestamo.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DATASET\DSReciboFactura.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DSReciboFactura.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DATASET\DSReporteAbonosACapital.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DSReporteAbonosACapital.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DATASET\DSReporteCancelaciones.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DSReporteCancelaciones.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DATASET\DSReporteFacturas.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DSReporteFacturas.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DATASET\DSReporteFacturasVentasDetalle.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DSReporteFacturasVentasDetalle.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DATASET\DSReporteLiquidaciones.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DSReporteLiquidaciones.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DATASET\DSReportePrestamos.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DSReportePrestamos.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DATASET\DSReporteRIE.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DSReporteRIE.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DATASET\DtsTransaccionesCaja.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DtsTransaccionesCaja.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Public\AnulacionFactura.aspx.cs">
+      <DependentUpon>AnulacionFactura.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\AnulacionFactura.aspx.designer.cs">
+      <DependentUpon>AnulacionFactura.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\AutorizacionEncargado.aspx.cs">
+      <DependentUpon>AutorizacionEncargado.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\AutorizacionEncargado.aspx.designer.cs">
+      <DependentUpon>AutorizacionEncargado.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\BuscarClienteSeguimiento.aspx.cs">
+      <DependentUpon>BuscarClienteSeguimiento.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\BuscarClienteSeguimiento.aspx.designer.cs">
+      <DependentUpon>BuscarClienteSeguimiento.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\BusquedaCliente.aspx.cs">
+      <DependentUpon>BusquedaCliente.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\BusquedaCliente.aspx.designer.cs">
+      <DependentUpon>BusquedaCliente.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\CambioInteresPrestamo.aspx.cs">
+      <DependentUpon>CambioInteresPrestamo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\CambioInteresPrestamo.aspx.designer.cs">
+      <DependentUpon>CambioInteresPrestamo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\CambioPrecioProducto.aspx.cs">
+      <DependentUpon>CambioPrecioProducto.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\CambioPrecioProducto.aspx.designer.cs">
+      <DependentUpon>CambioPrecioProducto.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\Casillas.aspx.cs">
+      <DependentUpon>Casillas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\Casillas.aspx.designer.cs">
+      <DependentUpon>Casillas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\FacturacionProductos.aspx.cs">
+      <DependentUpon>FacturacionProductos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\FacturacionProductos.aspx.designer.cs">
+      <DependentUpon>FacturacionProductos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\ImpresionFormatos.aspx.cs">
+      <DependentUpon>ImpresionFormatos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\ImpresionFormatos.aspx.designer.cs">
+      <DependentUpon>ImpresionFormatos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\IncrementosDecrementos.aspx.cs">
+      <DependentUpon>IncrementosDecrementos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\IncrementosDecrementos.aspx.designer.cs">
+      <DependentUpon>IncrementosDecrementos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\Intereses.aspx.cs">
+      <DependentUpon>Intereses.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\Intereses.aspx.designer.cs">
+      <DependentUpon>Intereses.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\ManejoCaja.aspx.cs">
+      <DependentUpon>ManejoCaja.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\ManejoCaja.aspx.designer.cs">
+      <DependentUpon>ManejoCaja.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\ListadoPrestamoSeguimiento.aspx.cs">
+      <DependentUpon>ListadoPrestamoSeguimiento.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\ListadoPrestamoSeguimiento.aspx.designer.cs">
+      <DependentUpon>ListadoPrestamoSeguimiento.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\Marcas.aspx.cs">
+      <DependentUpon>Marcas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\Marcas.aspx.designer.cs">
+      <DependentUpon>Marcas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\PrecioKilataje.aspx.cs">
+      <DependentUpon>PrecioKilataje.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\PrecioKilataje.aspx.designer.cs">
+      <DependentUpon>PrecioKilataje.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\PrestaVende.Master.cs">
+      <DependentUpon>PrestaVende.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\PrestaVende.Master.designer.cs">
+      <DependentUpon>PrestaVende.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Public\ProyeccionInteres.aspx.cs">
+      <DependentUpon>ProyeccionInteres.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\ProyeccionInteres.aspx.designer.cs">
+      <DependentUpon>ProyeccionInteres.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\RecepcionCaja.aspx.cs">
+      <DependentUpon>RecepcionCaja.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\RecepcionCaja.aspx.designer.cs">
+      <DependentUpon>RecepcionCaja.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\RecepcionLiquidaciones.aspx.cs">
+      <DependentUpon>RecepcionLiquidaciones.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\RecepcionLiquidaciones.aspx.designer.cs">
+      <DependentUpon>RecepcionLiquidaciones.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\RecepcionTrasladoArticulos.aspx.cs">
+      <DependentUpon>RecepcionTrasladoArticulos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\RecepcionTrasladoArticulos.aspx.designer.cs">
+      <DependentUpon>RecepcionTrasladoArticulos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\ReimpresionFacturaRecibo.aspx.cs">
+      <DependentUpon>ReimpresionFacturaRecibo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\ReimpresionFacturaRecibo.aspx.designer.cs">
+      <DependentUpon>ReimpresionFacturaRecibo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\Report.aspx.cs">
+      <DependentUpon>Report.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\Report.aspx.designer.cs">
+      <DependentUpon>Report.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\ReporteAbonos.aspx.cs">
+      <DependentUpon>ReporteAbonos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\ReporteAbonos.aspx.designer.cs">
+      <DependentUpon>ReporteAbonos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\ReporteCancelaciones.aspx.cs">
+      <DependentUpon>ReporteCancelaciones.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\ReporteCancelaciones.aspx.designer.cs">
+      <DependentUpon>ReporteCancelaciones.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\ReporteEstadoCuentaCaja.aspx.cs">
+      <DependentUpon>ReporteEstadoCuentaCaja.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\ReporteEstadoCuentaCaja.aspx.designer.cs">
+      <DependentUpon>ReporteEstadoCuentaCaja.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\ReporteFacturas.aspx.cs">
+      <DependentUpon>ReporteFacturas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\ReporteFacturas.aspx.designer.cs">
+      <DependentUpon>ReporteFacturas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\ReporteInventario.aspx.cs">
+      <DependentUpon>ReporteInventario.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\ReporteInventario.aspx.designer.cs">
+      <DependentUpon>ReporteInventario.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\ReporteLiquidaciones.aspx.cs">
+      <DependentUpon>ReporteLiquidaciones.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\ReporteLiquidaciones.aspx.designer.cs">
+      <DependentUpon>ReporteLiquidaciones.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\ReportePrestamos.aspx.cs">
+      <DependentUpon>ReportePrestamos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\ReportePrestamos.aspx.designer.cs">
+      <DependentUpon>ReportePrestamos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\ReporteRIE.aspx.cs">
+      <DependentUpon>ReporteRIE.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\ReporteRIE.aspx.designer.cs">
+      <DependentUpon>ReporteRIE.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\ReporteVencidos.aspx.cs">
+      <DependentUpon>ReporteVencidos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\ReporteVencidos.aspx.designer.cs">
+      <DependentUpon>ReporteVencidos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\ReporteVentas.aspx.cs">
+      <DependentUpon>ReporteVentas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\ReporteVentas.aspx.designer.cs">
+      <DependentUpon>ReporteVentas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\TrasladoArticulos.aspx.cs">
+      <DependentUpon>TrasladoArticulos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\TrasladoArticulos.aspx.designer.cs">
+      <DependentUpon>TrasladoArticulos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\WebReport.aspx.cs">
+      <DependentUpon>WebReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\WebReport.aspx.designer.cs">
+      <DependentUpon>WebReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\WFBusquedaCliente.aspx.cs">
+      <DependentUpon>WFBusquedaCliente.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\WFBusquedaCliente.aspx.designer.cs">
+      <DependentUpon>WFBusquedaCliente.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\WFBusquedaClienteFacturacion.aspx.cs">
+      <DependentUpon>WFBusquedaClienteFacturacion.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\WFBusquedaClienteFacturacion.aspx.designer.cs">
+      <DependentUpon>WFBusquedaClienteFacturacion.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\WFCrearFactura.aspx.cs">
+      <DependentUpon>WFCrearFactura.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\WFCrearFactura.aspx.designer.cs">
+      <DependentUpon>WFCrearFactura.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\WFFacturacion.aspx.cs">
+      <DependentUpon>WFFacturacion.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\WFFacturacion.aspx.designer.cs">
+      <DependentUpon>WFFacturacion.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\WFListadoPrestamo.aspx.cs">
+      <DependentUpon>WFListadoPrestamo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\WFListadoPrestamo.aspx.designer.cs">
+      <DependentUpon>WFListadoPrestamo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\WFMantenimientoCaja.aspx.cs">
+      <DependentUpon>WFMantenimientoCaja.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\WFMantenimientoCaja.aspx.designer.cs">
+      <DependentUpon>WFMantenimientoCaja.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\WFMantenimientoContraseña.aspx.cs">
+      <DependentUpon>WFMantenimientoContraseña.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\WFMantenimientoContraseña.aspx.designer.cs">
+      <DependentUpon>WFMantenimientoContraseña.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\WFMantenimientoProducto.aspx.cs">
+      <DependentUpon>WFMantenimientoProducto.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\WFMantenimientoProducto.aspx.designer.cs">
+      <DependentUpon>WFMantenimientoProducto.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\WFMantenimientoLiquidaciones.aspx.cs">
+      <DependentUpon>WFMantenimientoLiquidaciones.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\WFMantenimientoLiquidaciones.aspx.designer.cs">
+      <DependentUpon>WFMantenimientoLiquidaciones.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\WFMantenimientoSerie.aspx.cs">
+      <DependentUpon>WFMantenimientoSerie.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\WFMantenimientoSerie.aspx.designer.cs">
+      <DependentUpon>WFMantenimientoSerie.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\WFMantenimientoSubCategoria.aspx.cs">
+      <DependentUpon>WFMantenimientoSubCategoria.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\WFMantenimientoSubCategoria.aspx.designer.cs">
+      <DependentUpon>WFMantenimientoSubCategoria.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\WFMantenimientoCategoria.aspx.cs">
+      <DependentUpon>WFMantenimientoCategoria.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\WFMantenimientoCategoria.aspx.designer.cs">
+      <DependentUpon>WFMantenimientoCategoria.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\WFMantenimientoEmpresa.aspx.cs">
+      <DependentUpon>WFMantenimientoEmpresa.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\WFMantenimientoEmpresa.aspx.designer.cs">
+      <DependentUpon>WFMantenimientoEmpresa.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\WFMantenimientoSucursal.aspx.cs">
+      <DependentUpon>WFMantenimientoSucursal.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\WFMantenimientoSucursal.aspx.designer.cs">
+      <DependentUpon>WFMantenimientoSucursal.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\WFMantenimientoTipoCaja.aspx.cs">
+      <DependentUpon>WFMantenimientoTipoCaja.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\WFMantenimientoTipoCaja.aspx.designer.cs">
+      <DependentUpon>WFMantenimientoTipoCaja.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\WFMantAreaEmpresa.aspx.cs">
+      <DependentUpon>WFMantAreaEmpresa.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\WFMantAreaEmpresa.aspx.designer.cs">
+      <DependentUpon>WFMantAreaEmpresa.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\WFMantenimientoAsignacionCaja.aspx.cs">
+      <DependentUpon>WFMantenimientoAsignacionCaja.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\WFMantenimientoAsignacionCaja.aspx.designer.cs">
+      <DependentUpon>WFMantenimientoAsignacionCaja.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\WFMantenimientoUsuario.aspx.cs">
+      <DependentUpon>WFMantenimientoUsuario.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\WFMantenimientoUsuario.aspx.designer.cs">
+      <DependentUpon>WFMantenimientoUsuario.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\WFPrestamo.aspx.cs">
+      <DependentUpon>WFPrestamo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\WFPrestamo.aspx.designer.cs">
+      <DependentUpon>WFPrestamo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\WFPrincipal.aspx.cs">
+      <DependentUpon>WFPrincipal.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\WFPrincipal.aspx.designer.cs">
+      <DependentUpon>WFPrincipal.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\WFRetiroArticulo.aspx.cs">
+      <DependentUpon>WFRetiroArticulo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\WFRetiroArticulo.aspx.designer.cs">
+      <DependentUpon>WFRetiroArticulo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\CRBoletaTraslado.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CRBoletaTraslado.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\CRFacturas.cs">
+      <DependentUpon>CRFacturas.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Reports\CRCancelacion.cs">
+      <DependentUpon>CRCancelacion.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Reports\CRAbonosCapital.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CRAbonosCapital.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\CRContratoGeneral.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CRContratoGeneral.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\CREstadoCuentaPrestamo.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CREstadoCuentaPrestamo.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\CREtiquetaPrestamo.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CREtiquetaPrestamo.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\CRFacturaRecibo.cs">
+      <DependentUpon>CRFacturaRecibo.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Reports\CRFacturaIntereses.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CRFacturaIntereses.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\CRInventarioSucursal.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CRInventarioSucursal.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\CRProyeccionInteresCobro.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CRProyeccionInteresCobro.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\CRProyeccionIntereses.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CRProyeccionIntereses.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\CRReporteEstadoDeCuentaCaja.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CRReporteEstadoDeCuentaCaja.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\CRReporteLiquidaciones.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CRReporteLiquidaciones.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\CRReportePrestamos.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CRReportePrestamos.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\CRReporteRIE.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CRReporteRIE.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\CRReporteVencidos.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CRReporteVencidos.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\CRReporteVentasDetallado.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CRReporteVentasDetallado.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WebLogin.aspx.cs">
+      <DependentUpon>WebLogin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebLogin.aspx.designer.cs">
+      <DependentUpon>WebLogin.aspx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Reports\CRBoletaTraslado.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>CRBoletaTraslado.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\CRFacturas.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>CRFacturas.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\CRCancelacion.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>CRCancelacion.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\CRAbonosCapital.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>CRAbonosCapital.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\CRContratoGeneral.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>CRContratoGeneral.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\CREstadoCuentaPrestamo.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>CREstadoCuentaPrestamo.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\CREtiquetaPrestamo.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>CREtiquetaPrestamo.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\CRFacturaRecibo.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>CRFacturaRecibo.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\CRFacturaIntereses.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>CRFacturaIntereses.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\CRInventarioSucursal.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>CRInventarioSucursal.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\CRProyeccionInteresCobro.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>CRProyeccionInteresCobro.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\CRProyeccionIntereses.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>CRProyeccionIntereses.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\CRReporteEstadoDeCuentaCaja.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>CRReporteEstadoDeCuentaCaja.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\CRReporteLiquidaciones.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>CRReporteLiquidaciones.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\CRReportePrestamos.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>CRReportePrestamos.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\CRReporteRIE.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>CRReporteRIE.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\CRReporteVencidos.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>CRReporteVencidos.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\CRReporteVentasDetallado.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>CRReporteVentasDetallado.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>61105</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:61105/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

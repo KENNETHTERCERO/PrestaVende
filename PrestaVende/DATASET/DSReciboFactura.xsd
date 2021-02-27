@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DSReciboFactura" targetNamespace="http://tempuri.org/DSReciboFactura.xsd" xmlns:mstns="http://tempuri.org/DSReciboFactura.xsd" xmlns="http://tempuri.org/DSReciboFactura.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DSReciboFactura" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="DSReciboFactura" msprop:Generator_UserDSName="DSReciboFactura">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="DtDatos" msprop:Generator_TableClassName="DtDatosDataTable" msprop:Generator_TableVarName="tableDtDatos" msprop:Generator_TablePropName="DtDatos" msprop:Generator_RowDeletingName="DtDatosRowDeleting" msprop:Generator_RowChangingName="DtDatosRowChanging" msprop:Generator_RowEvHandlerName="DtDatosRowChangeEventHandler" msprop:Generator_RowDeletedName="DtDatosRowDeleted" msprop:Generator_UserTableName="DtDatos" msprop:Generator_RowChangedName="DtDatosRowChanged" msprop:Generator_RowEvArgName="DtDatosRowChangeEvent" msprop:Generator_RowClassName="DtDatosRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Valor" msprop:Generator_ColumnVarNameInTable="columnValor" msprop:Generator_ColumnPropNameInRow="Valor" msprop:Generator_ColumnPropNameInTable="ValorColumn" msprop:Generator_UserColumnName="Valor" type="xs:string" minOccurs="0" />
+              <xs:element name="Cliente" msprop:Generator_ColumnVarNameInTable="columnCliente" msprop:Generator_ColumnPropNameInRow="Cliente" msprop:Generator_ColumnPropNameInTable="ClienteColumn" msprop:Generator_UserColumnName="Cliente" type="xs:string" minOccurs="0" />
+              <xs:element name="ValorLetras" msprop:Generator_ColumnVarNameInTable="columnValorLetras" msprop:Generator_ColumnPropNameInRow="ValorLetras" msprop:Generator_ColumnPropNameInTable="ValorLetrasColumn" msprop:Generator_UserColumnName="ValorLetras" type="xs:string" minOccurs="0" />
+              <xs:element name="TipoTransaccion" msprop:Generator_ColumnVarNameInTable="columnTipoTransaccion" msprop:Generator_ColumnPropNameInRow="TipoTransaccion" msprop:Generator_ColumnPropNameInTable="TipoTransaccionColumn" msprop:Generator_UserColumnName="TipoTransaccion" type="xs:string" minOccurs="0" />
+              <xs:element name="Descripcion" msprop:Generator_ColumnVarNameInTable="columnDescripcion" msprop:Generator_ColumnPropNameInRow="Descripcion" msprop:Generator_ColumnPropNameInTable="DescripcionColumn" msprop:Generator_UserColumnName="Descripcion" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
