@@ -48,12 +48,14 @@
 
 
         </div>
-        <div>
-            <img src="Public/image/EMPRENDA.png" width="300px" height="100px" />
-        </div>
+        
         <div>
             <center>
             <form id="form_login" runat="server">
+                <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePartialRendering="true" EnablePageMethods="True" />
+                <div>
+                    <asp:Image runat="server" ID="imageLogo" AutoPostBack="True" Width="300px" Height ="150px"></asp:Image>
+                </div>
                 <table>
                     <tr>
                         <td>

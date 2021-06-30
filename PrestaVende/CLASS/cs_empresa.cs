@@ -33,6 +33,29 @@ namespace PrestaVende.CLASS
             }
         }
 
+        public int getShowReportViewer(ref string error, string id_sucursal)
+        {
+            try
+            {
+                int returnShow = 0;
+                connection.connection.Open();
+                command.Connection = connection.connection;
+                command.CommandText = "SELECT show_report_viewer FROM tbl_sucursal" +
+                                        "WHERE id_sucursal = @id_sucursal";
+                command.Parameters.AddWithValue("@id_sucursal", id_sucursal);
+                returnShow = Convert.ToInt32(command.ExecuteScalar());
+                return returnShow;
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                return 0;
+            }
+            finally
+            {
+                connection.connection.Close();
+            }
+        }
 
         public DataTable getEmpresa(ref string error)
         {

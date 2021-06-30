@@ -121,7 +121,6 @@
             </ul>
         </div>
         <div class="center">
-            T
         </div>
         <div>
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">

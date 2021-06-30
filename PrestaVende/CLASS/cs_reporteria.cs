@@ -57,5 +57,18 @@ namespace PrestaVende.CLASS
             return ds;
 
         }
+
+        public string createLinkReport(string parameters)
+        {
+            try
+            {
+                string scriptReport = "window.open('http://sql5090.site4now.net/ReportServer/Pages/ReportViewer.aspx?%2fgtsa2019-002%2f" + parameters + "&rc:Parameters=False');";
+                return scriptReport;
+            }
+            catch (Exception ex)
+            {
+                return ex.ToString();
+            }
+        }
     }
 }

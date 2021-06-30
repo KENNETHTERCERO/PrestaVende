@@ -18,6 +18,7 @@ namespace PrestaVende
                                                                                                                                                                                  
         protected void Page_Load(object sender, EventArgs e)
         {
+            setLogo();
             txtUser.Focus();
         }
 
@@ -159,6 +160,34 @@ namespace PrestaVende
             catch (Exception ex)
             {
                 showError(ex.ToString());
+            }
+        }
+
+        private void setLogo()
+        {
+            try
+            {
+                string logo = Request.QueryString.Get("E").ToString();
+
+                if (logo == "null")
+                {
+                    imageLogo.Visible = false;
+                }
+                else
+                {
+                    imageLogo.ImageUrl = "Public/image/" + logo + ".png";
+                }
+            }
+            catch (Exception ex)
+            {
+                if (ex.ToString().Contains("System.NullReferenceException"))
+                {
+                    imageLogo.Visible = false;
+                }
+                else
+                {
+                    showError(ex.ToString());
+                }
             }
         }
 
