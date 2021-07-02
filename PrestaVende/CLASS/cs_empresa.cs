@@ -57,6 +57,30 @@ namespace PrestaVende.CLASS
             }
         }
 
+        public int getEnabledComboBoxTypeLoan(ref string error, string id_empresa)
+        {
+            try
+            {
+                int returnShow = 0;
+                connection.connection.Open();
+                command.Connection = connection.connection;
+                command.CommandText = "SELECT enabled_combo_box_type_loan FROM tbl_empresa" +
+                                        "WHERE id_empresa = @id_empresa";
+                command.Parameters.AddWithValue("@id_empresa", id_empresa);
+                returnShow = Convert.ToInt32(command.ExecuteScalar());
+                return returnShow;
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                return 0;
+            }
+            finally
+            {
+                connection.connection.Close();
+            }
+        }
+
         public DataTable getEmpresa(ref string error)
         {
             try

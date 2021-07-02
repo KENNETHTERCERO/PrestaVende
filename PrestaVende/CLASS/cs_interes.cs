@@ -40,15 +40,18 @@ namespace PrestaVende.CLASS
             }
         }
 
-        public string getIdInteres(ref string error, string monto)
+        public string getIdInteres(ref string error, string monto, string id_empresa)
         {
             try
             {
                 string id_interes = "";
                 connection.connection.Open();
                 command.Connection = connection.connection;
-                command.CommandText = "select top 1 ISNULL(id_plan_prestamo, 0) From tbl_plan_prestamo WHERE @monto between minimo AND maximo";
+                command.CommandText = "select top 1 ISNULL(id_plan_prestamo, 0) From tbl_plan_prestamo " +
+                                      "WHERE @monto between minimo AND maximo " +
+                                      "AND id_empresa = @id_empresa";
                 command.Parameters.AddWithValue("@monto", monto);
+                command.Parameters.AddWithValue("@id_empresa", id_empresa);
                 id_interes = command.ExecuteScalar().ToString();
                 return id_interes;
             }

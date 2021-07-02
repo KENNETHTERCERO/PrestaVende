@@ -57,7 +57,7 @@ namespace PrestaVende.Public
             {
                 string id_cliente = Request.QueryString["id_cliente"];
                 lblid_cliente.Text = id_cliente;
-                foreach (DataRow item in cs_prestamo.getCountPrestamosCancelados(ref error, id_cliente).Rows)
+                foreach (DataRow item in cs_prestamo.getCountPrestamosCancelados(ref error, id_cliente, this.Session["id_empresa"].ToString()).Rows)
                 {
                     lblPrestamosCanceladosNumero.Text = item[0].ToString();
                     lblPrestamosCanceladosMonto.Text = item[1].ToString();
@@ -75,7 +75,7 @@ namespace PrestaVende.Public
             {
                 string id_cliente = Request.QueryString["id_cliente"];
                 lblid_cliente.Text = id_cliente;
-                foreach (DataRow item in cs_prestamo.getCountPrestamosActivos(ref error, id_cliente).Rows)
+                foreach (DataRow item in cs_prestamo.getCountPrestamosActivos(ref error, id_cliente, this.Session["id_empresa"].ToString()).Rows)
                 {
                     lblPrestamosActivosNumero.Text = item[0].ToString();
                     lblPrestamosActivosMonto.Text = item[1].ToString();
@@ -93,7 +93,7 @@ namespace PrestaVende.Public
             {
                 string id_cliente = Request.QueryString["id_cliente"];
                 lblid_cliente.Text = id_cliente;
-                foreach (DataRow item in cs_prestamo.getCountPrestamosLiquidados(ref error, id_cliente).Rows)
+                foreach (DataRow item in cs_prestamo.getCountPrestamosLiquidados(ref error, id_cliente, this.Session["id_empresa"].ToString()).Rows)
                 {
                     lblPrestamosLiquidadosNumero.Text = item[0].ToString();
                     lblPrestamosLiquidadosMonto.Text = item[1].ToString();
