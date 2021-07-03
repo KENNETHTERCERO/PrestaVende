@@ -20,7 +20,7 @@ namespace PrestaVende.Public
         private CLASS.cs_liquidacion cs_liquidacion = new CLASS.cs_liquidacion();
         private CLASS.cs_traslado cs_traslado = new CLASS.cs_traslado();
         private CLASS.cs_Empresa cs_empresa = new CLASS.cs_Empresa();
-        private string error = "";
+        private string error = "";        
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -31,25 +31,47 @@ namespace PrestaVende.Public
 
         private void managedReport(Int32 tipo_reporte)
         {
+            string nombre_reporte = "";
+            bool reporte_adicional = false;
+            string nombre_reporte_adicional = "";
+            int opcion_case = 0;
+
+            DataTable datosReporte = report.getReportData(ref error, report.getTransactionType(tipo_reporte), this.Session["id_empresa"].ToString());
+
+            nombre_reporte = datosReporte.Rows[0]["nombre_reporte"].ToString();
+            reporte_adicional = bool.Parse(datosReporte.Rows[0]["reporte_adicional"].ToString());
+            nombre_reporte_adicional = datosReporte.Rows[0]["nombre_reporte_adicional"].ToString();
+            opcion_case = int.Parse(datosReporte.Rows[0]["opcion_case"].ToString());
+
             switch (tipo_reporte)
             {
                 case 1://Impresion contrato
-                case 12:
-                    ScriptManager.RegisterClientScriptBlock(this, GetType(), "scriptReportAgreement", report.createLinkReport("Contrato&id_sucursal=" + this.Session["id_sucursal"].ToString() + "&numero_prestamo=" + this.Request.QueryString.Get("numero_prestamo").ToString()), true);
+                case 12:                    
+                    ScriptManager.RegisterClientScriptBlock(this, GetType(), "scriptReportAgreement", report.createLinkReport(nombre_reporte + "&id_sucursal=" + this.Session["id_sucursal"].ToString() + "&numero_prestamo=" + this.Request.QueryString.Get("numero_prestamo").ToString()), true);
+                    if (reporte_adicional)
+                        managedReport(opcion_case);
                     break;
-                case 2://Impresion factura
-                    ScriptManager.RegisterClientScriptBlock(this, GetType(), "scriptReportBill", report.createLinkReport("Factura&id_factura=" + this.Request.QueryString.Get("id_factura").ToString()), true);
+                case 2://Impresion factura                     
+                    ScriptManager.RegisterClientScriptBlock(this, GetType(), "scriptReportBill", report.createLinkReport(nombre_reporte + "&id_factura=" + this.Request.QueryString.Get("id_factura").ToString()), true);
+                    if (reporte_adicional)
+                        managedReport(opcion_case);
                     break;
                 case 3:
-                case 10: //Impresion estado de cuenta.
-                    ScriptManager.RegisterClientScriptBlock(this, GetType(), "scriptReportAccountStatus", report.createLinkReport("EstadoDeCuentaPrestamo&numero_prestamo=" + this.Request.QueryString.Get("numero_prestamo").ToString() + "&id_sucursal=" + this.Session["id_sucursal"].ToString()), true);
+                case 10: //Impresion estado de cuenta.                    
+                    ScriptManager.RegisterClientScriptBlock(this, GetType(), "scriptReportAccountStatus", report.createLinkReport(nombre_reporte + "&numero_prestamo=" + this.Request.QueryString.Get("numero_prestamo").ToString() + "&id_sucursal=" + this.Session["id_sucursal"].ToString()), true);
+                    if (reporte_adicional)
+                        managedReport(opcion_case);
                     break;
                 case 4:
                 case 11://Impresion etiqueta
-                    ScriptManager.RegisterClientScriptBlock(this, GetType(), "scriptReportTagAgreement", report.createLinkReport("EtiquetaPrestamo&numero_prestamo=" + this.Request.QueryString.Get("numero_prestamo").ToString() + "&id_sucursal=" + this.Session["id_sucursal"].ToString()), true);
+                    ScriptManager.RegisterClientScriptBlock(this, GetType(), "scriptReportTagAgreement", report.createLinkReport(nombre_reporte + "&numero_prestamo=" + this.Request.QueryString.Get("numero_prestamo").ToString() + "&id_sucursal=" + this.Session["id_sucursal"].ToString()), true);
+                    if (reporte_adicional)
+                        managedReport(opcion_case);
                     break;
                 case 5: //Impresion Recibo
-                    ScriptManager.RegisterClientScriptBlock(this, GetType(), "scriptReportReceipt", report.createLinkReport("ReciboFactura&id_recibo=" + this.Request.QueryString.Get("id_recibo").ToString() + "&id_sucursal=" + this.Session["id_sucursal"].ToString()), true);
+                    ScriptManager.RegisterClientScriptBlock(this, GetType(), "scriptReportReceipt", report.createLinkReport(nombre_reporte + "&id_recibo=" + this.Request.QueryString.Get("id_recibo").ToString() + "&id_sucursal=" + this.Session["id_sucursal"].ToString()), true);
+                    if (reporte_adicional)
+                        managedReport(opcion_case);
                     break;
                 case 6:
                 case 13: //Reporte Abonos y Cancelaciones
@@ -58,8 +80,8 @@ namespace PrestaVende.Public
                 case 7: //Reporte estado de cuenta caja.
                     ScriptManager.RegisterClientScriptBlock(this, GetType(), "scriptReportBondCancel", report.createLinkReport("EstadoCuentaCaja&id_sucursal=" + this.Request.QueryString.Get("id_sucursal") + "&id_caja=" + this.Request.QueryString.Get("id_caja") + "&fechaInicio=" + this.Request.QueryString.Get("fecha_inicio") + "&fecha_final=" + this.Request.QueryString.Get("fecha_fin")), true);
                     break;
-                case 8:
-                    //Este esta disponible
+                case 8://Reporte de Anexo Contrato
+                    ScriptManager.RegisterClientScriptBlock(this, GetType(), "scriptReportAnnexed", report.createLinkReport(nombre_reporte + "&id_sucursal=" + this.Session["id_sucursal"].ToString() + "&numero_prestamo=" + this.Request.QueryString.Get("numero_prestamo").ToString()), true);
                     break;
                 case 9: //Inventario disponible sucursal
                     ScriptManager.RegisterClientScriptBlock(this, GetType(), "scriptReportInventory", report.createLinkReport("InventarioSucursal&id_sucursal=" + this.Request.QueryString.Get("id_sucursal")), true);

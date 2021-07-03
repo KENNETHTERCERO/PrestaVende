@@ -58,6 +58,71 @@ namespace PrestaVende.CLASS
 
         }
 
+        public DataTable getReportData(ref string error, string id_tipo_transaccion, string id_empresa)
+        {            
+            DataTable dt = new DataTable();            
+
+            try
+            {
+
+                connection.connection.Open();
+                command.Connection = connection.connection;
+                command.Parameters.Clear();                
+
+                command.CommandType = CommandType.StoredProcedure;
+                command.CommandText = "SP_CargarReporte";                
+                command.Parameters.AddWithValue("@id_empresa", id_empresa);                
+                command.Parameters.AddWithValue("@id_tipo_transaccion", id_tipo_transaccion);
+
+                dt.Load(command.ExecuteReader());
+                
+                if (dt.Rows.Count == 0)
+                    error = "Error no existe nombre del reporte";
+                
+
+            }
+            catch (Exception ex)
+            {
+                error = "Error al consultar reporte: " + ex.ToString();
+            }
+            finally
+            {
+                connection.connection.Close();
+            }
+
+            return dt;
+        }
+
+        public string getTransactionType(Int32 opcionCase)
+        {
+            string transactionType = "";
+
+            switch (opcionCase)
+            {
+                case 1://Impresion contrato
+                case 12:
+                    transactionType = "7";
+                    break;
+                case 2://Impresion factura
+                    transactionType = "8";
+                    break;                
+                case 10: //Impresion estado de cuenta.
+                    transactionType = "17";
+                    break;
+                case 11://Impresion etiqueta
+                    transactionType = "18";
+                    break;
+                case 5: //Impresion Recibo
+                    transactionType = "19";
+                    break;
+                case 8://Reporte de Anexo Contrato
+                    transactionType = "20";
+                    break;
+            }
+
+            return transactionType;
+        }
+
         public string createLinkReport(string parameters)
         {
             try
