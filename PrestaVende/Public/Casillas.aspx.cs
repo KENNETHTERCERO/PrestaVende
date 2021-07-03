@@ -47,7 +47,7 @@ namespace PrestaVende.Public
             {
                 cs_categoria = new CLASS.cs_categoria();
                 error = "";
-                this.ddlCategoria.DataSource = cs_categoria.getCategoriaComboBox(ref error);
+                this.ddlCategoria.DataSource = cs_categoria.getCategoriaComboBox(ref error, this.Session["id_empresa"].ToString());
                 this.ddlCategoria.DataValueField = "id_categoria";
                 this.ddlCategoria.DataTextField = "categoria";
                 this.ddlCategoria.DataBind();

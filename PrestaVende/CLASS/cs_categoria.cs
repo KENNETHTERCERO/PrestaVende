@@ -32,7 +32,7 @@ namespace PrestaVende.CLASS
             }
         }
 
-        public DataTable getCategoriaComboBox(ref string error)
+        public DataTable getCategoriaComboBox(ref string error, string id_empresa)
         {
             try
             {
@@ -40,7 +40,8 @@ namespace PrestaVende.CLASS
                 connection.connection.Open();
                 command.Connection = connection.connection;
                 command.CommandText = "SELECT 0 as id_categoria, 'SELECCIONAR' AS categoria UNION " +
-                                      "SELECT id_categoria, categoria From tbl_categoria WHERE estado = 1";
+                                      "SELECT id_categoria, categoria From tbl_categoria WHERE estado = 1 AND id_empresa = @id_empresa";
+                command.Parameters.AddWithValue("@id_empresa", id_empresa);
                 returnTable.Load(command.ExecuteReader());
                 return returnTable;
             }

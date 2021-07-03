@@ -20,6 +20,7 @@ namespace PrestaVende.Public
         private CLASS.cs_marca cs_marca = new CLASS.cs_marca();
         private CLASS.cs_casilla cs_casilla = new CLASS.cs_casilla();
         private CLASS.cs_prestamo cs_prestamo = new CLASS.cs_prestamo();
+        private CLASS.cs_Empresa cs_empresa = new CLASS.cs_Empresa();
 
         private static DataTable dtTablaJoyas;
         private static DataTable dtTablaArticulos;
@@ -135,7 +136,7 @@ namespace PrestaVende.Public
         {
             try
             {
-                this.ddlTipoPrestamo.DataSource = cs_plan_prestamo.getPlanPrestamo(ref error);
+                this.ddlTipoPrestamo.DataSource = cs_plan_prestamo.getPlanPrestamo(ref error, this.Session["id_empresa"].ToString());
                 this.ddlTipoPrestamo.DataValueField = "id_plan_prestamo";
                 this.ddlTipoPrestamo.DataTextField = "plan_prestamo";
                 this.ddlTipoPrestamo.DataBind();
@@ -150,7 +151,7 @@ namespace PrestaVende.Public
         {
             try
             {
-                this.ddlCategoria.DataSource = cs_categoria.getCategoriaComboBox(ref error);
+                this.ddlCategoria.DataSource = cs_categoria.getCategoriaComboBox(ref error, this.Session["id_empresa"].ToString());
                 this.ddlCategoria.DataValueField = "id_categoria";
                 this.ddlCategoria.DataTextField = "categoria";
                 this.ddlCategoria.DataBind();
@@ -239,11 +240,11 @@ namespace PrestaVende.Public
             }
         }
 
-        private void HideOrShowControls(string id_categoria)
+        private void HideOrShowControls(string id_categoria, string descripcion)
         {
             try
             {
-                if (id_categoria.Equals("1"))
+                if (id_categoria.Equals("1") || id_categoria.Equals("18") || id_categoria.Contains("JOYA"))
                 {
                     showControlsJewelry();
                 }
@@ -1024,7 +1025,7 @@ namespace PrestaVende.Public
 
                 if (this.ddlTipo.SelectedValue.ToString().Equals("1"))
                 {
-                    id_TipoPlan = cs_interes.getIdInteres(ref error, totalPrestamo.ToString());
+                    id_TipoPlan = cs_interes.getIdInteres(ref error, totalPrestamo.ToString(), this.Session["id_empresa"].ToString());
                     this.ddlTipoPrestamo.SelectedValue = id_TipoPlan;
                 }
                 //ddlTipoPrestamo.Enabled = false;
@@ -1104,7 +1105,7 @@ namespace PrestaVende.Public
             try
             {
                 getSubCategorias(this.ddlCategoria.SelectedValue.ToString());
-                HideOrShowControls(this.ddlCategoria.SelectedValue.ToString());
+                HideOrShowControls(this.ddlCategoria.SelectedValue.ToString(), this.ddlCategoria.SelectedItem.ToString());
                 if (this.ddlCategoria.SelectedValue.ToString().Equals("0"))
                 {
                     hideAllControls();
@@ -1192,7 +1193,7 @@ namespace PrestaVende.Public
         {
             try
             {
-                if (this.ddlCategoria.SelectedValue.ToString().Equals("1") || this.ddlCategoria.Text.ToString().Equals("JOYAS"))
+                if (this.ddlCategoria.SelectedValue.ToString().Equals("1") || this.ddlCategoria.SelectedValue.ToString().Equals("18") || this.ddlCategoria.SelectedItem.ToString().Equals("JOYAS"))
                 {
                     if (validateJewelry())
                     {
@@ -1360,21 +1361,29 @@ namespace PrestaVende.Public
         {
             try
             {
-                if (this.ddlTipo.SelectedValue.ToString().Equals("1"))
+                if (cs_empresa.getEnabledComboBoxTypeLoan(ref error, this.Session["id_empresa"].ToString()) > 0)
                 {
-                    if (Convert.ToDecimal(this.lblTotalPrestamoQuetzales.Text) <= 500)
+                    if (this.ddlTipo.SelectedValue.ToString().Equals("1"))
                     {
-                        this.ddlTipoPrestamo.SelectedValue = "1";
+                        if (Convert.ToDecimal(this.lblTotalPrestamoQuetzales.Text) <= 500)
+                        {
+                            this.ddlTipoPrestamo.SelectedValue = "1";
+                        }
+                        else
+                        {
+                            this.ddlTipoPrestamo.SelectedValue = "2";
+                        }
                     }
-                    else
+                    else if (this.ddlTipo.SelectedValue.ToString().Equals("2"))
                     {
-                        this.ddlTipoPrestamo.SelectedValue = "2";
+                        this.ddlTipoPrestamo.SelectedValue = "3";
                     }
                 }
-                else if (this.ddlTipo.SelectedValue.ToString().Equals("2"))
+                else
                 {
-                    this.ddlTipoPrestamo.SelectedValue = "3";
+                    ddlTipoPrestamo.Enabled = true;
                 }
+                
             }
             catch (Exception ex)
             {

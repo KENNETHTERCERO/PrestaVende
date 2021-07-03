@@ -16,7 +16,7 @@ namespace PrestaVende.CLASS
         {
         }
 
-        public DataTable getPlanPrestamo(ref string error)
+        public DataTable getPlanPrestamo(ref string error, string id_empresa)
         {
             try
             {
@@ -24,7 +24,8 @@ namespace PrestaVende.CLASS
                 connection.connection.Open();
                 command.Connection = connection.connection;
                 command.CommandText = "SELECT 0 AS id_plan_prestamo, 'SELECCIONAR' AS plan_prestamo UNION " +
-                                      "SELECT id_plan_prestamo, plan_prestamo FROM tbl_plan_prestamo WHERE estado_plan = 1";
+                                      "SELECT id_plan_prestamo, plan_prestamo FROM tbl_plan_prestamo WHERE estado_plan = 1 AND id_empresa = @id_empresa";
+                command.Parameters.AddWithValue("@id_empresa", id_empresa);
                 dtPlanPrestamo.Load(command.ExecuteReader());
                 return dtPlanPrestamo;
             }

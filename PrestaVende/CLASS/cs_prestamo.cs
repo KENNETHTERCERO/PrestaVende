@@ -314,7 +314,7 @@ namespace PrestaVende.CLASS
             }
         }
 
-        public DataTable getCountPrestamosActivos(ref string error, string id_cliente)
+        public DataTable getCountPrestamosActivos(ref string error, string id_cliente, string id_empresa)
         {
             try
             {
@@ -324,8 +324,14 @@ namespace PrestaVende.CLASS
                 command.Connection = connection.connection;
                 command.Parameters.Clear();
                 command.Transaction = connection.connection.BeginTransaction();
-                command.CommandText = "SELECT COUNT(id_sucursal), SUM(total_prestamo) FROM  tbl_prestamo_encabezado WHERE estado_prestamo = 1 AND id_cliente = @id_cliente";
+                command.CommandText = "SELECT COUNT(enc.id_sucursal), SUM(total_prestamo) " +
+                                        "FROM tbl_prestamo_encabezado enc " +
+                                        "INNER JOIN tbl_sucursal AS suc ON suc.id_sucursal = enc.id_sucursal " +
+                                        "INNER JOIN tbl_empresa AS emp ON emp.id_empresa = suc.id_empresa " +
+                                        "WHERE estado_prestamo = 1 AND id_cliente = @id_cliente " +
+                                        "AND emp.id_empresa = @id_empresa";
                 command.Parameters.AddWithValue("@id_cliente", id_cliente);
+                command.Parameters.AddWithValue("@id_empresa", id_empresa);
                 dtPrestamosLiquidados.Load(command.ExecuteReader());
                 return dtPrestamosLiquidados;
             }
@@ -367,7 +373,7 @@ namespace PrestaVende.CLASS
             }
         }
 
-        public DataTable getCountPrestamosCancelados(ref string error, string id_cliente)
+        public DataTable getCountPrestamosCancelados(ref string error, string id_cliente, string id_empresa)
         {
             try
             {
@@ -377,8 +383,14 @@ namespace PrestaVende.CLASS
                 command.Connection = connection.connection;
                 command.Parameters.Clear();
                 command.Transaction = connection.connection.BeginTransaction();
-                command.CommandText = "SELECT COUNT(id_sucursal), SUM(total_prestamo) FROM  tbl_prestamo_encabezado WHERE estado_prestamo = 2 AND id_cliente = @id_cliente";
+                command.CommandText = "SELECT COUNT(enc.id_sucursal), SUM(total_prestamo) " +
+                                        "FROM tbl_prestamo_encabezado enc " +
+                                        "INNER JOIN tbl_sucursal AS suc ON suc.id_sucursal = enc.id_sucursal " +
+                                        "INNER JOIN tbl_empresa AS emp ON emp.id_empresa = suc.id_empresa " +
+                                        "WHERE estado_prestamo = 2 AND id_cliente = @id_cliente " +
+                                        "AND emp.id_empresa = @id_empresa";
                 command.Parameters.AddWithValue("@id_cliente", id_cliente);
+                command.Parameters.AddWithValue("@id_empresa", id_empresa);
                 dtPrestamosLiquidados.Load(command.ExecuteReader());
                 return dtPrestamosLiquidados;
             }
@@ -393,7 +405,7 @@ namespace PrestaVende.CLASS
             }
         }
 
-        public DataTable getCountPrestamosLiquidados(ref string error, string id_cliente)
+        public DataTable getCountPrestamosLiquidados(ref string error, string id_cliente, string id_empresa)
         {
             try
             {
@@ -403,8 +415,14 @@ namespace PrestaVende.CLASS
                 command.Connection = connection.connection;
                 command.Parameters.Clear();
                 command.Transaction = connection.connection.BeginTransaction();
-                command.CommandText = "SELECT COUNT(id_sucursal), SUM(total_prestamo) FROM  tbl_prestamo_encabezado WHERE estado_prestamo = 3 AND id_cliente = @id_cliente";
+                command.CommandText = "SELECT COUNT(enc.id_sucursal), SUM(total_prestamo) " +
+                                        "FROM tbl_prestamo_encabezado enc " +
+                                        "INNER JOIN tbl_sucursal AS suc ON suc.id_sucursal = enc.id_sucursal " +
+                                        "INNER JOIN tbl_empresa AS emp ON emp.id_empresa = suc.id_empresa " +
+                                        "WHERE estado_prestamo = 3 AND id_cliente = @id_cliente " +
+                                        "AND emp.id_empresa = @id_empresa";
                 command.Parameters.AddWithValue("@id_cliente", id_cliente);
+                command.Parameters.AddWithValue("@id_empresa", id_empresa);
                 dtPrestamosLiquidados.Load(command.ExecuteReader());
                 return dtPrestamosLiquidados;
             }
