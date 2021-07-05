@@ -105,10 +105,12 @@ namespace PrestaVende.CLASS
                     break;
                 case 2://Impresion factura
                     transactionType = "8";
-                    break;                
+                    break;
+                case 3:
                 case 10: //Impresion estado de cuenta.
                     transactionType = "17";
                     break;
+                case 4:
                 case 11://Impresion etiqueta
                     transactionType = "18";
                     break;

@@ -706,7 +706,7 @@ namespace PrestaVende.Public
         {
             try
             {
-                if (this.ddlCategoria.SelectedValue.ToString().Equals("1"))
+                if (this.ddlCategoria.SelectedValue.ToString().Equals("1") || ddlCategoria.SelectedValue.ToString().Equals("18") || ddlCategoria.SelectedItem.ToString().Contains("JOYA"))
                 {
                     guardarPrestamoJoya();
                     string scriptText = "alert('my message'); window.location='WFListadoPrestamo.aspx?id_cliente=" + this.lblid_cliente.Text + "'";
@@ -903,7 +903,7 @@ namespace PrestaVende.Public
                         montoFila = Math.Round(montoFila, 2);
                         item["valor"] = montoFila.ToString();
                     }
-                    Session["CurrentTableArticulos"] = dtRecalculoDatos;
+                    this.Session["CurrentTableArticulos"] = dtRecalculoDatos;
                     dtTablaArticulos = dtRecalculoDatos;
                     this.gvProductoElectrodomesticos.DataSource = dtTablaArticulos;
                     this.gvProductoElectrodomesticos.DataBind();
@@ -920,7 +920,7 @@ namespace PrestaVende.Public
                         montoFila = Math.Round(montoFila, 2);
                         item["valor"] = montoFila.ToString();
                     }
-                    Session["CurrentTableJoyas"] = dtRecalculoDatos;
+                    this.Session["CurrentTableJoyas"] = dtRecalculoDatos;
                     dtTablaJoyas = dtRecalculoDatos;
                     this.gvProductoJoya.DataSource = dtTablaJoyas;
                     this.gvProductoJoya.DataBind();
@@ -938,7 +938,7 @@ namespace PrestaVende.Public
             try
             {
                 decimal montoRedondeo = 0, porcentaje = 0, sumaTotalPrestamo = 0, montoPorFilaConRedondeo = 0;
-                if (gvProductoElectrodomesticos.Rows.Count > 0 && ddlCategoria.SelectedValue.ToString() != "1")
+                if (gvProductoElectrodomesticos.Rows.Count > 0 && (ddlCategoria.SelectedValue.ToString() != "1" || ddlCategoria.SelectedValue.ToString() != "JOYAS"))
                 {
                     foreach (GridViewRow item in gvProductoElectrodomesticos.Rows)
                     {

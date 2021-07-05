@@ -38,10 +38,13 @@ namespace PrestaVende.Public
 
             DataTable datosReporte = report.getReportData(ref error, report.getTransactionType(tipo_reporte), this.Session["id_empresa"].ToString());
 
-            nombre_reporte = datosReporte.Rows[0]["nombre_reporte"].ToString();
-            reporte_adicional = bool.Parse(datosReporte.Rows[0]["reporte_adicional"].ToString());
-            nombre_reporte_adicional = datosReporte.Rows[0]["nombre_reporte_adicional"].ToString();
-            opcion_case = int.Parse(datosReporte.Rows[0]["opcion_case"].ToString());
+            if (datosReporte.Rows.Count > 0)
+            {
+                nombre_reporte = datosReporte.Rows[0]["nombre_reporte"].ToString();
+                reporte_adicional = bool.Parse(datosReporte.Rows[0]["reporte_adicional"].ToString());
+                nombre_reporte_adicional = datosReporte.Rows[0]["nombre_reporte_adicional"].ToString();
+                opcion_case = int.Parse(datosReporte.Rows[0]["opcion_case"].ToString());
+            }
 
             switch (tipo_reporte)
             {
@@ -150,45 +153,6 @@ namespace PrestaVende.Public
                         error = ex.ToString();
                     }
                 }
-            }
-            else if (Convert.ToInt32(tipo_reporte) == 17)//17 reporte de liquidaciones.
-            {
-                //DataTable liquidados = new DataTable("reporteLiquidados");
-                //string id_sucursal = this.Request.QueryString.Get("id_sucursal");
-                //string fecha_inicio = this.Request.QueryString.Get("fecha_inicio");
-                //string fecha_fin = this.Request.QueryString.Get("fecha_fin");
-                //cs_liquidacion = new CLASS.cs_liquidacion();
-                //liquidados = cs_liquidacion.getReporteLiquidacion(ref error, id_sucursal, fecha_inicio, fecha_fin);
-                //if (liquidados.Rows.Count <= 0)
-                //{
-                //    error = "Error obteniendo datos de contrato." + error;
-                //    throw new Exception("");
-                //}
-                //else
-                //{
-                //    try
-                //    {
-                //        Reports.CRReporteLiquidaciones ReporteLiquidaciones = new Reports.CRReporteLiquidaciones();
-                //        ReporteLiquidaciones.Load(Server.MapPath("~/Reports/CRReporteLiquidaciones.rpt"));
-                //        ReporteLiquidaciones.SetDataSource(liquidados);
-                //        CrystalReportViewer1.ReportSource = ReporteLiquidaciones;//document;
-                //        CrystalReportViewer1.DataBind();
-                //        CrystalReportViewer1.RefreshReport();
-                //        string tipo = this.Request.QueryString.Get("tipo");
-                //        if (tipo == "excel")
-                //        {
-                //            ReporteLiquidaciones.ExportToHttpResponse(ExportFormatType.ExcelWorkbook, Response, false, "Sucursal No." + id_sucursal);
-                //        }
-                //        else
-                //        {
-                //            ReporteLiquidaciones.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, false, "Sucursal No." + id_sucursal);
-                //        }
-                //    }
-                //    catch (Exception ex)
-                //    {
-                //        error = ex.ToString();
-                //    }
-                //}
             }
             else if (Convert.ToInt32(tipo_reporte) == 18)//18 reporte de prestamos vencidos.
             {

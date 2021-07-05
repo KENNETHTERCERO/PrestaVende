@@ -158,7 +158,7 @@ namespace PrestaVende.Public
         {
             try
             {
-                string[] datosInsert = new string[19];
+                string[] datosInsert = new string[20];
 
                 datosInsert[0] = this.txtDPI.Text;
                 datosInsert[1] = this.txtNit.Text;
@@ -179,6 +179,7 @@ namespace PrestaVende.Public
                 datosInsert[16] = this.ddlCategoriaMedio.SelectedValue.ToString();
                 datosInsert[17] = this.ddlProfesion.SelectedValue.ToString();
                 datosInsert[18] = this.ddlNacionalidad.SelectedValue.ToString();
+                datosInsert[19] = this.txtFechaNacimiento.Text.ToString();
 
                 cs_cliente = new CLASS.cs_cliente();
                 error = "";
@@ -207,7 +208,7 @@ namespace PrestaVende.Public
         {
             try
             {
-                string[] datosUpdate = new string[18];
+                string[] datosUpdate = new string[19];
 
                 datosUpdate[0] = this.txtPrimerNombre.Text;
                 datosUpdate[1] = this.txtSegundoNombre.Text;
@@ -227,6 +228,7 @@ namespace PrestaVende.Public
                 datosUpdate[15] = this.txtTercerNombre.Text;
                 datosUpdate[16] = this.txtApellidoCasada.Text;
                 datosUpdate[17] = this.ddlNacionalidad.SelectedValue.ToString();
+                datosUpdate[18] = this.txtFechaNacimiento.Text.ToString();
 
                 cs_cliente = new CLASS.cs_cliente();
                 error = "";
@@ -285,6 +287,11 @@ namespace PrestaVende.Public
                 else if (this.txtDPI.Text.ToString().Length < 13)
                 {
                     showWarning("Debe agregar el numero de DPI completo.");
+                    return false;
+                }
+                else if (this.txtFechaNacimiento.Text.ToString().Length <= 0)
+                {
+                    showWarning("Debe agregar la fecha de nacimiento.");
                     return false;
                 }
                 else if (this.txtNit.Text.ToString().Length == 0)

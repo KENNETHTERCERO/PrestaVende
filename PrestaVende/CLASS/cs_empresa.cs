@@ -40,7 +40,7 @@ namespace PrestaVende.CLASS
                 int returnShow = 0;
                 connection.connection.Open();
                 command.Connection = connection.connection;
-                command.CommandText = "SELECT show_report_viewer FROM tbl_sucursal" +
+                command.CommandText = "SELECT show_report_viewer FROM tbl_sucursal " +
                                         "WHERE id_sucursal = @id_sucursal";
                 command.Parameters.AddWithValue("@id_sucursal", id_sucursal);
                 returnShow = Convert.ToInt32(command.ExecuteScalar());

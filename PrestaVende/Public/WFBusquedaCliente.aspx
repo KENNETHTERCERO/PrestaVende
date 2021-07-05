@@ -93,6 +93,14 @@
                                                 </tr>
                                                 <tr>
                                                     <td>
+                                                        <big><asp:Label ID="Label1" runat="server" Text="FECHA NACIMIENTO"></asp:Label></big>
+                                                    </td>
+                                                    <td>
+                                                        <asp:TextBox ID="txtFechaNacimiento" runat="server" type="date" class="form-control" AccessKey="" Font-Bold="False"></asp:TextBox>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
                                                         <big><asp:Label ID="lblNit" runat="server" Text="NIT"></asp:Label></big>
                                                     </td>
                                                     <td>

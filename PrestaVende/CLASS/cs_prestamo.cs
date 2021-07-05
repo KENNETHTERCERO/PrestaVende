@@ -153,7 +153,7 @@ namespace PrestaVende.CLASS
                 int inserts = 0;
                 foreach (DataRow item in detalle.Rows)
                 {
-                    if (tipo_prenda.Equals("1"))
+                    if (tipo_prenda.Equals("1") || tipo_prenda.Equals("18") || tipo_prenda.Contains("JOYA"))
                     {
                         comando = "INSERT INTO tbl_prestamo_detalle (id_prestamo_encabezado, id_sucursal, numero_prestamo, id_producto,     numero_linea,               peso,       id_kilataje,            cantidad,           valor,          id_marca,           caracteristicas,            peso_descuento,         peso_con_descuento, retirada, liquidado) " +
                               $"VALUES({id_prestamo_encabezado}, {Convert.ToInt32(HttpContext.Current.Session["id_sucursal"])}, {numero_prestamo}, {item["id_producto"].ToString()}, {item["numero_linea"].ToString()}, {item["peso"].ToString()}, {item["id_kilataje"].ToString()}, 1, {item["valor"].ToString()}, 0, '{item["caracteristicas"].ToString()}', {item["descuento"].ToString()}, {item["pesoReal"].ToString()}, 0, 0)";
