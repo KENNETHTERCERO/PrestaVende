@@ -358,8 +358,8 @@ namespace PrestaVende.Public
 
                                         if (id_tipo_transaccion == "9" || id_tipo_transaccion == "10")
                                         {
-                                            string script2 = "window.open('WebReport.aspx?tipo_reporte=5" + "&id_recibo=" + id_recibo.ToString() + "&id_sucursal=" + this.Session["id_sucursal"].ToString() + "');";
-                                            ScriptManager.RegisterClientScriptBlock(this, GetType(), "ImpresionRecibo", script2, true);
+                                            string script2 = "window.open('WebReport.aspx?tipo_reporte=5" + "&id_recibo=" + Convert.ToString(id_recibo) + "&id_sucursal=" + this.Session["id_sucursal"].ToString() + "');";
+                                            ScriptManager.RegisterClientScriptBlock(this, GetType(), "ImpresionReciboCancelAbono", script2, true);
                                         }                                        
 
                                         string scriptText = "alert('my message'); window.location='WFFacturacion.aspx?id_prestamo=" + id_prestamo.ToString() + "'";

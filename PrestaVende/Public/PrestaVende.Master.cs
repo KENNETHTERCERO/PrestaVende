@@ -88,8 +88,18 @@ namespace PrestaVende.Public
 
         protected void btnSalir_Click(object sender, EventArgs e)
         {
-            cancelarRecepcion();
-            Response.Redirect("~/WebLogin.aspx", false);
+            try
+            {
+                string id_usuario = this.Session["id_usuario"].ToString();
+                cancelarRecepcion();
+                cs_menu.exitSystem(id_usuario);
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         private void cancelarRecepcion()

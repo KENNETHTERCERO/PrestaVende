@@ -13,11 +13,7 @@ namespace PrestaVende.Public
     {
         private CLASS.cs_reporteria report = new CLASS.cs_reporteria();
         private CLASS.cs_prestamo cs_prestamo = new CLASS.cs_prestamo();
-        private CLASS.cs_factura cs_factura = new CLASS.cs_factura();
-        private CLASS.cs_caja cs_caja = new CLASS.cs_caja();
-        private CLASS.cs_manejo_inventario cs_manejo_inventario = new CLASS.cs_manejo_inventario();
         private CLASS.cs_reporteria cs_reporteria = new CLASS.cs_reporteria();
-        private CLASS.cs_liquidacion cs_liquidacion = new CLASS.cs_liquidacion();
         private CLASS.cs_traslado cs_traslado = new CLASS.cs_traslado();
         private CLASS.cs_Empresa cs_empresa = new CLASS.cs_Empresa();
         private string error = "";        

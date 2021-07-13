@@ -11,7 +11,6 @@ namespace PrestaVende.CLASS
     {
         private cs_connection connection = new cs_connection();
         private SqlCommand command = new SqlCommand();
-
         
         public string getIDMaxEmpresa(ref string error)
         {

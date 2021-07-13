@@ -12,6 +12,38 @@ namespace PrestaVende.CLASS
         private cs_connection connect = new cs_connection();
         private SqlCommand command = new SqlCommand();
 
+        public void exitSystem(string id_usuario)
+        {
+            try
+            {
+                string url, logo;
+                connect.connection.Open();
+                command.Connection = connect.connection;
+                command.CommandText = "SELECT " +
+                                        "    emp.nombre_corto_empresa " +
+                                        "FROM " +
+                                        "tbl_usuario AS us " +
+                                        "INNER JOIN tbl_empresa AS emp ON us.id_empresa = us.id_empresa " +
+                                        "WHERE us.id_usuario = @id_usuario ";
+                command.Parameters.AddWithValue("@id_usuario", id_usuario);
+                logo = command.ExecuteScalar().ToString();
+
+                url = "~/WebLogin?E=" + logo;
+
+                if (!string.IsNullOrEmpty(url))
+                {
+                    HttpContext.Current.Response.Redirect(url);
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                connect.connection.Close();
+            }
+        }
 
         public DataTable getMenuHeader(ref string error)
         {
